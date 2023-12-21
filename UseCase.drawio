@@ -1,4 +1,4 @@
-<mxfile host="app.diagrams.net" modified="2023-12-21T08:40:40.898Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36" etag="NIng_-h7xIgiPxcxJ3jr" version="22.1.11" type="github">
+<mxfile host="app.diagrams.net" modified="2023-12-21T08:46:48.822Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36" etag="CdtYYbgOq3NqTpHUDFRJ" version="22.1.11" type="github">
   <diagram name="페이지-1" id="AUHSDOZmDvJJ-M95pPlK">
     <mxGraphModel dx="1296" dy="772" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="0" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
       <root>
@@ -155,13 +155,13 @@
         <mxCell id="SqM2zr4Oi9O8r0nmkoWc-119" value="&lt;b style=&quot;border-color: var(--border-color); font-size: 16px;&quot;&gt;&amp;lt;&amp;lt;버스 티켓 예매 시스템&amp;gt;&amp;gt;&lt;/b&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=11;fontFamily=Helvetica;fontColor=default;" vertex="1" parent="1">
           <mxGeometry x="1095" width="280" height="37.5" as="geometry" />
         </mxCell>
-        <mxCell id="SqM2zr4Oi9O8r0nmkoWc-125" value="예매(결제) &lt;br&gt;취소" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="1">
-          <mxGeometry x="337" y="684" width="80" height="40" as="geometry" />
+        <mxCell id="SqM2zr4Oi9O8r0nmkoWc-125" value="회원 예매&lt;br&gt;(결제) 취소" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="337" y="509" width="80" height="40" as="geometry" />
         </mxCell>
-        <mxCell id="SqM2zr4Oi9O8r0nmkoWc-127" value="예매(좌석) &lt;br&gt;변경" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+        <mxCell id="SqM2zr4Oi9O8r0nmkoWc-127" value="회원 예매&lt;br&gt;(좌석) 변경" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="1">
           <mxGeometry x="337" y="626" width="80" height="40" as="geometry" />
         </mxCell>
-        <mxCell id="SqM2zr4Oi9O8r0nmkoWc-129" value="예매 정보 &lt;br&gt;조회" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+        <mxCell id="SqM2zr4Oi9O8r0nmkoWc-129" value="회원 예매 &lt;br&gt;정보 조회" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="1">
           <mxGeometry x="337" y="569" width="80" height="40" as="geometry" />
         </mxCell>
         <mxCell id="SqM2zr4Oi9O8r0nmkoWc-153" style="edgeStyle=none;shape=connector;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;labelBackgroundColor=default;strokeColor=default;align=center;verticalAlign=middle;fontFamily=Helvetica;fontSize=11;fontColor=default;endArrow=none;endFill=0;" edge="1" parent="1" source="SqM2zr4Oi9O8r0nmkoWc-131">
@@ -169,7 +169,7 @@
             <mxPoint x="635" y="442" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="SqM2zr4Oi9O8r0nmkoWc-131" value="예매(결제)" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+        <mxCell id="SqM2zr4Oi9O8r0nmkoWc-131" value="회원 &lt;br&gt;예매(결제)" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="1">
           <mxGeometry x="337" y="453" width="80" height="40" as="geometry" />
         </mxCell>
         <mxCell id="SqM2zr4Oi9O8r0nmkoWc-133" value="&lt;span style=&quot;font-size: 20px;&quot;&gt;카카오&lt;br&gt;API&lt;br&gt;&lt;/span&gt;" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;" vertex="1" parent="1">
@@ -183,11 +183,17 @@
         <mxCell id="SqM2zr4Oi9O8r0nmkoWc-135" value="&lt;span style=&quot;font-size: 20px;&quot;&gt;카카오&lt;br&gt;API&lt;br&gt;&lt;/span&gt;" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;" vertex="1" parent="1">
           <mxGeometry x="647" y="37.5" width="60" height="120" as="geometry" />
         </mxCell>
-        <mxCell id="SqM2zr4Oi9O8r0nmkoWc-147" value="결제 금액&lt;br&gt;&amp;nbsp;충전" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="1">
-          <mxGeometry x="337" y="511" width="80" height="40" as="geometry" />
+        <mxCell id="SqM2zr4Oi9O8r0nmkoWc-147" value="회원 결제 &lt;br&gt;금액&amp;nbsp;충전" style="ellipse;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
+          <mxGeometry x="337" y="683" width="80" height="40" as="geometry" />
         </mxCell>
         <mxCell id="SqM2zr4Oi9O8r0nmkoWc-149" value="&lt;span style=&quot;font-size: 20px;&quot;&gt;KG이니시스&lt;br&gt;API&lt;br&gt;&lt;/span&gt;" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;" vertex="1" parent="1">
           <mxGeometry x="647" y="373" width="60" height="120" as="geometry" />
+        </mxCell>
+        <mxCell id="SqM2zr4Oi9O8r0nmkoWc-156" style="edgeStyle=none;shape=connector;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0;exitY=0.5;exitDx=0;exitDy=0;exitPerimeter=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;labelBackgroundColor=default;strokeColor=default;align=center;verticalAlign=middle;fontFamily=Helvetica;fontSize=11;fontColor=default;endArrow=none;endFill=0;dashed=1;" edge="1" parent="1" source="SqM2zr4Oi9O8r0nmkoWc-154" target="SqM2zr4Oi9O8r0nmkoWc-147">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="SqM2zr4Oi9O8r0nmkoWc-154" value="&lt;p style=&quot;line-height: 150%;&quot;&gt;&lt;/p&gt;&lt;div style=&quot;line-height: 140%;&quot;&gt;&lt;/div&gt;&lt;b&gt;&amp;nbsp;회원&lt;/b&gt;&lt;br&gt;&lt;br&gt;파란색 유스 케이스는 구현 내용에 포함 안됨.&lt;p&gt;&lt;/p&gt;" style="shape=note;whiteSpace=wrap;html=1;backgroundOutline=1;darkOpacity=0.05;size=12;align=left;" vertex="1" parent="1">
+          <mxGeometry x="591" y="663" width="250" height="80" as="geometry" />
         </mxCell>
       </root>
     </mxGraphModel>
