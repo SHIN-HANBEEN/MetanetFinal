@@ -1,4 +1,4 @@
-<mxfile host="app.diagrams.net" modified="2023-12-22T09:12:14.685Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36" etag="tS-Zv5SljY6Ii6gPIXlm" version="22.1.11" type="github">
+<mxfile host="app.diagrams.net" modified="2023-12-22T09:18:14.313Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36" etag="XaUikTKrp171d-ofQD8c" version="22.1.11" type="github">
   <diagram name="페이지-1" id="AUHSDOZmDvJJ-M95pPlK">
     <mxGraphModel dx="1033" dy="1373" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="0" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
       <root>
@@ -8,7 +8,7 @@
           <mxGeometry x="1100" y="30" width="260" height="360" as="geometry" />
         </mxCell>
         <mxCell id="SqM2zr4Oi9O8r0nmkoWc-95" value="" style="rounded=0;whiteSpace=wrap;html=1;fontFamily=Helvetica;fontSize=11;fontColor=default;movable=1;resizable=1;rotatable=1;deletable=1;editable=1;locked=0;connectable=1;" parent="1" vertex="1">
-          <mxGeometry x="235" y="40" width="472" height="738" as="geometry" />
+          <mxGeometry x="235" y="40" width="472" height="774" as="geometry" />
         </mxCell>
         <mxCell id="SqM2zr4Oi9O8r0nmkoWc-30" style="rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.3333333333333333;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;endArrow=none;endFill=0;" parent="1" source="_ve195dAB9mzk3Xjmjc2-1" target="SqM2zr4Oi9O8r0nmkoWc-19" edge="1">
           <mxGeometry relative="1" as="geometry" />
@@ -242,6 +242,18 @@
             <mxPoint x="525" y="510" as="sourcePoint" />
             <mxPoint x="852" y="702" as="targetPoint" />
           </mxGeometry>
+        </mxCell>
+        <mxCell id="1YZSDNv5Se5F4XumH-Pe-15" style="edgeStyle=none;shape=connector;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0;exitY=0;exitDx=195;exitDy=45.5;exitPerimeter=0;entryX=0;entryY=1;entryDx=0;entryDy=0;dashed=1;labelBackgroundColor=default;strokeColor=default;align=center;verticalAlign=middle;fontFamily=Helvetica;fontSize=11;fontColor=default;endArrow=none;endFill=0;" edge="1" parent="1" source="1YZSDNv5Se5F4XumH-Pe-9" target="SqM2zr4Oi9O8r0nmkoWc-129">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="1YZSDNv5Se5F4XumH-Pe-9" value="&lt;p style=&quot;line-height: 150%;&quot;&gt;&lt;/p&gt;&lt;div style=&quot;line-height: 140%;&quot;&gt;&lt;/div&gt;&lt;b&gt;&amp;nbsp;회원&lt;/b&gt;&lt;br&gt;회원 예매 정보 조회는 회원 티켓 발급, 회원 예매(좌석) 변경, 회원 예매(결제) 취소에 선행 한다.&lt;br&gt;&lt;p&gt;&lt;/p&gt;" style="shape=note;whiteSpace=wrap;html=1;backgroundOutline=1;darkOpacity=0.05;size=12;align=left;" vertex="1" parent="1">
+          <mxGeometry x="23" y="736" width="195" height="79" as="geometry" />
+        </mxCell>
+        <mxCell id="1YZSDNv5Se5F4XumH-Pe-14" style="edgeStyle=none;shape=connector;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0;exitY=0;exitDx=195;exitDy=45.5;exitPerimeter=0;entryX=0;entryY=0;entryDx=0;entryDy=0;dashed=1;labelBackgroundColor=default;strokeColor=default;align=center;verticalAlign=middle;fontFamily=Helvetica;fontSize=11;fontColor=default;endArrow=none;endFill=0;" edge="1" parent="1" source="1YZSDNv5Se5F4XumH-Pe-10" target="SqM2zr4Oi9O8r0nmkoWc-9">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="1YZSDNv5Se5F4XumH-Pe-10" value="&lt;p style=&quot;line-height: 150%;&quot;&gt;&lt;/p&gt;&lt;div style=&quot;line-height: 140%;&quot;&gt;&lt;/div&gt;&lt;b&gt;&amp;nbsp;비회원&lt;/b&gt;&lt;br&gt;예매 정보 조회는 티켓 발급, 예매(좌석) 변경, 예매(결제) 취소에 선행 한다.&lt;br&gt;&lt;p&gt;&lt;/p&gt;" style="shape=note;whiteSpace=wrap;html=1;backgroundOutline=1;darkOpacity=0.05;size=12;align=left;" vertex="1" parent="1">
+          <mxGeometry x="21" y="40" width="195" height="79" as="geometry" />
         </mxCell>
       </root>
     </mxGraphModel>
