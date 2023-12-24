@@ -1,4 +1,4 @@
-<mxfile host="app.diagrams.net" modified="2023-12-24T02:13:29.736Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36" etag="uYI5T4x8l_zebkG7Z7p4" version="22.1.11" type="github">
+<mxfile host="app.diagrams.net" modified="2023-12-24T02:14:27.531Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36" etag="kR-tl-_pf5lpZm1wYnKi" version="22.1.11" type="github">
   <diagram name="페이지-1" id="AUHSDOZmDvJJ-M95pPlK">
     <mxGraphModel dx="821" dy="1373" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="0" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
       <root>
@@ -99,7 +99,7 @@
         <mxCell id="SqM2zr4Oi9O8r0nmkoWc-59" value="노선 관리" style="ellipse;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" parent="1" vertex="1">
           <mxGeometry x="1190" y="183" width="80" height="40" as="geometry" />
         </mxCell>
-        <mxCell id="SqM2zr4Oi9O8r0nmkoWc-67" value="지연 및 결항알림" style="ellipse;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+        <mxCell id="SqM2zr4Oi9O8r0nmkoWc-67" value="지연 및 결행알림" style="ellipse;whiteSpace=wrap;html=1;" parent="1" vertex="1">
           <mxGeometry x="1190" y="48" width="80" height="40" as="geometry" />
         </mxCell>
         <mxCell id="SqM2zr4Oi9O8r0nmkoWc-71" value="운송회사 &lt;br&gt;관리" style="ellipse;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" parent="1" vertex="1">
