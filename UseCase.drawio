@@ -1,6 +1,6 @@
-<mxfile host="app.diagrams.net" modified="2023-12-22T09:25:43.205Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36" etag="_um58A3dxqGYs5Ag6uAk" version="22.1.11" type="github">
+<mxfile host="app.diagrams.net" modified="2023-12-24T02:13:29.736Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36" etag="uYI5T4x8l_zebkG7Z7p4" version="22.1.11" type="github">
   <diagram name="페이지-1" id="AUHSDOZmDvJJ-M95pPlK">
-    <mxGraphModel dx="1033" dy="1373" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="0" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+    <mxGraphModel dx="821" dy="1373" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="0" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -99,7 +99,7 @@
         <mxCell id="SqM2zr4Oi9O8r0nmkoWc-59" value="노선 관리" style="ellipse;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" parent="1" vertex="1">
           <mxGeometry x="1190" y="183" width="80" height="40" as="geometry" />
         </mxCell>
-        <mxCell id="SqM2zr4Oi9O8r0nmkoWc-67" value="카카오톡&lt;br&gt;알림" style="ellipse;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+        <mxCell id="SqM2zr4Oi9O8r0nmkoWc-67" value="지연 및 결항알림" style="ellipse;whiteSpace=wrap;html=1;" parent="1" vertex="1">
           <mxGeometry x="1190" y="48" width="80" height="40" as="geometry" />
         </mxCell>
         <mxCell id="SqM2zr4Oi9O8r0nmkoWc-71" value="운송회사 &lt;br&gt;관리" style="ellipse;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" parent="1" vertex="1">
@@ -146,7 +146,7 @@
         <mxCell id="SqM2zr4Oi9O8r0nmkoWc-133" value="&lt;span style=&quot;&quot;&gt;카카오&lt;br&gt;API&lt;br&gt;&lt;/span&gt;" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;" parent="1" vertex="1">
           <mxGeometry x="1430" y="153" width="34" height="68" as="geometry" />
         </mxCell>
-        <mxCell id="SqM2zr4Oi9O8r0nmkoWc-134" style="edgeStyle=none;shape=connector;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;labelBackgroundColor=default;strokeColor=default;align=center;verticalAlign=middle;fontFamily=Helvetica;fontSize=11;fontColor=default;endArrow=none;endFill=0;entryX=0;entryY=0.3333333333333333;entryDx=0;entryDy=0;entryPerimeter=0;" parent="1" source="SqM2zr4Oi9O8r0nmkoWc-67" edge="1" target="SqM2zr4Oi9O8r0nmkoWc-133">
+        <mxCell id="SqM2zr4Oi9O8r0nmkoWc-134" style="edgeStyle=none;shape=connector;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;labelBackgroundColor=default;strokeColor=default;align=center;verticalAlign=middle;fontFamily=Helvetica;fontSize=11;fontColor=default;endArrow=none;endFill=0;entryX=0;entryY=0.3333333333333333;entryDx=0;entryDy=0;entryPerimeter=0;" parent="1" source="SqM2zr4Oi9O8r0nmkoWc-67" target="SqM2zr4Oi9O8r0nmkoWc-133" edge="1">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="1420" y="205" as="targetPoint" />
           </mxGeometry>
@@ -154,7 +154,7 @@
         <mxCell id="SqM2zr4Oi9O8r0nmkoWc-135" value="&lt;span style=&quot;&quot;&gt;카카오&lt;br&gt;인증 API&lt;br&gt;&lt;/span&gt;" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;" parent="1" vertex="1">
           <mxGeometry x="754.5" y="78" width="34" height="68" as="geometry" />
         </mxCell>
-        <mxCell id="1YZSDNv5Se5F4XumH-Pe-5" style="rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0;exitY=0.3333333333333333;exitDx=0;exitDy=0;exitPerimeter=0;entryX=1;entryY=0;entryDx=0;entryDy=0;fontFamily=Helvetica;fontSize=11;fontColor=default;endArrow=none;endFill=0;" edge="1" parent="1" source="SqM2zr4Oi9O8r0nmkoWc-149" target="SqM2zr4Oi9O8r0nmkoWc-174">
+        <mxCell id="1YZSDNv5Se5F4XumH-Pe-5" style="rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0;exitY=0.3333333333333333;exitDx=0;exitDy=0;exitPerimeter=0;entryX=1;entryY=0;entryDx=0;entryDy=0;fontFamily=Helvetica;fontSize=11;fontColor=default;endArrow=none;endFill=0;" parent="1" source="SqM2zr4Oi9O8r0nmkoWc-149" target="SqM2zr4Oi9O8r0nmkoWc-174" edge="1">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="SqM2zr4Oi9O8r0nmkoWc-149" value="&lt;span style=&quot;&quot;&gt;KG이니시스&lt;br&gt;API&lt;br&gt;&lt;/span&gt;" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;" parent="1" vertex="1">
@@ -243,16 +243,16 @@
             <mxPoint x="852" y="702" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="1YZSDNv5Se5F4XumH-Pe-15" style="edgeStyle=none;shape=connector;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0;exitY=0;exitDx=195;exitDy=45.5;exitPerimeter=0;entryX=0;entryY=1;entryDx=0;entryDy=0;dashed=1;labelBackgroundColor=default;strokeColor=default;align=center;verticalAlign=middle;fontFamily=Helvetica;fontSize=11;fontColor=default;endArrow=none;endFill=0;" edge="1" parent="1" source="1YZSDNv5Se5F4XumH-Pe-9" target="SqM2zr4Oi9O8r0nmkoWc-129">
+        <mxCell id="1YZSDNv5Se5F4XumH-Pe-15" style="edgeStyle=none;shape=connector;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0;exitY=0;exitDx=195;exitDy=45.5;exitPerimeter=0;entryX=0;entryY=1;entryDx=0;entryDy=0;dashed=1;labelBackgroundColor=default;strokeColor=default;align=center;verticalAlign=middle;fontFamily=Helvetica;fontSize=11;fontColor=default;endArrow=none;endFill=0;" parent="1" source="1YZSDNv5Se5F4XumH-Pe-9" target="SqM2zr4Oi9O8r0nmkoWc-129" edge="1">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="1YZSDNv5Se5F4XumH-Pe-9" value="&lt;p style=&quot;line-height: 150%;&quot;&gt;&lt;/p&gt;&lt;div style=&quot;line-height: 140%;&quot;&gt;&lt;/div&gt;&lt;b&gt;&amp;nbsp;회원&lt;/b&gt;&lt;br&gt;회원 예매 정보 조회는 회원 티켓 발급, 회원 예매(좌석) 변경, 회원 예매(결제) 취소에 선행 한다.&lt;br&gt;&lt;p&gt;&lt;/p&gt;" style="shape=note;whiteSpace=wrap;html=1;backgroundOutline=1;darkOpacity=0.05;size=12;align=left;" vertex="1" parent="1">
+        <mxCell id="1YZSDNv5Se5F4XumH-Pe-9" value="&lt;p style=&quot;line-height: 150%;&quot;&gt;&lt;/p&gt;&lt;div style=&quot;line-height: 140%;&quot;&gt;&lt;/div&gt;&lt;b&gt;&amp;nbsp;회원&lt;/b&gt;&lt;br&gt;회원 예매 정보 조회는 회원 티켓 발급, 회원 예매(좌석) 변경, 회원 예매(결제) 취소에 선행 한다.&lt;br&gt;&lt;p&gt;&lt;/p&gt;" style="shape=note;whiteSpace=wrap;html=1;backgroundOutline=1;darkOpacity=0.05;size=12;align=left;" parent="1" vertex="1">
           <mxGeometry x="23" y="736" width="195" height="79" as="geometry" />
         </mxCell>
-        <mxCell id="1YZSDNv5Se5F4XumH-Pe-14" style="edgeStyle=none;shape=connector;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0;exitY=0;exitDx=195;exitDy=45.5;exitPerimeter=0;entryX=0;entryY=0;entryDx=0;entryDy=0;dashed=1;labelBackgroundColor=default;strokeColor=default;align=center;verticalAlign=middle;fontFamily=Helvetica;fontSize=11;fontColor=default;endArrow=none;endFill=0;" edge="1" parent="1" source="1YZSDNv5Se5F4XumH-Pe-10" target="SqM2zr4Oi9O8r0nmkoWc-9">
+        <mxCell id="1YZSDNv5Se5F4XumH-Pe-14" style="edgeStyle=none;shape=connector;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0;exitY=0;exitDx=195;exitDy=45.5;exitPerimeter=0;entryX=0;entryY=0;entryDx=0;entryDy=0;dashed=1;labelBackgroundColor=default;strokeColor=default;align=center;verticalAlign=middle;fontFamily=Helvetica;fontSize=11;fontColor=default;endArrow=none;endFill=0;" parent="1" source="1YZSDNv5Se5F4XumH-Pe-10" target="SqM2zr4Oi9O8r0nmkoWc-9" edge="1">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="1YZSDNv5Se5F4XumH-Pe-10" value="&lt;p style=&quot;line-height: 150%;&quot;&gt;&lt;/p&gt;&lt;div style=&quot;line-height: 140%;&quot;&gt;&lt;/div&gt;&lt;b&gt;&amp;nbsp;비회원&lt;/b&gt;&lt;br&gt;예매 정보 조회는 티켓 발급, 예매(좌석) 변경, 예매(결제) 취소에 선행 한다.&lt;br&gt;&lt;p&gt;&lt;/p&gt;" style="shape=note;whiteSpace=wrap;html=1;backgroundOutline=1;darkOpacity=0.05;size=12;align=left;" vertex="1" parent="1">
+        <mxCell id="1YZSDNv5Se5F4XumH-Pe-10" value="&lt;p style=&quot;line-height: 150%;&quot;&gt;&lt;/p&gt;&lt;div style=&quot;line-height: 140%;&quot;&gt;&lt;/div&gt;&lt;b&gt;&amp;nbsp;비회원&lt;/b&gt;&lt;br&gt;예매 정보 조회는 티켓 발급, 예매(좌석) 변경, 예매(결제) 취소에 선행 한다.&lt;br&gt;&lt;p&gt;&lt;/p&gt;" style="shape=note;whiteSpace=wrap;html=1;backgroundOutline=1;darkOpacity=0.05;size=12;align=left;" parent="1" vertex="1">
           <mxGeometry x="21" y="40" width="195" height="79" as="geometry" />
         </mxCell>
       </root>
