@@ -17,4 +17,5 @@ public class Reservation {
 	private int payNum;
 	private int totPri;
 	private String isCnc;
+	private int satCot;
 }

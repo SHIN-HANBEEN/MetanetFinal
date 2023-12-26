@@ -1,5 +1,6 @@
 package metanet.kosa.metanetfinal.member.service;
 
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -21,14 +22,80 @@ public class MemberService implements IMemberService{
 		}
 	}
 
+	/*
+	 * 아이디 찾기 : 
+	 * 전화번호 인증 끝난 사용자만 사용 하므로,
+	 * 전화번호로 아이디 조회 후 표시
+	 */
 	@Override
 	public String getIdByPhoneNumber(String phoNum) {
 		return memberRepository.getIdByPhoneNumber(phoNum);
 	}
 
+	/*
+	 * 비밀번호 찾기 :
+	 * 전화번호 인증 끝난 사용자들만 사용가능하므로 
+	 * 아이디로 조회 후, Pw 초기화 한 다음, 
+	 * 임시 비밀번호 반환
+	 */
 	@Override
 	public String resetPwById(String id) {
 		return memberRepository.resetPwById(id);
 	}
 
+	/*
+	 * 회원탈퇴 : 
+	 * 비밀번호를 통한 인증 후 회원을 탈퇴한다.
+	 */
+	@Override
+	public void signOut(String id) {
+		memberRepository.signOut(id);
+	}
+
+	@Override
+	public void updateMember(String nme, String ema, String phoNum) {
+		
+	}
+
+	
+
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
