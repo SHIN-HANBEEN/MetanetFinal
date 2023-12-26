@@ -10,5 +10,6 @@ import lombok.ToString;
 public class Line {
 	private int lneId;
 	private int depId;
+	private int desId;
 	private int traTme;
 }
