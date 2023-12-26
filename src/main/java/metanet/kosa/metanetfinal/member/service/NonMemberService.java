@@ -8,7 +8,7 @@ import metanet.kosa.metanetfinal.member.repository.INonMemberRepository;
 import metanet.kosa.metanetfinal.reservation.model.Reservation;
 import metanet.kosa.metanetfinal.reservation.model.ReservationSchedule;
 
-public class MemberService implements IMemberService {
+public class NonMemberService implements INonMemberService {
 
 	@Autowired
 	INonMemberRepository memberRepository;

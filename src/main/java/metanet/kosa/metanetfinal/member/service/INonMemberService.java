@@ -8,7 +8,7 @@ import metanet.kosa.metanetfinal.reservation.model.Reservation;
 import metanet.kosa.metanetfinal.reservation.model.ReservationSchedule;
 
 @Service
-public interface IMemberService {
+public interface INonMemberService {
 	
 	/* 비회원 */
 	// 비회원 정보 등록
