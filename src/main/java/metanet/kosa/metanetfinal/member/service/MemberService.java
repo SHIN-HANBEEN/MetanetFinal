@@ -52,9 +52,14 @@ public class MemberService implements IMemberService{
 		memberRepository.signOut(id);
 	}
 
+	/*
+	 * 회원정보수정 이름, 이메일, 전화번호를 수정할 수 있습니다. 
+	 * 이름, 전화번호는 사용자가 전화번호 인증을 할 때만 할 수 있으므로
+	 * null 값이 넘어올 수 있다. 그에 따른 동적 쿼리 처리가 필요함
+	 */
 	@Override
 	public void updateMember(String nme, String ema, String phoNum) {
-		
+		memberRepository.updateMember(nme, ema, phoNum);
 	}
 
 	
