@@ -10,4 +10,5 @@ import metanet.kosa.metanetfinal.schedule.model.Schedule;
 public interface IScheduleService {
 	// 편도 노선 조회
 	Schedule[] getSchedule(int depId, int desId, Date depTim);
+	
 }
