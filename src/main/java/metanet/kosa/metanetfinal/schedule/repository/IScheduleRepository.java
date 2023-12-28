@@ -11,6 +11,7 @@ import metanet.kosa.metanetfinal.schedule.model.Schedule;
 @Mapper
 @Repository
 public interface IScheduleRepository {
+	// 노선 조회
 	Schedule[] getSchedule(int depId, int desId, Date depTim);
 	
 	
