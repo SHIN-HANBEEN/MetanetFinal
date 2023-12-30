@@ -7,8 +7,8 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-public class DiscountType {
-	private int disId;
-	private String disNme;
-	private float disRte;
+public class Discounts {
+	private int discountId;
+	private String discountType;
+	private float discountRate;
 }

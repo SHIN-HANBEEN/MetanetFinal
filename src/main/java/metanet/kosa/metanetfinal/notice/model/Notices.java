@@ -9,10 +9,10 @@ import lombok.ToString;
 @Builder
 @Setter
 @ToString
-public class Notice {
-	private int ntcId;
-	private int memId;
-	private String tit;
-	private String cnt;
+public class Notices {
+	private int noticeId;
+	private int memberId;
+	private String title;
+	private String content;
 	private String dirPath;
 }

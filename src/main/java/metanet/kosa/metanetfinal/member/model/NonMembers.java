@@ -7,8 +7,8 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-public class NonMember {
-   private int nmbId;
-   private String phoNum;
+public class NonMembers {
+   private int nmemberId;
+   private String phoneNum;
 }
 
