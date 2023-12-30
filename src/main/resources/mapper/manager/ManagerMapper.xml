@@ -29,7 +29,9 @@
 		WHERE NTC_ID=#{ntcId}
 	]]>
 	</delete>
- <!--  -->
+	
+	
+ <!--  
 	<insert id="registerNonMember" parameterType="map">
 	<![CDATA[
 		INSERT INTO 
@@ -90,5 +92,7 @@
 		WHERE userid=#{userid}
 	]]>
 	</select>
+	
+	-->
 	
 </mapper>

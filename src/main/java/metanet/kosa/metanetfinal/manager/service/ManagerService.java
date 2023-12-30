@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 import lombok.RequiredArgsConstructor;
 import metanet.kosa.metanetfinal.manager.repository.IManagerRepository;
 import metanet.kosa.metanetfinal.member.repository.IMemberRepository;
-import metanet.kosa.metanetfinal.notice.model.Notice;
+import metanet.kosa.metanetfinal.notice.model.Notices;
 @Service
 @RequiredArgsConstructor
 public class ManagerService implements IManagerService {
@@ -30,7 +30,7 @@ public class ManagerService implements IManagerService {
 	 * 공지글에 글을 등록
 	 */
 	@Override
-	public void insertBoard(Notice notice) {
+	public void insertBoard(Notices notice) {
 		managerRepository.insertBoard(notice);
 
 	}
@@ -38,7 +38,7 @@ public class ManagerService implements IManagerService {
 	 * 공지글을 수정
 	 */
 	@Override
-	public void updateBoard(Notice notice) {
+	public void updateBoard(Notices notice) {
 		managerRepository.updateBoard(notice);
 
 	}

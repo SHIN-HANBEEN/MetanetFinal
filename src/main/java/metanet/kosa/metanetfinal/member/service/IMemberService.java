@@ -1,10 +1,9 @@
 package metanet.kosa.metanetfinal.member.service;
 
-
-import metanet.kosa.metanetfinal.member.model.Member;
+import metanet.kosa.metanetfinal.member.model.Members;
 
 public interface IMemberService {
-	void register(Member member); 
+	void register(Members member); 
 	String getIdByPhoneNumber(String phoNum);
 	String resetPwById(String id);
 	void signOut(String id);

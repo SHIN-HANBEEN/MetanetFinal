@@ -4,7 +4,7 @@ package metanet.kosa.metanetfinal.member.repository;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
 
-import metanet.kosa.metanetfinal.member.model.Member;
+import metanet.kosa.metanetfinal.member.model.Members;
 
 @Repository
 @Mapper
@@ -17,7 +17,7 @@ public interface IMemberRepository {
 	/*
 	 * 회원 등록
 	 */
-	void register(Member member); 
+	void register(Members member); 
 	
 	/*
 	 * 아이디 찾기 : 전화번호로 아이디 조회

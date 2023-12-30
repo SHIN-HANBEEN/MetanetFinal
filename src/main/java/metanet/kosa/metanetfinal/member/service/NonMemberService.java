@@ -5,8 +5,6 @@ import java.util.HashMap;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import metanet.kosa.metanetfinal.member.repository.INonMemberRepository;
-import metanet.kosa.metanetfinal.reservation.model.Reservation;
-import metanet.kosa.metanetfinal.reservation.model.ReservationSchedule;
 
 public class NonMemberService implements INonMemberService {
 

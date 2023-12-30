@@ -7,8 +7,9 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
-@Mapper
+
 @Repository
+@Mapper
 public interface IRouteRepository {
 	//출발지, 도착지, 출발시간에 해당하는 데이터가 노선 테이블에 있는지 확인하기
 	String getRouteId(
@@ -24,6 +25,4 @@ public interface IRouteRepository {
 			@Param("departureTime") Date departureTime, 
 			@Param("arrivalTime") Date arrivalTime, 
 			@Param("price") int price);
-	
-	
 }

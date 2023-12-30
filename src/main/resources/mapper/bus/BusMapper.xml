@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="metanet.kosa.metanet.line.repository.ILineRepository">
+<mapper namespace="metanet.kosa.metanet.bus.repository.IBusesRepository">
 
 	<select id="getBusId" parameterType="int" resultType="java.lang.String">
 		SELECT bus_id
@@ -16,5 +16,19 @@
         WHERE BUS_ID = #{busId}
         AND IS_RES = 'True'
 	</select>
+	
+	<insert id="makeNewSeats" parameterType="list">
+	    INSERT INTO SEATS (SEAT_ID, BUS_ID)
+	    VALUES
+	    <foreach collection="busIdList" item="busId" index="index" separator=",">
+	        (#{index + 1}, #{busId})
+	    </foreach>
+	</insert>
+	
+	<insert id="makeNewBus" parameterType="map">
+	    INSERT INTO BUSES (BUS_ID, ROUTE_ID, GRADE_NAME)
+	    VALUES
+	    	(bus_id.NEXTVAL, #{routeId}, #{gradeName})
+	</insert>
 	
 </mapper>

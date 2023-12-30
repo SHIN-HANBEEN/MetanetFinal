@@ -4,7 +4,6 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
-import metanet.kosa.metanetfinal.reservation.model.Reservation;
 
 @Mapper
 @Repository

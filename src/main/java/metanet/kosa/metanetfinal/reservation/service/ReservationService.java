@@ -3,6 +3,7 @@ package metanet.kosa.metanetfinal.reservation.service;
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
 import java.util.UUID;
@@ -10,11 +11,10 @@ import java.util.UUID;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import metanet.kosa.metanetfinal.bus.repository.IBusRepository;
+import metanet.kosa.metanetfinal.bus.repository.IBusesRepository;
 import metanet.kosa.metanetfinal.reservation.repository.IReservationRepository;
 import metanet.kosa.metanetfinal.reservation.repository.IReservationScheduleRepository;
 import metanet.kosa.metanetfinal.route.repository.IRouteRepository;
-import metanet.kosa.metanetfinal.route.repository.IScheduleRepository;
 
 
 @Service
@@ -23,7 +23,7 @@ public class ReservationService implements IReservationService{
 	IRouteRepository routeRepository;
 	
 	@Autowired
-	IBusRepository busRepository;
+	IBusesRepository busRepository;
 	
 	
 	@Override
@@ -42,7 +42,11 @@ public class ReservationService implements IReservationService{
 			
 			//좌석 생성
 			int busId = busRepository.getBusId(routeId);
-			busRepository.makeNewSeats(busId);
+			List<Integer> busIdList = new ArrayList<>();
+			for(int i = 0; i<28; i++) {
+				busIdList.add(busId);
+			}
+			busRepository.makeNewSeats(busIdList);
 			
 			//잔여좌석 28 반환
 			return busRepository.getRemainingSeatCount(busId);

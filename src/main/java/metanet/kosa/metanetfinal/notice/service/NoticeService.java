@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-import metanet.kosa.metanetfinal.notice.model.Notice;
+import metanet.kosa.metanetfinal.notice.model.Notices;
 import metanet.kosa.metanetfinal.notice.repository.INoticeRepository;
 
 public class NoticeService implements INoticeService{
@@ -13,7 +13,7 @@ public class NoticeService implements INoticeService{
 	INoticeRepository noticeRepository;
 
 	@Override
-	public List<Notice> getNoticeList() {
+	public List<Notices> getNoticeList() {
 		/*
 		 * 공지사항 리스트 조회
 		 */
@@ -21,7 +21,7 @@ public class NoticeService implements INoticeService{
 	}
 
 	@Override
-	public Notice getNotice(int ntcId) {
+	public Notices getNotice(int ntcId) {
 		/*
 		 * 공지사항 상세 조회
 		 */
