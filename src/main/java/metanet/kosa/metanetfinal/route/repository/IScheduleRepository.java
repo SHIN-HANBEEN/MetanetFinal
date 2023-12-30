@@ -1,4 +1,4 @@
-package metanet.kosa.metanetfinal.schedule.repository;
+package metanet.kosa.metanetfinal.route.repository;
 
 import java.sql.Date;
 import java.util.List;

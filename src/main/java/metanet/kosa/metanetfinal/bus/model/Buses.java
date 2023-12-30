@@ -1,4 +1,4 @@
-package metanet.kosa.metanetfinal.company.model;
+package metanet.kosa.metanetfinal.bus.model;
 
 import lombok.Getter;
 import lombok.Setter;

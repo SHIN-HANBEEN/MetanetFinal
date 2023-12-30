@@ -1,4 +1,4 @@
-package metanet.kosa.metanetfinal.company.repository;
+package metanet.kosa.metanetfinal.bus.repository;
 
 public interface IBusRepository {
 	/*

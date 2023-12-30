@@ -10,7 +10,7 @@ import metanet.kosa.metanetfinal.company.repository.IBusRepository;
 import metanet.kosa.metanetfinal.reservation.model.DetailedReservation;
 import metanet.kosa.metanetfinal.reservation.repository.IReservationRepository;
 import metanet.kosa.metanetfinal.reservation.repository.IReservationScheduleRepository;
-import metanet.kosa.metanetfinal.schedule.repository.IScheduleRepository;
+import metanet.kosa.metanetfinal.route.repository.IScheduleRepository;
 import metanet.kosa.metanetfinal.reservation.model.Reservation;
 
 public class ReservationService implements IReservationService{

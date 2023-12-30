@@ -1,4 +1,4 @@
-package metanet.kosa.metanetfinal.line.model;
+package metanet.kosa.metanetfinal.route.model;
 
 import lombok.Getter;
 import lombok.Setter;

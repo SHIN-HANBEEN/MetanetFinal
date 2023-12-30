@@ -1,11 +1,11 @@
-package metanet.kosa.metanetfinal.schedule.service;
+package metanet.kosa.metanetfinal.route.service;
 
 import java.sql.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
+import metanet.kosa.metanetfinal.route.repository.IScheduleRepository;
 import metanet.kosa.metanetfinal.schedule.model.Schedule;
-import metanet.kosa.metanetfinal.schedule.repository.IScheduleRepository;
 
 public class ScheduleService implements IScheduleService{
 
