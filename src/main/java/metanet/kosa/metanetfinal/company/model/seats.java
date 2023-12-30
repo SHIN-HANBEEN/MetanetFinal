@@ -7,9 +7,9 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-public class Bus {
+public class seats {
 	private int busId;
-	private int comId;
-	private String busNum;
-	private int satNum;
+	private String routeId;
+	private String gradeName;
+	private int seatCnt;
 }

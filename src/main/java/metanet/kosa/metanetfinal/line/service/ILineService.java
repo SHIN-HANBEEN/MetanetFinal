@@ -4,7 +4,7 @@ import java.sql.Date;
 
 import org.springframework.stereotype.Service;
 
-import metanet.kosa.metanetfinal.line.model.Line;
+import metanet.kosa.metanetfinal.line.model.Routes;
 import metanet.kosa.metanetfinal.schedule.model.Schedule;
 
 @Service
