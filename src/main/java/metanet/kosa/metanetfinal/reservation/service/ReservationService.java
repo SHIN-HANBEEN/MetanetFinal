@@ -31,10 +31,10 @@ public class ReservationService implements IReservationService{
 			Date arrivalTime, String gradeName,int price) {
 		//출발지, 도착지, 출발시간에 해당하는 데이터가 노선 테이블에 있는지 확인하기
 		if (routeRepository.getRouteId(departureId, arrivalId, departureTime)== null) {
-			//노선 아이디 UUID 만들기
+			//확인해서, 없으면 노선 아이디 UUID 만들기
 			String routeId = UUID.randomUUID().toString();
 			
-			//확인해서, 없으면 노선 생성
+			//노선 생성
 			routeRepository.makeNewRoute(routeId, departureId, arrivalId, departureTime, departureTime, price);
 			
 			//버스 생성

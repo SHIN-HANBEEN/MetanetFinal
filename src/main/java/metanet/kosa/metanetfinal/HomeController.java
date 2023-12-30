@@ -31,7 +31,6 @@ public class HomeController {
 	
 	@PostMapping(value = "/main") 
 	public String homePost(@RequestBody Map<String, String> body, Model model) {
-		String isOneWay = body.get("isOneWay");
 		String departureId = body.get("departureId");
 		String arrivalId = body.get("arrivalId");
 		String departureTimeString = body.get("departureTime");
