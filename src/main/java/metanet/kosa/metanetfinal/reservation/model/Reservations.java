@@ -21,4 +21,5 @@ public class Reservations {
 	private String payId;
 	private int totalPrice;
 	private String isCancled;
+	private Date cancledDate;
 }
