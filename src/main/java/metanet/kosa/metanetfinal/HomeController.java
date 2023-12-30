@@ -16,7 +16,7 @@ import lombok.extern.slf4j.Slf4j;
 import metanet.kosa.metanetfinal.reservation.service.IReservationService;
 import metanet.kosa.metanetfinal.reservation.service.ReservationService;
 
-@Slf4j
+
 @Controller
 public class HomeController {
 	
@@ -26,10 +26,10 @@ public class HomeController {
 	@GetMapping(value="/")
 	public String home(Model model) {
 		model.addAttribute("message", "Welcome");
-		return "/main";
+		return "/home";
 	}
 	
-	@PostMapping(value = "/main") 
+	@PostMapping(value = "/home") 
 	public String homePost(@RequestBody Map<String, String> body, Model model) {
 		String departureId = body.get("departureId");
 		String arrivalId = body.get("arrivalId");
@@ -43,8 +43,8 @@ public class HomeController {
 		
 		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMddHHmm");
 		try {
-            Date parsedDepartureDate = (Date) dateFormat.parse(departureTimeString);
-            Date parsedArrivalDate = (Date) dateFormat.parse(arrivalTimeString);
+            java.util.Date parsedDepartureDate = dateFormat.parse(departureTimeString);
+            java.util.Date parsedArrivalDate = dateFormat.parse(arrivalTimeString);
             departureTime = new Date(parsedDepartureDate.getTime());
             arrivalTime = new Date(parsedArrivalDate.getTime());
         } catch (ParseException e) {
@@ -53,6 +53,6 @@ public class HomeController {
 		
 		model.addAttribute("remainingSeatCount", 
 				reservationService.getRemainingSeatCount(departureId, arrivalId, departureTime, arrivalTime, gradeName, price));
-		return "";
+		return "/home";
 	}
 }

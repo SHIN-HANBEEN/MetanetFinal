@@ -20,6 +20,7 @@ public class RouteTest {
 	
 	@Test
 	public void getRouteId() {
+		System.out.println("test started");
 		Date departureTime = null;
 		Date arrivalTime = null;
 		
@@ -32,6 +33,10 @@ public class RouteTest {
         } catch (ParseException e) {
             e.printStackTrace();
         }
-		System.out.println(routeRepository.getRouteId("NAI0511601", "NAI2551901", departureTime));
+		if (routeRepository.getRouteId("NAI0511601", "NAI2551901", departureTime)!= null) {
+			System.out.println(routeRepository.getRouteId("NAI0511601", "NAI2551901", departureTime));
+		} else {
+			System.out.println("결과가 비었습니다.");
+		}
 	}
 }

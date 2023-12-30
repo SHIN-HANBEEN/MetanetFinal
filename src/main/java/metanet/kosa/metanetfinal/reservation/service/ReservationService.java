@@ -10,6 +10,7 @@ import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import metanet.kosa.metanetfinal.bus.repository.IBusesRepository;
 import metanet.kosa.metanetfinal.reservation.repository.IReservationRepository;
@@ -23,9 +24,9 @@ public class ReservationService implements IReservationService{
 	IRouteRepository routeRepository;
 	
 	@Autowired
-	IBusesRepository busRepository;
+	IBusesRepository busesRepository;
 	
-	
+	@Transactional
 	@Override
 	public int getRemainingSeatCount(String departureId, String arrivalId, Date departureTime, 
 			Date arrivalTime, String gradeName,int price) {
@@ -38,23 +39,22 @@ public class ReservationService implements IReservationService{
 			routeRepository.makeNewRoute(routeId, departureId, arrivalId, departureTime, departureTime, price);
 			
 			//버스 생성
-			busRepository.makeNewBus(routeId, gradeName);
+			busesRepository.makeNewBus(routeId, gradeName);
 			
 			//좌석 생성
-			int busId = busRepository.getBusId(routeId);
-			List<Integer> busIdList = new ArrayList<>();
+			int busId = busesRepository.getBusId(routeId);
 			for(int i = 0; i<28; i++) {
-				busIdList.add(busId);
+				busesRepository.makeNewSeat(busId, i+1);
 			}
-			busRepository.makeNewSeats(busIdList);
+			
 			
 			//잔여좌석 28 반환
-			return busRepository.getRemainingSeatCount(busId);
+			return busesRepository.getRemainingSeatCount(busId);
 		} else {
 			//확인해서 있으면, 좌석 테이블에 가서, 예매여부를 확인해서 잔여좌석 수 가져오기
 			String routeId = routeRepository.getRouteId(departureId, arrivalId, departureTime);
-			int busId = busRepository.getBusId(routeId);
-			return busRepository.getRemainingSeatCount(busId);
+			int busId = busesRepository.getBusId(routeId);
+			return busesRepository.getRemainingSeatCount(busId);
 		}
 	}
 //	@Autowired
