@@ -4,5 +4,17 @@
 
 <mapper namespace="metanet.kosa.metanet.line.repository.ILineRepository">
 
+	<select id="getBusId" parameterType="int" resultType="java.lang.String">
+		SELECT bus_id
+        FROM buses
+        WHERE route_id = #{routeId}
+	</select>
+	
+	<select id="getRemainingSeatCount" parameterType="int" resultType="int">
+	 	SELECT COUNT(*) AS remainingSeat
+        FROM SEATS
+        WHERE BUS_ID = #{busId}
+        AND IS_RES = 'True'
+	</select>
 	
 </mapper>
