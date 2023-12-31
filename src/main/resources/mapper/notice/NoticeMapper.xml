@@ -2,7 +2,75 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="metanet.kosa.metanet.notice.repository.INoticeRepository">
+<mapper namespace="metanet.kosa.metanetfinal.notice.repository.INoticeRepository">
 
+	<select id="getNoticeList" parameterType="hashmap" resultType="metanet.kosa.metanetfinal.notice.model.Notices">
+		<![CDATA[
+		SELECT 
+			notice_id 		AS "noticeId", 
+			member_id 		AS "memberId", 
+			title			AS "title", 
+			content			AS "content", 
+			dirPath			AS "dirPath", 
+		FROM (
+			SELECT 
+				board_id, member_id, title, content, dirPath
+				rownum AS rnum
+			FROM (
+				SELECT * FROM notices
+				ORDER BY notice_id DESC
+			)
+		)
+		WHERE rnum BETWEEN #{start} AND #{end}
+	]]>
+	</select>
 	
+	<select id="getTotalNoticeNum" resultType="int">
+		<![CDATA[
+			SELECT COUNT(notice_id) AS "count" FROM notices
+		]]>
+	</select>
+	
+	<select id="getNotice" parameterType="int" resultType="metanet.kosa.metanetfinal.notice.model.Notices">
+		<![CDATA[
+		SELECT 
+			notice_id					AS "noticeId", 
+			member_id					AS "memberId", 
+			title						AS "title", 
+			content						AS "content", 
+			dirPath						AS "dirPath"
+		FROM notices
+		WHERE notice_id=#{noticeId}
+	]]>
+	</select>
+	
+	<select id="getNoticeSearchList" parameterType="hashmap" resultType="metanet.kosa.metanetfinal.notice.model.Notices">
+		<![CDATA[
+		SELECT 
+			notice_id 		AS "noticeId", 
+			member_id 		AS "memberId", 
+			title			AS "title", 
+			content			AS "content", 
+			dirPath			AS "dirPath", 
+		FROM (
+			SELECT * FROM notices
+			WHERE
+				title LIKE #{keyword}
+				OR
+				content LIKE #{keyword}	
+			FROM (
+				SELECT * FROM notices
+				ORDER BY notice_id DESC
+			)
+		)
+		WHERE rnum BETWEEN #{start} AND #{end}
+	]]>
+	</select>
+	
+	<select id="getTotalNoticSearcheNum" resultType="int">
+		<![CDATA[
+			SELECT COUNT(*) FROM notices
+			WHERE title LIKE #{keyword} OR content LIKE #{keyword}
+		]]>
+	</select>
 </mapper>

@@ -4,32 +4,34 @@
 
 <mapper namespace="metanet.kosa.metanetfinal.manager.repository.IManagerRepository">
 
-	<insert id="insertBoard" parameterType="Notice" useGeneratedKeys="true" keyProperty="NTC_ID">
+	<insert id="insertBoard" parameterType="Notices" useGeneratedKeys="true" keyProperty="NOTICE_ID">
 	<![CDATA[
-		INSERT INTO ntc 
-			(MEM_ID, TIT, CNT, DIR_PATH)
+		INSERT INTO notice 
+			(MEMBER_ID, TITLE, CONTENT, DIR_PATH)
 		VALUES 
-			(#{memId}, #{tit}, #{cnt}, #{dirPath})
+			(#{memberId}, #{title}, #{content}, #{dirPath})
 	]]>
 	</insert>
 	
 	<update id="updateBoard">
 	<![CDATA[
-		UPDATE ntc 
+		UPDATE notice
 		SET 
-			MEM_ID=#{memId}, TIT=#{tit}, 
-			CNT=#{cnt}, DIR_PATH=#{dirPath}
-		WHERE NTC_ID=#{ntcId}
+			MEMBER_ID=#{memberId}, TITLE=#{title}, 
+			CONTENT=#{content}, DIR_PATH=#{dirPath}
+		WHERE NOTICE_ID=#{noticeId}
 	]]>
 	</update>
 	
 	<delete id="deleteBoard" parameterType="int">
 	<![CDATA[
-		DELETE FROM ntc
-		WHERE NTC_ID=#{ntcId}
+		DELETE FROM notice
+		WHERE NOTICE_ID=#{noticeId}
 	]]>
 	</delete>
- <!--  -->
+	
+	
+ <!--  
 	<insert id="registerNonMember" parameterType="map">
 	<![CDATA[
 		INSERT INTO 
@@ -90,5 +92,7 @@
 		WHERE userid=#{userid}
 	]]>
 	</select>
+	
+	-->
 	
 </mapper>

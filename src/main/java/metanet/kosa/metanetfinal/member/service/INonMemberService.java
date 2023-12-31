@@ -1,11 +1,6 @@
 package metanet.kosa.metanetfinal.member.service;
 
-import java.util.HashMap;
-
 import org.springframework.stereotype.Service;
-
-import metanet.kosa.metanetfinal.reservation.model.Reservation;
-import metanet.kosa.metanetfinal.reservation.model.ReservationSchedule;
 
 @Service
 public interface INonMemberService {
