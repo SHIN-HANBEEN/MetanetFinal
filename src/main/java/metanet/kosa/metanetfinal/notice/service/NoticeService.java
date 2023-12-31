@@ -13,7 +13,11 @@ public class NoticeService implements INoticeService{
 	INoticeRepository noticeRepository;
 
 	@Override
+<<<<<<< HEAD
 	public List<Notices> getNoticeList(int page) {
+=======
+	public List<Notices> getNoticeList() {
+>>>>>>> main
 		/*
 		 * 공지사항 리스트 조회
 		 */
@@ -23,7 +27,11 @@ public class NoticeService implements INoticeService{
 	}
 
 	@Override
+<<<<<<< HEAD
 	public Notices getNotice(int noticeId) {
+=======
+	public Notices getNotice(int ntcId) {
+>>>>>>> main
 		/*
 		 * 공지사항 상세 조회
 		 */

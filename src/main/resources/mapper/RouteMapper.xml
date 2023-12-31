@@ -2,36 +2,56 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="metanet.kosa.metanetfinal.manager.repository.IManagerRepository">
-
-	<insert id="insertBoard" parameterType="Notices" useGeneratedKeys="true" keyProperty="NOTICE_ID">
+<mapper namespace="metanet.kosa.metanetfinal.route.repository.IRouteRepository">
+	
+	<select id="getRouteId" parameterType="map" resultType="string">
 	<![CDATA[
-		INSERT INTO notice 
-			(MEMBER_ID, TITLE, CONTENT, DIR_PATH)
+		SELECT 
+			ROUTE_ID
+		FROM 
+			ROUTES
+		WHERE DEPARTURE_ID = #{departureId}
+		AND ARRIVAL_ID = #{arrivalId}
+		AND DEPARTURE_TIME = #{departureTime}
+	]]>
+	</select>
+	
+	<insert id="makeNewRoute" parameterType="map">
+	<![CDATA[
+		INSERT INTO ROUTES
+			(ROUTE_ID, DEPARTURE_ID, ARRIVAL_ID, DEPARTURE_TIME, ARRIVAL_TIME, PRICE)
 		VALUES 
-			(#{memberId}, #{title}, #{content}, #{dirPath})
+			(#{routeId}, #{departureId}, #{arrivalId}, #{departureTime}, #{arrivalTime}, #{price})
+	]]>
+	</insert>
+
+	<!--  
+	<insert id="insertBoard" parameterType="Notice" useGeneratedKeys="true" keyProperty="NTC_ID">
+	<![CDATA[
+		INSERT INTO ntc 
+			(MEM_ID, TIT, CNT, DIR_PATH)
+		VALUES 
+			(#{memId}, #{tit}, #{cnt}, #{dirPath})
 	]]>
 	</insert>
 	
 	<update id="updateBoard">
 	<![CDATA[
-		UPDATE notice
+		UPDATE ntc 
 		SET 
-			MEMBER_ID=#{memberId}, TITLE=#{title}, 
-			CONTENT=#{content}, DIR_PATH=#{dirPath}
-		WHERE NOTICE_ID=#{noticeId}
+			MEM_ID=#{memId}, TIT=#{tit}, 
+			CNT=#{cnt}, DIR_PATH=#{dirPath}
+		WHERE NTC_ID=#{ntcId}
 	]]>
 	</update>
 	
 	<delete id="deleteBoard" parameterType="int">
 	<![CDATA[
-		DELETE FROM notice
-		WHERE NOTICE_ID=#{noticeId}
+		DELETE FROM ntc
+		WHERE NTC_ID=#{ntcId}
 	]]>
 	</delete>
-	
-	
- <!--  
+
 	<insert id="registerNonMember" parameterType="map">
 	<![CDATA[
 		INSERT INTO 
@@ -92,7 +112,6 @@
 		WHERE userid=#{userid}
 	]]>
 	</select>
-	
 	-->
 	
 </mapper>

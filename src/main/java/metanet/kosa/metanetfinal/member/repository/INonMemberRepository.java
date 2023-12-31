@@ -1,7 +1,9 @@
 package metanet.kosa.metanetfinal.member.repository;
 
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
+
 
 @Mapper
 @Repository

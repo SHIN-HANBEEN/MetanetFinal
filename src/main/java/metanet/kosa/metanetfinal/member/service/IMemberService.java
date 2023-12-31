@@ -1,6 +1,5 @@
 package metanet.kosa.metanetfinal.member.service;
 
-
 import metanet.kosa.metanetfinal.member.model.Members;
 
 public interface IMemberService {

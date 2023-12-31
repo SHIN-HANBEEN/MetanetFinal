@@ -1,9 +1,12 @@
 package metanet.kosa.metanetfinal.manager.service;
 
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 
 import lombok.RequiredArgsConstructor;
 import metanet.kosa.metanetfinal.manager.repository.IManagerRepository;
+import metanet.kosa.metanetfinal.member.repository.IMemberRepository;
 import metanet.kosa.metanetfinal.notice.model.Notices;
 @Service
 @RequiredArgsConstructor
@@ -43,8 +46,9 @@ public class ManagerService implements IManagerService {
 	 * 공지글 삭제
 	 */
 	@Override
-	public void deleteBoard(int noticeId) {
-		managerRepository.deleteBoard(noticeId);
+	public void deleteBoard(int ntcId) {
+		// TODO Auto-generated method stub
+		managerRepository.deleteBoard(ntcId);
 	}
 
 }

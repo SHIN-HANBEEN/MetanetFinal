@@ -9,6 +9,7 @@ import metanet.kosa.metanetfinal.notice.model.Notices;
 @Service
 public interface INoticeService {
 	// 공지사항 리스트 조회
+<<<<<<< HEAD
 	List<Notices> getNoticeList(int page);
 	// 공지사항 검색 리스트 조회
 	List<Notices> getNoticeSearchList(String keyword, int page);
@@ -18,4 +19,9 @@ public interface INoticeService {
 	int getTotalNoticeNum();
 	// 공지사항 검색 게시글 총 개수 조회
 	int getTotalNoticSearcheNum();
+=======
+	List<Notices> getNoticeList();
+	// 공지사항 상세 조회
+	Notices getNotice(int ntcId);
+>>>>>>> main
 }

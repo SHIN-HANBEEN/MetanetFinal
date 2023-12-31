@@ -3,18 +3,19 @@ package metanet.kosa.metanetfinal.reservation.service;
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import metanet.kosa.metanetfinal.bus.repository.IBusRepository;
+import metanet.kosa.metanetfinal.bus.repository.IBusesRepository;
 import metanet.kosa.metanetfinal.reservation.repository.IReservationRepository;
 import metanet.kosa.metanetfinal.reservation.repository.IReservationScheduleRepository;
 import metanet.kosa.metanetfinal.route.repository.IRouteRepository;
-import metanet.kosa.metanetfinal.route.repository.IScheduleRepository;
 
 
 @Service
@@ -23,34 +24,37 @@ public class ReservationService implements IReservationService{
 	IRouteRepository routeRepository;
 	
 	@Autowired
-	IBusRepository busRepository;
+	IBusesRepository busesRepository;
 	
-	
+	@Transactional
 	@Override
 	public int getRemainingSeatCount(String departureId, String arrivalId, Date departureTime, 
 			Date arrivalTime, String gradeName,int price) {
 		//출발지, 도착지, 출발시간에 해당하는 데이터가 노선 테이블에 있는지 확인하기
 		if (routeRepository.getRouteId(departureId, arrivalId, departureTime)== null) {
-			//노선 아이디 UUID 만들기
+			//확인해서, 없으면 노선 아이디 UUID 만들기
 			String routeId = UUID.randomUUID().toString();
 			
-			//확인해서, 없으면 노선 생성
+			//노선 생성
 			routeRepository.makeNewRoute(routeId, departureId, arrivalId, departureTime, departureTime, price);
 			
 			//버스 생성
-			busRepository.makeNewBus(routeId, gradeName);
+			busesRepository.makeNewBus(routeId, gradeName);
 			
 			//좌석 생성
-			int busId = busRepository.getBusId(routeId);
-			busRepository.makeNewSeats(busId);
+			int busId = busesRepository.getBusId(routeId);
+			for(int i = 0; i<28; i++) {
+				busesRepository.makeNewSeat(busId, i+1);
+			}
+			
 			
 			//잔여좌석 28 반환
-			return busRepository.getRemainingSeatCount(busId);
+			return busesRepository.getRemainingSeatCount(busId);
 		} else {
 			//확인해서 있으면, 좌석 테이블에 가서, 예매여부를 확인해서 잔여좌석 수 가져오기
 			String routeId = routeRepository.getRouteId(departureId, arrivalId, departureTime);
-			int busId = busRepository.getBusId(routeId);
-			return busRepository.getRemainingSeatCount(busId);
+			int busId = busesRepository.getBusId(routeId);
+			return busesRepository.getRemainingSeatCount(busId);
 		}
 	}
 //	@Autowired
