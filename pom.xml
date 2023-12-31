@@ -106,6 +106,13 @@
 	        <artifactId>jaxb-api</artifactId>
 	        <version>2.3.0</version>
 	    </dependency>
+	    
+	    <!-- CoolSMS 의존성 -->
+	    <dependency>
+			<groupId>net.nurigo</groupId>
+			<artifactId>sdk</artifactId>
+    		<version>4.3.0</version>
+		</dependency>
 	</dependencies>
 
 	<build>
