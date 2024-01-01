@@ -1,23 +1,33 @@
 package metanet.kosa.metanetfinal.member.service;
 
 
+import java.util.UUID;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import metanet.kosa.metanetfinal.coolsms.CoolSmsService;
 import metanet.kosa.metanetfinal.member.model.Members;
 import metanet.kosa.metanetfinal.member.repository.IMemberRepository;
 
 @Service
+@Transactional
 public class MemberService implements IMemberService{
 	@Autowired
 	IMemberRepository memberRepository;
+	
+	@Autowired
+	CoolSmsService smsService;
 	
 	/*
 	 * 등록하려는 아이디가 유일하면 회원 가입을 진행한다.
 	 */
 	@Override
 	public void register(Members member) {
-		if (memberRepository.isUniqueId(member.getId())) {
+		System.out.println(memberRepository.isUniqueId(member.getId()));
+		if (memberRepository.isUniqueId(member.getId()) == null) {
+			//비밀번호 암호화 필요
 			memberRepository.register(member);
 		}
 	}
@@ -38,11 +48,19 @@ public class MemberService implements IMemberService{
 	 * 아이디로 조회 후, Pw 초기화 한 다음, 
 	 * 임시 비밀번호 반환
 	 */
+	@Transactional
 	@Override
 	public String resetPwById(String id) {
-		return memberRepository.resetPwById(id);
+		String uuid = UUID.randomUUID().toString();
+		String tmpPassword = uuid.substring(0, 10);
+		String phoneNum = memberRepository.isUniqueId(id);
+		//비밀번호 암호화 필요
+		memberRepository.resetPwById(id, tmpPassword);
+		smsService.sendOne(phoneNum, "임시비밀번호 [" + tmpPassword + "]");
+		
+		return tmpPassword;
 	}
-
+	//_________________2024-01-01 완승 ____________
 	/*
 	 * 회원탈퇴 : 
 	 * 비밀번호를 통한 인증 후 회원을 탈퇴한다.

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="metanet.kosa.metanetfinal.member.repository.IMemberRepository">
+
+	<select id="isUniqueId" parameterType="string" resultType="string">
+	<![CDATA[
+		SELECT 
+			PHONE_NUM
+		FROM 
+			MEMBERS 
+		WHERE ID=#{id}
+	]]>
+	</select>
+	
+	<insert id="register" useGeneratedKeys="true" keyProperty="memberId" keyColumn="MEMBER_ID">
+	INSERT INTO MEMBERS
+	(MEMBER_ID,ID,PASSWORD, EMAIL, BIRTH_DATE, SEX, NAME, PHONE_NUM, ROLE, MILEAGE)
+	VALUES 
+	(member_id.NEXTVAL,#{id},#{password},#{email},#{birthDate},#{sex},#{name},#{phoneNum},#{role},#{mileage})
+	</insert>
+	
+	<select id="getIdByPhoneNumber" parameterType="string" resultType="string">
+	<![CDATA[
+		SELECT 
+			ID
+		FROM 
+			MEMBERS 
+		WHERE PHONE_NUM=#{phoneNum}
+	]]>
+	</select>
+	
+	<update id="resetPwById">
+	UPDATE MEMBERS SET PASSWORD=#{tmpPassword} WHERE ID=#{id}
+	</update>
+
+	
+	
+</mapper>
