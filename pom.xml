@@ -141,6 +141,12 @@
 		  <artifactId>iamport-rest-client-java</artifactId>
 		  <version>0.2.14</version>
 		</dependency>
+		
+		<!-- AOP 의존성 -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-aop</artifactId>
+		</dependency>
 	</dependencies>
 	
 
