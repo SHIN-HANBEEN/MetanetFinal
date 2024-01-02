@@ -35,7 +35,7 @@
 	UPDATE MEMBERS SET PASSWORD=#{tmpPassword} WHERE ID=#{id}
 	</update>
 
-	<select id="selectMemberById" parameterType="string" resultType="Members">
+	<select id="selectMemberById" parameterType="string" resultType="metanet.kosa.metanetfinal.member.model.Members">
 	<![CDATA[
 		SELECT 
 			MEMBER_ID,ID,PASSWORD, EMAIL, BIRTH_DATE, SEX, NAME, PHONE_NUM, ROLE, MILEAGE

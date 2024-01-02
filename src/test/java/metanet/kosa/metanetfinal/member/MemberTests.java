@@ -43,4 +43,6 @@ public class MemberTests {
 		String tmpPW = memberService.resetPwById("test");
 		System.out.println(tmpPW);
 	}
+	
+	@Test
 }
