@@ -34,14 +34,39 @@
 	<update id="resetPwById">
 	UPDATE MEMBERS SET PASSWORD=#{tmpPassword} WHERE ID=#{id}
 	</update>
+	
+	<update id="updateMemberByID">
+	UPDATE MEMBERS 
+		SET EMAIL=#{email}, PHONE_NUM=#{phoneNum} 
+	WHERE ID=#{id}
+	</update>
 
-	<select id="selectMemberById" parameterType="string" resultType="Members">
+	<select id="getMemberById" parameterType="string" resultType="Members">
 	<![CDATA[
 		SELECT 
 			MEMBER_ID,ID,PASSWORD, EMAIL, BIRTH_DATE, SEX, NAME, PHONE_NUM, ROLE, MILEAGE
 		FROM 
 			MEMBERS 
 		WHERE ID=#{id}
+	]]>
+	</select>
+	
+	<delete id="signOut">
+	<![CDATA[
+		DELETE FROM
+			MEMBERS 
+		WHERE
+			id=#{id} AND password=#{password}
+	]]>
+	</delete>
+	
+	<select id="getMemberById" parameterType="string" resultType="Members">
+	<![CDATA[
+		SELECT 
+			MEMBER_ID,ID,PASSWORD, EMAIL, BIRTH_DATE, SEX, NAME, PHONE_NUM, ROLE, MILEAGE
+		FROM 
+			MEMBERS 
+		WHERE ID=#{id} AND PASSWORD=#{password}
 	]]>
 	</select>
 	
