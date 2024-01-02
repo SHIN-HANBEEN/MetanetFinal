@@ -113,6 +113,12 @@
 			<artifactId>sdk</artifactId>
     		<version>4.3.0</version>
 		</dependency>
+		
+		<!-- Mail 의존성 -->
+		<dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-mail</artifactId>
+        </dependency>
 	</dependencies>
 
 	<build>
