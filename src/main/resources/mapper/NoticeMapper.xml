@@ -11,10 +11,10 @@
 			member_id 		AS "memberId", 
 			title			AS "title", 
 			content			AS "content", 
-			dirPath			AS "dirPath", 
+			dir_Path		AS "dirPath"
 		FROM (
 			SELECT 
-				board_id, member_id, title, content, dirPath
+				notice_id, member_id, title, content, dir_Path,
 				rownum AS rnum
 			FROM (
 				SELECT * FROM notices
@@ -38,28 +38,28 @@
 			member_id					AS "memberId", 
 			title						AS "title", 
 			content						AS "content", 
-			dirPath						AS "dirPath"
+			dir_Path					AS "dirPath"
 		FROM notices
 		WHERE notice_id=#{noticeId}
 	]]>
 	</select>
 	
-	<select id="getNoticeSearchList" parameterType="hashmap" resultType="metanet.kosa.metanetfinal.notice.model.Notices">
+	<select id="getNoticeSearchList" resultType="metanet.kosa.metanetfinal.notice.model.Notices">
 		<![CDATA[
 		SELECT 
 			notice_id 		AS "noticeId", 
 			member_id 		AS "memberId", 
 			title			AS "title", 
 			content			AS "content", 
-			dirPath			AS "dirPath", 
+			dir_Path		AS "dirPath"
 		FROM (
-			SELECT * FROM notices
-			WHERE
-				title LIKE #{keyword}
-				OR
-				content LIKE #{keyword}	
+			SELECT 
+				notice_id, member_id, title, content, dir_Path,
+				rownum AS rnum
 			FROM (
 				SELECT * FROM notices
+				WHERE title LIKE #{keyword} OR
+					  content LIKE #{keyword}
 				ORDER BY notice_id DESC
 			)
 		)

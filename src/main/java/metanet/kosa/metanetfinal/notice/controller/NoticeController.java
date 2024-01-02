@@ -55,10 +55,13 @@ public class NoticeController {
 	@GetMapping("/notice/search/{page}")
 	public String getNoticeSearchList(@RequestParam(required=false, defaultValue="") String keyword, 
 				@PathVariable int page, HttpSession session, Model model) {
+		System.out.println("controller 서비스 전 " + keyword);
 		List<Notices> noticeList = noticeService.getNoticeSearchList(keyword, page);
 		model.addAttribute("noticeList", noticeList);
+		System.out.println("controller 서비스 후");
 		
-		int bbsCount = noticeService.getTotalNoticSearcheNum();
+		int bbsCount = noticeService.getTotalNoticSearcheNum(keyword);
+		System.out.println(bbsCount);
 		int totalPage = 0;
 		if(bbsCount > 0) {
 			totalPage= (int)Math.ceil(bbsCount/10.0);
@@ -80,7 +83,7 @@ public class NoticeController {
 		model.addAttribute("startPage", startPage);
 		model.addAttribute("endPage", endPage);
 
-	return "board/search";
+	return "notice/search";
 	}
 	
 	// 공지사항 상세조회

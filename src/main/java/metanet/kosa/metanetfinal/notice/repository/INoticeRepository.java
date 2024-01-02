@@ -20,5 +20,5 @@ public interface INoticeRepository {
 	// 공지사항 총 게시글 갯수 조회
 	int getTotalNoticeNum();
 	// 공지사항 검색 총 게시글 갯수 조회
-	int getTotalNoticSearcheNum();
+	int getTotalNoticSearcheNum(@Param("keyword") String keyword);
 }

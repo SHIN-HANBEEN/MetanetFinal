@@ -3,21 +3,19 @@ package metanet.kosa.metanetfinal.notice.service;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import metanet.kosa.metanetfinal.notice.model.Notices;
 import metanet.kosa.metanetfinal.notice.repository.INoticeRepository;
 
+@Service
 public class NoticeService implements INoticeService{
 	
 	@Autowired
 	INoticeRepository noticeRepository;
 
 	@Override
-<<<<<<< HEAD
 	public List<Notices> getNoticeList(int page) {
-=======
-	public List<Notices> getNoticeList() {
->>>>>>> main
 		/*
 		 * 공지사항 리스트 조회
 		 */
@@ -27,11 +25,7 @@ public class NoticeService implements INoticeService{
 	}
 
 	@Override
-<<<<<<< HEAD
 	public Notices getNotice(int noticeId) {
-=======
-	public Notices getNotice(int ntcId) {
->>>>>>> main
 		/*
 		 * 공지사항 상세 조회
 		 */
@@ -52,12 +46,14 @@ public class NoticeService implements INoticeService{
 		 * 공지사항 검색 리스트 조회
 		 */
 		int start = (page-1)*10 + 1;
+		// System.out.println("서비스 " + keyword+ " " + start);
 		return noticeRepository.getNoticeSearchList("%"+keyword+"%", start, start+9);
+	
 	}
 
 	@Override
-	public int getTotalNoticSearcheNum() {
-		return noticeRepository.getTotalNoticSearcheNum();
+	public int getTotalNoticSearcheNum(String keyword) {
+		return noticeRepository.getTotalNoticSearcheNum(keyword);
 	}
 	
 	
