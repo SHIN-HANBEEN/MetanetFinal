@@ -35,6 +35,14 @@
 	UPDATE MEMBERS SET PASSWORD=#{tmpPassword} WHERE ID=#{id}
 	</update>
 
-	
+	<select id="selectMemberById" parameterType="string" resultType="Members">
+	<![CDATA[
+		SELECT 
+			MEMBER_ID,ID,PASSWORD, EMAIL, BIRTH_DATE, SEX, NAME, PHONE_NUM, ROLE, MILEAGE
+		FROM 
+			MEMBERS 
+		WHERE ID=#{id}
+	]]>
+	</select>
 	
 </mapper>

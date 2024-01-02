@@ -60,7 +60,14 @@ public class MemberService implements IMemberService{
 		
 		return tmpPassword;
 	}
-	//_________________2024-01-01 완승 ____________
+	/*
+	 * 비밀번호 재설정
+	 * 임시비밀번호로 로그인하면
+	 * 비밀번호를 재설정한다.
+	 */
+	public void updatePassword(String id, String newPw) {
+		memberRepository.resetPwById(id, newPw);
+	}
 	/*
 	 * 회원탈퇴 : 
 	 * 비밀번호를 통한 인증 후 회원을 탈퇴한다.
@@ -76,8 +83,8 @@ public class MemberService implements IMemberService{
 	 * null 값이 넘어올 수 있다. 그에 따른 동적 쿼리 처리가 필요함
 	 */
 	@Override
-	public void updateMember(String nme, String ema, String phoNum) {
-		memberRepository.updateMember(nme, ema, phoNum);
+	public void updateMember(String name, String email, String phoneNum) {
+		memberRepository.updateMember(name, email, phoneNum);
 	}
 
 	
