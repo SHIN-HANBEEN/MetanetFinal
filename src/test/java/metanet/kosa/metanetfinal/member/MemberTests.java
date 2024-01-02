@@ -9,12 +9,16 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import metanet.kosa.metanetfinal.member.model.Members;
 import metanet.kosa.metanetfinal.member.model.Members.MembersBuilder;
+import metanet.kosa.metanetfinal.member.repository.IMemberRepository;
 import metanet.kosa.metanetfinal.member.service.MemberService;
 
 @SpringBootTest
 public class MemberTests {
 	@Autowired
 	MemberService memberService;
+	
+	@Autowired
+	IMemberRepository memberRepository;
 	
 	@Test
 	void regMemberTest() {
@@ -42,5 +46,11 @@ public class MemberTests {
 	void resetPwById() {
 		String tmpPW = memberService.resetPwById("test");
 		System.out.println(tmpPW);
+	}
+	
+	@Test
+	void getMemberTest() {
+		Members member = memberRepository.getMemberById("test");
+		System.out.println(member.getEmail());
 	}
 }

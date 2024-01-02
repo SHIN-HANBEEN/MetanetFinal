@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import metanet.kosa.metanetfinal.coolsms.CoolSmsService;
+import metanet.kosa.metanetfinal.email.service.EmailService;
 import metanet.kosa.metanetfinal.member.model.Members;
 import metanet.kosa.metanetfinal.member.repository.IMemberRepository;
 
@@ -18,7 +19,25 @@ public class MemberService implements IMemberService{
 	IMemberRepository memberRepository;
 	
 	@Autowired
-	CoolSmsService smsService;
+	EmailService emailService;
+	
+	/*
+	 * 로그인
+	 * 컨트롤러에서 로그인실패했을때 if(member == null) 처리 필요
+	 */
+	@Override
+	public Members login(String id, String password) {
+		return memberRepository.getMemberByIdAndPassword(id, password);
+		
+	}
+	
+	/*
+	 * 회원 정보 리턴
+	 */
+	public Members getMemberInfo(String id) {
+		return memberRepository.getMemberById(id);
+	}
+
 	
 	/*
 	 * 등록하려는 아이디가 유일하면 회원 가입을 진행한다.
@@ -53,31 +72,41 @@ public class MemberService implements IMemberService{
 	public String resetPwById(String id) {
 		String uuid = UUID.randomUUID().toString();
 		String tmpPassword = uuid.substring(0, 10);
-		String phoneNum = memberRepository.isUniqueId(id);
+		String userEmail = memberRepository.getMemberById(id).getEmail();
 		//비밀번호 암호화 필요
 		memberRepository.resetPwById(id, tmpPassword);
-		smsService.sendOne(phoneNum, "임시비밀번호 [" + tmpPassword + "]");
+		String text = "임시비밀번호 [" + tmpPassword + "]";
+		emailService.sendEmailtoUser(userEmail, "메타버스에서 임시비밀번호가 발급되었습니다.", text);
+		
 		
 		return tmpPassword;
 	}
-	//_________________2024-01-01 완승 ____________
+	/*
+	 * 비밀번호 재설정
+	 * 임시비밀번호로 로그인하면
+	 * 비밀번호를 재설정한다.
+	 */
+	public void updatePassword(String id, String newPw) {
+		memberRepository.resetPwById(id, newPw);
+	}
 	/*
 	 * 회원탈퇴 : 
 	 * 비밀번호를 통한 인증 후 회원을 탈퇴한다.
 	 */
 	@Override
-	public void signOut(String id) {
-		memberRepository.signOut(id);
+	public void signOut(String id, String password) {
+		memberRepository.signOut(id, password);
 	}
 
 	/*
 	 * 회원정보수정 이메일, 전화번호를 수정할 수 있습니다. 
 	 */
 	@Override
-	public void updateMember(String nme, String ema, String phoNum) {
-		memberRepository.updateMember(nme, ema, phoNum);
+	public void updateMember(String userId, String email, String phoneNum) {
+		memberRepository.updateMemberByID(userId, email, phoneNum);
 	}
 
+	
 	
 
 }

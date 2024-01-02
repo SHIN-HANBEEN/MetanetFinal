@@ -28,7 +28,7 @@ public class EmailService {
 
     private Properties prop;    // SMTP Setting information
     
-    public EmailService() {}; //default 생성자
+    public EmailService() {this.prop = getProperties();}; //default 생성자
     
     public EmailService(String name, String subject, String text) {
         this.name = name;
@@ -58,6 +58,32 @@ public class EmailService {
         });
     }
 
+    public void sendEmailtoUser(String userEmail, String title, String text) {
+    	try {
+            Session session = getSession();
+            MimeMessage message = new MimeMessage(session);
+            message.setFrom(new InternetAddress(senderEmail));
+            // Receiver mail
+            message.addRecipient(Message.RecipientType.TO, new InternetAddress(userEmail)); // 이메일 받는 계정 입력
+            // Suject
+            message.setSubject(title);
+            // Text
+            MimeBodyPart content = new MimeBodyPart();
+            content.setText(text);
+
+            // Write contents(Text & File)
+            Multipart mp = new MimeMultipart();
+            mp.addBodyPart(content);
+            message.setContent(mp);
+
+            // Send the message
+            Transport.send(message);
+            log.info("전송에 성공했습니다");
+        } catch (Exception e) {
+            log.info("전송에 실패했습니다");
+            e.printStackTrace();
+        }
+    }
     // 4. Mail을 전송하는 부분입니다.
     public void send(String name, String emailForReply, String subject, String text) {
         try {
