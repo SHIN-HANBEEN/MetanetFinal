@@ -17,6 +17,14 @@
 	<properties>
 		<java.version>17</java.version>
 	</properties>
+	<!-- 결제 리파지토리 -->
+	<repositories>
+	  <repository>
+	    <id>jitpack.io</id>
+	    <url>https://jitpack.io</url>
+	  </repository>
+	</repositories>
+	
 	<dependencies>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -119,7 +127,22 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-mail</artifactId>
         </dependency>
+        
+	    <!-- log4jdbc 추가 -->
+	    <dependency>
+		    <groupId>org.bgee.log4jdbc-log4j2</groupId>
+		    <artifactId>log4jdbc-log4j2-jdbc4.1</artifactId>
+		    <version>1.16</version>
+		</dependency>
+		
+		<!-- 결제 -->
+		<dependency>
+		  <groupId>com.github.iamport</groupId>
+		  <artifactId>iamport-rest-client-java</artifactId>
+		  <version>0.2.14</version>
+		</dependency>
 	</dependencies>
+	
 
 	<build>
 		<plugins>

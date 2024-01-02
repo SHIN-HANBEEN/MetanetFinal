@@ -35,17 +35,21 @@ public interface IMemberRepository {
 	/*
 	 * 회원탈퇴 : 아이디로 회원 탈퇴 진행
 	 */
-	void signOut(String id);
+	void signOut(@Param("id") String id, @Param("password") String password);
 	
 	/*
 	 * 회원정보수정 : 이름, 이메일, 전화번호 수정 가능
 	 * 이름, 전화번호는 사용자가 전화번호 인증을 할 때만 할 수 있으므로
 	 * null 값이 넘어올 수 있다. 그에 따른 동적 쿼리 처리가 필요함
 	 */
-	void updateMember(String name, String email, String phoneNum);
+	void updateMemberByID(@Param("id") String id, @Param("email") String email, @Param("phoneNum") String phoneNum);
 	
 	/*
-	 * 
+	 * 아이디로 회원조회
 	 */
-	Members selectMemberById(String id);
+	Members getMemberById(String id);
+	/*
+	 * 로그인 By ID and Password
+	 */
+	Members getMemberByIdAndPassword(@Param("id")String id, @Param("password") String password);
 }

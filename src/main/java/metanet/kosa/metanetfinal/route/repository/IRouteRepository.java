@@ -7,6 +7,8 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
+import metanet.kosa.metanetfinal.route.model.Terminals;
+
 
 @Repository
 @Mapper
@@ -25,4 +27,7 @@ public interface IRouteRepository {
 			@Param("departureTime") Date departureTime, 
 			@Param("arrivalTime") Date arrivalTime, 
 			@Param("price") int price);
+	
+	//입력된 터미널명으로 시작하는 터미널 리스트 반환
+	List<Terminals> searchTerminalsListStartWithTerminalName(@Param("terminalName") String terminalName);
 }

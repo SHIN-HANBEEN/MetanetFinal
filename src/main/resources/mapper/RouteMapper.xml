@@ -24,6 +24,18 @@
 			(#{routeId}, #{departureId}, #{arrivalId}, #{departureTime}, #{arrivalTime}, #{price})
 	]]>
 	</insert>
+	
+	<select id="searchTerminalsListStartWithTerminalName" parameterType="string" 
+    resultType="metanet.kosa.metanetfinal.route.model.Terminals">
+    <![CDATA[
+        SELECT TERMINAL_ID, TERMINAL_NAME, CITY_ID, CITY_NAME
+        FROM TERMINALS
+        WHERE TERMINAL_NAME LIKE #{terminalName} || '%'
+    ]]>
+	</select>
+
+
+
 
 	<!--  
 	<insert id="insertBoard" parameterType="Notice" useGeneratedKeys="true" keyProperty="NTC_ID">

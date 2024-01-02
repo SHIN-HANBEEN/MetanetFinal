@@ -28,7 +28,7 @@
 	 	SELECT COUNT(*) AS remainingSeat
         FROM SEATS
         WHERE BUS_ID = #{busId}
-        AND IS_RES = 'True'
+        AND IS_RES = 'FALSE'
 	</select>
 	
 </mapper>

@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head> </head>
+<body>
+    <!-- jQuery -->
+    <script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+    <!-- iamport.payment.js -->
+    <script src="https://cdn.iamport.kr/v1/iamport.js"></script>
+	<script>
+		//문서가 준비되면 제일 먼저 실행
+		$(document).ready(function(){
+		    $("#iamportPayment").click(function(){
+		        payment(); //버튼 클릭하면 함수 호출
+		    });
+		});
+		
+		// 주문번호 만들기
+		/*
+		function createOrderNum(){
+			const date = new Date();
+			const year = date.getFullYear();
+			const month = String(date.getMonth() + 1).padStart(2, "0");
+			const day = String(date.getDate()).padStart(2, "0");
+			
+			let orderNum = year + month + day;
+			for(let i=0;i<10;i++) {
+				orderNum += Math.floor(Math.random() * 8);	
+			}
+			return orderNum;
+		}
+		*/
+		
+		//버튼 클릭하면 실행
+		function payment(data) {
+		    IMP.init('imp33561285'); //아임포트 관리자 콘솔에서 확인한 '가맹점 식별코드' 입력
+		    IMP.request_pay({ // param
+		        pg: "inicis", //pg사명 or pg사명.CID (잔액 일시불 할부 등, 기본 PG사가 따로 있음)
+		        pay_method: "card", //결제 방법
+		        merchant_uid: "28", //가맹점 주문번호 (아임포트를 사용하는 가맹점에서 임의로 지정)
+		        name: "버스 결제 테스트", //결제창에서 보여질 상품명
+		        amount: 100, //금액
+		        buyer_email: "gildong0405@gmail.com",
+		        buyer_name: "길동이",
+		        buyer_tel: "01052016412"
+		    }, function (rsp) { // callback
+		    	console.log(rsp);
+		        if (rsp.success) {
+		            alert("결제 성공 -> imp_uid : " + rsp.imp_uid + " / merchant_uid(orderKey) : " + rsp.merchant_uid);
+		            
+		            // 이후 reservation 객체 데이터 추가
+		            let data = {};
+		            // data.imp_uid = rsp.imp_uid;
+		            data.payId = rsp.merchant_uid;
+		            data.totalPrice = rsp.paid_amount;
+		            // resId (예매 아이디)
+		            // memberId (회원 아이디)
+		            // nmemberId (비회원 아이디)
+		            // routeId (노선 아이디)
+					// busId (버스 아이디)
+					// seatId (좌석 번호)
+					// resDate (예매일자) data에 넣기
+
+							            
+		            // 성공하면 데이터 전송~ -> 테스트 전송 성공
+		            $.ajax({
+						url: "/reservation/payOk",
+						method: "POST",
+						data: data,
+						success: function(response) {
+							console.log(response);
+							alert("결제 정보가 성공적으로 전송되었습니다");
+							window.location.href="/reservation/refund";
+						}, 
+						error: function(xhr, status, error) {
+							console.error("결제 정보 전송 실패 : ", error);
+							alert("결제 정보 전송에 실패");
+						}
+					});
+					
+					
+		        } else {
+		            alert("실패 : 코드(" + rsp.error_code + ") 메시지(" + rsp.error_msg + ")");
+		        }
+		    });
+		}
+	</script>
+    <div>
+        <h2>IAMPORT 결제 테스트</h2>
+        <li>
+            <button id="iamportPayment" type="button">결제테스트</button>
+        </li>
+    </div>
+</body>
+</html>
