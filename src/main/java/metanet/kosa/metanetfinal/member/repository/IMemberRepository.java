@@ -12,6 +12,7 @@ import metanet.kosa.metanetfinal.member.model.Members;
 public interface IMemberRepository {
 	/*
 	 * 회원가입할 때, 아이디 고유 확인
+	 * 전화번호 반환
 	 */
 	String isUniqueId(String id); 
 	
@@ -42,4 +43,9 @@ public interface IMemberRepository {
 	 * null 값이 넘어올 수 있다. 그에 따른 동적 쿼리 처리가 필요함
 	 */
 	void updateMember(String name, String email, String phoneNum);
+	
+	/*
+	 * 
+	 */
+	Members selectMemberById(String id);
 }
