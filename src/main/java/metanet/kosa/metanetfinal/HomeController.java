@@ -29,6 +29,11 @@ public class HomeController {
 		return "/home";
 	}
 	
+	/*
+	 * 출발지, 도착지, 출발시간(출발일자 아님, 배차조회까지 끝낸 다음 선택한 출발시간) 입력
+	 * 한 다음, 잔여좌석을 model 에 담아서 redirect 한다. 
+	 * 지금은 아직 redirect 할 페이지 작성을 안해서, home 으로 return 을 작성해두었다.
+	 */
 	@PostMapping(value = "/home") 
 	public String homePost(@RequestBody Map<String, String> body, Model model) {
 		String departureId = body.get("departureId");
@@ -53,6 +58,7 @@ public class HomeController {
 		
 		model.addAttribute("remainingSeatCount", 
 				reservationService.getRemainingSeatCount(departureId, arrivalId, departureTime, arrivalTime, gradeName, price));
+		System.out.println(reservationService.getRemainingSeatCount(departureId, arrivalId, departureTime, arrivalTime, gradeName, price));
 		return "/home";
 	}
 }

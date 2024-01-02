@@ -8,7 +8,7 @@ import lombok.ToString;
 @Setter
 @ToString
 public class Terminals {
-	private int terminalId;
+	private String terminalId;
 	private String terminalName;
 	private int cityId;
 	private String cityName;
