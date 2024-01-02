@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+<button onclick="cancelPay()">환불하기</button>
+<script
+  src="https://code.jquery.com/jquery-3.3.1.min.js"
+  integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+  crossorigin="anonymous"></script>
+
+  <script>
+  function cancelPay() {
+    jQuery.ajax({
+        "url": "reservation/refund/cancel",
+        "type": "POST",
+        "contentType": "application/json",
+        "data": JSON.stringify({
+            "merchant_uid": "28", // 주문 번호 또는 고유 식별자
+            "cancel_request_amount": 100, // 환불 금액
+            "reason": "테스트 결제 환불" // 환불 사유
+        }),
+        "dataType": "json",
+        success: function (data) {
+        console.log("Success Response:", data);
+
+        if (data.status === "success") {
+          alert("환불 요청이 성공적으로 전송되었습니다.");
+        } else {
+          alert("환불 요청 중 오류가 발생했습니다. " + data.message);
+        }
+      },
+      error: function (jqXHR, textStatus, errorThrown) {
+        console.error("Error:", errorThrown);
+        console.log("Response Text:", jqXHR.responseText);
+        alert("환불 요청 중 오류가 발생했습니다. " + textStatus);
+      }
+    });
+  }
+</script>
+  
+</body>
+</html>
