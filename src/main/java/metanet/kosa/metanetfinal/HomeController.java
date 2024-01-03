@@ -26,7 +26,7 @@ public class HomeController {
 	@GetMapping(value="/")
 	public String home(Model model) {
 		model.addAttribute("message", "Welcome");
-		return "/home";
+		return "home";
 	}
 	
 	/*
@@ -59,6 +59,6 @@ public class HomeController {
 		model.addAttribute("remainingSeatCount", 
 				reservationService.getRemainingSeatCount(departureId, arrivalId, departureTime, arrivalTime, gradeName, price));
 		System.out.println(reservationService.getRemainingSeatCount(departureId, arrivalId, departureTime, arrivalTime, gradeName, price));
-		return "/home";
+		return "home";
 	}
 }
