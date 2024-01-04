@@ -1,0 +1,107 @@
+.metanet-page-header {
+	position: relative;
+	overflow: hidden;
+	background-size: cover;
+	background-position: 50%;
+}
+
+.metanet-mt-24 {
+	margin-top: 24%;
+}
+
+.metanet-mt-16 {
+	margin-top: 16%;
+}
+
+.metanet-ht-350 {
+	height: 350px;
+}
+
+.metanet-bc-wh {
+	background-color: white;
+}
+
+.metanet-st-hd {
+	position: sticky; top: 0; 
+}
+
+.metanet-hidden {
+	visibility: hidden;
+}
+
+.metanet-border-test {
+	border: 1px solid black;
+}
+
+.metanet-width-10p {
+	width: 3px;
+}
+
+.metanet-table-fixed {
+	table-layout: fixed;
+}
+
+.metanet-table-fixed td, .metanet-table-fixed th {
+	padding: 0;
+	text-align: center;
+}
+
+.custom-btn {
+  width: 130px;
+  height: 40px;
+  color: #fff;
+  border-radius: 5px;
+  padding: 10px 25px;
+  font-family: 'Lato', sans-serif;
+  font-weight: 500;
+  background: transparent;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+  display: inline-block;
+   box-shadow:inset 2px 2px 2px 0px rgba(255,255,255,.5),
+   7px 7px 20px 0px rgba(0,0,0,.1),
+   4px 4px 5px 0px rgba(0,0,0,.1);
+  outline: none;
+}
+
+.btn-5 {
+  width: 96px;
+  height: 32px;
+  line-height: 34px;
+  padding: 0;
+  border: none;
+  background: black;
+background: linear-gradient(0deg, black 0%, black 100%);
+}
+.btn-5:hover {
+  color: black;
+  background: transparent;
+   box-shadow:none;
+}
+.btn-5:before,
+.btn-5:after{
+  content:'';
+  position:absolute;
+  top:0;
+  right:0;
+  height:2px;
+  width:0;
+  background: black;
+  box-shadow:
+   -1px -1px 5px 0px #fff,
+   7px 7px 20px 0px #0003,
+   4px 4px 5px 0px #0002;
+  transition:400ms ease all;
+}
+.btn-5:after{
+  right:inherit;
+  top:inherit;
+  left:0;
+  bottom:0;
+}
+.btn-5:hover:before,
+.btn-5:hover:after{
+  width:100%;
+  transition:800ms ease all;
+}
