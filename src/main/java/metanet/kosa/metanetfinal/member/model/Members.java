@@ -11,7 +11,6 @@ import lombok.ToString;
 @Setter
 @ToString
 @Getter
-@Builder
 public class Members {
 	
 	private int memberId;
@@ -23,6 +22,7 @@ public class Members {
 //	@Pattern(regexp = "(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[^a-zA-Z0-9])[a-zA-Z0-9!@#$%^&*()_+\\-=\\[\\]{};:'\"<>,./?]{10,20}",
 //			message = "최소 1개 이상의 소문자 영어, 대문자 영어, 특수문자, 숫자를 이용한 10자~20자를 입력하세요.")
 	private String password;
+	private String password2;
 	
 //	@Pattern(regexp = "[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}",
 //			message = "올바른 형식의 이메일 주소를 입력하세요.")
