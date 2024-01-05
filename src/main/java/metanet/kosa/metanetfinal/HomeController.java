@@ -24,9 +24,23 @@ public class HomeController {
 	IReservationService reservationService;
 	
 	@GetMapping(value="/")
-	public String home(Model model) {
-		model.addAttribute("message", "Welcome");
+	public String home() {
 		return "home2";
+	}
+	
+	@GetMapping(value="/login")
+	public String login() {
+		return "login";
+	}
+	
+	@GetMapping(value="/mypage")
+	public String mypage() {
+		return "mypage";
+	}
+	
+	@GetMapping(value="/signin")
+	public String signin() {
+		return "signin";
 	}
 	
 	/*
@@ -59,6 +73,6 @@ public class HomeController {
 		model.addAttribute("remainingSeatCount", 
 				reservationService.getRemainingSeatCount(departureId, arrivalId, departureTime, arrivalTime, gradeName, price));
 		System.out.println(reservationService.getRemainingSeatCount(departureId, arrivalId, departureTime, arrivalTime, gradeName, price));
-		return "home";
+		return "home2";
 	}
 }

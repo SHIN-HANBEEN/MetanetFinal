@@ -1,2 +1,74 @@
-   <!-- Navbar Transparent -->   <!-- <nav class="navbar navbar-expand-lg position-absolute top-0 z-index-3 w-100 shadow-none my-3 navbar-transparent"> -->  <div class="container position-sticky z-index-sticky top-0" th:fragment="navbar">	  <div class="row">		  <div class="col-12">	  	<nav class="navbar navbar-expand-lg  blur border-radius-xl top-0 z-index-fixed shadow position-absolute my-3 py-2 start-0 end-0 mx-4">  	        <div class="container">	          <a class="navbar-brand  text-black" href="../home.html" rel="tooltip" title="시외버스 예매 시스템" data-placement="bottom" target="_blank">	            <img src="../assets/img/logo-white.png" class="img-fluid" style="width: 30%; max-height:50%;"/>	          </a>	          <button class="navbar-toggler shadow-none ms-2" type="button" data-bs-toggle="collapse" data-bs-target="#navigation" aria-controls="navigation" aria-expanded="false" aria-label="Toggle navigation">	            <span class="navbar-toggler-icon mt-2">	              <span class="navbar-toggler-bar bar1"></span>	              <span class="navbar-toggler-bar bar2"></span>	              <span class="navbar-toggler-bar bar3"></span>	            </span>	          </button>	          <div class="collapse navbar-collapse w-100 pt-3 pb-2 py-lg-0 ms-lg-12 ps-lg-5" id="navigation">	            <ul class="navbar-nav navbar-nav-hover ms-auto">	              <li class="nav-item dropdown dropdown-hover mx-2 ms-lg-6">	                <a class="nav-link ps-2 d-flex cursor-pointer align-items-center" id="dropdownMenuPages2" data-bs-toggle="dropdown" aria-expanded="false">	                  <i class="material-icons opacity-6 me-2 text-md">dashboard</i>	                  Pages	                  <img src="./assets/img/down-arrow-white.svg" alt="down-arrow" class="arrow ms-auto ms-md-2 d-lg-block d-none">	                  <img src="./assets/img/down-arrow-dark.svg" alt="down-arrow" class="arrow ms-auto ms-md-2 d-lg-none d-block">	                </a>	              </li>		              <li class="nav-item dropdown dropdown-hover mx-2">	                <a class="nav-link ps-2 d-flex cursor-pointer align-items-center" id="dropdownMenuBlocks" data-bs-toggle="dropdown" aria-expanded="false">	                  <i class="material-icons opacity-6 me-2 text-md">view_day</i>	                  Sections	                  <img src="./assets/img/down-arrow-white.svg" alt="down-arrow" class="arrow ms-auto ms-md-2 d-lg-block d-none">	                  <img src="./assets/img/down-arrow-dark.svg" alt="down-arrow" class="arrow ms-auto ms-md-2 d-lg-none d-block">	                </a>	              </li>		              <li class="nav-item dropdown dropdown-hover mx-2">	                <a class="nav-link ps-2 d-flex cursor-pointer align-items-center" id="dropdownMenuDocs" data-bs-toggle="dropdown" aria-expanded="false">	                  <i class="material-icons opacity-6 me-2 text-md">article</i>	                  Docs	                  <img src="./assets/img/down-arrow-white.svg" alt="down-arrow" class="arrow ms-auto ms-md-2 d-lg-block d-none">	                  <img src="./assets/img/down-arrow-dark.svg" alt="down-arrow" class="arrow ms-auto ms-md-2 d-lg-none d-block">	                </a>	              </li>	              <li class="nav-item ms-lg-auto my-auto ms-3 ms-lg-0 mt-2 mt-lg-0">	                <a href="https://www.creative-tim.com/product/material-kit" class="btn btn-sm  bg-gradient-primary mb-0 me-1 mt-2 mt-md-0">Free Download</a></li>	            </ul>	          </div>	        </div>	      </nav>	      <!-- End Navbar -->		  </div>	  </div>   </div>
-     
+<!-- Navbar Transparent -->
+<!-- <nav class="navbar navbar-expand-lg position-absolute top-0 z-index-3 w-100 shadow-none my-3 navbar-transparent"> -->
+<div class="container position-sticky z-index-sticky top-0" th:fragment="navbar">
+	<div class="row">
+		<div class="col-12">
+			<nav
+				class="navbar navbar-expand-lg  blur border-radius-xl top-0 z-index-fixed shadow position-absolute my-3 py-2 start-0 end-0 mx-4">
+				<div class="container">
+					<a class="navbar-brand  text-black" href="../home.html" rel="tooltip" title="시외버스 예매 시스템"
+						data-placement="bottom" target="_blank">
+						<img src="../assets/img/logo-white.png" class="img-fluid" style="width: 30%; max-height:50%;" />
+					</a>
+					<button class="navbar-toggler shadow-none ms-2" type="button" data-bs-toggle="collapse"
+						data-bs-target="#navigation" aria-controls="navigation" aria-expanded="false"
+						aria-label="Toggle navigation">
+						<span class="navbar-toggler-icon mt-2">
+							<span class="navbar-toggler-bar bar1"></span>
+							<span class="navbar-toggler-bar bar2"></span>
+							<span class="navbar-toggler-bar bar3"></span>
+						</span>
+					</button>
+					<div class="collapse navbar-collapse w-100 pt-3 pb-2 py-lg-0 ms-lg-8 ps-lg-5" id="navigation">
+						<ul class="navbar-nav navbar-nav-hover ms-auto">
+							<li class="nav-item dropdown dropdown-hover mx-2 ms-lg-6">
+								<a href="mypage"
+								  class="nav-link ps-2 d-flex cursor-pointer align-items-center"
+									aria-expanded="false" >
+									<i class="material-icons opacity-6 me-2 text-md">dashboard</i>
+									마이페이지
+									
+								</a>
+							</li>
+
+							<li class="nav-item dropdown dropdown-hover mx-2">
+								<a href="/notice/list/1"
+								  class="nav-link ps-2 d-flex cursor-pointer align-items-center" 
+									aria-expanded="false">
+									<i class="material-icons opacity-6 me-2 text-md">view_day</i>
+									공지사항
+									
+								</a>
+							</li>
+
+							<li class="nav-item  mx-2">
+								<a href="nreservation"
+								  class="nav-link ps-2 d-flex cursor-pointer align-items-center" 
+									aria-expanded="false">
+									<i class="material-icons opacity-6 me-2 text-md">article</i>
+									비회원예매조회
+								</a>
+							</li>
+							
+							<li class="nav-item  mx-2">
+								<a href="reservation"
+								  class="nav-link ps-2 d-flex cursor-pointer align-items-center" 
+									aria-expanded="false">
+									<i class="material-icons opacity-6 me-2 text-md">article</i>
+									회원예매조회
+								</a>
+							</li>
+							<li class="nav-item ms-lg-auto my-auto ms-3 ms-lg-0 mt-2 mt-lg-0">
+								<a href="login"
+									class="btn btn-sm  bg-gradient-primary mb-0 me-1 my-2 mt-md-0">
+									Login
+								</a>
+							</li>
+						</ul>
+					</div>
+				</div>
+			</nav>
+			<!-- End Navbar -->
+		</div>
+	</div>
+</div>
