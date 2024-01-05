@@ -1,5 +1,6 @@
 package metanet.kosa.metanetfinal.route.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,8 +28,12 @@ public class RouteRestController {
 	 * '동'으로 출발하는 리스트 뿌리기 위한 REST
 	 */
 	@GetMapping("/search-terminal")
-	public List<Terminals> searchTerminal(@RequestParam String terminalName) {
-		List<Terminals> result = routeService.searchTerminalsListStartWithTerminalName(terminalName);
+	public List<String> searchTerminal(@RequestParam String terminalName) {
+		List<Terminals> terminals = routeService.searchTerminalsListStartWithTerminalName(terminalName);
+		List<String> result = new ArrayList<>();
+		for(int i = 0; i < terminals.size(); i++) {
+			result.add(i, terminals.get(i).getTerminalName());
+		}
 		return result;
 	}
 }
