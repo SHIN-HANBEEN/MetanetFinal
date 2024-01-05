@@ -13,6 +13,10 @@
 	margin-top: 16%;
 }
 
+.metanet-mt-8 {
+	margin-top: 8%;
+}
+
 .metanet-ht-350 {
 	height: 350px;
 }
@@ -44,6 +48,20 @@
 .metanet-table-fixed td, .metanet-table-fixed th {
 	padding: 0;
 	text-align: center;
+}
+
+.metanet-hide-date::before {
+	 content: attr(data-placeholder);
+  width: 100%;
+}
+
+.metanet-hide-date:focus::before,
+.metanet-hide-date:valid::before {
+  display: none;
+}
+
+.metanet-display-hidden {
+	display: none;
 }
 
 .custom-btn {

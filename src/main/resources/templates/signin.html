@@ -27,6 +27,8 @@
 
 	<!-- 커스텀 CSS -->
 	<link href="../assets/css/final.css" rel="stylesheet" />
+	<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
 </head>
 
 <body>
@@ -38,327 +40,93 @@
 		<div class="row">
 			<div class="col-lg-12 metanet-page-header" style="height: 90vh; background-image: url('./assets/img/bus.png');">
 				<span class="mask bg-gradient-dark opacity-6"></span>
-				<div class="container-fluid metanet-mt-24">
-					<div class="row">
-						<div class="col-lg-12">
-							<div class="card card-body shadow-xl mx-3 mx-md-11 mt-n12">
+				<div class="container-fluid metanet-mt-16">
 
-								<div class="section text-center">
-									<h2 class="title">예매하기</h2>
-									<div class="row border-radius-md pb-4 p-3 mx-sm-0 mx-1 position-relative">
-										<div class="col-sm-12 col-md-6 col-lg-3 mt-lg-n2 mt-2">
-											<label class="ms-0">출발지</label>
-											<div class="row">
-												<div class="col-sm-9 col-md-9 col-lg-9" style="padding: 0px;">
-													<div class="input-group input-group-dynamic mb-4">
-														<input class="form-control" placeholder="출발 터미널 검색" type="text">
-													</div>
-												</div>
-												<div class="col-sm-3 col-md-3 col-lg-3" style="padding: 0px;">
-													<button class="btn btn-dark btn-icon btn" data-bs-toggle="modal"
-														data-bs-target="#exampleModal" type="button" style="margin: 8px 8px 0px 0px;">
-														<div class="d-flex align-items-center">
-															<i class="fas fa-search" aria-hidden="true"></i>
-														</div>
-													</button>
-												</div>
-											</div>
-										</div>
-										<div class="col-sm-12 col-md-6 col-lg-3 mt-lg-n2 mt-2">
-											<label class="ms-0">도착지</label>
-											<div class="row">
-												<div class="col-sm-9 col-md-9 col-lg-9" style="padding: 0px;">
-													<div class="input-group input-group-dynamic mb-4">
-														<input class="form-control" placeholder="도착 터미널 검색" type="text">
-													</div>
-												</div>
-												<div class="col-sm-3 col-md-3 col-lg-3" style="padding: 0px;">
-													<button class="btn btn-dark btn-icon btn" data-bs-toggle="modal"
-														data-bs-target="#exampleModal" type="button" style="margin: 8px 8px 0px 0px;">
-														<div class="d-flex align-items-center">
-															<i class="fas fa-search" aria-hidden="true"></i>
-														</div>
-													</button>
-												</div>
-											</div>
-										</div>
-										<div class="col-sm-12 col-md-6 col-lg-3 mt-lg-n2 mt-2">
-											<label class="ms-0">출발일자</label>
-											<div class="input-group input-group-static">
-												<span class="input-group-text"></span>
-												<input class="form-control datepicker" placeholder="Please select date" type="date">
-											</div>
-										</div>
-										<div class="col-sm-12 col-md-6 col-lg-3 mt-lg-n2 mt-2">
-											<label>&nbsp;</label>
-											<button type="button" class="btn bg-gradient-primary w-100 mb-0">Search</button>
+					<div class="container my-auto">
+						<div class="row">
+							<div class="col-lg-4 col-md-8 col-12 mx-auto">
+								<div class="card z-index-0 fadeIn3 fadeInBottom">
+									<div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
+										<div class="bg-gradient-primary shadow-primary border-radius-lg py-3 pe-1">
+											<h4 class="text-white font-weight-bolder text-center mt-2 mb-0">회원가입</h4>
+
 										</div>
 									</div>
-								</div>
+									<div class="card-body">
+										<form role="form" class="text-start">
+											<div class="input-group input-group-outline my-3">
+												<label class="form-label">아이디 입력</label>
+												<input type="email" class="form-control">
+											</div>
+											<div class="input-group input-group-outline mb-3">
+												<label class="form-label">비밀번호 입력</label>
+												<input type="password" class="form-control">
+											</div>
+											<div class="input-group input-group-outline mb-3">
+												<label class="form-label">비밀번호 확인</label>
+												<input type="password" class="form-control">
+											</div>
+											<div class="input-group input-group-outline mb-3">
+												<input class="metanet-hide-date form-control datepicker" aria-required="true" required
+													data-placeholder="생년 월일 선택" type="date">
+											</div>
 
-							</div>
-						</div>
-						<div class="col-lg-12">
-							<div class="card card-body shadow-xl mx-3 mx-md-11 metanet-ht-350">
-
-
-								<div class="table-responsive">
-									<table class="table metanet-table-fixed table-hover align-items-center mb-0 ">
-										<thead class="metanet-bc-wh metanet-st-hd">
-											<tr>
-												<th class="text-center text-uppercase text-secondary text-lg font-weight-bolder opacity-7">
-													출발터미널
-												</th>
-												<th class="text-center text-uppercase text-secondary text-lg font-weight-bolder opacity-7">
-													출발시간
-												</th>
-												<th class="text-center text-uppercase text-secondary text-lg font-weight-bolder opacity-7">
-													도착터미널
-												</th>
-												<th class="text-center text-uppercase text-secondary text-lg font-weight-bolder opacity-7">
-													도착시간
-												</th>
-												<th class="text-center text-uppercase text-secondary text-lg font-weight-bolder opacity-7">
-													요금
-												</th>
-												<th class="text-center text-uppercase text-secondary text-lg font-weight-bolder opacity-7">
-													등급
-												</th>
-												<th class="text-center text-uppercase text-secondary text-lg font-weight-bolder opacity-7">
-													예매하기
-												</th>
-											</tr>
-										</thead>
-										<tbody>
-											
-											<tr>
-												<td>
-													<h6 class="my-sm-2 text-md">John Michael</h6>
-												</td>
-												<td>
-													<h6 class="my-sm-2 text-md">John Michael</h6>
-												</td>
-												<td>
-													<h6 class="my-sm-2 text-md">John Michael</h6>
-												</td>
-												<td>
-													<h6 class="my-sm-2 text-md">John Michael</h6>
-												</td>
-												<td>
-													<h6 class="my-sm-2 text-md">John Michael</h6>
-												</td>
-												<td>
-													<h6 class="my-sm-2 text-md">John Michael</h6>
-												</td>
-												<td>
-													<button class="custom-btn btn-5"><span>예매하기</span></button>
-												</td>
-
-											</tr>
-											<tr>
-												<td>
-													<h6 class="my-sm-2 text-md">John Michael</h6>
-												</td>
-												<td>
-													<h6 class="my-sm-2 text-md">John Michael</h6>
-												</td>
-												<td>
-													<h6 class="my-sm-2 text-md">John Michael</h6>
-												</td>
-												<td>
-													<h6 class="my-sm-2 text-md">John Michael</h6>
-												</td>
-												<td>
-													<h6 class="my-sm-2 text-md">John Michael</h6>
-												</td>
-												<td>
-													<h6 class="my-sm-2 text-md">John Michael</h6>
-												</td>
-												<td>
-													<button class="custom-btn btn-5"><span>예매하기</span></button>
-												</td>
-
-											</tr>
-											<tr>
-												<td>
-													<h6 class="my-sm-2 text-md">John Michael</h6>
-												</td>
-												<td>
-													<h6 class="my-sm-2 text-md">John Michael</h6>
-												</td>
-												<td>
-													<h6 class="my-sm-2 text-md">John Michael</h6>
-												</td>
-												<td>
-													<h6 class="my-sm-2 text-md">John Michael</h6>
-												</td>
-												<td>
-													<h6 class="my-sm-2 text-md">John Michael</h6>
-												</td>
-												<td>
-													<h6 class="my-sm-2 text-md">John Michael</h6>
-												</td>
-												<td>
-													<button class="custom-btn btn-5"><span>예매하기</span></button>
-												</td>
-
-											</tr>
-											<tr>
-												<td>
-													<h6 class="my-sm-2 text-md">John Michael</h6>
-												</td>
-												<td>
-													<h6 class="my-sm-2 text-md">John Michael</h6>
-												</td>
-												<td>
-													<h6 class="my-sm-2 text-md">John Michael</h6>
-												</td>
-												<td>
-													<h6 class="my-sm-2 text-md">John Michael</h6>
-												</td>
-												<td>
-													<h6 class="my-sm-2 text-md">John Michael</h6>
-												</td>
-												<td>
-													<h6 class="my-sm-2 text-md">John Michael</h6>
-												</td>
-												<td>
-													<button class="custom-btn btn-5"><span>예매하기</span></button>
-												</td>
-
-											</tr>
-											<tr>
-												<td>
-													<h6 class="my-sm-2 text-md">John Michael</h6>
-												</td>
-												<td>
-													<h6 class="my-sm-2 text-md">John Michael</h6>
-												</td>
-												<td>
-													<h6 class="my-sm-2 text-md">John Michael</h6>
-												</td>
-												<td>
-													<h6 class="my-sm-2 text-md">John Michael</h6>
-												</td>
-												<td>
-													<h6 class="my-sm-2 text-md">John Michael</h6>
-												</td>
-												<td>
-													<h6 class="my-sm-2 text-md">John Michael</h6>
-												</td>
-												<td>
-													<button class="custom-btn btn-5"><span>예매하기</span></button>
-												</td>
-
-											</tr>
-											<tr>
-												<td>
-													<h6 class="my-sm-2 text-md">John Michael</h6>
-												</td>
-												<td>
-													<h6 class="my-sm-2 text-md">John Michael</h6>
-												</td>
-												<td>
-													<h6 class="my-sm-2 text-md">John Michael</h6>
-												</td>
-												<td>
-													<h6 class="my-sm-2 text-md">John Michael</h6>
-												</td>
-												<td>
-													<h6 class="my-sm-2 text-md">John Michael</h6>
-												</td>
-												<td>
-													<h6 class="my-sm-2 text-md">John Michael</h6>
-												</td>
-												<td>
-													<button class="custom-btn btn-5"><span>예매하기</span></button>
-												</td>
-
-											</tr>
-											
-
-
-
-
-										</tbody>
-									</table>
+											<div class="nav-wrapper position-relative end-0 mb-4">
+												<ul class="nav nav-pills nav-fill p-1" role="tablist">
+													<li class="nav-item">
+														<a class="nav-link mb-0 px-0 py-1 active" data-bs-toggle="tab" href="#profile-tabs-simple"
+															role="tab" aria-controls="profile" aria-selected="true">
+															남성
+														</a>
+													</li>
+													<li class="nav-item">
+														<a class="nav-link mb-0 px-0 py-1" data-bs-toggle="tab" href="#dashboard-tabs-simple"
+															role="tab" aria-controls="dashboard" aria-selected="false">
+															여성
+														</a>
+													</li>
+												</ul>
+											</div>
+											<div class="input-group input-group-outline mb-3">
+												<label class="form-label">휴대폰 번호 입력</label>
+												<input type="tel" class="form-control" id="phoneNumberInput">
+												<button class="btn btn-sm  bg-gradient-primary mb-0 me-1 my-2 mt-md-0"
+													onclick="showInputCertificationNumber()">
+													인증번호받기
+												</button>
+											</div>
+											<div class="metanet-display-hidden input-group input-group-outline mb-3" id="certificationNumber">
+												<label class="form-label">인증 번호 입력</label>
+												<input type="text" class="form-control" id="inputNumber">
+												<button class="btn btn-sm bg-gradient-primary mb-0 me-1 my-2 mt-md-0"
+													onclick="submitAuthentication()">
+													본인인증하기
+												</button>
+											</div>
+											<p id="authenticationResult"></p>
+											<div class="text-center">
+												<a href="signin" class="btn bg-gradient-primary w-100 my-1 mb-2">
+													회원가입
+												</a>
+											</div>
+										</form>
+									</div>
 								</div>
 							</div>
 						</div>
 					</div>
 				</div>
 
-
 			</div>
 		</div>
+
+
+	</div>
+	</div>
 	</div>
 
 
-	<!-- Modal -->
-	<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true"
-		style="margin-top: 48px;">
-		<div class="modal-dialog">
-			<div class="modal-content">
-				<div class="modal-header">
-					<h5 class="modal-title" id="exampleModalLabel">터미널 검색하기</h5>
-					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-				</div>
-				<div class="modal-body">
-					<div class="row">
-						<h6>출발 지역 선택</h6>
-						<div class="col-lg-3"><button type="button" class="btn bg-gradient-dark mb-0"
-								style="margin-top: 8px;">서울</button></div>
-						<div class="col-lg-3"><button type="button" class="btn bg-gradient-dark mb-0"
-								style="margin-top: 8px;">서울</button></div>
-						<div class="col-lg-3"><button type="button" class="btn bg-gradient-dark mb-0"
-								style="margin-top: 8px;">서울</button></div>
-						<div class="col-lg-3"><button type="button" class="btn bg-gradient-dark mb-0"
-								style="margin-top: 8px;">서울</button></div>
-						<div class="col-lg-3"><button type="button" class="btn bg-gradient-dark mb-0"
-								style="margin-top: 8px;">서울</button></div>
-						<div class="col-lg-3"><button type="button" class="btn bg-gradient-dark mb-0"
-								style="margin-top: 8px;">서울</button></div>
-					</div>
-				</div>
-				<div class="modal-body" style="max-height: 400px; overflow-y: auto;">
-					<div class="row">
-						<h6>터미널 선택</h6>
-						<table class="table">
-							<tbody>
-								<tr class="row" style="padding: 16px; text-align: center;">
-									<td class="col-lg-6">John</td>
-									<td class="col-lg-6">John</td>
-									<td class="col-lg-6">John</td>
-									<td class="col-lg-6">John</td>
-									<td class="col-lg-6">John</td>
-									<td class="col-lg-6">John</td>
-									<td class="col-lg-6">John</td>
-									<td class="col-lg-6">John</td>
-									<td class="col-lg-6">John</td>
-									<td class="col-lg-6">John</td>
-									<td class="col-lg-6">John</td>
-									<td class="col-lg-6">John</td>
-									<td class="col-lg-6">John</td>
-									<td class="col-lg-6">John</td>
-									<td class="col-lg-6">John</td>
-									<td class="col-lg-6">John</td>
-									<td class="col-lg-6">John</td>
-									<td class="col-lg-6">John</td>
-									<td class="col-lg-6">John</td>
-									<td class="col-lg-6">John</td>
-									<td class="col-lg-6">John</td>
-								</tr>
-							</tbody>
-						</table>
-					</div>
-				</div>
-				<div class="modal-footer justify-content-between">
-					<button type="button" class="btn bg-gradient-dark mb-0" data-bs-dismiss="modal">Close</button>
-					<button type="button" class="btn bg-gradient-primary mb-0">Save changes</button>
-				</div>
-			</div>
-		</div>
-	</div>
+
 
 
 	<!-- footer -->
@@ -370,8 +138,51 @@
 	<script src="./assets/js/core/bootstrap.min.js" type="text/javascript"></script>
 	<script src="./assets/js/plugins/perfect-scrollbar.min.js"></script>
 
+	<!--핸드폰 번호 인증 버튼 클릭 시 인증번호 입력 활성화-->
+	<script>
+		function showInputCertificationNumber() {
+			var certificationNumber = document.getElementById('certificationNumber');
+			certificationNumber.style.display = 'flex';
 
+			var phoneNumber = $('#phoneNumberInput').val();
 
+			// AJAX를 사용하여 서버에 비동기 요청 보내기
+			$.ajax({
+				type: 'GET',
+				url: '/certification-phonenumber',
+				data: {'phonenum': phoneNumber},
+				success: function (data) {
+					alert("인증번호를 전송했습니다.");
+				},
+				error: function (error) {
+					console.error('There was a problem with the AJAX request:', error);
+				}
+			});
+		}
+	</script>
+	<script>
+		function submitAuthentication() {
+			// 입력된 인증번호 가져오기
+			var inputNumber = $('#inputNumber').val();
+			var phonenum = $('#phoneNumberInput').val();
+			// AJAX를 사용하여 서버에 비동기 POST 요청 보내기
+			$.ajax({
+				type: 'POST',
+				url: '/certification-phonenumber',
+				data: {
+					'phonenum': phonenum,
+					'inputNumber': inputNumber
+				},
+				success: function (result) {
+					// 서버 응답 처리
+					$('#authenticationResult').text(result);
+				},
+				error: function (error) {
+					console.error('There was a problem with the AJAX request:', error);
+				}
+			});
+		}
+	</script>
 
 	<!--  Plugin for TypedJS, full documentation here: https://github.com/inorganik/CountUp.js -->
 	<script src="./assets/js/plugins/countup.min.js"></script>

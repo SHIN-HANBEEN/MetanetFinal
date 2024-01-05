@@ -38,10 +38,9 @@ public class HomeController {
 		return "mypage";
 	}
 	
-	@GetMapping(value="/signin")
-	public String signin() {
-		return "signin";
-	}
+	/*
+	 * @GetMapping(value="/signin") public String signin() { return "signin"; }
+	 */
 	
 	/*
 	 * 출발지, 도착지, 출발시간(출발일자 아님, 배차조회까지 끝낸 다음 선택한 출발시간) 입력
