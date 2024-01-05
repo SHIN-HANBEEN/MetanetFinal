@@ -1,8 +1,11 @@
 package metanet.kosa.metanetfinal.reservation.controller;
 
 import java.io.IOException;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Random;
+import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -92,8 +95,21 @@ public class PaymentController {
 	
 	 // 결제 후 정보 받기	
 	@PostMapping("/reservation/payOk")
-	public void paytestOk() {
+	public void paytestOk(@RequestBody Map<String, Object> req) {
+		System.out.println(req.toString());
 		System.out.println("paytestOk");
+		
+	}
+	
+	@GetMapping("/paymentid")
+	public Map<String, String> getMerchant_uid() {
+		//결제요청됨
+		Map<String, String> merchantUid = new HashMap<>();
+		Date date = new Date();
+		String uuid = UUID.randomUUID().toString();
+		String uid = date.toString().substring(11,date.toString().length()-9) + uuid.substring(3,11);
+		merchantUid.put("paymentId", uid);
+		return merchantUid;
 	}
 	
 }
