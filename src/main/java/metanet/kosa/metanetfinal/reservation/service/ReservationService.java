@@ -92,7 +92,8 @@ public class ReservationService implements IReservationService{
 		data.put("depPlaceNm", depPlaceNm);
 		data.put("arrPlandTime", route.getArrivalTime().toLocaleString());
 		data.put("depPlandTime", route.getDepartureTime().toLocaleString());
-		data.put("gradeNm", routeRepository.getBusGrade(route.getRouteId()));
+		data.put("gradeNm", busesRepository.getBusByRouteId(route.getRouteId()).getGradeName());
+		data.put("busId", busesRepository.getBusByRouteId(route.getRouteId()).getBusId());
 		data.put("routeId", route.getRouteId());
 		data.put("occupiedSeats", occupiedBusSeats);
 		data.put("adultCharge", discountedCost.get(0));

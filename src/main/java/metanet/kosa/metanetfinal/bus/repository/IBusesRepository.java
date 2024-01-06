@@ -7,6 +7,7 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
+import metanet.kosa.metanetfinal.bus.model.Buses;
 import metanet.kosa.metanetfinal.bus.model.Seats;
 
 @Mapper
@@ -49,4 +50,6 @@ public interface IBusesRepository {
 	List<Integer> getDiscountedCostOfBusSeats(@Param("departureId") String departureId, 
 			@Param("arrivalId") String arrivalId, 
 			@Param("departureTime") String departureTime);
+	
+	Buses getBusByRouteId(String routeId);
 }

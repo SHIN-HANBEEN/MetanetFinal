@@ -37,7 +37,7 @@ public class PhoneNumCertificationService {
 	}
 	
 	@Scheduled(cron = "0 0 1 * * ?") //매일 오전 1시에 실행
-	private void clearCache() {
+	public void clearCache() {
 		certification.clear();
 	}
 }

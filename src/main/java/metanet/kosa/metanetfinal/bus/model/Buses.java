@@ -9,7 +9,7 @@ import lombok.ToString;
 @ToString
 public class Buses {
 	private int busId;
-	private int routeId;
+	private String routeId;
 	private String gradeName;
 	private int seatCnt;
 }

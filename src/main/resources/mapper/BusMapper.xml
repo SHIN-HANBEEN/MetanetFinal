@@ -54,6 +54,12 @@
 		as price from discounts
 	</select>
 	
+	<select id="getBusByRouteId" parameterType="String" resultType="metanet.kosa.metanetfinal.bus.model.Buses">
+		select bus_id, route_id, grade_name, seat_cnt
+		from BUSES
+		WHERE route_id = #{routeId}
+	</select>
+	
 	
 	
 	
