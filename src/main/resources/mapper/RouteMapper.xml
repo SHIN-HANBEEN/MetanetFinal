@@ -34,7 +34,14 @@
     ]]>
 	</select>
 
-
+  <select id="getTerminalIdByTerminalName" parameterType="string" 
+    resultType="string">
+    <![CDATA[
+        SELECT TERMINAL_ID
+        FROM TERMINALS
+        WHERE TERMINAL_NAME=#{terminalName}
+    ]]>
+	</select>
 
 
 	<!--  

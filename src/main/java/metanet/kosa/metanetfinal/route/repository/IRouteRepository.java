@@ -30,4 +30,8 @@ public interface IRouteRepository {
 	
 	//입력된 터미널명으로 시작하는 터미널 리스트 반환
 	List<Terminals> searchTerminalsListStartWithTerminalName(@Param("terminalName") String terminalName);
+	
+	//터미널 이름으로, 터미널 ID 조회
+	String getTerminalIdByTerminalName(@Param("terminalName") String terminalName);
+	
 }
