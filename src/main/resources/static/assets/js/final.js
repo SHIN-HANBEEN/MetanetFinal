@@ -184,128 +184,57 @@ document.getElementById('terminalTable2').addEventListener('click', function(eve
 
 
 // ============== 시간표 조회 ===============
-function getSevenDaysAgo(dateString) {
-	// Parse the input date string to create a Date object
-	const inputDate = new Date(dateString);
-
-	// Calculate the date 7 days ago
-	const sevenDaysAgo = new Date(inputDate);
-	sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7);
-
-	// Format the result as 'YYYY-MM-DD'
-	const formattedResult = sevenDaysAgo.toISOString().slice(0, 10);
-
-	return formattedResult;
-}
-
 // Function to send GET request and update table
-async function getSchedule(dpTerminalName, arrTerminalName, dpDate) {
-	const resultDateString = getSevenDaysAgo(dpDate);
+function getSchedule(dpTerminalName, arrTerminalName, dpDate) {
+	// Send GET request to /search-terminal with the searchTerm
+	fetch(`/search-schedule?dpTerminalName=${encodeURIComponent(dpTerminalName)}
+				&arrTerminalName=${encodeURIComponent(arrTerminalName)}
+				&dpDate=${encodeURIComponent(dpDate)}
+				`, {
+		method: 'GET',
+		headers: {
+			'Content-Type': 'application/json',
+			// You can add additional headers if needed
+		},
+	})
+		.then(response => response.json())
+		.then(data => {
+			// Get the table body element
+			const tableBody = document.getElementById('scheduleTable1').getElementsByTagName('tbody')[0];
 
-	try {
-		/*await fetch(`/search-schedule?dpTerminalName=${dpTerminalName}
-						&arrTerminalName=${arrTerminalName}
-						&dpDate=${resultDateString}`)
-						.then((response) => response.json())
-						.then((data) => console.log(data));*/
+			// Clear existing table rows
+			tableBody.innerHTML = '';
+			tableBody.innerHTML = data.body;
 
-		// Send GET request to /search-schedule with the searchTerm
-		const response = await fetch(
-			`/search-schedule?dpTerminalName=${dpTerminalName}
-      &arrTerminalName=${arrTerminalName}
-      &dpDate=${resultDateString}`,
-			{
-				headers: {
-					"Access-Control-Allow-Origin": "*", // Required for CORS support to work
-					"Access-Control-Allow-Credentials": true // Required for cookies, authorization headers with HTTPS
-				}
-			}
-		);
+			// Add new rows based on the returned data
+			data.body.items.item.forEach(schedule => {
+				const row = tableBody.insertRow();
+				// Modify the code based on your data structure to populate different cells
+				const depPlaceCell = row.insertCell(0);
+				depPlaceCell.textContent = schedule.depPlaceNm;
 
-		console.log(response);
+				const depTimeCell = row.insertCell(1);
+				depTimeCell.textContent = schedule.depPlandTime;
 
-		if (!response.ok) {
-			throw new Error('Network response was not ok');
-		}
+				const arrPlaceCell = row.insertCell(2);
+				arrPlaceCell.textContent = schedule.arrPlaceNm;
 
-		const data = await response.json();
+				const arrTimeCell = row.insertCell(3);
+				arrTimeCell.textContent = schedule.arrPlandTime;
 
-		console.log(data);
+				const chargeCell = row.insertCell(4);
+				chargeCell.textContent = schedule.charge;
 
-		// Get the table body element
-		const tableBody = document.getElementById('scheduleTable1').getElementsByTagName('tbody')[0];
+				const gradeCell = row.insertCell(5);
+				gradeCell.textContent = schedule.gradeNm;
 
-		// Clear existing table rows
-		tableBody.innerHTML = '';
-
-		// Add new rows based on the returned data
-		data.response.body.items.item.forEach(schedule => {
-			const row = tableBody.insertRow();
-
-			// Populate table cells with schedule data
-			const depPlaceCell = row.insertCell(0);
-			let depPlaceNm = schedule.depPlaceNm;
-			depPlaceCell.textContent = depPlaceNm;
-
-			const depTimeCell = row.insertCell(1);
-			let depPlandTime = schedule.depPlandTime;
-			depTimeCell.textContent = depPlandTime;
-
-			const arrPlaceCell = row.insertCell(2);
-			let arrPlaceNm = schedule.arrPlaceNm;
-			arrPlaceCell.textContent = arrPlaceNm;
-
-			const arrTimeCell = row.insertCell(3);
-			let arrPlandTime = schedule.arrPlandTime;
-			arrTimeCell.textContent = arrPlandTime;
-
-			const chargeCell = row.insertCell(4);
-			let charge = schedule.charge;
-			chargeCell.textContent = charge;
-
-			const gradeCell = row.insertCell(5);
-			let gradeNm = schedule.gradeNm
-			gradeCell.textContent = gradeNm;
-
-			const remainingSeats = row.insertCell(6);
-			remainingSeats.textContent = getRemainingSeats(depPlaceNm, arrPlaceNm,
-				depPlandTime, arrPlandTime, gradeNm, charge);
-
-			const reservationCell = row.insertCell(7);
-			reservationCell.textContent = '예매하기'; // You may need to add a button or link for reservation
+				const reservationCell = row.insertCell(6);
+				reservationCell.textContent = '예매하기';
+			})
+			.catch(error => {
+				console.error('Error fetching terminal data:', error);
+			});
 		});
-	} catch (error) {
-		console.error('Error fetching terminal data:', error);
-	}
-}
-
-async function getRemainingSeats(depPlaceNm, arrPlaceNm, depPlandTime, arrPlandTime,
-	gradeNm, charge) {
-	try {
-		// Send GET request to /search-schedule with the searchTerm
-		const response = await fetch(
-			`/get-remaining-seats?depPlaceNm=${depPlaceNm}
-      				&arrPlaceNm=${arrPlaceNm}
-      				&depPlandTime=${depPlandTime}
-      				&arrPlandTime=${arrPlandTime}
-      				&gradeNm=${gradeNm}
-      				&charge=${charge}`,
-			{
-				
-			}
-		);
-
-		console.log(response);
-
-		if (!response.ok) {
-			throw new Error('Network response was not ok');
-		}
-
-		const data = await response.json();
-		return data
-	} catch (error) {
-		console.error('Error fetching remaining seats data:', error);
-	}
 }
 
 // Add event listener for button click
@@ -331,9 +260,6 @@ document.getElementById('submitButton1').addEventListener('click', function() {
 		document.getElementById('scheduleTable1').getElementsByTagName('tbody')[0].innerHTML = '';
 	}
 });
-
-
-
 
 
 

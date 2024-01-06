@@ -20,7 +20,23 @@ public class RouteTest {
 	
 	@Test
 	public void getRouteId() {
-		System.out.println(routeRepository.getTerminalIdByTerminalName("동서울"));
+		System.out.println("test started");
+		Date departureTime = null;
+		Date arrivalTime = null;
+		
+		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMddHHmm");
+		try {
+            Date parsedDepartureDate = (Date) dateFormat.parse("202312280640");
+            Date parsedArrivalDate = (Date) dateFormat.parse("");
+            departureTime = new Date(parsedDepartureDate.getTime());
+            arrivalTime = new Date(parsedArrivalDate.getTime());
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+		if (routeRepository.getRouteId("NAI0511601", "NAI2551901", departureTime)!= null) {
+			System.out.println(routeRepository.getRouteId("NAI0511601", "NAI2551901", departureTime));
+		} else {
+			System.out.println("결과가 비었습니다.");
+		}
 	}
-	
 }

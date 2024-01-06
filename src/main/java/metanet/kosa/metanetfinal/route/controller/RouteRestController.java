@@ -1,8 +1,6 @@
 package metanet.kosa.metanetfinal.route.controller;
 
-import java.sql.Date;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
+import java.net.URI;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -20,7 +18,6 @@ import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponents;
 import org.springframework.web.util.UriComponentsBuilder;
 
-import metanet.kosa.metanetfinal.reservation.service.IReservationService;
 import metanet.kosa.metanetfinal.route.model.Terminals;
 import metanet.kosa.metanetfinal.route.service.IRouteService;
 
@@ -36,9 +33,6 @@ public class RouteRestController {
 	@Autowired
 	IRouteService routeService;
 
-	@Autowired
-	IReservationService reservationService;
-
 	/*
 	 * 출발지, 도착지에서 '동' 한글자만 입력하면 '동'으로 출발하는 리스트 뿌리기 위한 REST
 	 */
@@ -53,32 +47,25 @@ public class RouteRestController {
 	}
 
 	@GetMapping("/search-schedule")
-	public String searchSchedule(@RequestParam String dpTerminalName, @RequestParam String arrTerminalName,
-			@RequestParam String dpDate) {
-//		System.out.println(dpTerminalName);
-//		System.out.println(arrTerminalName);
-//		System.out.println(dpDate);
+	public String searchSchedule(@RequestParam String dpTerminalName,
+			@RequestParam String arrTerminalName, @RequestParam String dpDate) {
 
 		String serviceKey = "EDX0wACMZAUSqHv3FZoxJ//0f5uYSjlN24rlk9/zLatbt21dRKjj81MlsAUFqkDAC68x1aKh6bkdwJUvIuHUyQ==";
-		String dpTerminalId = routeService.getTerminalIdByTerminalName(dpTerminalName.trim());
-		String arrTerminalId = routeService.getTerminalIdByTerminalName(arrTerminalName.trim());
+		String dpTerminalId = routeService.getTerminalId(dpTerminalName);
+		String arrTerminalId = routeService.getTerminalId(arrTerminalName);
 		String numOfRows = "10";
 		String pageNo = "1";
 		String type = "json";
 		String parsedDpDate = dpDate.replace("-", "");
-		// 날짜 -7 처리 프런트에서 했음.
-
-//		System.out.println(dpTerminalId);
-//		System.out.println(arrTerminalId);
-//		System.out.println(parsedDpDate);
 
 		HttpHeaders headers = new HttpHeaders();
 		headers.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));
 		HttpEntity<?> entity = new HttpEntity<>(headers);
-
+		
 		// Build the URL using UriComponentsBuilder
 		String apiUrl = "http://apis.data.go.kr/1613000/SuburbsBusInfoService/getStrtpntAlocFndSuberbsBusInfo";
-		UriComponents uri = UriComponentsBuilder.fromHttpUrl(apiUrl).queryParam("serviceKey", serviceKey)
+		UriComponents uri = UriComponentsBuilder.fromHttpUrl(apiUrl)
+				.queryParam("serviceKey", serviceKey)
 				.queryParam("depTerminalId", dpTerminalId).queryParam("arrTerminalId", arrTerminalId)
 				.queryParam("depPlandTime", parsedDpDate).queryParam("numOfRows", numOfRows)
 				.queryParam("pageNo", pageNo).queryParam("_type", type).build();
@@ -86,12 +73,11 @@ public class RouteRestController {
 		// Create a RestTemplate instance
 		RestTemplate restTemplate = new RestTemplate();
 
-		ResponseEntity<String> responseEntity = restTemplate.exchange(uri.toUri(), HttpMethod.GET, entity,
-				String.class);
+		ResponseEntity<String> responseEntity = restTemplate.exchange(uri.toUri(), HttpMethod.GET, entity, String.class);
 
 		// Check for success or error
 		if (responseEntity.getStatusCode().is2xxSuccessful()) {
-			System.out.println("API Response: " + responseEntity.getBody());
+			System.out.println("API Response: " + responseEntity.toString());
 		} else {
 			System.out.println("Error Response: " + responseEntity.toString());
 		}
@@ -100,48 +86,4 @@ public class RouteRestController {
 		return responseEntity.getBody();
 	}
 
-	@GetMapping("/get-remaining-seats")
-	public int getRemainingSeats(@RequestParam String depPlaceNm, @RequestParam String arrPlaceNm,
-			@RequestParam String depPlandTime, @RequestParam String arrPlandTime, @RequestParam String gradeNm,
-			@RequestParam int charge) {
-		String departureId = routeService.getTerminalIdByTerminalName(depPlaceNm);
-		String arrivalId = routeService.getTerminalIdByTerminalName(arrPlaceNm);
-		Date departureTime = null;
-		Date arrivalTime = null;
-		try {
-			// Parse the string into separate components
-			int year = Integer.parseInt(depPlandTime.substring(0, 4));
-			int month = Integer.parseInt(depPlandTime.substring(4, 6));
-			int day = Integer.parseInt(depPlandTime.substring(6, 8));
-			int hour = Integer.parseInt(depPlandTime.substring(8, 10));
-			int minute = Integer.parseInt(depPlandTime.substring(10, 12));
-
-			// departureTime 설정
-			departureTime = getSqlDate(year, month, day, hour, minute);
-
-			// Parse the string into separate components
-			int year2 = Integer.parseInt(arrPlandTime.substring(0, 4));
-			int month2 = Integer.parseInt(arrPlandTime.substring(4, 6));
-			int day2 = Integer.parseInt(arrPlandTime.substring(6, 8));
-			int hour2 = Integer.parseInt(arrPlandTime.substring(8, 10));
-			int minute2 = Integer.parseInt(arrPlandTime.substring(10, 12));
-
-			// departureTime 설정
-			arrivalTime = getSqlDate(year2, month2, day2, hour2, minute2);
-		} catch (ParseException e) {
-			e.printStackTrace();
-		}
-
-		return reservationService.getRemainingSeatCount(departureId, arrivalId, departureTime, arrivalTime, gradeNm,
-				charge);
-	}
-
-	private static java.sql.Date getSqlDate(int year, int month, int day, int hour, int minute) throws ParseException {
-		// Construct a java.util.Date object
-		java.util.Date utilDate = new SimpleDateFormat("yyyy-MM-dd HH:mm")
-				.parse(String.format("%04d-%02d-%02d %02d:%02d", year, month, day, hour, minute));
-
-		// Convert java.util.Date to java.sql.Date
-		return new java.sql.Date(utilDate.getTime());
-	}
 }

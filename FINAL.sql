@@ -3388,11 +3388,6 @@ VALUES (37, 'Í≤ΩÏÉÅÎ∂ÅÎèÑ', 'NAI3743101', 'Ï≤??Ü°');
 INSERT INTO TERMINALS (CITY_ID, CITY_NAME, TERMINAL_ID, TERMINAL_NAME)
 VALUES (37, 'Í≤ΩÏÉÅÎ∂ÅÎèÑ', 'NAI3743701', 'Ï£ºÏôï?Ç∞');
 
-insert into discounts values (1,'º∫¿Œ', 1.0);
-insert into discounts values (2,'¡ﬂ∞ÌµÓ', 0.75);
-insert into discounts values (3,'æ∆µø', 0.5);
-
-
 commit;
 
 
@@ -3403,7 +3398,5 @@ SELECT TERMINAL_ID, TERMINAL_NAME, CITY_ID, CITY_NAME
 	    WHERE TERMINAL_NAME LIKE 'µø' || '%';
 
 
-SELECT TERMINAL_ID
-        FROM TERMINALS
-        WHERE TERMINAL_NAME='µøº≠øÔ';
+
 
