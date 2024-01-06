@@ -182,6 +182,34 @@ document.getElementById('terminalTable2').addEventListener('click', function(eve
 	}
 });
 
+// 검색 버튼에 이벤트 리스너 설정 해주기
+document.getElementById('submitButton1').addEventListener('click', async function() {
+	const dpTerminalName = document.getElementById('TerminalSearchInput1').value.trim();
+	const arrTerminalName = document.getElementById('TerminalSearchInput2').value.trim();
+	const dpDate = document.getElementById('dpDate').value.trim();
+
+	const scheduleDiv = document.getElementById('scheduleDiv');
+
+	// Check if the search term is not empty
+	if (dpTerminalName !== '' && arrTerminalName !== '' && dpDate !== '') {
+		// 창을 보이게 설정
+		scheduleDiv.classList.remove('metanet-hidden');
+
+		try {
+			// Call the function to update table data
+			const data = await getSchedule(dpTerminalName, arrTerminalName, dpDate);
+			console.log(data);
+		} catch (error) {
+			console.error('Error fetching schedule data:', error);
+		}
+	} else {
+		// 창을 안 보이게 설정
+		scheduleDiv.classList.add('metanet-hidden');
+
+		// If the search term is empty, clear the table rows
+		document.getElementById('scheduleTable1').getElementsByTagName('tbody')[0].innerHTML = '';
+	}
+});
 
 
 
@@ -202,6 +230,7 @@ function getSevenDaysAgo(dateString) {
 
 // Function to send GET request and update table
 async function getSchedule(dpTerminalName, arrTerminalName, dpDate) {
+	console.log("[[AOP Before]] - getSevenDaysAgo");
 	const resultDateString = getSevenDaysAgo(dpDate);
 
 	try {
@@ -270,8 +299,11 @@ async function getSchedule(dpTerminalName, arrTerminalName, dpDate) {
 			gradeCell.textContent = gradeNm;
 
 			const remainingSeats = row.insertCell(6);
-			remainingSeats.textContent = getRemainingSeats(depPlaceNm, arrPlaceNm,
+			console.log("[[AOP Before]] - getRemainingSeats");
+			const reminingSeatsValue = callerForGetRemainingSeats(depPlaceNm, arrPlaceNm,
 				depPlandTime, arrPlandTime, gradeNm, charge);
+			console.log("잔여좌석 조회 결과 : " + JSON.stringify(reminingSeatsValue));
+			remainingSeats.textContent = JSON.stringify(reminingSeatsValue);
 
 			const reservationCell = row.insertCell(7);
 			reservationCell.textContent = '예매하기'; // You may need to add a button or link for reservation
@@ -281,61 +313,33 @@ async function getSchedule(dpTerminalName, arrTerminalName, dpDate) {
 	}
 }
 
+async function callerForGetRemainingSeats(depPlaceNm, arrPlaceNm,
+				depPlandTime, arrPlandTime, gradeNm, charge) {
+	return await getRemainingSeats(depPlaceNm, arrPlaceNm,
+				depPlandTime, arrPlandTime, gradeNm, charge);
+}
+
 // getRemainingSeats => get-remaining-seats 로 Get 요청 보내기
 async function getRemainingSeats(depPlaceNm, arrPlaceNm, depPlandTime, arrPlandTime,
 	gradeNm, charge) {
 	try {
-		// Send GET request to /search-schedule with the searchTerm
 		const response = await fetch(
 			`/get-remaining-seats?depPlaceNm=${depPlaceNm}
       				&arrPlaceNm=${arrPlaceNm}
       				&depPlandTime=${depPlandTime}
       				&arrPlandTime=${arrPlandTime}
       				&gradeNm=${gradeNm}
-      				&charge=${charge}`,
-			{
-
-			}
+      				&charge=${charge}`
 		);
-
-		console.log(response);
-
-		if (!response.ok) {
-			throw new Error('Network response was not ok');
-		}
-
-		const data = await response.json();
-		return data
+		
+		const jsonData = await response.json();
+		console.log(jsonData);
+		
+		return jsonData;
 	} catch (error) {
-		console.error('Error fetching remaining seats data:', error);
+		console.error('Error fetching data:', error);
 	}
 }
-
-// Add event listener for button click
-document.getElementById('submitButton1').addEventListener('click', function() {
-	let dpTerminalName = document.getElementById('TerminalSearchInput1').value.trim();
-	let arrTerminalName = document.getElementById('TerminalSearchInput2').value.trim();
-	let dpDate = document.getElementById('dpDate').value.trim();
-
-	const scheduleDiv = document.getElementById('scheduleDiv');
-
-	// Check if the search term is not empty
-	if (dpTerminalName !== '' && arrTerminalName !== '' && dpDate !== '') {
-		// 창을 보이게 설정
-		scheduleDiv.classList.remove('metanet-hidden');
-
-		// Call the function to update table data
-		getSchedule(dpTerminalName, arrTerminalName, dpDate);
-	} else {
-		// 창을 안 보이게 설정
-		scheduleDiv.classList.add('metanet-hidden');
-
-		// If the search term is empty, clear the table rows
-		document.getElementById('scheduleTable1').getElementsByTagName('tbody')[0].innerHTML = '';
-	}
-});
-
-
 
 
 

@@ -56,9 +56,9 @@ public class RouteRestController {
 	@GetMapping("/search-schedule")
 	public String searchSchedule(@RequestParam String dpTerminalName, @RequestParam String arrTerminalName,
 			@RequestParam String dpDate) {
-//		System.out.println(dpTerminalName);
-//		System.out.println(arrTerminalName);
-//		System.out.println(dpDate);
+		System.out.println(dpTerminalName);
+		System.out.println(arrTerminalName);
+		System.out.println(dpDate);
 
 		String serviceKey = "EDX0wACMZAUSqHv3FZoxJ//0f5uYSjlN24rlk9/zLatbt21dRKjj81MlsAUFqkDAC68x1aKh6bkdwJUvIuHUyQ==";
 		String dpTerminalId = routeService.getTerminalIdByTerminalName(dpTerminalName.trim());
@@ -69,9 +69,9 @@ public class RouteRestController {
 		String parsedDpDate = dpDate.replace("-", "");
 		// 날짜 -7 처리 프런트에서 했음.
 
-//		System.out.println(dpTerminalId);
-//		System.out.println(arrTerminalId);
-//		System.out.println(parsedDpDate);
+		System.out.println(dpTerminalId);
+		System.out.println(arrTerminalId);
+		System.out.println(parsedDpDate);
 
 		HttpHeaders headers = new HttpHeaders();
 		headers.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));
@@ -141,12 +141,20 @@ public class RouteRestController {
 			e.printStackTrace();
 		}
 		
-		System.out.println(departureId);
-		System.out.println(arrivalId);
-		System.out.println(departureTime);
-		System.out.println(arrivalTime);
-		System.out.println(trimedGradeNm);
-		System.out.println(charge);
+//		System.out.println(departureId);
+//		System.out.println(arrivalId);
+//		System.out.println(departureTime);
+//		System.out.println(arrivalTime);
+//		System.out.println(trimedGradeNm);
+//		System.out.println(charge);
+		
+		System.out.println("잔여좌석 결과 : " + reservationService.getRemainingSeatCount(
+				departureId, 
+				arrivalId, 
+				departureTime, 
+				arrivalTime, 
+				trimedGradeNm,
+				price));
 
 		return reservationService.getRemainingSeatCount(
 				departureId, 
