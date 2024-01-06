@@ -7,6 +7,7 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
+import metanet.kosa.metanetfinal.route.model.Routes;
 import metanet.kosa.metanetfinal.route.model.Terminals;
 
 
@@ -33,5 +34,20 @@ public interface IRouteRepository {
 	
 	//터미널 이름으로, 터미널 ID 조회
 	String getTerminalIdByTerminalName(@Param("terminalName") String terminalName);
+	
+	/*
+	 * 터미널 ID로 터미널 이름조회
+	 */
+	String getTerminalNameByTerminalId(String terminalId);
+	/*
+	 * Routes 객체 반환 By 출발지 도착지 출발시간
+	 */
+	Routes getRoute(@Param("departureId") String departureId, 
+			@Param("arrivalId") String arrivalId, 
+			@Param("departureTime") String departureTime);
+	/*
+	 * 버스등급조회 By 노선 ID
+	 */
+	String getBusGrade(String routeId);
 	
 }

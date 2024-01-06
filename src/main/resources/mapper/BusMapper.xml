@@ -29,6 +29,32 @@
         FROM SEATS
         WHERE BUS_ID = #{busId}
         AND IS_RES = 'FALSE'
+        <!--  -->
 	</select>
+	
+	<select id="getOccupiedBusSeats" resultType="Integer">
+		SELECT SEAT_ID FROM SEATS 
+			WHERE BUS_ID=
+				(SELECT BUS_ID FROM BUSES WHERE ROUTE_ID = 
+        			(SELECT ROUTE_ID FROM ROUTES 
+        				WHERE ARRIVAL_ID = #{arrivalId} 
+        				AND DEPARTURE_ID = #{departureId}
+        				AND TO_CHAR(DEPARTURE_TIME, 'yyyymmddhh24mi') = #{departureTime})
+    			) 
+    	AND IS_RES = 'TRUE'
+	</select>
+	
+	<select id="getDiscountedCostOfBusSeats" resultType="Integer">
+		select round
+		(discount_rate*
+			(SELECT price FROM ROUTES 
+				WHERE arrival_id = #{arrivalId} 
+					AND departure_id = #{departureId} 
+					AND TO_CHAR(departure_time, 'yyyymmddhh24mi') = #{departureTime}),-2) 
+		as price from discounts
+	</select>
+	
+	
+	
 	
 </mapper>

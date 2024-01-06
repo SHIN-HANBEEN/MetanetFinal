@@ -2,16 +2,23 @@ package metanet.kosa.metanetfinal.reservation.controller;
 
 import java.util.Map;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
+import metanet.kosa.metanetfinal.reservation.service.ReservationService;
 
 @RestController
 public class reservationRestController {
 	
+	@Autowired
+	ReservationService reservationService;
+	
 	@GetMapping("/routeinfotest")
-	public String getInfoForReservation() {
+	public Map<String, Object> getInfoForReservation(@RequestParam String departureId, @RequestParam String arrivalId, @RequestParam String departureTime) {
 		String info = 
 				"{\r\n"
 				+ "   \"arrPlaceNm\": \"강릉시외터미널\",\r\n"
@@ -27,7 +34,9 @@ public class reservationRestController {
 				+ "   \"childCharge\": 9800,\r\n"
 				+ "   \"busId\": 100\r\n"
 				+ "}";
-		return info;
+		Map<String, Object> dataForSeatsSelection = reservationService.getDataForSeatsSelection(departureId, arrivalId, departureTime);
+		
+		return dataForSeatsSelection;
 	}
 	
 	@PostMapping("/routeinfotest")

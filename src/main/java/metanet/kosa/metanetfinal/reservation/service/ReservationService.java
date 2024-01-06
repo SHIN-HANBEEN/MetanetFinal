@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
 import java.util.UUID;
 
@@ -15,6 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 import metanet.kosa.metanetfinal.bus.repository.IBusesRepository;
 import metanet.kosa.metanetfinal.reservation.repository.IReservationRepository;
 import metanet.kosa.metanetfinal.reservation.repository.IReservationScheduleRepository;
+import metanet.kosa.metanetfinal.route.model.Routes;
 import metanet.kosa.metanetfinal.route.repository.IRouteRepository;
 
 
@@ -38,7 +40,7 @@ public class ReservationService implements IReservationService{
 			String routeId = UUID.randomUUID().toString();
 			
 			//노선 생성
-			routeRepository.makeNewRoute(routeId, departureId, arrivalId, departureTime, departureTime, price);
+			routeRepository.makeNewRoute(routeId, departureId, arrivalId, departureTime, arrivalTime, price);
 			
 			//버스 생성
 			busesRepository.makeNewBus(routeId, gradeName);
@@ -58,6 +60,46 @@ public class ReservationService implements IReservationService{
 			int busId = busesRepository.getBusId(routeId);
 			return busesRepository.getRemainingSeatCount(busId);
 		}
+	}
+	
+	/*
+	 * DB데이터 집어넣는 용도의 테스트 메서드 
+	 * 나중에 지우기를 -완승-
+	 */
+	
+	@Transactional
+	public int makeTestDataReservationInfo(String departureId, String arrivalId, Date departureTime, 
+			Date arrivalTime, String gradeName,int price) {
+		//노선,버스,좌석 DB저장
+		int seatCount = getRemainingSeatCount(departureId, arrivalId, departureTime, arrivalTime, gradeName, price);
+		return seatCount;
+	}
+	
+	/*
+	 * 좌석선택페이지를 위한 데이터 JSON 만들기용 01-06
+	 */
+	@SuppressWarnings("deprecation")
+	@Transactional
+	public Map<String, Object> getDataForSeatsSelection(String departureId, String arrivalId, String departureTime) {
+		Map<String, Object> data = new HashMap<>();
+		String arrPlaceNm = routeRepository.getTerminalNameByTerminalId(arrivalId);
+		String depPlaceNm = routeRepository.getTerminalNameByTerminalId(departureId);
+		Routes route = routeRepository.getRoute(departureId, arrivalId, departureTime);
+		List<Integer> occupiedBusSeats = busesRepository.getOccupiedBusSeats(departureId, arrivalId, departureTime);
+		List<Integer> discountedCost = busesRepository.getDiscountedCostOfBusSeats(departureId, arrivalId, departureTime);
+		
+		data.put("arrPlaceNm", arrPlaceNm);
+		data.put("depPlaceNm", depPlaceNm);
+		data.put("arrPlandTime", route.getArrivalTime().toLocaleString());
+		data.put("depPlandTime", route.getDepartureTime().toLocaleString());
+		data.put("gradeNm", routeRepository.getBusGrade(route.getRouteId()));
+		data.put("routeId", route.getRouteId());
+		data.put("occupiedSeats", occupiedBusSeats);
+		data.put("adultCharge", discountedCost.get(0));
+		data.put("middleChildCharge", discountedCost.get(1));
+		data.put("childCharge", discountedCost.get(2));
+		
+		return data;
 	}
 //	@Autowired
 //	IReservationRepository reservationRepository;
