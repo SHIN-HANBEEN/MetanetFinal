@@ -46,8 +46,12 @@
 
 								<div class="section text-center">
 									<h2 class="title">예매하기</h2>
-									<div class="row border-radius-md pb-4 p-3 mx-sm-0 mx-1 position-relative">
 
+									<!-- 검색 폼 
+									<form action="/search-schedule" method="get">
+									-->
+
+									<div class="row border-radius-md pb-4 p-3 mx-sm-0 mx-1 position-relative">
 										<!-- 출발 터미널 검색 -->
 										<div class="col-sm-12 col-md-6 col-lg-3 mt-lg-n2 mt-2">
 											<label for="searchInput1" class="form-label ms-0">출발지</label>
@@ -57,7 +61,8 @@
 														<div class="input-group input-group-dynamic mb-4" id="dropdownMenuButton1"
 															data-bs-toggle="dropdown" aria-expanded="true">
 															<input class="form-control" id="TerminalSearchInput1" placeholder="출발 터미널 검색"
-																type="text">
+																name="dpTerminalName" type="text"
+																autocomplete="off">
 														</div>
 														<!-- 출발 터미널 조회 결과 테이블 (show)-->
 														<table class="table dropdown-menu px-2 py-3" aria-labelledby="dropdownMenuButton1"
@@ -90,7 +95,8 @@
 														<div class="input-group input-group-dynamic mb-4" id="dropdownMenuButton2"
 															data-bs-toggle="dropdown" aria-expanded="true">
 															<input class="form-control" id="TerminalSearchInput2" placeholder="도착 터미널 검색"
-																type="text">
+																name="arrTerminalName" type="text"
+																autocomplete="off">
 														</div>
 														<!-- 출발 터미널 조회 결과 테이블 (show)-->
 														<table class="table dropdown-menu px-2 py-3" aria-labelledby="dropdownMenuButton2"
@@ -119,16 +125,26 @@
 											<label class="ms-0">출발일자</label>
 											<div class="input-group input-group-static">
 												<span class="input-group-text"></span>
-												<input class="form-control datepicker" placeholder="Please select date" type="date">
+												<input class="form-control datepicker" id="dpDate" placeholder="Please select date"
+													name="dpDate" type="date">
 											</div>
 										</div>
 
-										<!-- SEARCH 버튼 -->
+										<!-- SEARCH 버튼 
+											<input type="submit" value="검색하기">
+											-->
 										<div class="col-sm-12 col-md-6 col-lg-3 mt-lg-n2 mt-2">
 											<label>&nbsp;</label>
-											<button type="button" class="btn bg-gradient-primary w-100 mb-0">검색하기</button>
+											<button type="button submit" class="btn bg-gradient-primary w-100 mb-0" id="submitButton1">
+												검색하기
+											</button>
 										</div>
 									</div>
+									<!-- 
+										</form>
+									-->
+
+
 								</div>
 
 							</div>
@@ -137,10 +153,11 @@
 
 
 						<!-- 시간표 조회 카드 -->
-						<div class="col-lg-12 metanet-hidden">
+						<div class="col-lg-12 metanet-hidden" id="scheduleDiv">
 							<div class="card card-body shadow-xl mx-3 mx-md-11 metanet-ht-350">
 								<div class="table-responsive">
-									<table class="table metanet-table-fixed table-hover align-items-center mb-0 ">
+									<table class="table metanet-table-fixed table-hover align-items-center mb-0" 
+										id="scheduleTable1">
 										<thead class="metanet-bc-wh metanet-st-hd">
 											<tr>
 												<th class="text-center text-uppercase text-secondary text-lg font-weight-bolder opacity-7">
@@ -167,156 +184,7 @@
 											</tr>
 										</thead>
 										<tbody>
-
-											<tr>
-												<td>
-													<h6 class="my-sm-2 text-md">John Michael</h6>
-												</td>
-												<td>
-													<h6 class="my-sm-2 text-md">John Michael</h6>
-												</td>
-												<td>
-													<h6 class="my-sm-2 text-md">John Michael</h6>
-												</td>
-												<td>
-													<h6 class="my-sm-2 text-md">John Michael</h6>
-												</td>
-												<td>
-													<h6 class="my-sm-2 text-md">John Michael</h6>
-												</td>
-												<td>
-													<h6 class="my-sm-2 text-md">John Michael</h6>
-												</td>
-												<td>
-													<button class="custom-btn btn-5"><span>예매하기</span></button>
-												</td>
-
-											</tr>
-											<tr>
-												<td>
-													<h6 class="my-sm-2 text-md">John Michael</h6>
-												</td>
-												<td>
-													<h6 class="my-sm-2 text-md">John Michael</h6>
-												</td>
-												<td>
-													<h6 class="my-sm-2 text-md">John Michael</h6>
-												</td>
-												<td>
-													<h6 class="my-sm-2 text-md">John Michael</h6>
-												</td>
-												<td>
-													<h6 class="my-sm-2 text-md">John Michael</h6>
-												</td>
-												<td>
-													<h6 class="my-sm-2 text-md">John Michael</h6>
-												</td>
-												<td>
-													<button class="custom-btn btn-5"><span>예매하기</span></button>
-												</td>
-
-											</tr>
-											<tr>
-												<td>
-													<h6 class="my-sm-2 text-md">John Michael</h6>
-												</td>
-												<td>
-													<h6 class="my-sm-2 text-md">John Michael</h6>
-												</td>
-												<td>
-													<h6 class="my-sm-2 text-md">John Michael</h6>
-												</td>
-												<td>
-													<h6 class="my-sm-2 text-md">John Michael</h6>
-												</td>
-												<td>
-													<h6 class="my-sm-2 text-md">John Michael</h6>
-												</td>
-												<td>
-													<h6 class="my-sm-2 text-md">John Michael</h6>
-												</td>
-												<td>
-													<button class="custom-btn btn-5"><span>예매하기</span></button>
-												</td>
-
-											</tr>
-											<tr>
-												<td>
-													<h6 class="my-sm-2 text-md">John Michael</h6>
-												</td>
-												<td>
-													<h6 class="my-sm-2 text-md">John Michael</h6>
-												</td>
-												<td>
-													<h6 class="my-sm-2 text-md">John Michael</h6>
-												</td>
-												<td>
-													<h6 class="my-sm-2 text-md">John Michael</h6>
-												</td>
-												<td>
-													<h6 class="my-sm-2 text-md">John Michael</h6>
-												</td>
-												<td>
-													<h6 class="my-sm-2 text-md">John Michael</h6>
-												</td>
-												<td>
-													<button class="custom-btn btn-5"><span>예매하기</span></button>
-												</td>
-
-											</tr>
-											<tr>
-												<td>
-													<h6 class="my-sm-2 text-md">John Michael</h6>
-												</td>
-												<td>
-													<h6 class="my-sm-2 text-md">John Michael</h6>
-												</td>
-												<td>
-													<h6 class="my-sm-2 text-md">John Michael</h6>
-												</td>
-												<td>
-													<h6 class="my-sm-2 text-md">John Michael</h6>
-												</td>
-												<td>
-													<h6 class="my-sm-2 text-md">John Michael</h6>
-												</td>
-												<td>
-													<h6 class="my-sm-2 text-md">John Michael</h6>
-												</td>
-												<td>
-													<button class="custom-btn btn-5"><span>예매하기</span></button>
-												</td>
-
-											</tr>
-											<tr>
-												<td>
-													<h6 class="my-sm-2 text-md">John Michael</h6>
-												</td>
-												<td>
-													<h6 class="my-sm-2 text-md">John Michael</h6>
-												</td>
-												<td>
-													<h6 class="my-sm-2 text-md">John Michael</h6>
-												</td>
-												<td>
-													<h6 class="my-sm-2 text-md">John Michael</h6>
-												</td>
-												<td>
-													<h6 class="my-sm-2 text-md">John Michael</h6>
-												</td>
-												<td>
-													<h6 class="my-sm-2 text-md">John Michael</h6>
-												</td>
-												<td>
-													<button class="custom-btn btn-5"><span>예매하기</span></button>
-												</td>
-
-											</tr>
-
-
-
-
-
+											<!-- 데이터 동적 추가 -->
 										</tbody>
 									</table>
 								</div>
@@ -443,7 +311,7 @@
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 
 
-	
+
 </body>
 
 </html>

@@ -18,4 +18,9 @@ public class RouteService implements IRouteService{
 		return routeRepository.searchTerminalsListStartWithTerminalName(terminalName);
 	}
 
+	@Override
+	public String getTerminalId(String terminalName) {
+		return routeRepository.getTerminalIdByTerminalName(terminalName);
+	}
+
 }
