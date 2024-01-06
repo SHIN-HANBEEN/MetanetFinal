@@ -21,8 +21,6 @@ function updateTerminalTable1(searchTerm) {
 			// Clear existing table rows
 			tableBody.innerHTML = '';
 
-			console.log(data);
-			
 			// Add new rows based on the returned data
 			data.forEach(terminal => {
 				const row = tableBody.insertRow();
@@ -281,7 +279,6 @@ async function getSchedule(dpTerminalName, arrTerminalName, dpDate) {
 	}
 }
 
-// getRemainingSeats => get-remaining-seats 로 Get 요청 보내기
 async function getRemainingSeats(depPlaceNm, arrPlaceNm, depPlandTime, arrPlandTime,
 	gradeNm, charge) {
 	try {

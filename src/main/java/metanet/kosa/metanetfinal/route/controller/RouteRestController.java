@@ -49,7 +49,6 @@ public class RouteRestController {
 		for (int i = 0; i < terminals.size(); i++) {
 			result.add(i, terminals.get(i).getTerminalName());
 		}
-		System.out.println(result);
 		return result;
 	}
 
@@ -102,59 +101,39 @@ public class RouteRestController {
 	}
 
 	@GetMapping("/get-remaining-seats")
-	public int getRemainingSeats(@RequestParam String depPlaceNm, 
-			@RequestParam String arrPlaceNm,
-			@RequestParam String depPlandTime, 
-			@RequestParam String arrPlandTime, 
-			@RequestParam String gradeNm,
-			@RequestParam String charge) {
-		String departureId = routeService.getTerminalIdByTerminalName(depPlaceNm.trim());
-		String arrivalId = routeService.getTerminalIdByTerminalName(arrPlaceNm.trim());
-		String trimedDepPlandTime = depPlandTime.trim();
-		String trimedArrPlandTime = arrPlandTime.trim();
-		String trimedGradeNm = gradeNm.trim();
-		String trimedCharge = charge.trim();
-		int price = Integer.valueOf(trimedCharge);
+	public int getRemainingSeats(@RequestParam String depPlaceNm, @RequestParam String arrPlaceNm,
+			@RequestParam String depPlandTime, @RequestParam String arrPlandTime, @RequestParam String gradeNm,
+			@RequestParam int charge) {
+		String departureId = routeService.getTerminalIdByTerminalName(depPlaceNm);
+		String arrivalId = routeService.getTerminalIdByTerminalName(arrPlaceNm);
 		Date departureTime = null;
 		Date arrivalTime = null;
 		try {
 			// Parse the string into separate components
-			int year = Integer.parseInt(trimedDepPlandTime.substring(0, 4));
-			int month = Integer.parseInt(trimedDepPlandTime.substring(4, 6));
-			int day = Integer.parseInt(trimedDepPlandTime.substring(6, 8));
-			int hour = Integer.parseInt(trimedDepPlandTime.substring(8, 10));
-			int minute = Integer.parseInt(trimedDepPlandTime.substring(10, 12));
+			int year = Integer.parseInt(depPlandTime.substring(0, 4));
+			int month = Integer.parseInt(depPlandTime.substring(4, 6));
+			int day = Integer.parseInt(depPlandTime.substring(6, 8));
+			int hour = Integer.parseInt(depPlandTime.substring(8, 10));
+			int minute = Integer.parseInt(depPlandTime.substring(10, 12));
 
 			// departureTime 설정
 			departureTime = getSqlDate(year, month, day, hour, minute);
 
 			// Parse the string into separate components
-			int year2 = Integer.parseInt(trimedArrPlandTime.substring(0, 4));
-			int month2 = Integer.parseInt(trimedArrPlandTime.substring(4, 6));
-			int day2 = Integer.parseInt(trimedArrPlandTime.substring(6, 8));
-			int hour2 = Integer.parseInt(trimedArrPlandTime.substring(8, 10));
-			int minute2 = Integer.parseInt(trimedArrPlandTime.substring(10, 12));
+			int year2 = Integer.parseInt(arrPlandTime.substring(0, 4));
+			int month2 = Integer.parseInt(arrPlandTime.substring(4, 6));
+			int day2 = Integer.parseInt(arrPlandTime.substring(6, 8));
+			int hour2 = Integer.parseInt(arrPlandTime.substring(8, 10));
+			int minute2 = Integer.parseInt(arrPlandTime.substring(10, 12));
 
 			// departureTime 설정
 			arrivalTime = getSqlDate(year2, month2, day2, hour2, minute2);
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}
-		
-		System.out.println(departureId);
-		System.out.println(arrivalId);
-		System.out.println(departureTime);
-		System.out.println(arrivalTime);
-		System.out.println(trimedGradeNm);
-		System.out.println(charge);
 
-		return reservationService.getRemainingSeatCount(
-				departureId, 
-				arrivalId, 
-				departureTime, 
-				arrivalTime, 
-				trimedGradeNm,
-				price);
+		return reservationService.getRemainingSeatCount(departureId, arrivalId, departureTime, arrivalTime, gradeNm,
+				charge);
 	}
 
 	private static java.sql.Date getSqlDate(int year, int month, int day, int hour, int minute) throws ParseException {

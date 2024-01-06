@@ -5,7 +5,7 @@ import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
-//@EnableAspectJAutoProxy
+@EnableAspectJAutoProxy
 @Configuration
 public class WebMvcConfig implements WebMvcConfigurer{
 
