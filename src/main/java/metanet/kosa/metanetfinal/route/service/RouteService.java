@@ -19,7 +19,7 @@ public class RouteService implements IRouteService{
 	}
 
 	@Override
-	public String getTerminalId(String terminalName) {
+	public String getTerminalIdByTerminalName(String terminalName) {
 		return routeRepository.getTerminalIdByTerminalName(terminalName);
 	}
 

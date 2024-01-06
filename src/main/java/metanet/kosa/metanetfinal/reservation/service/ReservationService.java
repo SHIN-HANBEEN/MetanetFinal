@@ -29,7 +29,7 @@ public class ReservationService implements IReservationService{
 	@Transactional
 	@Override
 	public int getRemainingSeatCount(String departureId, String arrivalId, Date departureTime, 
-			Date arrivalTime, String gradeName,int price) {
+			Date arrivalTime, String gradeName, int price) {
 		
 		System.out.println(routeRepository.getRouteId(departureId, arrivalId, departureTime));
 		//출발지, 도착지, 출발시간에 해당하는 데이터가 노선 테이블에 있는지 확인하기
