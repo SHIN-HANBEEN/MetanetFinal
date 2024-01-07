@@ -1,5 +1,9 @@
 package metanet.kosa.metanetfinal.reservation.controller;
 
+import static org.hamcrest.CoreMatchers.instanceOf;
+
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,12 +14,15 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import metanet.kosa.metanetfinal.reservation.service.ReservationService;
+import metanet.kosa.metanetfinal.reservation.service.SeatsLockSystemService;
 
 @RestController
 public class reservationRestController {
 	
 	@Autowired
 	ReservationService reservationService;
+	@Autowired
+	SeatsLockSystemService seatsLockSystemService;
 	
 	@GetMapping("/routeinfotest")
 	public Map<String, Object> getInfoForReservation(@RequestParam String departureId, @RequestParam String arrivalId, @RequestParam String departureTime) {
@@ -42,6 +49,15 @@ public class reservationRestController {
 	@PostMapping("/routeinfotest")
 	public Map<String, Object> selectedSeatsInBus(@RequestBody Map<String, Object> request) {
 		System.out.println(request.toString());
+		int busId = Integer.parseInt(request.get("busId").toString());
+		System.out.println(busId);
+		System.out.println(request.get("selectedSeats"));
+		List<Object> li = (ArrayList<Object>) request.get("selectedSeats");
+		List<Integer> selectedSeatsList =  new ArrayList<>();
+		li.stream().map(obj -> Integer.parseInt(obj.toString())).forEach(selectedSeatsList::add);
+		
+		seatsLockSystemService.seatsLocking10m(busId, selectedSeatsList);
+		System.out.println("총가격"+request.get("totalPrice"));
 		return request;
 	}
 }

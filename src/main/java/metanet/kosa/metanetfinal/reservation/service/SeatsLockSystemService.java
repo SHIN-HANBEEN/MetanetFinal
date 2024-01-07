@@ -33,6 +33,7 @@ public class SeatsLockSystemService {
 		LocalTime now = LocalTime.now();
 		
 		if(!lockedBusQue.isEmpty()) {
+			log.info("큐활성화");
 			// Queue.peek를 통해 현재시간과 비교
 			boolean isTimeOut = isDifferenceGreaterThan10Minutes(now);
 			//10분이상 차이가 난다면 락을 풀고 해당과정을 반복
@@ -57,7 +58,7 @@ public class SeatsLockSystemService {
 		LocalTime now = LocalTime.now(); 
 		//DB에 is_res 상태를 TRUE로 변경
 		for (Integer selectedSeat : selectedSeatList) {
-			busesRepository.setBusSeatTrue(busId, selectedSeat);
+			busesRepository.setBusSeatTrue(busId, selectedSeat.intValue());
 		}
 		//시간, 버스아이디, 선택된 좌석으로 새로운 객체를 생성해서 큐에 저장
 		LockedBus lockedBus = new LockedBus(now, busId, selectedSeatList);
@@ -84,10 +85,11 @@ public class SeatsLockSystemService {
 	 */
 	@Transactional
 	private boolean isDifferenceGreaterThan10Minutes(LocalTime now) {
+		if(lockedBusQue.isEmpty()) return false;
 		LockedBus peek = lockedBusQue.peek();
 		LocalTime lockTime = peek.getLockTime();
 		// 두 시간의 차이 계산
-		Duration duration = Duration.between(now, lockTime);
+		Duration duration = Duration.between(lockTime, now);
 		// 차이가 10분 이상인지 확인
 		boolean isDifferenceGreaterThan10Minutes = duration.toMinutes() >= 10;
 		return isDifferenceGreaterThan10Minutes;
@@ -100,7 +102,7 @@ public class SeatsLockSystemService {
 		List<Integer> lockedSeatsList = lockedBus.getLockedSeats();
 		int lockedBusId = lockedBus.getBusId();
 		for (Integer lockedSeatId : lockedSeatsList) {
-			busesRepository.setBusSeatFalse(lockedBusId, lockedSeatId);
+			busesRepository.setBusSeatFalse(lockedBusId, lockedSeatId.intValue());
 		}
 	}
 }

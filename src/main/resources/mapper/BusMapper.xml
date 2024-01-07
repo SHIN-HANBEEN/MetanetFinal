@@ -60,14 +60,14 @@
 		WHERE route_id = #{routeId}
 	</select>
 	
-	<update id="setBusSeatTrue">
-	UPDATE BUSES
+	<update id="setBusSeatTrue" parameterType="int">
+	UPDATE SEATS
 		SET IS_RES='TRUE'
-	WHERE SEAT_ID=#{seatId} AND BUS_ID=#{busId}
+	WHERE seat_id=#{seatId} AND BUS_ID=#{busId}
 	</update>
 	
 	<update id="setBusSeatFalse">
-	UPDATE BUSES
+	UPDATE SEATS
 		SET IS_RES='FALSE'
 	WHERE SEAT_ID=#{seatId} AND BUS_ID=#{busId}
 	</update>
