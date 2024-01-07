@@ -50,6 +50,15 @@ public interface IBusesRepository {
 	List<Integer> getDiscountedCostOfBusSeats(@Param("departureId") String departureId, 
 			@Param("arrivalId") String arrivalId, 
 			@Param("departureTime") String departureTime);
-	
+	/*
+	 * 노선아이디로 버스가져오기
+	 */
 	Buses getBusByRouteId(String routeId);
+	
+	/*
+	 * 좌석 예약 (is_res = TRUE and FALSE) 로 변경
+	 */
+	void setBusSeatTrue(@Param("busId") int busId, @Param("seatId") int seatId );
+	void setBusSeatFalse(@Param("busId") int busId, @Param("seatId") int seatId );
+	
 }

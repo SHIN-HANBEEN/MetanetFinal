@@ -4,6 +4,7 @@ import java.time.Duration;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -13,9 +14,12 @@ import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import lombok.extern.slf4j.Slf4j;
 import metanet.kosa.metanetfinal.bus.repository.IBusesRepository;
 import metanet.kosa.metanetfinal.reservation.model.LockedBus;
+@Slf4j
 @Service
 public class SeatsLockSystemService {
 	@Autowired
@@ -24,12 +28,15 @@ public class SeatsLockSystemService {
 	LinkedList<LockedBus> lockedBusQue = new LinkedList<>();
 	
 	@Scheduled(cron = "0 * * ? * *") //매 분 0초
-	public void clearCache() {
-		System.out.println("1분지남");
+	public void checkExpiredSeatTime() {
+		log.info("1분지남");
 		LocalTime now = LocalTime.now();
+		
 		if(!lockedBusQue.isEmpty()) {
+			// Queue.peek를 통해 현재시간과 비교
 			boolean isTimeOut = isDifferenceGreaterThan10Minutes(now);
-			while(isTimeOut) { //10분이상 차이가 난다면 버리고 반복
+			//10분이상 차이가 난다면 락을 풀고 해당과정을 반복
+			while(isTimeOut) { 
 				LockedBus lockedBus = lockedBusQue.poll();
 				//락 풀기 로직 ----
 				unlockSeats(lockedBus);
@@ -37,12 +44,45 @@ public class SeatsLockSystemService {
 				isTimeOut = isDifferenceGreaterThan10Minutes(now);
 			}
 		}
-		System.out.println(now);
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HHmm");
 		
-		System.out.println("현재시간:" + now.format(formatter) );
+		log.info("현재시간:{}", now.format(formatter) );
 	}
-
+	
+	/*
+	 * 좌석상태를 예매완료상태로 변경
+	 */
+	@Transactional
+	public void seatsLocking10m(int busId, List<Integer> selectedSeatList) {
+		LocalTime now = LocalTime.now(); 
+		//DB에 is_res 상태를 TRUE로 변경
+		for (Integer selectedSeat : selectedSeatList) {
+			busesRepository.setBusSeatTrue(busId, selectedSeat);
+		}
+		//시간, 버스아이디, 선택된 좌석으로 새로운 객체를 생성해서 큐에 저장
+		LockedBus lockedBus = new LockedBus(now, busId, selectedSeatList);
+		lockedBusQue.add(lockedBus);
+	}
+	
+	/*
+	 * 결제가 온전히 완료되었을 때
+	 * Queue 에 들어있는 객체를 지워버림으로써 예매완료상태가 변하지 않게함
+	 */
+	public void paymentCompleteProcess(int busId, List<Integer> selectedSeatList) {
+		
+		for (int i = 0; i < lockedBusQue.size(); i++) { // O(n)
+			LockedBus lockedBus = lockedBusQue.get(i);
+			if(lockedBus.getBusId() == busId && selectedSeatList.equals(lockedBus.getLockedSeats())) {
+				lockedBusQue.remove(i);
+				break;
+			}
+		}
+	}
+	
+	/*
+	 * 10분이상 차이가 나는지 확인하는 메서드
+	 */
+	@Transactional
 	private boolean isDifferenceGreaterThan10Minutes(LocalTime now) {
 		LockedBus peek = lockedBusQue.peek();
 		LocalTime lockTime = peek.getLockTime();
@@ -53,9 +93,14 @@ public class SeatsLockSystemService {
 		return isDifferenceGreaterThan10Minutes;
 	}
 	
+	/*
+	 * 좌석상태를 FALSE로 변경하는 메서드
+	 */
 	private void unlockSeats(LockedBus lockedBus) {
 		List<Integer> lockedSeatsList = lockedBus.getLockedSeats();
 		int lockedBusId = lockedBus.getBusId();
-		
+		for (Integer lockedSeatId : lockedSeatsList) {
+			busesRepository.setBusSeatFalse(lockedBusId, lockedSeatId);
+		}
 	}
 }
