@@ -1,104 +1,166 @@
 <!DOCTYPE html>
 <html lang="ko">
-<head> </head>
+
+<head> 
+	<meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <title>Hello World!</title>
+
+    <!-- Favicon -->
+    <!--<link href="./assets/img/brand/favicon.png" rel="icon" type="image/png">-->
+
+
+
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet">
+
+    <!-- Icons -->
+    <link href="/assets/css/nucleo-icons.css" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/42d5adcbca.js" crossorigin="anonymous"></script>
+
+    <!-- Material Kit-->
+    <link type="text/css" rel="stylesheet" href="/assets/css/seat2.css">
+    <link type="text/css" href="/assets/css/material-kit.min.css" rel="stylesheet">
+</head>
+
 <body>
-	<div>
-        <h2>IAMPORT 결제 테스트</h2>
-        <li>
-            <button id="iamportPayment" type="button">결제테스트</button>
-        </li>
-    </div>
-<!-- jQuery -->
-<script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
-<!-- iamport.payment.js -->
-<script src="https://cdn.iamport.kr/v1/iamport.js"></script>
-<script>
-	var paymentId;
-	//문서가 준비되면 제일 먼저 실행
-	$(document).ready(function(){
-		$.ajax({
-		    url: 'http://localhost:8083/paymentid', // 요청을 보낼 URL
-		    method: 'GET', // HTTP 메서드 (GET, POST, 등)
-		    dataType: 'json', // 응답 데이터 타입 (json, xml, 등)
-		    success: function(data) {
-		      // 성공적으로 응답을 받았을 때 실행할 코드
-		      console.log('성공:', data);
-		      paymentId = data.paymentId;
-		      
-		    },
-		    error: function(error) {
-		      // 요청이 실패했을 때 실행할 코드
-		      console.log('실패:', error);
-		    }
-		  });
-	    
-	});
-	$("#iamportPayment").click(function(){
-			        payment(); //버튼 클릭하면 함수 호출
-			  });
-	
-	//버튼 클릭하면 실행
-	function payment(data) {
-		
-	    IMP.init('imp33561285'); //아임포트 관리자 콘솔에서 확인한 '가맹점 식별코드' 입력
-	    console.log(paymentId);
-	    IMP.request_pay({ // param
-	        pg: "inicis", //pg사명 or pg사명.CID (잔액 일시불 할부 등, 기본 PG사가 따로 있음)
-	        pay_method: "card", //결제 방법
-	        merchant_uid: paymentId, //가맹점 주문번호 (아임포트를 사용하는 가맹점에서 임의로 지정)
-	        name: "버스 결제 테스트", //결제창에서 보여질 상품명
-	        amount: 100, //금액
-	        buyer_email: "gildong0405@gmail.com",
-	        buyer_name: "길동이",
-	        buyer_postcode: "1",
-	        buyer_tel: "01052016412"
-	    }, function (rsp) { // callback
-	    	console.log(rsp);
-	        if (rsp.success) {
-	            alert("결제 성공 -> imp_uid : " + rsp.imp_uid + " / merchant_uid(orderKey) : " + rsp.merchant_uid);
-	            
-	            // 이후 reservation 객체 데이터 추가
-	            let data = {};
-	            console.log("rsp",rsp);
-	            // data.imp_uid = rsp.imp_uid;
-	            data.payId = rsp.merchant_uid;
-	            data.totalPrice = rsp.paid_amount;
-	            data.email = rsp.buyer_email;
-	            data.name = rsp.buyer_name;
-	            data.memberId = rsp.buyer_postcode;
-	            data.payMethod = rsp.pay_method;
-	            data.phoneNum = rsp.buyer_tel;
-	            // resId (예매 아이디)
-	            // memberId (회원 아이디)
-	            // nmemberId (비회원 아이디)
-	            // routeId (노선 아이디)
-				// busId (버스 아이디)
-				// seatId (좌석 번호)
-				// resDate (예매일자) data에 넣기
-	            console.log(data);
-	            // 성공하면 데이터 전송~ -> 테스트 전송 성공
-	            $.ajax({
-					url: "http://localhost:8083/reservation/payOk",
-					method: "POST",
-					data: JSON.stringify(data),
-					contentType: "application/json",
-					success: function(response) {
-						console.log(response);
-						alert("결제 정보가 성공적으로 전송되었습니다");
-						window.location.href="/reservation/refund";
-					}, 
-					error: function(xhr, status, error) {
-						//console.error("결제 정보 전송 실패 : ", error);
-						//alert("결제 정보 전송에 실패");
-					}
-				});
-				
-				
-	        } else {
-	            alert("실패 : 코드(" + rsp.error_code + ") 메시지(" + rsp.error_msg + ")");
-	        }
-	    });
-	}
-</script>
+	<div class="container ">
+		<div class="row justify-content-md-center " style="margin-top: 60px;">
+			<div class="position-relative m-4 border rounded" style="padding: 50px 30px 50px 30px; width: 700px; margin-top: 60px;">
+				<h2 style="text-align: center;">IAMPORT 결제 테스트</h2>
+				<table class="table" style="text-align: center; margin-top: 60px;">
+					<tbody>
+					  <tr>
+						<td>출발지 --- 도착지</td>
+						<td>출발시간</td>						
+					  </tr>
+					  <tr>
+						<td>우등</td>
+						<td>Thornton</td>
+					  </tr>
+					  <tr>
+						<td>Jacob</td>
+						<td>Thornton</td>
+					  </tr>
+					</tbody>
+				  </table>
+
+				  <table class="table table-bordered" style="text-align: center; margin-top: 60px;">
+					<tbody>
+					  <tr>
+						<td>결제금액</td>
+						<td>50만원</td>						
+					  </tr>
+					</tbody>
+				  </table>
+				<li>
+					<button id="iamportPayment" type="button">결제테스트</button>
+				</li>
+			</div>
+		</div>
+	</div>
+	<!-- jQuery -->
+	<script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+	<!-- iamport.payment.js -->
+	<script src="https://cdn.iamport.kr/v1/iamport.js"></script>
+	<script>
+		var paymentId;
+		//문서가 준비되면 제일 먼저 실행
+		$(document).ready(function () {
+			$.ajax({
+				url: 'http://localhost:8083/paymentid', // 요청을 보낼 URL
+				method: 'GET', // HTTP 메서드 (GET, POST, 등)
+				dataType: 'json', // 응답 데이터 타입 (json, xml, 등)
+				success: function (data) {
+					// 성공적으로 응답을 받았을 때 실행할 코드
+					console.log('성공:', data);
+					paymentId = data.paymentId;
+
+				},
+				error: function (error) {
+					// 요청이 실패했을 때 실행할 코드
+					console.log('실패:', error);
+				}
+			});
+			var data = JSON.parse(localStorage.getItem("reservationData"));
+			console.log(data);
+			//localStorage.removeItem("reservationData");
+		});
+		$("#iamportPayment").click(function () {
+			payment(); //버튼 클릭하면 함수 호출
+		});
+
+		//버튼 클릭하면 실행
+		function payment(data) {
+
+			IMP.init('imp33561285'); //아임포트 관리자 콘솔에서 확인한 '가맹점 식별코드' 입력
+			console.log(paymentId);
+			IMP.request_pay({ // param
+				pg: "inicis", //pg사명 or pg사명.CID (잔액 일시불 할부 등, 기본 PG사가 따로 있음)
+				pay_method: "card", //결제 방법
+				merchant_uid: paymentId, //가맹점 주문번호 (아임포트를 사용하는 가맹점에서 임의로 지정)
+				name: "버스 결제 테스트", //결제창에서 보여질 상품명
+				amount: 100, //금액
+				buyer_email: "gildong0405@gmail.com",
+				buyer_name: "길동이",
+				buyer_postcode: "1",
+				buyer_tel: "01052016412"
+			}, function (rsp) { // callback
+				console.log(rsp);
+				if (rsp.success) {
+					alert("결제 성공 -> imp_uid : " + rsp.imp_uid + " / merchant_uid(orderKey) : " + rsp.merchant_uid);
+
+					// 이후 reservation 객체 데이터 추가
+					let data = {};
+					console.log("rsp", rsp);
+					// data.imp_uid = rsp.imp_uid;
+					data.payId = rsp.merchant_uid;
+					data.totalPrice = rsp.paid_amount;
+					data.email = rsp.buyer_email;
+					data.name = rsp.buyer_name;
+					data.memberId = rsp.buyer_postcode;
+					data.payMethod = rsp.pay_method;
+					data.phoneNum = rsp.buyer_tel;
+					// resId (예매 아이디)
+					// memberId (회원 아이디)
+					// nmemberId (비회원 아이디)
+					// routeId (노선 아이디)
+					// busId (버스 아이디)
+					// seatId (좌석 번호)
+					// resDate (예매일자) data에 넣기
+					console.log(data);
+					// 성공하면 데이터 전송~ -> 테스트 전송 성공
+					$.ajax({
+						url: "http://localhost:8083/reservation/payOk",
+						method: "POST",
+						data: JSON.stringify(data),
+						contentType: "application/json",
+						success: function (response) {
+							console.log(response);
+							alert("결제 정보가 성공적으로 전송되었습니다");
+							window.location.href = "/reservation/refund";
+						},
+						error: function (xhr, status, error) {
+							//console.error("결제 정보 전송 실패 : ", error);
+							//alert("결제 정보 전송에 실패");
+						}
+					});
+
+
+				} else {
+					alert("실패 : 코드(" + rsp.error_code + ") 메시지(" + rsp.error_msg + ")");
+				}
+			});
+		}
+	</script>
+	<!--   Core JS Files   -->
+    <script src="/assets/js/core/popper.min.js" type="text/javascript"></script>
+    <script src="/assets/js/core/bootstrap.min.js" type="text/javascript"></script>
+    <script src="/assets/js/plugins/perfect-scrollbar.min.js" type="text/javascript"></script>
+    <script src="/assets/js/plugins/moment.min.js"></script>
+
+    <script src="/assets/js/material-kit.min.js" type="text/javascript"></script>
 </body>
+
 </html>

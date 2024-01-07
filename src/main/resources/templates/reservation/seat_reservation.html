@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html>
-
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -271,6 +270,7 @@
         var routeData;
         //totalPrice를 보내는건 조작가능하므로 보안적으로 위험할 수 있음, 서버에서 한번더 검증해야함
         document.addEventListener('DOMContentLoaded', () => {
+			//window.location.reload();
             fetch("http://localhost:8083/routeinfotest?departureId=NAI0511601&arrivalId=NAI2551901&departureTime=202401050640")
             .then((response) => response.json())
             .then((data) => 
@@ -419,7 +419,20 @@
                 }),
                 })
                 .then((response) => response.json())
-                .then((data) => console.log(data));
+                .then((data) => {
+						console.log(data);
+						/*
+						localStorage.setItem('reservationData',JSON.stringify({
+		                    routeData: routeData,
+		                    busId: busId,
+		                    selectedSeats: reservationSeatsList,
+		                    totalPrice: totalPrice,
+		                    adaultNum: adaultNum,
+		                    middleChildNum: middleChildNum,
+		                    childNum: childNum
+	                	}));*/
+                		location.href="http://localhost:8083/reservation/payment";
+				});
             }
         }
 
@@ -432,17 +445,6 @@
     <script src="/assets/js/plugins/perfect-scrollbar.min.js" type="text/javascript"></script>
     <script src="/assets/js/plugins/moment.min.js"></script>
 
-
-    <!-- Plugin for the Sliders, full documentation here: http://refreshless.com/nouislider/ -->
-    <!-- <script src="./assets/js/plugins/nouislider.min.js"></script> -->
-
-    <!--  Plugin for the Carousel, full documentation here: http://jedrzejchalubek.com/  -->
-    <!-- <script src="./assets/js/plugins/glidejs.min.js"></script> -->
-
-    <!--	Plugin for Select, full documentation here: https://joshuajohnson.co.uk/Choices/ -->
-    <!-- <script src="./assets/js/plugins/choices.min.js" type="text/javascript"></script> -->
-
-    <!-- Control Center for Material Kit parallax effects, scripts for the example pages etc -->
     <script src="/assets/js/material-kit.min.js" type="text/javascript"></script>
 </body>
 
