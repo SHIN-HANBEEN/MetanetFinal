@@ -4,7 +4,8 @@
 
 <mapper namespace="metanet.kosa.metanetfinal.manager.repository.IManagerRepository">
 
-	<insert id="insertBoard" parameterType="Notices" useGeneratedKeys="true" keyProperty="NTC_ID">
+	<!-- <insert id="insertBoard" parameterType="Notices" 
+		useGeneratedKeys="true" keyProperty="NTC_ID">
 	<![CDATA[
 		INSERT INTO ntc 
 			(MEM_ID, TIT, CNT, DIR_PATH)
@@ -29,7 +30,7 @@
 		WHERE NTC_ID=#{ntcId}
 	]]>
 	</delete>
-	
+	 -->
 	
  <!--  
 	<insert id="registerNonMember" parameterType="map">

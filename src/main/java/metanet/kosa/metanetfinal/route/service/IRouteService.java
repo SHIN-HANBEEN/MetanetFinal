@@ -7,4 +7,6 @@ import metanet.kosa.metanetfinal.route.model.Terminals;
 public interface IRouteService {
 	List<Terminals> searchTerminalsListStartWithTerminalName(String terminalName);
 	String getTerminalIdByTerminalName(String terminalName);
+	int getCityIdByCityName(String cityName);
+	List<String> getTerminalNamesByCityId(int cityId);
 }

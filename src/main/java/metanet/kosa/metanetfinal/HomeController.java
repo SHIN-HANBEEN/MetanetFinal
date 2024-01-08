@@ -20,8 +20,8 @@ import metanet.kosa.metanetfinal.reservation.service.ReservationService;
 @Controller
 public class HomeController {
 	
-	@Autowired
-	IReservationService reservationService;
+//	@Autowired
+//	IReservationService reservationService;
 	
 	@GetMapping(value="/")
 	public String home() {
@@ -48,31 +48,31 @@ public class HomeController {
 	 * 한 다음, 잔여좌석을 model 에 담아서 redirect 한다. 
 	 * 지금은 아직 redirect 할 페이지 작성을 안해서, home 으로 return 을 작성해두었다.
 	 */
-	@PostMapping(value = "/home") 
-	public String homePost(@RequestBody Map<String, String> body, Model model) {
-		String departureId = body.get("departureId");
-		String arrivalId = body.get("arrivalId");
-		String departureTimeString = body.get("departureTime");
-		String arrivalTimeString = body.get("arrivalTime");
-		String gradeName = body.get("gradeName");
-		int price = Integer.parseInt(body.get("price"));
-		
-		Date departureTime = null;
-		Date arrivalTime = null;
-		
-		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMddHHmm");
-		try {
-            java.util.Date parsedDepartureDate = dateFormat.parse(departureTimeString);
-            java.util.Date parsedArrivalDate = dateFormat.parse(arrivalTimeString);
-            departureTime = new Date(parsedDepartureDate.getTime());
-            arrivalTime = new Date(parsedArrivalDate.getTime());
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-		
-		model.addAttribute("remainingSeatCount", 
-				reservationService.getRemainingSeatCount(departureId, arrivalId, departureTime, arrivalTime, gradeName, price));
-		System.out.println(reservationService.getRemainingSeatCount(departureId, arrivalId, departureTime, arrivalTime, gradeName, price));
-		return "home2";
-	}
+//	@PostMapping(value = "/home") 
+//	public String homePost(@RequestBody Map<String, String> body, Model model) {
+//		String departureId = body.get("departureId");
+//		String arrivalId = body.get("arrivalId");
+//		String departureTimeString = body.get("departureTime");
+//		String arrivalTimeString = body.get("arrivalTime");
+//		String gradeName = body.get("gradeName");
+//		int price = Integer.parseInt(body.get("price"));
+//		
+//		Date departureTime = null;
+//		Date arrivalTime = null;
+//		
+//		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMddHHmm");
+//		try {
+//            java.util.Date parsedDepartureDate = dateFormat.parse(departureTimeString);
+//            java.util.Date parsedArrivalDate = dateFormat.parse(arrivalTimeString);
+//            departureTime = new Date(parsedDepartureDate.getTime());
+//            arrivalTime = new Date(parsedArrivalDate.getTime());
+//        } catch (ParseException e) {
+//            e.printStackTrace();
+//        }
+//		
+//		model.addAttribute("remainingSeatCount", 
+//				reservationService.getRemainingSeatCount(departureId, arrivalId, departureTime, arrivalTime, gradeName, price));
+//		System.out.println(reservationService.getRemainingSeatCount(departureId, arrivalId, departureTime, arrivalTime, gradeName, price));
+//		return "home2";
+//	}
 }

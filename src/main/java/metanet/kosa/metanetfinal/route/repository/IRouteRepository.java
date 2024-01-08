@@ -48,6 +48,15 @@ public interface IRouteRepository {
 	/*
 	 * 버스등급조회 By 노선 ID
 	 */
-	String getBusGrade(String routeId);
+	String getBusGrade(@Param("routeId") String routeId);
 	
+	/*
+	 * 도시이름으로 도시 아이디 가져오기
+	 */
+	int getCityIdByCityName(@Param("cityName") String cityName);
+	
+	/*
+	 * 도시 아이디로 터미널 이름 리스트 가져오기
+	 */
+	List<String> getTerminalNamesByCityId(int cityId);
 }

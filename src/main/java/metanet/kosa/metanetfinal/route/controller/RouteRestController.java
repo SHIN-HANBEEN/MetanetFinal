@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -173,4 +174,11 @@ public class RouteRestController {
 		// Convert java.util.Date to java.sql.Date
 		return new java.sql.Date(utilDate.getTime());
 	}
+	
+	@GetMapping("/terminal-list")
+	public List<String> terminalList(@RequestParam String cityName) {
+		int cityId = routeService.getCityIdByCityName(cityName);
+		return routeService.getTerminalNamesByCityId(cityId);
+	}
+	
 }
