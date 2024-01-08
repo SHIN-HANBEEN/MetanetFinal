@@ -32,16 +32,15 @@
 				<table class="table" style="text-align: center; margin-top: 60px;">
 					<tbody>
 					  <tr>
-						<td>출발지 --- 도착지</td>
-						<td>출발시간</td>						
+						<td id="startToEnd" style="width: 50%;">출발지 --- 도착지</td>
+						<td id="depPlandTime">출발시간</td>						
 					  </tr>
 					  <tr>
-						<td>우등</td>
-						<td>Thornton</td>
+						<td id="grade"></td>
+						<td id="ageType" style="width: 50%;"></td>
 					  </tr>
 					  <tr>
-						<td>Jacob</td>
-						<td>Thornton</td>
+						<td id="selectedSeats" colspan="2">좌석 3, 4 번</td>
 					  </tr>
 					</tbody>
 				  </table>
@@ -49,8 +48,8 @@
 				  <table class="table table-bordered" style="text-align: center; margin-top: 60px;">
 					<tbody>
 					  <tr>
-						<td>결제금액</td>
-						<td>50만원</td>						
+						<td style="width: 50%;">결제금액</td>
+						<td id="totalPrice">50만원</td>						
 					  </tr>
 					</tbody>
 				  </table>
@@ -65,9 +64,29 @@
 	<!-- iamport.payment.js -->
 	<script src="https://cdn.iamport.kr/v1/iamport.js"></script>
 	<script>
-		var paymentId;
+		var localData;
+		var payId;
 		//문서가 준비되면 제일 먼저 실행
 		$(document).ready(function () {
+			
+			localData = JSON.parse(localStorage.getItem("reservationData"));
+			console.log(localData);
+			document.querySelector('#startToEnd').textContent = localData.routeData.depPlaceNm + '---->' + localData.routeData.arrPlaceNm;
+			document.querySelector('#depPlandTime').textContent = localData.routeData.depPlandTime;
+			document.querySelector('#grade').textContent = localData.routeData.gradeNm;
+			document.querySelector('#ageType').textContent = '성인 '+ localData.adultNum + ' 중고생 ' + localData.middleChildNum + ' 아동 ' + localData.childNum;
+			document.querySelector('#selectedSeats').textContent = localData.selectedSeats;
+			document.querySelector('#totalPrice').textContent = localData.totalPrice;
+			//sessionStorage.removeItem("reservationData");
+			var payId= createPaymentId();
+		});
+		$("#iamportPayment").click(function () {
+			payment(); //버튼 클릭하면 함수 호출
+		});
+
+		//결제고유코드 생성
+		function createPaymentId() {
+			var paymentId;
 			$.ajax({
 				url: '/paymentid', // 요청을 보낼 URL
 				method: 'GET', // HTTP 메서드 (GET, POST, 등)
@@ -83,29 +102,22 @@
 					console.log('실패:', error);
 				}
 			});
-			var data = JSON.parse(localStorage.getItem("reservationData"));
-			console.log(data);
-			//sessionStorage.removeItem("reservationData");
-		});
-		$("#iamportPayment").click(function () {
-			payment(); //버튼 클릭하면 함수 호출
-		});
-		
+			return paymentId;
+		}
 		//버튼 클릭하면 실행
 		function payment(data) {
-
+			//var paymentId = createPaymentId();
 			IMP.init('imp33561285'); //아임포트 관리자 콘솔에서 확인한 '가맹점 식별코드' 입력
-			console.log(paymentId);
 			IMP.request_pay({ // param
 				pg: "inicis", //pg사명 or pg사명.CID (잔액 일시불 할부 등, 기본 PG사가 따로 있음)
 				pay_method: "card", //결제 방법
-				merchant_uid: paymentId, //가맹점 주문번호 (아임포트를 사용하는 가맹점에서 임의로 지정)
+				merchant_uid: payId, //가맹점 주문번호 (아임포트를 사용하는 가맹점에서 임의로 지정)
 				name: "버스 결제 테스트", //결제창에서 보여질 상품명
-				amount: 100, //금액
-				buyer_email: "gildong0405@gmail.com",
-				buyer_name: "길동이",
-				buyer_postcode: "1",
-				buyer_tel: "01052016412"
+				amount: localData.totalPrice, //금액
+				// buyer_email: "gildong0405@gmail.com",
+				// buyer_name: "길동이",
+				// buyer_postcode: "1",
+				// buyer_tel: "01052016412"
 			}, function (rsp) { // callback
 				console.log(rsp);
 				if (rsp.success) {
@@ -122,6 +134,9 @@
 					data.memberId = rsp.buyer_postcode;
 					data.payMethod = rsp.pay_method;
 					data.phoneNum = rsp.buyer_tel;
+					data.routeId = localData.routeData.routeId;
+					data.busId = localData.busId;
+					data.selectedSeats = localData.selectedSeats;
 					// resId (예매 아이디)
 					// memberId (회원 아이디)
 					// nmemberId (비회원 아이디)

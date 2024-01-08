@@ -261,7 +261,7 @@
 
     <script>
         var reservationNum = 1;
-        var adaultPrice = 8000;
+        var adultPrice = 8000;
         var middleChildPrice = 6000;
         var childPrice = 4000;
         var occupiedSeatsList = [];
@@ -281,10 +281,10 @@
                 document.querySelector('#depPlandTime').textContent = data.depPlandTime;
                 document.querySelector('#gradeNm').textContent = data.gradeNm;
                 routeData = data;
-                adaultPrice = data.adultCharge;
-                totalPrice = adaultPrice;
-                document.querySelector('#adult').textContent = adaultPrice;
-                document.querySelector('#costs').textContent = adaultPrice.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
+                adultPrice = data.adultCharge;
+                totalPrice = adultPrice;
+                document.querySelector('#adult').textContent = adultPrice;
+                document.querySelector('#costs').textContent = adultPrice.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
                 middleChildPrice = data.middleChildCharge;
                 childPrice = data.childCharge;
                 busId = data.busId;
@@ -310,9 +310,9 @@
 
             let count = document.querySelector('#count'); // 인원수
             let costs = document.querySelector('#costs'); // 가격
-            costs.textContent = adaultPrice;
+            costs.textContent = adultPrice;
             var seatsNames = document.querySelector('#selectedseat');
-            document.querySelector('#adult').textContent = adaultPrice;
+            document.querySelector('#adult').textContent = adultPrice;
 
             // 선택한 좌석수 텍스트 변경해주기
 
@@ -365,7 +365,7 @@
             var value_str2 = document.getElementById('select2');
             var value_str3 = document.getElementById('select3');
 
-            var price1 = adaultPrice * parseInt(value_str1.options[value_str1.selectedIndex].value);
+            var price1 = adultPrice * parseInt(value_str1.options[value_str1.selectedIndex].value);
             var price2 = middleChildPrice * parseInt(value_str2.options[value_str2.selectedIndex].value);
             var price3 = childPrice * parseInt(value_str3.options[value_str3.selectedIndex].value);
 
@@ -398,7 +398,7 @@
                 var value_str2 = document.getElementById('select2');
                 var value_str3 = document.getElementById('select3');
 
-                var adaultNum = parseInt(value_str1.options[value_str1.selectedIndex].value);
+                var adultNum = parseInt(value_str1.options[value_str1.selectedIndex].value);
                 var middleChildNum = parseInt(value_str2.options[value_str2.selectedIndex].value);
                 var childNum = parseInt(value_str3.options[value_str3.selectedIndex].value);
 
@@ -413,7 +413,7 @@
                     busId: busId,
                     selectedSeats: reservationSeatsList,
                     totalPrice: totalPrice,
-                    adaultNum: adaultNum,
+                    adultNum: adultNum,
                     middleChildNum: middleChildNum,
                     childNum: childNum
                 }),
@@ -437,7 +437,7 @@
 		                    busId: busId,
 		                    selectedSeats: reservationSeatsList,
 		                    totalPrice: totalPrice,
-		                    adaultNum: adaultNum,
+		                    adultNum: adultNum,
 		                    middleChildNum: middleChildNum,
 		                    childNum: childNum
 	                	}));
