@@ -61,4 +61,6 @@ public interface IBusesRepository {
 	void setBusSeatTrue(@Param("busId") int busId, @Param("seatId") int seatId );
 	void setBusSeatFalse(@Param("busId") int busId, @Param("seatId") int seatId );
 	
+	int verifyCountFalseSeats(@Param("busId") int busId, @Param("seatIdList") List<Integer> seatIdList);
+	
 }

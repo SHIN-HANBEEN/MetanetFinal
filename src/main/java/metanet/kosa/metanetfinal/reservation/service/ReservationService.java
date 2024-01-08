@@ -102,6 +102,19 @@ public class ReservationService implements IReservationService{
 		
 		return data;
 	}
+	/*
+	 * 좌석선택창에서 동시에 선택할 경우 먼저 다음버튼 누른사람이 승자
+	 * 선택한 좌석의 수와 선택한 좌석의 예매여부 갯수를 비교
+	 */
+	@Transactional
+	public boolean verifySeatsCount(int busId, List<Integer> selectedSeatsList) {
+		
+		int reservedSeatsCnt = busesRepository.verifyCountFalseSeats(busId, selectedSeatsList);
+		System.out.println("DB카운트:" + reservedSeatsCnt);
+		System.out.println("DB카운트:" + selectedSeatsList.size());
+		if(selectedSeatsList.size() != reservedSeatsCnt) return false;
+		return true;
+	}
 //	@Autowired
 //	IReservationRepository reservationRepository;
 //	

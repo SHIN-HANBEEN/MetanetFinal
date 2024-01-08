@@ -271,7 +271,7 @@
         //totalPrice를 보내는건 조작가능하므로 보안적으로 위험할 수 있음, 서버에서 한번더 검증해야함
         document.addEventListener('DOMContentLoaded', () => {
 			//window.location.reload();
-            fetch("http://localhost:8083/routeinfotest?departureId=NAI0511601&arrivalId=NAI2551901&departureTime=202401050640")
+            fetch("/routeinfotest?departureId=NAI0511601&arrivalId=NAI2551901&departureTime=202401050640")
             .then((response) => response.json())
             .then((data) => 
             {
@@ -402,8 +402,8 @@
                 var middleChildNum = parseInt(value_str2.options[value_str2.selectedIndex].value);
                 var childNum = parseInt(value_str3.options[value_str3.selectedIndex].value);
 
-
-                fetch("http://localhost:8083/routeinfotest", {
+				var status;
+                fetch("/routeinfotest", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -418,9 +418,19 @@
                     childNum: childNum
                 }),
                 })
-                .then((response) => response.json())
+                .then((response) => {
+					if(response.status == 400){
+						alert('이미 예약된 좌석이 포함되어 있습니다.')
+						//새로고침
+						window.location.reload();
+						status = 400;
+						return;
+					}else{
+						response.json();
+					}
+				})
                 .then((data) => {
-						console.log(data);
+						console.log('다음',data);
 						/*
 						localStorage.setItem('reservationData',JSON.stringify({
 		                    routeData: routeData,
@@ -431,8 +441,8 @@
 		                    middleChildNum: middleChildNum,
 		                    childNum: childNum
 	                	}));*/
-                		location.href="http://localhost:8083/reservation/payment";
-				});
+                		if(status!=400) location.href="/reservation/payment";
+				}).catch(error => console.log('FetchError'));
             }
         }
 

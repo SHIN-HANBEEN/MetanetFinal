@@ -7,6 +7,8 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatusCode;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -47,17 +49,19 @@ public class reservationRestController {
 	}
 	
 	@PostMapping("/routeinfotest")
-	public Map<String, Object> selectedSeatsInBus(@RequestBody Map<String, Object> request) {
+	public ResponseEntity<Map<String, Object>>  selectedSeatsInBus(@RequestBody Map<String, Object> request) {
 		System.out.println(request.toString());
 		int busId = Integer.parseInt(request.get("busId").toString());
-		System.out.println(busId);
-		System.out.println(request.get("selectedSeats"));
+		//Object to List<Integer>
 		List<Object> li = (ArrayList<Object>) request.get("selectedSeats");
 		List<Integer> selectedSeatsList =  new ArrayList<>();
 		li.stream().map(obj -> Integer.parseInt(obj.toString())).forEach(selectedSeatsList::add);
-		
+		//좌석검증
+		if(!reservationService.verifySeatsCount(busId, selectedSeatsList)) 
+			return new ResponseEntity<Map<String, Object>>(request, HttpStatusCode.valueOf(400));
+		//검증되면 좌석 락
 		seatsLockSystemService.seatsLocking10m(busId, selectedSeatsList);
 		System.out.println("총가격"+request.get("totalPrice"));
-		return request;
+		return new ResponseEntity<Map<String, Object>>(request, HttpStatusCode.valueOf(200));
 	}
 }

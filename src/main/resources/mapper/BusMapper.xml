@@ -72,6 +72,15 @@
 	WHERE SEAT_ID=#{seatId} AND BUS_ID=#{busId}
 	</update>
 	
+	<select id="verifyCountFalseSeats" resultType="int">
+	select count(*)
+	from seats
+	where bus_id=#{busId} and is_res='FALSE' and seat_id in
+	<foreach collection="seatIdList" item="value" separator="," open="(" close=")">
+    	#{value}
+    </foreach>
+	</select>
+	
 	
 	
 	

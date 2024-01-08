@@ -29,7 +29,6 @@ public class SeatsLockSystemService {
 	
 	@Scheduled(cron = "0 * * ? * *") //매 분 0초
 	public void checkExpiredSeatTime() {
-		log.info("1분지남");
 		LocalTime now = LocalTime.now();
 		
 		if(!lockedBusQue.isEmpty()) {
