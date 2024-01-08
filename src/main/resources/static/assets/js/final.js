@@ -234,12 +234,6 @@ async function getSchedule(dpTerminalName, arrTerminalName, dpDate) {
 	const resultDateString = getSevenDaysAgo(dpDate);
 
 	try {
-		/*await fetch(`/search-schedule?dpTerminalName=${dpTerminalName}
-						&arrTerminalName=${arrTerminalName}
-						&dpDate=${resultDateString}`)
-						.then((response) => response.json())
-						.then((data) => console.log(data));*/
-
 		// Send GET request to /search-schedule with the searchTerm
 		const response = await fetch(
 			`/search-schedule?dpTerminalName=${dpTerminalName}
@@ -270,7 +264,7 @@ async function getSchedule(dpTerminalName, arrTerminalName, dpDate) {
 		tableBody.innerHTML = '';
 
 		// Add new rows based on the returned data
-		data.response.body.items.item.forEach(schedule => {
+		data.response.body.items.item.forEach(async schedule => {
 			const row = tableBody.insertRow();
 
 			// Populate table cells with schedule data
@@ -300,10 +294,17 @@ async function getSchedule(dpTerminalName, arrTerminalName, dpDate) {
 
 			const remainingSeats = row.insertCell(6);
 			console.log("[[AOP Before]] - getRemainingSeats");
-			const reminingSeatsValue = callerForGetRemainingSeats(depPlaceNm, arrPlaceNm,
-				depPlandTime, arrPlandTime, gradeNm, charge);
-			console.log("잔여좌석 조회 결과 : " + JSON.stringify(reminingSeatsValue));
-			remainingSeats.textContent = JSON.stringify(reminingSeatsValue);
+
+			try {
+				const remainingSeatsValue = await getRemainingSeats(depPlaceNm, arrPlaceNm,
+					depPlandTime, arrPlandTime, gradeNm, charge);
+
+				console.log("잔여좌석 뿌리기 전 최종 값 : " + remainingSeatsValue);
+
+				remainingSeats.textContent = remainingSeatsValue;
+			} catch (error) {
+				console.error('Error fetching remaining seats:', error);
+			}
 
 			const reservationCell = row.insertCell(7);
 			reservationCell.textContent = '예매하기'; // You may need to add a button or link for reservation
@@ -313,29 +314,27 @@ async function getSchedule(dpTerminalName, arrTerminalName, dpDate) {
 	}
 }
 
-async function callerForGetRemainingSeats(depPlaceNm, arrPlaceNm,
-				depPlandTime, arrPlandTime, gradeNm, charge) {
-	return await getRemainingSeats(depPlaceNm, arrPlaceNm,
-				depPlandTime, arrPlandTime, gradeNm, charge);
-}
-
 // getRemainingSeats => get-remaining-seats 로 Get 요청 보내기
 async function getRemainingSeats(depPlaceNm, arrPlaceNm, depPlandTime, arrPlandTime,
 	gradeNm, charge) {
 	try {
-		const response = await fetch(
+		let result;
+		await fetch(
 			`/get-remaining-seats?depPlaceNm=${depPlaceNm}
       				&arrPlaceNm=${arrPlaceNm}
       				&depPlandTime=${depPlandTime}
       				&arrPlandTime=${arrPlandTime}
       				&gradeNm=${gradeNm}
       				&charge=${charge}`
+		).then(
+			(response) => response.text()
+		).then(
+			(data) => {
+				result = data;
+			}
 		);
-		
-		const jsonData = await response.json();
-		console.log(jsonData);
-		
-		return jsonData;
+		console.log("result 결과 : " + result);
+		return result;
 	} catch (error) {
 		console.error('Error fetching data:', error);
 	}
