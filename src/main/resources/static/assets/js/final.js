@@ -294,7 +294,8 @@ async function getSchedule(dpTerminalName, arrTerminalName, dpDate) {
 
 			const remainingSeats = row.insertCell(6);
 			console.log("[[AOP Before]] - getRemainingSeats");
-
+			
+			// 문제였던 부분
 			try {
 				const remainingSeatsValue = await getRemainingSeats(depPlaceNm, arrPlaceNm,
 					depPlandTime, arrPlandTime, gradeNm, charge);
