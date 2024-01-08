@@ -311,7 +311,7 @@ async function getSchedule(dpTerminalName, arrTerminalName, dpDate) {
 			// Create the Info button with a link that includes parameters
 			const infoButton = document.createElement("button");
 			infoButton.type = "button";
-			infoButton.className = "btn bg-gradient-info";
+			infoButton.className = "btn bg-gradient-info my-2";
 			infoButton.textContent = "Info";
 
 			// Attach a click event listener to handle the button click
@@ -361,6 +361,92 @@ async function getRemainingSeats(depPlaceNm, arrPlaceNm, depPlandTime, arrPlandT
 	}
 }
 
+
+// jquery 
+// 모달 창 관련 JS 코드들
+// Function to handle button click
+function onButtonClick(cityName) {
+	// Make AJAX request
+	$.ajax({
+		url: '/terminal-list',
+		type: 'GET',
+		data: { cityName: cityName },
+		success: function(data) {
+			// Update the table body with the returned data
+			updateTableBody(data);
+		},
+		error: function(error) {
+			console.error('Error fetching terminal list:', error);
+		}
+	});
+}
+
+// Function to update table body with the returned data
+function updateTableBody(data) {
+	// Get the tbody element
+	var tbody = $('table tbody');
+
+	// Clear existing data
+	tbody.empty();
+
+	// Iterate through the data and append rows to the tbody
+	for (var i = 0; i < data.length; i++) {
+		var row = '<tr><td>' + data[i] + '</td></tr>';
+		tbody.append(row);
+	}
+}
+
+// Attach click event handlers to buttons
+$(document).ready(function() {
+	$('.metanet-width-96px').click(function() {
+		// Get the text value of the clicked button
+		var cityName = $(this).text().trim();
+		onButtonClick(cityName);
+	});
+});
+
+// Function to handle row click and insert data into input
+function onRowClick(cityName, inputId) {
+	// Get the input element by ID
+	var inputElement = $('#' + inputId);
+
+	// Insert the clicked data into the input
+	inputElement.val(cityName);
+
+	// Close the modal if needed (assuming your modal has an ID of 'exampleModal')
+	$('#exampleModal').modal('hide');
+}
+
+// Function to handle hover effect on table rows
+function onRowHover(row) {
+	row.addClass('table-primary'); // Add a hover effect using Bootstrap's 'table-primary' class
+}
+
+// Function to handle mouse leave on table rows
+function onRowLeave(row) {
+	row.removeClass('table-primary'); // Remove the hover effect
+}
+
+// Attach click event handlers to table rows
+$(document).ready(function() {
+	// For Terminal Table 1
+	$('#exampleModal1').on('click', 'tr', function() {
+		// Get the text value of the clicked row
+		var cityName = $(this).text().trim();
+
+		// Call the function to insert data into the input field
+		onRowClick(cityName, 'TerminalSearchInput1');
+	});
+
+	// For Terminal Table 2
+	$('#exampleModal2').on('click', 'tr', function() {
+		// Get the text value of the clicked row
+		var cityName = $(this).text().trim();
+
+		// Call the function to insert data into the input field
+		onRowClick(cityName, 'TerminalSearchInput2');
+	});
+});
 
 
 

@@ -27,6 +27,9 @@
 
 	<!-- 커스텀 CSS -->
 	<link href="../assets/css/final.css" rel="stylesheet" />
+
+	<!-- jQuery -->
+	<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 </head>
 
 <body>
@@ -76,7 +79,7 @@
 												<!-- 출발 터미널 검색 버튼 -->
 												<div class="col-sm-3 col-md-3 col-lg-3" style="padding: 0px;">
 													<button class="btn btn-dark btn-icon btn" data-bs-toggle="modal"
-														data-bs-target="#exampleModal" type="button" style="margin: 8px 8px 0px 0px;">
+														data-bs-target="#exampleModal1" type="button" style="margin: 8px 8px 0px 0px;">
 														<div class="d-flex align-items-center">
 															<i class="fas fa-search" aria-hidden="true"></i>
 														</div>
@@ -109,7 +112,7 @@
 												<!-- 도착 터미널 검색 버튼 -->
 												<div class="col-sm-3 col-md-3 col-lg-3" style="padding: 0px;">
 													<button class="btn btn-dark btn-icon btn" data-bs-toggle="modal"
-														data-bs-target="#exampleModal" type="button" style="margin: 8px 8px 0px 0px;">
+														data-bs-target="#exampleModal2" type="button" style="margin: 8px 8px 0px 0px;">
 														<div class="d-flex align-items-center">
 															<i class="fas fa-search" aria-hidden="true"></i>
 														</div>
@@ -151,13 +154,11 @@
 
 
 						<!-- 시간표 조회 카드 -->
-						<div class="col-lg-12 metanet-hidden" 
-							id="scheduleDiv" style="height: 300px;">
-							<div class="card card-body shadow-xl mx-3 mx-md-11">
+						<div class="col-lg-12 metanet-hidden" id="scheduleDiv">
+							<div class="card card-body shadow-xl mx-3 mx-md-11" style="max-height: 450px;">
 								<div class="table-responsive" style="height: 100%">
-									<table class="table metanet-table-fixed table-hover align-items-center mb-0" 
-										id="scheduleTable1">
-										<thead class="metanet-bc-wh metanet-st-hd">
+									<table class="table metanet-table-fixed table-hover align-items-center mb-0" id="scheduleTable1">
+										<thead class="metanet-bc-wh metanet-st-hd" style="z-index: 100;">
 											<tr>
 												<th class="text-center text-uppercase text-secondary text-lg font-weight-bolder opacity-7">
 													출발터미널
@@ -199,31 +200,104 @@
 	</div>
 
 	<div></div>
-	
-	<!-- Modal -->
-	<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true"
-		style="margin-top: 48px;">
+
+	<!-- Modal1 -->
+	<div class="modal fade" id="exampleModal1" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true"
+		style="margin-top: 8px;">
 		<div class="modal-dialog">
-			<div class="modal-content">
+			<div class="modal-content" style="min-width: 560px;">
 				<div class="modal-header">
 					<h5 class="modal-title" id="exampleModalLabel">터미널 검색하기</h5>
 					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 				</div>
-				<div class="modal-body">
+				<div class="modal-body mx-2 my-2">
 					<div class="row">
 						<h6>출발 지역 선택</h6>
-						<div class="col-lg-3"><button type="button" class="btn bg-gradient-dark mb-0"
-								style="margin-top: 8px;">서울</button></div>
-						<div class="col-lg-3"><button type="button" class="btn bg-gradient-dark mb-0"
-								style="margin-top: 8px;">서울</button></div>
-						<div class="col-lg-3"><button type="button" class="btn bg-gradient-dark mb-0"
-								style="margin-top: 8px;">서울</button></div>
-						<div class="col-lg-3"><button type="button" class="btn bg-gradient-dark mb-0"
-								style="margin-top: 8px;">서울</button></div>
-						<div class="col-lg-3"><button type="button" class="btn bg-gradient-dark mb-0"
-								style="margin-top: 8px;">서울</button></div>
-						<div class="col-lg-3"><button type="button" class="btn bg-gradient-dark mb-0"
-								style="margin-top: 8px;">서울</button></div>
+						<div class="col-lg-3">
+							<button type="button" class="btn bg-gradient-dark mb-0 mx-2 metanet-width-96px" style="margin-top: 8px;">
+								서울
+							</button>
+						</div>
+						<div class="col-lg-3">
+							<button type="button" class="btn bg-gradient-dark mb-0 mx-2 metanet-width-96px" style="margin-top: 8px;">
+								세종
+							</button>
+						</div>
+						<div class="col-lg-3">
+							<button type="button" class="btn bg-gradient-dark mb-0 mx-2 metanet-width-96px" style="margin-top: 8px;">
+								부산
+							</button>
+						</div>
+						<div class="col-lg-3">
+							<button type="button" class="btn bg-gradient-dark mb-0 mx-2 metanet-width-96px" style="margin-top: 8px;">
+								대구
+							</button>
+						</div>
+						<div class="col-lg-3">
+							<button type="button" class="btn bg-gradient-dark mb-0 mx-2 metanet-width-96px" style="margin-top: 8px;">
+								인천
+							</button>
+						</div>
+						<div class="col-lg-3">
+							<button type="button" class="btn bg-gradient-dark mb-0 mx-2 metanet-width-96px" style="margin-top: 8px;">
+								광주
+							</button>
+						</div>
+						<div class="col-lg-3">
+							<button type="button" class="btn bg-gradient-dark mb-0 mx-2 metanet-width-96px" style="margin-top: 8px;">
+								대전
+							</button>
+						</div>
+						<div class="col-lg-3">
+							<button type="button" class="btn bg-gradient-dark mb-0 mx-2 metanet-width-96px" style="margin-top: 8px;">
+								울산
+							</button>
+						</div>
+						<div class="col-lg-3">
+							<button type="button" class="btn bg-gradient-dark mb-0 mx-2 metanet-width-96px" style="margin-top: 8px;">
+								경기도
+							</button>
+						</div>
+						<div class="col-lg-3">
+							<button type="button" class="btn bg-gradient-dark mb-0 mx-2 metanet-width-96px" style="margin-top: 8px;">
+								강원도
+							</button>
+						</div>
+						<div class="col-lg-3">
+							<button type="button" class="btn bg-gradient-dark mb-0 mx-2 metanet-width-96px" style="margin-top: 8px;">
+								충청북도
+							</button>
+						</div>
+						<div class="col-lg-3">
+							<button type="button" class="btn bg-gradient-dark mb-0 mx-2 metanet-width-96px" style="margin-top: 8px;">
+								충청남도
+							</button>
+						</div>
+						<div class="col-lg-3">
+							<button type="button" class="btn bg-gradient-dark mb-0 mx-2 metanet-width-96px" style="margin-top: 8px;">
+								전라북도
+							</button>
+						</div>
+						<div class="col-lg-3">
+							<button type="button" class="btn bg-gradient-dark mb-0 mx-2 metanet-width-96px" style="margin-top: 8px;">
+								전라남도
+							</button>
+						</div>
+						<div class="col-lg-3">
+							<button type="button" class="btn bg-gradient-dark mb-0 mx-2 metanet-width-96px" style="margin-top: 8px;">
+								경상북도
+							</button>
+						</div>
+						<div class="col-lg-3">
+							<button type="button" class="btn bg-gradient-dark mb-0 mx-2 metanet-width-96px" style="margin-top: 8px;">
+								경상남도
+							</button>
+						</div>
+						<div class="col-lg-3">
+							<button type="button" class="btn bg-gradient-dark mb-0 mx-2 metanet-width-96px" style="margin-top: 8px;">
+								제주도
+							</button>
+						</div>
 					</div>
 				</div>
 				<div class="modal-body" style="max-height: 400px; overflow-y: auto;">
@@ -231,36 +305,133 @@
 						<h6>터미널 선택</h6>
 						<table class="table">
 							<tbody>
-								<tr class="row" style="padding: 16px; text-align: center;">
-									<td class="col-lg-6">John</td>
-									<td class="col-lg-6">John</td>
-									<td class="col-lg-6">John</td>
-									<td class="col-lg-6">John</td>
-									<td class="col-lg-6">John</td>
-									<td class="col-lg-6">John</td>
-									<td class="col-lg-6">John</td>
-									<td class="col-lg-6">John</td>
-									<td class="col-lg-6">John</td>
-									<td class="col-lg-6">John</td>
-									<td class="col-lg-6">John</td>
-									<td class="col-lg-6">John</td>
-									<td class="col-lg-6">John</td>
-									<td class="col-lg-6">John</td>
-									<td class="col-lg-6">John</td>
-									<td class="col-lg-6">John</td>
-									<td class="col-lg-6">John</td>
-									<td class="col-lg-6">John</td>
-									<td class="col-lg-6">John</td>
-									<td class="col-lg-6">John</td>
-									<td class="col-lg-6">John</td>
-								</tr>
+								<!-- insert actively -->
 							</tbody>
 						</table>
 					</div>
 				</div>
 				<div class="modal-footer justify-content-between">
 					<button type="button" class="btn bg-gradient-dark mb-0" data-bs-dismiss="modal">Close</button>
-					<button type="button" class="btn bg-gradient-primary mb-0">Save changes</button>
+					<!--					<button type="button" class="btn bg-gradient-primary mb-0">Save changes</button>
+-->
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	<!-- Modal2 -->
+	<div class="modal fade" id="exampleModal2" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true"
+		style="margin-top: 8px;">
+		<div class="modal-dialog">
+			<div class="modal-content" style="min-width: 560px;">
+				<div class="modal-header">
+					<h5 class="modal-title" id="exampleModalLabel">터미널 검색하기</h5>
+					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+				</div>
+				<div class="modal-body mx-2 my-2">
+					<div class="row">
+						<h6>출발 지역 선택</h6>
+						<div class="col-lg-3">
+							<button type="button" class="btn bg-gradient-dark mb-0 mx-2 metanet-width-96px" style="margin-top: 8px;">
+								서울
+							</button>
+						</div>
+						<div class="col-lg-3">
+							<button type="button" class="btn bg-gradient-dark mb-0 mx-2 metanet-width-96px" style="margin-top: 8px;">
+								세종
+							</button>
+						</div>
+						<div class="col-lg-3">
+							<button type="button" class="btn bg-gradient-dark mb-0 mx-2 metanet-width-96px" style="margin-top: 8px;">
+								부산
+							</button>
+						</div>
+						<div class="col-lg-3">
+							<button type="button" class="btn bg-gradient-dark mb-0 mx-2 metanet-width-96px" style="margin-top: 8px;">
+								대구
+							</button>
+						</div>
+						<div class="col-lg-3">
+							<button type="button" class="btn bg-gradient-dark mb-0 mx-2 metanet-width-96px" style="margin-top: 8px;">
+								인천
+							</button>
+						</div>
+						<div class="col-lg-3">
+							<button type="button" class="btn bg-gradient-dark mb-0 mx-2 metanet-width-96px" style="margin-top: 8px;">
+								광주
+							</button>
+						</div>
+						<div class="col-lg-3">
+							<button type="button" class="btn bg-gradient-dark mb-0 mx-2 metanet-width-96px" style="margin-top: 8px;">
+								대전
+							</button>
+						</div>
+						<div class="col-lg-3">
+							<button type="button" class="btn bg-gradient-dark mb-0 mx-2 metanet-width-96px" style="margin-top: 8px;">
+								울산
+							</button>
+						</div>
+						<div class="col-lg-3">
+							<button type="button" class="btn bg-gradient-dark mb-0 mx-2 metanet-width-96px" style="margin-top: 8px;">
+								경기도
+							</button>
+						</div>
+						<div class="col-lg-3">
+							<button type="button" class="btn bg-gradient-dark mb-0 mx-2 metanet-width-96px" style="margin-top: 8px;">
+								강원도
+							</button>
+						</div>
+						<div class="col-lg-3">
+							<button type="button" class="btn bg-gradient-dark mb-0 mx-2 metanet-width-96px" style="margin-top: 8px;">
+								충청북도
+							</button>
+						</div>
+						<div class="col-lg-3">
+							<button type="button" class="btn bg-gradient-dark mb-0 mx-2 metanet-width-96px" style="margin-top: 8px;">
+								충청남도
+							</button>
+						</div>
+						<div class="col-lg-3">
+							<button type="button" class="btn bg-gradient-dark mb-0 mx-2 metanet-width-96px" style="margin-top: 8px;">
+								전라북도
+							</button>
+						</div>
+						<div class="col-lg-3">
+							<button type="button" class="btn bg-gradient-dark mb-0 mx-2 metanet-width-96px" style="margin-top: 8px;">
+								전라남도
+							</button>
+						</div>
+						<div class="col-lg-3">
+							<button type="button" class="btn bg-gradient-dark mb-0 mx-2 metanet-width-96px" style="margin-top: 8px;">
+								경상북도
+							</button>
+						</div>
+						<div class="col-lg-3">
+							<button type="button" class="btn bg-gradient-dark mb-0 mx-2 metanet-width-96px" style="margin-top: 8px;">
+								경상남도
+							</button>
+						</div>
+						<div class="col-lg-3">
+							<button type="button" class="btn bg-gradient-dark mb-0 mx-2 metanet-width-96px" style="margin-top: 8px;">
+								제주도
+							</button>
+						</div>
+					</div>
+				</div>
+				<div class="modal-body" style="max-height: 400px; overflow-y: auto;">
+					<div class="row">
+						<h6>터미널 선택</h6>
+						<table class="table">
+							<tbody>
+								<!-- insert actively -->
+							</tbody>
+						</table>
+					</div>
+				</div>
+				<div class="modal-footer justify-content-between">
+					<button type="button" class="btn bg-gradient-dark mb-0" data-bs-dismiss="modal">Close</button>
+					<!--					<button type="button" class="btn bg-gradient-primary mb-0">Save changes</button>
+-->
 				</div>
 			</div>
 		</div>

@@ -72,6 +72,7 @@
     SELECT DISTINCT TERMINAL_NAME
     FROM TERMINALS
     WHERE CITY_ID=#{cityId}
+    ORDER BY TERMINAL_NAME
 	</select>
 
 	<!--  
