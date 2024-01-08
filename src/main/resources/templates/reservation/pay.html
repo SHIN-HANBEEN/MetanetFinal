@@ -69,7 +69,7 @@
 		//문서가 준비되면 제일 먼저 실행
 		$(document).ready(function () {
 			$.ajax({
-				url: 'http://localhost:8083/paymentid', // 요청을 보낼 URL
+				url: '/paymentid', // 요청을 보낼 URL
 				method: 'GET', // HTTP 메서드 (GET, POST, 등)
 				dataType: 'json', // 응답 데이터 타입 (json, xml, 등)
 				success: function (data) {
@@ -85,12 +85,12 @@
 			});
 			var data = JSON.parse(localStorage.getItem("reservationData"));
 			console.log(data);
-			//localStorage.removeItem("reservationData");
+			//sessionStorage.removeItem("reservationData");
 		});
 		$("#iamportPayment").click(function () {
 			payment(); //버튼 클릭하면 함수 호출
 		});
-
+		
 		//버튼 클릭하면 실행
 		function payment(data) {
 

@@ -431,7 +431,7 @@
 				})
                 .then((data) => {
 						console.log('다음',data);
-						/*
+						
 						localStorage.setItem('reservationData',JSON.stringify({
 		                    routeData: routeData,
 		                    busId: busId,
@@ -440,7 +440,7 @@
 		                    adaultNum: adaultNum,
 		                    middleChildNum: middleChildNum,
 		                    childNum: childNum
-	                	}));*/
+	                	}));
                 		if(status!=400) location.href="/reservation/payment";
 				}).catch(error => console.log('FetchError'));
             }
