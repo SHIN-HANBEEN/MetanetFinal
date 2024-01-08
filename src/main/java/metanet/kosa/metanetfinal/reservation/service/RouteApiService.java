@@ -24,8 +24,8 @@ public class RouteApiService {
 	
 	public String callRouteAPI(String dpTerminalName,String arrTerminalName, String dpDate) {
 		String serviceKey = "EDX0wACMZAUSqHv3FZoxJ//0f5uYSjlN24rlk9/zLatbt21dRKjj81MlsAUFqkDAC68x1aKh6bkdwJUvIuHUyQ==";
-		String dpTerminalId = routeService.getTerminalId(dpTerminalName);
-		String arrTerminalId = routeService.getTerminalId(arrTerminalName);
+		String dpTerminalId = routeService.getTerminalIdByTerminalName(dpTerminalName);
+		String arrTerminalId = routeService.getTerminalIdByTerminalName(arrTerminalName);
 		String numOfRows = "10";
 		String pageNo = "1";
 		String type = "json";

@@ -68,6 +68,7 @@ public class ReservationService implements IReservationService{
 	 */
 	
 	@Transactional
+	@Override
 	public int makeTestDataReservationInfo(String departureId, String arrivalId, Date departureTime, 
 			Date arrivalTime, String gradeName,int price) {
 		//노선,버스,좌석 DB저장
@@ -80,6 +81,7 @@ public class ReservationService implements IReservationService{
 	 */
 	@SuppressWarnings("deprecation")
 	@Transactional
+	@Override
 	public Map<String, Object> getDataForSeatsSelection(String departureId, String arrivalId, String departureTime) {
 		Map<String, Object> data = new HashMap<>();
 		String arrPlaceNm = routeRepository.getTerminalNameByTerminalId(arrivalId);
@@ -107,6 +109,7 @@ public class ReservationService implements IReservationService{
 	 * 선택한 좌석의 수와 선택한 좌석의 예매여부 갯수를 비교
 	 */
 	@Transactional
+	@Override
 	public boolean verifySeatsCount(int busId, List<Integer> selectedSeatsList) {
 		
 		int reservedSeatsCnt = busesRepository.verifyCountFalseSeats(busId, selectedSeatsList);

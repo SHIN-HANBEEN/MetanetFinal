@@ -294,7 +294,7 @@ async function getSchedule(dpTerminalName, arrTerminalName, dpDate) {
 
 			const remainingSeats = row.insertCell(6);
 			console.log("[[AOP Before]] - getRemainingSeats");
-			
+
 			// 문제였던 부분
 			try {
 				const remainingSeatsValue = await getRemainingSeats(depPlaceNm, arrPlaceNm,
@@ -308,7 +308,27 @@ async function getSchedule(dpTerminalName, arrTerminalName, dpDate) {
 			}
 
 			const reservationCell = row.insertCell(7);
-			reservationCell.textContent = '예매하기'; // You may need to add a button or link for reservation
+			// Create the Info button with a link that includes parameters
+			const infoButton = document.createElement("button");
+			infoButton.type = "button";
+			infoButton.className = "btn bg-gradient-info";
+			infoButton.textContent = "Info";
+
+			// Attach a click event listener to handle the button click
+			infoButton.addEventListener("click", async () => {
+				try {
+					// Include the parameters in the URL
+					const url = `/reservation/seats-selection?dpTerminalName=${encodeURIComponent(depPlaceNm)}&arrTerminalName=${encodeURIComponent(arrPlaceNm)}&departureTime=${encodeURIComponent(depPlandTime)}`;
+
+					// Redirect to the URL
+					window.location.href = url;
+				} catch (error) {
+					console.error('Error handling Info button click:', error);
+				}
+			});
+
+			// Append the button to the reservationCell
+			reservationCell.appendChild(infoButton);
 		});
 	} catch (error) {
 		console.error('Error fetching terminal data:', error);

@@ -3,6 +3,7 @@ package metanet.kosa.metanetfinal.reservation.service;
 import java.sql.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 
 public interface IReservationService {
@@ -72,4 +73,11 @@ public interface IReservationService {
 	 */
 	int getRemainingSeatCount(String departureId, String arrivalId, Date departureTime, 
 			Date arrivalTime, String gradeName,int price);
+	
+	int makeTestDataReservationInfo(String departureId, String arrivalId, Date departureTime, 
+			Date arrivalTime, String gradeName,int price);
+	
+	boolean verifySeatsCount(int busId, List<Integer> selectedSeatsList);
+	
+	Map<String, Object> getDataForSeatsSelection(String departureId, String arrivalId, String departureTime);
 }
