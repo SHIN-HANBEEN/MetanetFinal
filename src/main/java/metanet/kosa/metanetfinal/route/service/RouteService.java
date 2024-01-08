@@ -22,5 +22,14 @@ public class RouteService implements IRouteService{
 	public String getTerminalIdByTerminalName(String terminalName) {
 		return routeRepository.getTerminalIdByTerminalName(terminalName);
 	}
+	
+	@Override
+	public int getCityIdByCityName(String cityName) {
+		return routeRepository.getCityIdByCityName(cityName);
+	}
 
+	@Override
+	public List<String> getTerminalNamesByCityId(int cityId) {
+		return routeRepository.getTerminalNamesByCityId(cityId);
+	}
 }

@@ -3,11 +3,11 @@ package metanet.kosa.metanetfinal.route;
 import java.sql.Date;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.List;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import metanet.kosa.metanetfinal.reservation.service.IReservationService;
 import metanet.kosa.metanetfinal.route.repository.IRouteRepository;
@@ -105,6 +105,21 @@ public class RouteTest {
 				trimedGradeNm,
 				price));
 	}
+	
+	@Test
+	public void getCityIdByCityName() {
+		System.out.println(
+				routeService.getCityIdByCityName("서울")
+				);
+	}
+	
+	@Test
+	public void getTerminalNameByCityId() {
+		List<String> r = routeService.getTerminalNamesByCityId(11);
+		System.out.println(r);
+				
+	}
+	
 	
 	
 	private static java.sql.Date getSqlDate(int year, int month, int day, int hour, int minute) throws ParseException {

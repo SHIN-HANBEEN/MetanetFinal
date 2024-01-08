@@ -164,6 +164,13 @@ public class RouteRestController {
 				trimedGradeNm,
 				price);
 	}
+	
+	@GetMapping("/terminal-list")
+	public List<String> terminalList(@RequestParam String cityName) {
+		int cityId = routeService.getCityIdByCityName(cityName);
+		return routeService.getTerminalNamesByCityId(cityId);
+	}
+	
 
 	private static java.sql.Date getSqlDate(int year, int month, int day, int hour, int minute) throws ParseException {
 		// Construct a java.util.Date object
