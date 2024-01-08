@@ -22,45 +22,40 @@
 					<div class="collapse navbar-collapse w-100 pt-3 pb-2 py-lg-0 ms-lg-8 ps-lg-5" id="navigation">
 						<ul class="navbar-nav navbar-nav-hover ms-auto">
 							<li class="nav-item dropdown dropdown-hover mx-2 ms-lg-6">
-								<a href="mypage"
-								  class="nav-link ps-2 d-flex cursor-pointer align-items-center"
-									aria-expanded="false" >
+								<a href="mypage" class="nav-link ps-2 d-flex cursor-pointer align-items-center" 
+								aria-expanded="false">
 									<i class="material-icons opacity-6 me-2 text-md">dashboard</i>
 									마이페이지
-									
+
 								</a>
 							</li>
 
 							<li class="nav-item dropdown dropdown-hover mx-2">
-								<a href="/notice/list/1"
-								  class="nav-link ps-2 d-flex cursor-pointer align-items-center" 
+								<a href="/notice/list/1" class="nav-link ps-2 d-flex cursor-pointer align-items-center"
 									aria-expanded="false">
 									<i class="material-icons opacity-6 me-2 text-md">view_day</i>
 									공지사항
-									
+
 								</a>
 							</li>
 
 							<li class="nav-item  mx-2">
-								<a href="nreservation"
-								  class="nav-link ps-2 d-flex cursor-pointer align-items-center" 
+								<a href="nreservation" class="nav-link ps-2 d-flex cursor-pointer align-items-center"
 									aria-expanded="false">
 									<i class="material-icons opacity-6 me-2 text-md">article</i>
 									비회원예매조회
 								</a>
 							</li>
-							
+
 							<li class="nav-item  mx-2">
-								<a href="reservation"
-								  class="nav-link ps-2 d-flex cursor-pointer align-items-center" 
+								<a href="reservation" class="nav-link ps-2 d-flex cursor-pointer align-items-center"
 									aria-expanded="false">
 									<i class="material-icons opacity-6 me-2 text-md">article</i>
 									회원예매조회
 								</a>
 							</li>
 							<li class="nav-item ms-lg-auto my-auto ms-3 ms-lg-0 mt-2 mt-lg-0">
-								<a href="login"
-									class="btn btn-sm  bg-gradient-primary mb-0 me-1 my-2 mt-md-0">
+								<a href="login" class="btn btn-sm  bg-gradient-primary mb-0 me-1 my-2 mt-md-0">
 									Login
 								</a>
 							</li>
@@ -72,3 +67,30 @@
 		</div>
 	</div>
 </div>
+
+
+<script>
+	// 토큰을 서버로 보내는 함수
+	function sendTokenToServer(page) {
+		var token = sessionStorage.getItem('token');
+
+		$.ajax({
+			type: 'GET',
+			url: '/' + page,
+			headers: {
+				'Authorization': 'Bearer ' + token
+			},
+			success: function (data) {
+				// 서버 응답 처리
+				console.log(data);
+			},
+			error: function (error) {
+				// 에러 처리
+				console.error(error);
+			}
+		});
+	}
+
+	sendTokenToServer('mypage');
+
+</script>

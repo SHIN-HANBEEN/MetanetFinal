@@ -27,6 +27,33 @@
 
 	<!-- 커스텀 CSS -->
 	<link href="../assets/css/final.css" rel="stylesheet" />
+
+	<!--<script>
+		const token = sessionStorage.getItem('token');
+
+		// 토큰이 없거나 유효하지 않으면 로그인 페이지로 리디렉션
+		if (!token) {
+			window.location.href = '/login';
+		} else {
+			// 서버로 토큰 유효성 검사 요청
+			fetch('/validateToken', {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json',
+					'Authorization': `Bearer ${token}`, 
+				},
+			})
+				.then(response => response.json())
+				.then(result => {
+					if (!result.valid) {
+						// 토큰이 유효하지 않으면 로그인 페이지로 리디렉션
+						window.location.href = '/login';
+					}
+				})
+				.catch(error => console.error('Error during token validation:', error));
+		}
+	</script>-->
+
 </head>
 
 <body>
@@ -130,7 +157,7 @@
 											</tr>
 										</thead>
 										<tbody>
-											
+
 											<tr>
 												<td>
 													<h6 class="my-sm-2 text-md">John Michael</h6>
@@ -275,7 +302,7 @@
 												</td>
 
 											</tr>
-											
+
 
 
 
