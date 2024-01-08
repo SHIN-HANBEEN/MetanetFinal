@@ -29,6 +29,59 @@
         FROM SEATS
         WHERE BUS_ID = #{busId}
         AND IS_RES = 'FALSE'
+        <!--  -->
 	</select>
+	
+	<select id="getOccupiedBusSeats" resultType="Integer">
+		SELECT SEAT_ID FROM SEATS 
+			WHERE BUS_ID=
+				(SELECT BUS_ID FROM BUSES WHERE ROUTE_ID = 
+        			(SELECT ROUTE_ID FROM ROUTES 
+        				WHERE ARRIVAL_ID = #{arrivalId} 
+        				AND DEPARTURE_ID = #{departureId}
+        				AND TO_CHAR(DEPARTURE_TIME, 'yyyymmddhh24mi') = #{departureTime})
+    			) 
+    	AND IS_RES = 'TRUE'
+	</select>
+	
+	<select id="getDiscountedCostOfBusSeats" resultType="Integer">
+		select round
+		(discount_rate*
+			(SELECT price FROM ROUTES 
+				WHERE arrival_id = #{arrivalId} 
+					AND departure_id = #{departureId} 
+					AND TO_CHAR(departure_time, 'yyyymmddhh24mi') = #{departureTime}),-2) 
+		as price from discounts
+	</select>
+	
+	<select id="getBusByRouteId" parameterType="String" resultType="metanet.kosa.metanetfinal.bus.model.Buses">
+		select bus_id, route_id, grade_name, seat_cnt
+		from BUSES
+		WHERE route_id = #{routeId}
+	</select>
+	
+	<update id="setBusSeatTrue" parameterType="int">
+	UPDATE SEATS
+		SET IS_RES='TRUE'
+	WHERE seat_id=#{seatId} AND BUS_ID=#{busId}
+	</update>
+	
+	<update id="setBusSeatFalse">
+	UPDATE SEATS
+		SET IS_RES='FALSE'
+	WHERE SEAT_ID=#{seatId} AND BUS_ID=#{busId}
+	</update>
+	
+	<select id="verifyCountFalseSeats" resultType="int">
+	select count(*)
+	from seats
+	where bus_id=#{busId} and is_res='FALSE' and seat_id in
+	<foreach collection="seatIdList" item="value" separator="," open="(" close=")">
+    	#{value}
+    </foreach>
+	</select>
+	
+	
+	
 	
 </mapper>

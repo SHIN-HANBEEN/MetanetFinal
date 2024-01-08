@@ -15,13 +15,13 @@ import lombok.extern.slf4j.Slf4j;
 @Aspect
 @Component
 public class LogAspect {
-	@Before("execution(* metanet.kosa.metanetfinal..*.*(..))")
-	public void beforeLog(JoinPoint joinPoint) {
-		Signature signature = joinPoint.getSignature();
-		String methodName = signature.getName();
-		log.info("[[[AOP-before Log]]]-{}", methodName);
-	}
-	
+//	@Before("execution(* metanet.kosa.metanetfinal..*.*(..))")
+//	public void beforeLog(JoinPoint joinPoint) {
+//		Signature signature = joinPoint.getSignature();
+//		String methodName = signature.getName();
+//		log.info("[[[AOP-before Log]]]-{}", methodName);
+//	}
+//	
 //	@AfterThrowing(pointcut = "* metanet.kosa.metanetfinal..*.*(..)", throwing = "exception")
 //	public void afterThrowingLog(JoinPoint joinPoint, Exception exception) {
 //		Signature signature = joinPoint.getSignature();

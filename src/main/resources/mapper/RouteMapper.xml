@@ -43,6 +43,23 @@
     ]]>
 	</select>
 
+	<select id="getRoute" resultType="metanet.kosa.metanetfinal.route.model.Routes">
+		select ROUTE_ID, DEPARTURE_ID, ARRIVAL_ID, DEPARTURE_TIME, ARRIVAL_TIME, PRICE
+		from ROUTES
+		WHERE ARRIVAL_ID = #{arrivalId} AND DEPARTURE_ID = #{departureId} AND TO_CHAR(departure_time, 'yyyymmddhh24mi') = #{departureTime}
+	</select>
+	
+	<select id="getTerminalNameByTerminalId" parameterType="string" resultType="string">
+		select TERMINAL_NAME
+		from TERMINALS
+		WHERE TERMINAL_ID=#{terminalId}
+	</select>
+	
+	<select id="getBusGrade" parameterType="string" resultType="string">
+		select GRADE_NAME
+		from BUSES
+		WHERE ROUTE_ID=#{routeId}
+	</select>
 
 	<!--  
 	<insert id="insertBoard" parameterType="Notice" useGeneratedKeys="true" keyProperty="NTC_ID">
