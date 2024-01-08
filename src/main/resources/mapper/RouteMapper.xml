@@ -60,26 +60,6 @@
 		from BUSES
 		WHERE ROUTE_ID=#{routeId}
 	</select>
-	
-	<select id="getCityIdByCityName" parameterType="string" resultType="int">
-    SELECT DISTINCT CITY_ID
-    FROM TERMINALS
-    WHERE CITY_NAME LIKE '%' || #{cityName} || '%'
-	</select>
-	
-	<select id="getCityIdByCityName" parameterType="string" resultType="int">
-    SELECT DISTINCT CITY_ID
-    FROM TERMINALS
-    WHERE CITY_NAME LIKE '%' || #{cityName} || '%'
-	</select>
-	
-	<!-- List<String> getTerminalNamesByCityId(int cityId); -->
-	<select id="getTerminalNamesByCityId" parameterType="int" resultType="string">
-    SELECT DISTINCT TERMINAL_NAME
-    FROM TERMINALS
-    WHERE CITY_ID=#{cityId}
-	</select>
-
 
 	<!--  
 	<insert id="insertBoard" parameterType="Notice" useGeneratedKeys="true" keyProperty="NTC_ID">

@@ -23,7 +23,6 @@
 
 .metanet-st-hd {
 	position: sticky; top: 0; 
-	z-index: 100;
 }
 
 .metanet-hidden {
@@ -36,10 +35,6 @@
 
 .metanet-width-10p {
 	width: 3px;
-}
-
-.metanet-mh-400px {
-	max-height: 400px;
 }
 
 .metanet-table-fixed {

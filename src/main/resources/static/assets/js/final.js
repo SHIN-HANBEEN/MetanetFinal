@@ -311,8 +311,8 @@ async function getSchedule(dpTerminalName, arrTerminalName, dpDate) {
 			// Create the Info button with a link that includes parameters
 			const infoButton = document.createElement("button");
 			infoButton.type = "button";
-			infoButton.className = "btn bg-gradient-info my-2";
-			infoButton.textContent = "예매하기";
+			infoButton.className = "btn bg-gradient-info";
+			infoButton.textContent = "Info";
 
 			// Attach a click event listener to handle the button click
 			infoButton.addEventListener("click", async () => {
