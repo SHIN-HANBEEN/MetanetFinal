@@ -230,35 +230,37 @@ function getSevenDaysAgo(dateString) {
 	return formattedResult;
 }
 
-function getSevenDaysAfter(dateString) {
-	console.log("dateString 찍어보기 : " + dateString);
-	
-	/*const year = dateString.substring(0, 4);
+function getSevenDaysAfter(date) {
+	console.log("dateString 찍어보기 : " + String(date));
+	// Result was like: 202401021310
+	let dateString = String(date);
+
+	// Extract year, month, day, hour, and minute from the input string
+	const year = dateString.substring(0, 4);
 	const month = dateString.substring(4, 6);
 	const day = dateString.substring(6, 8);
 	const hour = dateString.substring(8, 10);
-	const min = dateString.substring(10, 12);
+	const minute = dateString.substring(10, 12);
 
-	const timeDate = year +
-		'-' + month +
-		'-' + day +
-		'-' + hour +
-		'-' + min;
+	// Create a Date object with the extracted values
+	const inputDate = new Date(`${year}-${month}-${day}T${hour}:${minute}:00`);
 
+	// Check if the input date is valid
+	if (isNaN(inputDate.getTime())) {
+		throw new Error('Invalid date format');
+	}
 
-	// Parse the input date string to create a Date object
-	const inputDate = new Date(timeDate);
-
-
-	// Calculate the date 7 days ago
+	// Calculate the date 7 days after
 	const sevenDaysAfter = new Date(inputDate);
 	sevenDaysAfter.setDate(sevenDaysAfter.getDate() + 7);
 
-	// Format the result as 'YYYY-MM-DD HH-mm-ss'
-	const formattedResult = sevenDaysAfter.toISOString();
+	// Format the result as 'YYYY-MM-DD HH:mm:ss'
+	const formattedResult = sevenDaysAfter.toISOString().slice(0, 16).replace("T", " ");
 
-	return formattedResult;*/
+	return formattedResult;
 }
+
+
 
 // Function to send GET request and update table
 async function getSchedule(dpTerminalName, arrTerminalName, dpDate) {
@@ -337,7 +339,7 @@ async function getSchedule(dpTerminalName, arrTerminalName, dpDate) {
 			const arrTimeCell = row.insertCell(3);
 			let arrPlandTime = schedule.arrPlandTime;
 			try {
-				// Assuming getSevenDaysAfter returns a promise
+				console.log("before get SevenDaysAfter. arrPlandTime : " + arrPlandTime)
 				const result = await getSevenDaysAfter(arrPlandTime);
 				arrTimeCell.textContent = result;
 			} catch (error) {
@@ -513,6 +515,20 @@ $(document).ready(function() {
 		// Call the function to insert data into the input field
 		onRowClick(cityName, 'TerminalSearchInput2');
 	});
+});
+
+
+//달력에서 날짜 7일 이후까지만 가능하도록 제한하기
+$(document).ready(function() {
+	// Set the minimum date to today
+	const today = new Date().toISOString().split('T')[0];
+	document.getElementById('dpDate').min = today;
+
+	// Set the maximum date to 7 days from today
+	const sevenDaysLater = new Date();
+	sevenDaysLater.setDate(sevenDaysLater.getDate() + 7);
+	const maxDate = sevenDaysLater.toISOString().split('T')[0];
+	document.getElementById('dpDate').max = maxDate;
 });
 
 
