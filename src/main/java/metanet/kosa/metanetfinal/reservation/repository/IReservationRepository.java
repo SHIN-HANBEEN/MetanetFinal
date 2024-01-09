@@ -4,7 +4,10 @@ import java.util.HashMap;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
+
+import metanet.kosa.metanetfinal.reservation.model.Reservations;
 
 
 
@@ -69,8 +72,12 @@ public interface IReservationRepository {
 //	// 매수 및 좌석 선택
 //	void selectSeat(int adult, int child, int special, int[] seats);
 	
-	
-	
+	/*
+	 * 예약하기
+	 * 예약확정
+	 */
+	void insertReservationData(@Param("res") Reservations res);
+	void testCount();
 	
 	/*
 	 * 홈 화면에서 출발지, 도착지, 출발시간 골랐을 때, 잔여좌석 보여주기

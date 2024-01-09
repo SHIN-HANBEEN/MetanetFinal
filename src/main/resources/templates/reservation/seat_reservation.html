@@ -263,16 +263,18 @@
 	</div>
 
 	<script th:inline="javascript">
+		
 		var data = [[${mapData}]];
+		
 		var reservationNum = 1;
-		var adaultPrice = 8000;
+		var adultPrice = 8000;
 		var middleChildPrice = 6000;
 		var childPrice = 4000;
 		var occupiedSeatsList = [];
 		var busId;
 		var totalPrice = 0;
 		var routeData;
-		//totalPrice를 보내는건 조작가능하므로 보안적으로 위험할 수 있음, 서버에서 한번더 검증해야함
+		
 		document.addEventListener('DOMContentLoaded', () => {
 
 			console.log(data);
@@ -281,10 +283,10 @@
 			document.querySelector('#depPlandTime').textContent = data.depPlandTime;
 			document.querySelector('#gradeNm').textContent = data.gradeNm;
 			routeData = data;
-			adaultPrice = data.adultCharge;
-			totalPrice = adaultPrice;
-			document.querySelector('#adult').textContent = adaultPrice;
-			document.querySelector('#costs').textContent = adaultPrice.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
+			adultPrice = data.adultCharge;
+			totalPrice = adultPrice;
+			document.querySelector('#adult').textContent = adultPrice;
+			document.querySelector('#costs').textContent = adultPrice.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
 			middleChildPrice = data.middleChildCharge;
 			childPrice = data.childCharge;
 			busId = data.busId;
@@ -307,11 +309,11 @@
 			console.log(seatContainer);
 			const movie = document.getElementById('movie'); // 선택할 영화
 
-			let count = document.querySelector('#count'); // 인원수
-			let costs = document.querySelector('#costs'); // 가격
-			costs.textContent = adaultPrice;
-			var seatsNames = document.querySelector('#selectedseat');
-			document.querySelector('#adult').textContent = adaultPrice;
+            let count = document.querySelector('#count'); // 인원수
+            let costs = document.querySelector('#costs'); // 가격
+            costs.textContent = adultPrice;
+            var seatsNames = document.querySelector('#selectedseat');
+            document.querySelector('#adult').textContent = adultPrice;
 
 			// 선택한 좌석수 텍스트 변경해주기
 
@@ -364,9 +366,9 @@
 			var value_str2 = document.getElementById('select2');
 			var value_str3 = document.getElementById('select3');
 
-			var price1 = adaultPrice * parseInt(value_str1.options[value_str1.selectedIndex].value);
-			var price2 = middleChildPrice * parseInt(value_str2.options[value_str2.selectedIndex].value);
-			var price3 = childPrice * parseInt(value_str3.options[value_str3.selectedIndex].value);
+            var price1 = adultPrice * parseInt(value_str1.options[value_str1.selectedIndex].value);
+            var price2 = middleChildPrice * parseInt(value_str2.options[value_str2.selectedIndex].value);
+            var price3 = childPrice * parseInt(value_str3.options[value_str3.selectedIndex].value);
 
 			document.querySelector('#adult').textContent = price1;
 			document.querySelector('#middleChild').textContent = price2;
@@ -389,61 +391,53 @@
 				var reservationSeatsList = [];
 				var selected = document.querySelectorAll('.selectedSeat');
 
-				for (var value of selected) {
-					reservationSeatsList.push(value.id);
-				}
-
-				var value_str1 = document.getElementById('select1');
-				var value_str2 = document.getElementById('select2');
-				var value_str3 = document.getElementById('select3');
-
-				var adaultNum = parseInt(value_str1.options[value_str1.selectedIndex].value);
-				var middleChildNum = parseInt(value_str2.options[value_str2.selectedIndex].value);
-				var childNum = parseInt(value_str3.options[value_str3.selectedIndex].value);
+                var adultNum = parseInt(value_str1.options[value_str1.selectedIndex].value);
+                var middleChildNum = parseInt(value_str2.options[value_str2.selectedIndex].value);
+                var childNum = parseInt(value_str3.options[value_str3.selectedIndex].value);
 
 				var status;
-				fetch("/routeinfotest", {
-					method: "POST",
-					headers: {
-						"Content-Type": "application/json",
-					},
-					body: JSON.stringify({
-						routeData: routeData,
-						busId: busId,
-						selectedSeats: reservationSeatsList,
-						totalPrice: totalPrice,
-						adaultNum: adaultNum,
-						middleChildNum: middleChildNum,
-						childNum: childNum
-					}),
+                fetch("/routeinfotest", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    routeData: routeData,
+                    busId: busId,
+                    selectedSeats: reservationSeatsList,
+                    totalPrice: totalPrice,
+                    adultNum: adultNum,
+                    middleChildNum: middleChildNum,
+                    childNum: childNum
+                }),
+                })
+                .then((response) => {
+					if(response.status == 400){
+						alert('이미 예약된 좌석이 포함되어 있습니다.')
+						//새로고침
+						window.location.reload();
+						status = 400;
+						return;
+					}else{
+						response.json();
+					}
 				})
-					.then((response) => {
-						if (response.status == 400) {
-							alert('이미 예약된 좌석이 포함되어 있습니다.')
-							//새로고침
-							window.location.reload();
-							status = 400;
-							return;
-						} else {
-							response.json();
-						}
-					})
-					.then((data) => {
-						console.log('다음', data);
-
-						localStorage.setItem('reservationData', JSON.stringify({
-							routeData: routeData,
-							busId: busId,
-							selectedSeats: reservationSeatsList,
-							totalPrice: totalPrice,
-							adaultNum: adaultNum,
-							middleChildNum: middleChildNum,
-							childNum: childNum
-						}));
-						if (status != 400) location.href = "/reservation/payment";
-					}).catch(error => console.log('FetchError'));
-			}
-		}
+                .then((data) => {
+						console.log('다음',data);
+						
+						sessionStorage.setItem('reservationData',JSON.stringify({
+		                    routeData: routeData,
+		                    busId: busId,
+		                    selectedSeats: reservationSeatsList,
+		                    totalPrice: totalPrice,
+		                    adultNum: adultNum,
+		                    middleChildNum: middleChildNum,
+		                    childNum: childNum
+	                	}));
+                		if(status!=400) location.href="/reservation/payment";
+				}).catch(error => console.log('FetchError'));
+            }
+        }
 
 
 	</script>
