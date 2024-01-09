@@ -17,7 +17,7 @@ import metanet.kosa.metanetfinal.reservation.service.ReservationService;
 import metanet.kosa.metanetfinal.reservation.service.SeatsLockSystemService;
 
 @RestController
-public class reservationRestController {
+public class ReservationRestController {
 	
 	@Autowired
 	ReservationService reservationService;
