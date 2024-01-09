@@ -2,7 +2,30 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="metanet.kosa.metanet.reservation.repository.IReservationRepository">
-
+<mapper namespace="metanet.kosa.metanetfinal.reservation.repository.IReservationRepository">
+	<insert id="insertReservationData" parameterType="metanet.kosa.metanetfinal.reservation.model.Reservations">
+	INSERT INTO RESERVATIONS
+		(RES_ID, MEMBER_ID, PHONE_NUM, ROUTE_ID, BUS_ID, SEAT_ID, DISCOUNT_ID, RES_DATE, PAY_ID, TOTAL_PRICE, CANCLED_DATE)
+	VALUES
+		(res_id.NEXTVAL, 
+		<if test="res.memberId == 0">
+        	null
+    	</if>
+    	<if test="res.memberId gte 1">
+        	#{res.memberId}
+    	</if>
+		, #{res.phoneNum}, #{res.routeId}, #{res.busId}, #{res.seatId}, #{res.discountId},
+		 #{res.resDate}, #{res.payId}, #{res.totalPrice},
+		<if test="res.cancledDate == null">
+        	null
+    	</if>
+    	<if test="res.cancledDate != null">
+        	#{res.cancledDate}
+    	</if>
+		 )
+	</insert>
 	
+	<select id="testCount">
+	select count(*) from reservations
+	</select>
 </mapper>
