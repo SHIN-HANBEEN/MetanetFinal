@@ -27,7 +27,10 @@ public class reservationRestController {
 	SeatsLockSystemService seatsLockSystemService;
 	
 	@GetMapping("/routeinfotest")
-	public Map<String, Object> getInfoForReservation(@RequestParam String departureId, @RequestParam String arrivalId, @RequestParam String departureTime) {
+	public Map<String, Object> getInfoForReservation(
+			@RequestParam String departureId, 
+			@RequestParam String arrivalId, 
+			@RequestParam String departureTime) {
 		String info = 
 				"{\r\n"
 				+ "   \"arrPlaceNm\": \"강릉시외터미널\",\r\n"

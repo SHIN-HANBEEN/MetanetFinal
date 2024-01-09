@@ -21,6 +21,8 @@ function updateTerminalTable1(searchTerm) {
 			// Clear existing table rows
 			tableBody.innerHTML = '';
 
+			console.log(data);
+
 			// Add new rows based on the returned data
 			data.forEach(terminal => {
 				const row = tableBody.insertRow();
@@ -180,65 +182,8 @@ document.getElementById('terminalTable2').addEventListener('click', function(eve
 	}
 });
 
-
-
-
-// ============== 시간표 조회 ===============
-// Function to send GET request and update table
-function getSchedule(dpTerminalName, arrTerminalName, dpDate) {
-	// Send GET request to /search-terminal with the searchTerm
-	fetch(`/search-schedule?dpTerminalName=${encodeURIComponent(dpTerminalName)}
-				&arrTerminalName=${encodeURIComponent(arrTerminalName)}
-				&dpDate=${encodeURIComponent(dpDate)}
-				`, {
-		method: 'GET',
-		headers: {
-			'Content-Type': 'application/json',
-			// You can add additional headers if needed
-		},
-	})
-		.then(response => response.json())
-		.then(data => {
-			// Get the table body element
-			const tableBody = document.getElementById('scheduleTable1').getElementsByTagName('tbody')[0];
-
-			// Clear existing table rows
-			tableBody.innerHTML = '';
-			tableBody.innerHTML = data.body;
-
-			// Add new rows based on the returned data
-			data.body.items.item.forEach(schedule => {
-				const row = tableBody.insertRow();
-				// Modify the code based on your data structure to populate different cells
-				const depPlaceCell = row.insertCell(0);
-				depPlaceCell.textContent = schedule.depPlaceNm;
-
-				const depTimeCell = row.insertCell(1);
-				depTimeCell.textContent = schedule.depPlandTime;
-
-				const arrPlaceCell = row.insertCell(2);
-				arrPlaceCell.textContent = schedule.arrPlaceNm;
-
-				const arrTimeCell = row.insertCell(3);
-				arrTimeCell.textContent = schedule.arrPlandTime;
-
-				const chargeCell = row.insertCell(4);
-				chargeCell.textContent = schedule.charge;
-
-				const gradeCell = row.insertCell(5);
-				gradeCell.textContent = schedule.gradeNm;
-
-				const reservationCell = row.insertCell(6);
-				reservationCell.textContent = '예매하기';
-			})
-			.catch(error => {
-				console.error('Error fetching terminal data:', error);
-			});
-		});
-}
-
-// Add event listener for button click
-document.getElementById('submitButton1').addEventListener('click', function() {
+// 검색 버튼에 이벤트 리스너 설정 해주기
+document.getElementById('submitButton1').addEventListener('click', async function() {
 	const dpTerminalName = document.getElementById('TerminalSearchInput1').value.trim();
 	const arrTerminalName = document.getElementById('TerminalSearchInput2').value.trim();
 	const dpDate = document.getElementById('dpDate').value.trim();
@@ -250,8 +195,13 @@ document.getElementById('submitButton1').addEventListener('click', function() {
 		// 창을 보이게 설정
 		scheduleDiv.classList.remove('metanet-hidden');
 
-		// Call the function to update table data
-		getSchedule(dpTerminalName, arrTerminalName, dpDate);
+		try {
+			// Call the function to update table data
+			const data = await getSchedule(dpTerminalName, arrTerminalName, dpDate);
+			console.log(data);
+		} catch (error) {
+			console.error('Error fetching schedule data:', error);
+		}
 	} else {
 		// 창을 안 보이게 설정
 		scheduleDiv.classList.add('metanet-hidden');
@@ -260,6 +210,157 @@ document.getElementById('submitButton1').addEventListener('click', function() {
 		document.getElementById('scheduleTable1').getElementsByTagName('tbody')[0].innerHTML = '';
 	}
 });
+
+
+
+// ============== 시간표 조회 ===============
+function getSevenDaysAgo(dateString) {
+	// Parse the input date string to create a Date object
+	const inputDate = new Date(dateString);
+
+	// Calculate the date 7 days ago
+	const sevenDaysAgo = new Date(inputDate);
+	sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7);
+
+	// Format the result as 'YYYY-MM-DD'
+	const formattedResult = sevenDaysAgo.toISOString().slice(0, 10);
+
+	return formattedResult;
+}
+
+// Function to send GET request and update table
+async function getSchedule(dpTerminalName, arrTerminalName, dpDate) {
+	console.log("[[AOP Before]] - getSevenDaysAgo");
+	const resultDateString = getSevenDaysAgo(dpDate);
+
+	try {
+		// Send GET request to /search-schedule with the searchTerm
+		const response = await fetch(
+			`/search-schedule?dpTerminalName=${dpTerminalName}
+      &arrTerminalName=${arrTerminalName}
+      &dpDate=${resultDateString}`,
+			{
+				headers: {
+					"Access-Control-Allow-Origin": "*", // Required for CORS support to work
+					"Access-Control-Allow-Credentials": true // Required for cookies, authorization headers with HTTPS
+				}
+			}
+		);
+
+		console.log(response);
+
+		if (!response.ok) {
+			throw new Error('Network response was not ok');
+		}
+
+		const data = await response.json();
+
+		console.log(data);
+
+		// Get the table body element
+		const tableBody = document.getElementById('scheduleTable1').getElementsByTagName('tbody')[0];
+
+		// Clear existing table rows
+		tableBody.innerHTML = '';
+
+		// Add new rows based on the returned data
+		data.response.body.items.item.forEach(async schedule => {
+			const row = tableBody.insertRow();
+
+			// Populate table cells with schedule data
+			const depPlaceCell = row.insertCell(0);
+			let depPlaceNm = schedule.depPlaceNm;
+			depPlaceCell.textContent = depPlaceNm;
+
+			const depTimeCell = row.insertCell(1);
+			let depPlandTime = schedule.depPlandTime;
+			depTimeCell.textContent = depPlandTime;
+
+			const arrPlaceCell = row.insertCell(2);
+			let arrPlaceNm = schedule.arrPlaceNm;
+			arrPlaceCell.textContent = arrPlaceNm;
+
+			const arrTimeCell = row.insertCell(3);
+			let arrPlandTime = schedule.arrPlandTime;
+			arrTimeCell.textContent = arrPlandTime;
+
+			const chargeCell = row.insertCell(4);
+			let charge = schedule.charge;
+			chargeCell.textContent = charge;
+
+			const gradeCell = row.insertCell(5);
+			let gradeNm = schedule.gradeNm
+			gradeCell.textContent = gradeNm;
+
+			const remainingSeats = row.insertCell(6);
+			console.log("[[AOP Before]] - getRemainingSeats");
+
+			// 문제였던 부분
+			try {
+				const remainingSeatsValue = await getRemainingSeats(depPlaceNm, arrPlaceNm,
+					depPlandTime, arrPlandTime, gradeNm, charge);
+
+				console.log("잔여좌석 뿌리기 전 최종 값 : " + remainingSeatsValue);
+
+				remainingSeats.textContent = remainingSeatsValue;
+			} catch (error) {
+				console.error('Error fetching remaining seats:', error);
+			}
+
+			const reservationCell = row.insertCell(7);
+			// Create the Info button with a link that includes parameters
+			const infoButton = document.createElement("button");
+			infoButton.type = "button";
+			infoButton.className = "btn bg-gradient-info";
+			infoButton.textContent = "Info";
+
+			// Attach a click event listener to handle the button click
+			infoButton.addEventListener("click", async () => {
+				try {
+					// Include the parameters in the URL
+					const url = `/reservation/seats-selection?dpTerminalName=${encodeURIComponent(depPlaceNm)}&arrTerminalName=${encodeURIComponent(arrPlaceNm)}&departureTime=${encodeURIComponent(depPlandTime)}`;
+
+					// Redirect to the URL
+					window.location.href = url;
+				} catch (error) {
+					console.error('Error handling Info button click:', error);
+				}
+			});
+
+			// Append the button to the reservationCell
+			reservationCell.appendChild(infoButton);
+		});
+	} catch (error) {
+		console.error('Error fetching terminal data:', error);
+	}
+}
+
+// getRemainingSeats => get-remaining-seats 로 Get 요청 보내기
+async function getRemainingSeats(depPlaceNm, arrPlaceNm, depPlandTime, arrPlandTime,
+	gradeNm, charge) {
+	try {
+		let result;
+		await fetch(
+			`/get-remaining-seats?depPlaceNm=${depPlaceNm}
+      				&arrPlaceNm=${arrPlaceNm}
+      				&depPlandTime=${depPlandTime}
+      				&arrPlandTime=${arrPlandTime}
+      				&gradeNm=${gradeNm}
+      				&charge=${charge}`
+		).then(
+			(response) => response.text()
+		).then(
+			(data) => {
+				result = data;
+			}
+		);
+		console.log("result 결과 : " + result);
+		return result;
+	} catch (error) {
+		console.error('Error fetching data:', error);
+	}
+}
+
 
 
 
