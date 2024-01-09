@@ -86,21 +86,21 @@
 
 											<div class="nav-wrapper position-relative end-0 mb-4">
 												<ul class="nav nav-pills nav-fill p-1" role="tablist">
-													<li class="nav-item" onclick="setGender('남성', event)">
+													<li class="nav-item" onclick="setGender('MALE', event)">
 														<a class="nav-link mb-0 px-0 py-1 active" data-bs-toggle="tab" href="#profile-tabs-simple"
-															role="tab" aria-controls="profile" aria-selected="false" data-gender="남성">
+															role="tab" aria-controls="profile" aria-selected="false" data-gender="MALE">
 															남성
 														</a>
 													</li>
-													<li class="nav-item" onclick="setGender('여성', event)">
+													<li class="nav-item" onclick="setGender('FEMALE', event)">
 														<a class="nav-link mb-0 px-0 py-1" data-bs-toggle="tab" href="#dashboard-tabs-simple"
-															role="tab" aria-controls="dashboard" aria-selected="false" data-gender="여성">
+															role="tab" aria-controls="dashboard" aria-selected="false" data-gender="FEMALE">
 															여성
 														</a>
 													</li>
 												</ul>
 											</div>
-											<input type="hidden" id="selectedGender" name="sex" value="남자" autocomplete="off" />
+											<input type="hidden" id="selectedGender" name="sex" value="MALE" autocomplete="off" />
 
 											<div class="input-group input-group-outline mb-3">
 												<label class="form-label" for="phoneNum">휴대폰 번호 입력</label>
@@ -156,6 +156,16 @@
 
 	<!--성별-->
 	<script>
+		document.addEventListener('DOMContentLoaded', () => {
+		console.log('slkjdnflksnlk');
+		var token = sessionStorage.getItem("X-AUTH-TOKEN");
+		console.log(token);
+		//document.getElementById('testbutton').addEventListener('click', showAlert);
+		//function showAlert()
+		//alert('test');
+		
+		});
+		
 		function setGender(gender) {
 			// Set the selected gender value to the hidden input field
 			document.getElementById('selectedGender').value = gender;

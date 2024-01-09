@@ -11,13 +11,15 @@ import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import metanet.kosa.metanetfinal.jwt.JwtTokenProvider;
 import metanet.kosa.metanetfinal.member.model.Members;
@@ -40,8 +42,11 @@ public class MemberController {
 	@Autowired
 	PasswordEncoder passwordEncoder;
 
+	
 	@PostMapping("/login")
-	public ResponseEntity<String> login(@RequestParam String id, @RequestParam String password) {
+	@ResponseBody
+	public ResponseEntity<String> login(@RequestParam String id, @RequestParam String password, 
+			HttpServletResponse response) {
 		/*
 		 * web 에서 보낸 데이터에서 "userid" 키 값을 꺼내서 그걸로 Member 객체를 얻어내고, 유효성 검사를 마친 후에는 token 을
 		 * 만들어서 반환해주면 된다.
@@ -53,56 +58,24 @@ public class MemberController {
 		if (!passwordEncoder.matches(password, member.getPassword())) {
 			throw new IllegalArgumentException("비밀번호 오류");
 		}
-		String token = tokenProvider.generateToken(member);
-		System.out.println("token" + token);
+		/*
+		 * 비밀번호 검증이 완료 되면 쿠키에 JWT 토큰을 넣어서 생성
+		 */
+		Cookie cookie = new Cookie("access_token", tokenProvider.generateToken(member));
+		cookie.setMaxAge(60*60*24*7);
+		cookie.setHttpOnly(true);
+		cookie.setPath("/");
+		
+		response.addCookie(cookie);
 
-		return ResponseEntity.ok(token);
-	}
-
-//	 @PostMapping("/login2")
-//	 @ResponseBody
-//     public String login2(@RequestBody Map<String, String> user) {
-//          /*
-//          * web 에서 보낸 데이터에서 "userid" 키 값을 꺼내서 그걸로
-//          * Member 객체를 얻어내고,
-//          * 유효성 검사를 마친 후에는 token 을 만들어서 반환해주면 된다.
-//          */
-//          Members member = memberService.getMemberInfo(user.get("id"));
-//          System.out.println("members : "+member);
-//          if (member==null) {
-//               throw new IllegalArgumentException("사용자가 없습니다");
-//          }
-//          System.out.println("password :" + user.get("password"));
-//          System.out.println(member.getPassword());
-//
-//          if(!passwordEncoder.matches(user.get("password"), member.getPassword())) {
-//               throw new IllegalArgumentException("비밀번호 오류");
-//          }
-//          return tokenProvider.generateToken(member);
-//     }
-	/*
-	 * @PostMapping("/login") public String login(@RequestParam String id
-	 * , @RequestParam String password) {
-	 * 
-	 * web 에서 보낸 데이터에서 "userid" 키 값을 꺼내서 그걸로 Member 객체를 얻어내고, 유효성 검사를 마친 후에는 token 을
-	 * 만들어서 반환해주면 된다.
-	 * 
-	 * Members member = memberService.getMemberInfo(id); System.out.println(member);
-	 * if (member == null) { throw new IllegalArgumentException("사용자가 없습니다"); } if
-	 * (!passwordEncoder.matches(password, member.getPassword())) { throw new
-	 * IllegalArgumentException("비밀번호 오류"); } return
-	 * tokenProvider.generateToken(member); }
-	 */
-
-	@GetMapping("/test_jwt")
-	public String testJwt(HttpServletRequest request) {
-		String token = tokenProvider.resolveToken(request);
-		Authentication auth = tokenProvider.getAuthentication(token);
-		return tokenProvider.getUserId(token);
+		return ResponseEntity.ok("Login successful");
 	}
 
 	@GetMapping(value = "/signin")
 	public String signin(HttpSession session, Model model) {
+		/*UUID 로 CSRF토큰을 생성하여 
+		 * 
+		 */
 		String csrfToken = UUID.randomUUID().toString();
 		session.setAttribute("csrfToken", csrfToken);
 		Members member = new Members();
@@ -116,8 +89,9 @@ public class MemberController {
 		System.out.println(csrfToken);
 		if (csrfToken == null || "".equals(csrfToken)) {
 			throw new RuntimeException("CSRF 토큰이 없습니다.");
+			
 		} else if (!csrfToken.equals(session.getAttribute("csrfToken"))) {
-			throw new RuntimeException("잘 못된 접근이 감지되었습니다.");
+			throw new RuntimeException("잘못된 접근이 감지되었습니다.");
 		}
 		try {
 			if (!member.getPassword().equals(member.getPassword2())) {
@@ -128,7 +102,7 @@ public class MemberController {
 			PasswordEncoder pwEncoder = PasswordEncoderFactories.createDelegatingPasswordEncoder();
 			String encodedPw = pwEncoder.encode(member.getPassword());
 			member.setPassword(encodedPw);
-			member.setRole("USER_ROLE");
+			member.setRole("ROLE_USER");
 			member.setMileage(0);
 			memberService.signin(member);
 		} catch (DuplicateKeyException e) {

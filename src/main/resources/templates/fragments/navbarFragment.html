@@ -22,8 +22,8 @@
 					<div class="collapse navbar-collapse w-100 pt-3 pb-2 py-lg-0 ms-lg-8 ps-lg-5" id="navigation">
 						<ul class="navbar-nav navbar-nav-hover ms-auto">
 							<li class="nav-item dropdown dropdown-hover mx-2 ms-lg-6">
-								<a href="mypage" class="nav-link ps-2 d-flex cursor-pointer align-items-center" 
-								aria-expanded="false">
+								<a href="mypage" id="mypageLink" class="nav-link ps-2 d-flex cursor-pointer align-items-center"
+									aria-expanded="false">
 									<i class="material-icons opacity-6 me-2 text-md">dashboard</i>
 									마이페이지
 
@@ -69,28 +69,3 @@
 </div>
 
 
-<script>
-	// 토큰을 서버로 보내는 함수
-	function sendTokenToServer(page) {
-		var token = sessionStorage.getItem('token');
-
-		$.ajax({
-			type: 'GET',
-			url: '/' + page,
-			headers: {
-				'Authorization': 'Bearer ' + token
-			},
-			success: function (data) {
-				// 서버 응답 처리
-				console.log(data);
-			},
-			error: function (error) {
-				// 에러 처리
-				console.error(error);
-			}
-		});
-	}
-
-	sendTokenToServer('mypage');
-
-</script>

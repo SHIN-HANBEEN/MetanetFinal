@@ -8,6 +8,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 
+import jakarta.servlet.http.Cookie;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.Jwts;
@@ -36,50 +37,55 @@ public class JwtTokenProvider {
 
 	/**
 	 * 토큰을 만들어 반환
+	 * 
 	 * @param member 사용자 정보를 저장한 객체, 클래임에 사용자 정보를 저장하기 위해 필요
 	 * @return 생성된 토큰
 	 */
 	public String generateToken(Members member) {
-		Claims claims = Jwts.claims()
-				.subject(member.getId())
-				.issuer(member.getName())
-				.add("roles", member.getRole())
+		Claims claims = Jwts.claims().subject(member.getId()).issuer(member.getName()).add("roles", member.getRole())
 				.build();
 		Date now = new Date();
-		return Jwts.builder()
-				.claims(claims) // sub, iss, roles
+		return Jwts.builder().claims(claims) // sub, iss, roles
 				.issuedAt(now) // iat
-				.expiration(new Date(now.getTime() + tokenValidTime))
-				.signWith(key)  // 암호화에 사용할 키 설정
+				.expiration(new Date(now.getTime() + tokenValidTime)).signWith(key) // 암호화에 사용할 키 설정
 				.compact();
 	}
 
 	/**
 	 * Request의 Header에서 token 값을 가져옴 "X-AUTH-TOKEN" : "TOKEN값'
+	 * 
 	 * @param request 요청객체
 	 * @return 토큰
 	 */
 	public String resolveToken(HttpServletRequest request) {
-		return request.getHeader("X-AUTH-TOKEN");
+		Cookie[] cookies = request.getCookies();
+		String accessToken = null;
+		if (cookies != null) {
+			for (Cookie cookie : cookies) {
+				if ("access_token".equals(cookie.getName())) {
+					accessToken = cookie.getValue();
+					// 여기에서 accessToken 활용
+					// 예: 사용자의 인증 정보를 확인하거나 다른 작업 수행
+				}
+			}
+		}
+		return accessToken;
 	}
 
 	/**
 	 * 토큰에서 회원 정보 추출
+	 * 
 	 * @param token 토큰
 	 * @return 토큰에서 사용자 아이디를 추출해서 반환
 	 */
 	public String getUserId(String token) {
 		log.info(token);
-		return Jwts.parser()
-				.verifyWith(key)
-				.build()
-				.parseSignedClaims(token)
-				.getPayload()
-				.getSubject();
+		return Jwts.parser().verifyWith(key).build().parseSignedClaims(token).getPayload().getSubject();
 	}
 
 	/**
 	 * JWT 토큰에서 인증 정보 조회
+	 * 
 	 * @param token 토큰
 	 * @return 인증정보 Authentication 객체
 	 */
@@ -91,15 +97,13 @@ public class JwtTokenProvider {
 
 	/**
 	 * 토큰의 유효성과 만료일자 확인
+	 * 
 	 * @param token 토큰
 	 * @return 토큰이 유효한지 확인, 유효하면 true 반환
 	 */
 	public boolean validateToken(String token) {
 		try {
-			Jws<Claims> claims = Jwts.parser()
-					.verifyWith(key)
-					.build()
-					.parseSignedClaims(token);
+			Jws<Claims> claims = Jwts.parser().verifyWith(key).build().parseSignedClaims(token);
 			return !claims.getPayload().getExpiration().before(new Date());
 		} catch (Exception e) {
 			return false;
