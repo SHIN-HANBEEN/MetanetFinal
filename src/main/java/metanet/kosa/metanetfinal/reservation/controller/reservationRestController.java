@@ -1,7 +1,5 @@
 package metanet.kosa.metanetfinal.reservation.controller;
 
-import static org.hamcrest.CoreMatchers.instanceOf;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -66,5 +64,25 @@ public class reservationRestController {
 		seatsLockSystemService.seatsLocking10m(busId, selectedSeatsList);
 		System.out.println("총가격"+request.get("totalPrice"));
 		return new ResponseEntity<Map<String, Object>>(request, HttpStatusCode.valueOf(200));
+	}
+	
+	 // 결제 후 정보 받기	
+	@PostMapping("/reservation/payOk")
+	public ResponseEntity<Map<String, Object>> paytestOk(@RequestBody Map<String, Object> request) {
+		System.out.println(request.toString());
+		
+		List<Object> li = (ArrayList<Object>) request.get("selectedSeats");
+		List<Integer> selectedSeatsList =  new ArrayList<>();
+		li.stream().map(obj -> Integer.parseInt(obj.toString())).forEach(selectedSeatsList::add);
+		//좌석잠금큐에서 삭제
+		seatsLockSystemService.paymentCompleteProcess(Integer.parseInt(request.get("busId").toString()), selectedSeatsList);
+		//좌석예약 DB Insert
+		boolean isInserted = reservationService.reservationPaymentComplete(request, selectedSeatsList);
+		if(!isInserted) {
+			//Insert 실패시
+			return new ResponseEntity<>(HttpStatusCode.valueOf(500));
+		}
+		return new ResponseEntity<Map<String, Object>>(request, HttpStatusCode.valueOf(200));
+		
 	}
 }

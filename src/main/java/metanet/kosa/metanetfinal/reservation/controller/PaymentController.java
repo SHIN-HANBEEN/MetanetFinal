@@ -93,13 +93,7 @@ public class PaymentController {
 		// return "reservation/refundtest";
 	}
 	
-	 // 결제 후 정보 받기	
-	@PostMapping("/reservation/payOk")
-	public void paytestOk(@RequestBody Map<String, Object> req) {
-		System.out.println(req.toString());
-		System.out.println("paytestOk");
-		
-	}
+
 	
 	@GetMapping("/paymentid")
 	public Map<String, String> getMerchant_uid() {
