@@ -121,6 +121,8 @@ public class RouteRestController {
 		int price = Integer.valueOf(trimedCharge);
 		Date departureTime = null;
 		Date arrivalTime = null;
+		String dbDepartureTime = ""; //db에서 검색할 때 사용할 형태로 가공하기
+		String dbArrivalTime = ""; //db에서 검색할 때 사용할 형태로 가공하기
 		// 'YYYY-MM-DD HH:mm' 형태로 들어오는 출발, 도착 시간 데이터
 		try {
 			// Parse the string into separate components
@@ -132,6 +134,7 @@ public class RouteRestController {
 
 			// departureTime 설정
 			departureTime = getSqlDate(year, month, day, hour, minute);
+			dbDepartureTime = trimedDepPlandTime.substring(0, 4) + month + day + hour + minute;
 
 			// Parse the string into separate components
 			int year2 = Integer.parseInt(trimedArrPlandTime.substring(0, 4));
@@ -142,6 +145,7 @@ public class RouteRestController {
 
 			// departureTime 설정
 			arrivalTime = getSqlDate(year2, month2, day2, hour2, minute2);
+			dbArrivalTime = trimedArrPlandTime.substring(0, 4) + month2 + day2 + hour2 + minute2;
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}

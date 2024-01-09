@@ -319,9 +319,9 @@ async function getSchedule(dpTerminalName, arrTerminalName, dpDate) {
 			let depResultTime;
 			try {
 				// Assuming getSevenDaysAfter returns a promise
-				const result = await getSevenDaysAfter(depPlandTime);
+				const result = await getSevenDaysAfter(depPlandTime); // 'YYYY-MM-DD HH:mm' 형태로 저장된다.
 				depTimeCell.textContent = result;
-				depResultTime = result;
+				depResultTime = result; 
 			} catch (error) {
 				console.error("Error retrieving data:", error);
 			}
@@ -343,7 +343,7 @@ async function getSchedule(dpTerminalName, arrTerminalName, dpDate) {
 			let arrResultTime;
 			try {
 				console.log("before get SevenDaysAfter. arrPlandTime : " + arrPlandTime)
-				const result = await getSevenDaysAfter(arrPlandTime);
+				const result = await getSevenDaysAfter(arrPlandTime); // 'YYYY-MM-DD HH:mm' 형태로 저장된다.
 				arrResultTime = result;
 				arrTimeCell.textContent = result;
 			} catch (error) {
@@ -373,6 +373,7 @@ async function getSchedule(dpTerminalName, arrTerminalName, dpDate) {
 			try {
 				const remainingSeatsValue = await getRemainingSeats(depPlaceNm, arrPlaceNm,
 					depResultTime, arrResultTime, gradeNm, charge);
+					//잔여좌석이 저장된다.
 
 				console.log("잔여좌석 뿌리기 전 최종 값 : " + remainingSeatsValue);
 
@@ -396,7 +397,7 @@ async function getSchedule(dpTerminalName, arrTerminalName, dpDate) {
 					const url = `/reservation/seats-selection
 					?dpTerminalName=${encodeURIComponent(depPlaceNm)}
 					&arrTerminalName=${encodeURIComponent(arrPlaceNm)}
-					&departureTime=${encodeURIComponent(depResultTime)}`;
+					&departureTime=${encodeURIComponent(depResultTime)}`;  // 'YYYY-MM-DD HH:mm' 형태로 저장된다.
 
 					// Redirect to the URL
 					window.location.href = url;
@@ -418,10 +419,10 @@ async function getRemainingSeats(depPlaceNm, arrPlaceNm, depPlandTime, arrPlandT
 	gradeNm, charge) {
 	try {
 		let result;
-		await fetch(
+		await fetch(// 'YYYY-MM-DD HH:mm' 형태로 time 이 들어간다.
 			`/get-remaining-seats?depPlaceNm=${depPlaceNm}
       				&arrPlaceNm=${arrPlaceNm}
-      				&depPlandTime=${depPlandTime}
+      				&depPlandTime=${depPlandTime} 
       				&arrPlandTime=${arrPlandTime}
       				&gradeNm=${gradeNm}
       				&charge=${charge}`

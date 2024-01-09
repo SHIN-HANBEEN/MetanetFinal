@@ -82,13 +82,23 @@ public class ReservationService implements IReservationService{
 	@SuppressWarnings("deprecation")
 	@Transactional
 	@Override
-	public Map<String, Object> getDataForSeatsSelection(String departureId, String arrivalId, String departureTime) {
+	public Map<String, Object> getDataForSeatsSelection(
+			String departureId, 
+			String arrivalId, 
+			String departureTime) { //202401082140 형태로 값이 전달된다. (reservationPageController 참고)
 		Map<String, Object> data = new HashMap<>();
+		
 		String arrPlaceNm = routeRepository.getTerminalNameByTerminalId(arrivalId);
 		String depPlaceNm = routeRepository.getTerminalNameByTerminalId(departureId);
+		
+		//departureTime = 202401082140 같은 형식으로 들어옵니다.
 		Routes route = routeRepository.getRoute(departureId, arrivalId, departureTime);
-		List<Integer> occupiedBusSeats = busesRepository.getOccupiedBusSeats(departureId, arrivalId, departureTime);
-		List<Integer> discountedCost = busesRepository.getDiscountedCostOfBusSeats(departureId, arrivalId, departureTime);
+		
+		List<Integer> occupiedBusSeats = 
+				busesRepository.getOccupiedBusSeats(departureId, arrivalId, departureTime);
+		
+		List<Integer> discountedCost = 
+				busesRepository.getDiscountedCostOfBusSeats(departureId, arrivalId, departureTime);
 		
 		data.put("arrPlaceNm", arrPlaceNm);
 		data.put("depPlaceNm", depPlaceNm);

@@ -39,12 +39,16 @@ public interface IRouteRepository {
 	 * 터미널 ID로 터미널 이름조회
 	 */
 	String getTerminalNameByTerminalId(String terminalId);
+	
 	/*
 	 * Routes 객체 반환 By 출발지 도착지 출발시간
+	 * //departureTime = 202401082140 같은 형식으로 들어옵니다.
 	 */
 	Routes getRoute(@Param("departureId") String departureId, 
 			@Param("arrivalId") String arrivalId, 
 			@Param("departureTime") String departureTime);
+	
+	
 	/*
 	 * 버스등급조회 By 노선 ID
 	 */
