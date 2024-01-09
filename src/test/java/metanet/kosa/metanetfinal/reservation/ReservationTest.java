@@ -22,7 +22,7 @@ public class ReservationTest {
 							.resId(0)
 							.memberId(0)
 							.phoneNum("11111111")
-							.routeId("479f662a-d02f-468c-b109-f5480ce2863a")
+							.routeId("80e83662-22a0-498b-bdf7-ac4c5fc86e7c")
 							.busId(2)
 							.seatId(4)
 							.discountId(2)

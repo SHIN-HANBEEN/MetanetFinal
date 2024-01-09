@@ -84,7 +84,7 @@
 		//문서가 준비되면 제일 먼저 실행
 		$(document).ready(function () {
 			
-			localData = JSON.parse(localStorage.getItem("reservationData"));
+			localData = JSON.parse(sessionStorage.getItem("reservationData"));
 			console.log(localData);
 			document.querySelector('#startToEnd').textContent = localData.routeData.depPlaceNm + '---->' + localData.routeData.arrPlaceNm;
 			document.querySelector('#depPlandTime').textContent = localData.routeData.depPlandTime;
@@ -92,8 +92,7 @@
 			document.querySelector('#ageType').textContent = '성인 '+ localData.adultNum + ' 중고생 ' + localData.middleChildNum + ' 아동 ' + localData.childNum;
 			document.querySelector('#selectedSeats').textContent = localData.selectedSeats;
 			document.querySelector('#totalPrice').textContent = localData.totalPrice;
-			sessionStorage.removeItem("reservationData");
-			var payId= createPaymentId();
+			//sessionStorage.removeItem("reservationData");
 		});
 
 		//전화번호

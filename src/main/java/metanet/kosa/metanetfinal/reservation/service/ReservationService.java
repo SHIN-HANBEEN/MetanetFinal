@@ -148,18 +148,17 @@ public class ReservationService implements IReservationService{
 		int adultNum = Integer.parseInt(payData.get("adultNum").toString());
 		int middleChildNum = Integer.parseInt(payData.get("middleChildNum").toString());
 		int childNum = Integer.parseInt(payData.get("childNum").toString());
-		
+		//할인아이디 집어넣는 큐
 		Queue<Integer> q = new LinkedList<>();
 		
 		for (int i = 0; i < adultNum; i++) q.add(1);
 		for (int i = 0; i < middleChildNum; i++) q.add(2);
 		for (int i = 0; i < childNum; i++) q.add(3);
-		
 		for (Integer seatId : selectedSeatsList) {
 			Reservations reservation = 
 					Reservations.builder()
 								.resId(0)
-								.memberId(1)
+								.memberId(0)
 								.phoneNum(payData.get("phoneNum").toString())
 								.routeId(payData.get("routeId").toString())
 								.busId(Integer.parseInt(payData.get("busId").toString()) )

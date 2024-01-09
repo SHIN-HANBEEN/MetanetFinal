@@ -383,17 +383,22 @@
 
 		document.getElementById("btn").addEventListener("click", btnClick);
 		function btnClick() {
-			console.log('click!!!');
+			//console.log('click!!!');
 			const selectedSeatCount = document.querySelectorAll('.selectedSeat').length;
 			if (selectedSeatCount != reservationNum) {
 				alert('선택하신 승차권 매수와 선택한 좌석수를 다릅니다. 좌석을 다시 선택해 주십시오.');
 			} else {
 				var reservationSeatsList = [];
 				var selected = document.querySelectorAll('.selectedSeat');
-
-                var adultNum = parseInt(value_str1.options[value_str1.selectedIndex].value);
-                var middleChildNum = parseInt(value_str2.options[value_str2.selectedIndex].value);
-                var childNum = parseInt(value_str3.options[value_str3.selectedIndex].value);
+				for(var value of selected){
+					reservationSeatsList.push(value.id);
+				}
+				var value_str1 = document.getElementById('select1');
+				var value_str2 = document.getElementById('select2');
+				var value_str3 = document.getElementById('select3');
+        var adultNum = parseInt(value_str1.options[value_str1.selectedIndex].value);
+        var middleChildNum = parseInt(value_str2.options[value_str2.selectedIndex].value);
+        var childNum = parseInt(value_str3.options[value_str3.selectedIndex].value);
 
 				var status;
                 fetch("/routeinfotest", {
