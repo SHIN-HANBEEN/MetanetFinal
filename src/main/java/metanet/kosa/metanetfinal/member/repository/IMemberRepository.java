@@ -1,6 +1,8 @@
 package metanet.kosa.metanetfinal.member.repository;
 
 
+import java.util.List;
+
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
@@ -21,6 +23,10 @@ public interface IMemberRepository {
 	 */
 	void register(Members member); 
 	
+	/*
+	 * 권한 조회
+	 */
+	List<String> getRoles(String memberid);
 	/*
 	 * 아이디 찾기 : 전화번호로 아이디 조회
 	 */

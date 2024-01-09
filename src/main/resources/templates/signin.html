@@ -27,6 +27,8 @@
 
 	<!-- 커스텀 CSS -->
 	<link href="../assets/css/final.css" rel="stylesheet" />
+	<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
 </head>
 
 <body>
@@ -38,327 +40,108 @@
 		<div class="row">
 			<div class="col-lg-12 metanet-page-header" style="height: 90vh; background-image: url('./assets/img/bus.png');">
 				<span class="mask bg-gradient-dark opacity-6"></span>
-				<div class="container-fluid metanet-mt-24">
-					<div class="row">
-						<div class="col-lg-12">
-							<div class="card card-body shadow-xl mx-3 mx-md-11 mt-n12">
+				<div class="container-fluid metanet-pt-8">
 
-								<div class="section text-center">
-									<h2 class="title">예매하기</h2>
-									<div class="row border-radius-md pb-4 p-3 mx-sm-0 mx-1 position-relative">
-										<div class="col-sm-12 col-md-6 col-lg-3 mt-lg-n2 mt-2">
-											<label class="ms-0">출발지</label>
-											<div class="row">
-												<div class="col-sm-9 col-md-9 col-lg-9" style="padding: 0px;">
-													<div class="input-group input-group-dynamic mb-4">
-														<input class="form-control" placeholder="출발 터미널 검색" type="text">
-													</div>
-												</div>
-												<div class="col-sm-3 col-md-3 col-lg-3" style="padding: 0px;">
-													<button class="btn btn-dark btn-icon btn" data-bs-toggle="modal"
-														data-bs-target="#exampleModal" type="button" style="margin: 8px 8px 0px 0px;">
-														<div class="d-flex align-items-center">
-															<i class="fas fa-search" aria-hidden="true"></i>
-														</div>
-													</button>
-												</div>
-											</div>
-										</div>
-										<div class="col-sm-12 col-md-6 col-lg-3 mt-lg-n2 mt-2">
-											<label class="ms-0">도착지</label>
-											<div class="row">
-												<div class="col-sm-9 col-md-9 col-lg-9" style="padding: 0px;">
-													<div class="input-group input-group-dynamic mb-4">
-														<input class="form-control" placeholder="도착 터미널 검색" type="text">
-													</div>
-												</div>
-												<div class="col-sm-3 col-md-3 col-lg-3" style="padding: 0px;">
-													<button class="btn btn-dark btn-icon btn" data-bs-toggle="modal"
-														data-bs-target="#exampleModal" type="button" style="margin: 8px 8px 0px 0px;">
-														<div class="d-flex align-items-center">
-															<i class="fas fa-search" aria-hidden="true"></i>
-														</div>
-													</button>
-												</div>
-											</div>
-										</div>
-										<div class="col-sm-12 col-md-6 col-lg-3 mt-lg-n2 mt-2">
-											<label class="ms-0">출발일자</label>
-											<div class="input-group input-group-static">
-												<span class="input-group-text"></span>
-												<input class="form-control datepicker" placeholder="Please select date" type="date">
-											</div>
-										</div>
-										<div class="col-sm-12 col-md-6 col-lg-3 mt-lg-n2 mt-2">
-											<label>&nbsp;</label>
-											<button type="button" class="btn bg-gradient-primary w-100 mb-0">Search</button>
+					<div class="container my-auto">
+						<div class="row">
+							<div class="col-lg-4 col-md-8 col-12 mx-auto">
+								<div class="card z-index-0 fadeIn3 fadeInBottom">
+									<div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
+										<div class="bg-gradient-primary shadow-primary border-radius-lg py-3 pe-1">
+											<h4 class="text-white font-weight-bolder text-center mt-2 mb-0">회원가입</h4>
+
 										</div>
 									</div>
-								</div>
+									<div class="card-body">
+										<form action="/signin" id="signUpForm" method="post" th:object="${member}" role="form" class="text-start">
+											<input type="hidden" name="csrfToken" id="csrfToken" th:value="${session.csrfToken}"
+												autocomplete="off">
+											<div class="input-group input-group-outline my-3">
+												<label class="form-label" for="id">아이디 입력</label>
+												<input type="text" id="id" name="id" class="form-control">
+											</div>
+											<div class="input-group input-group-outline mb-3">
+												<label class="form-label" for="password">비밀번호 입력</label>
+												<input type="password" id="password" name="password" class=" form-control" autocomplete="off">
+											</div>
+											<div class="input-group input-group-outline mb-3">
+												<label class="form-label" for="password2">비밀번호 확인</label>
+												<input type="password" id="password2" name="password2" class=" form-control" autocomplete="off">
+											</div>
 
-							</div>
-						</div>
-						<div class="col-lg-12">
-							<div class="card card-body shadow-xl mx-3 mx-md-11 metanet-ht-350">
+											<div class="input-group input-group-outline my-3">
+												<label class="form-label" for="name">이름 입력</label>
+												<input type="text" id="name" name="name" class="form-control" autocomplete="off">
+											</div>
 
+											<div class="input-group input-group-outline my-3">
+												<label class="form-label" for="email">이메일 입력</label>
+												<input type="text" id="email" name="email" class="form-control" autocomplete="off">
+											</div>
 
-								<div class="table-responsive">
-									<table class="table metanet-table-fixed table-hover align-items-center mb-0 ">
-										<thead class="metanet-bc-wh metanet-st-hd">
-											<tr>
-												<th class="text-center text-uppercase text-secondary text-lg font-weight-bolder opacity-7">
-													출발터미널
-												</th>
-												<th class="text-center text-uppercase text-secondary text-lg font-weight-bolder opacity-7">
-													출발시간
-												</th>
-												<th class="text-center text-uppercase text-secondary text-lg font-weight-bolder opacity-7">
-													도착터미널
-												</th>
-												<th class="text-center text-uppercase text-secondary text-lg font-weight-bolder opacity-7">
-													도착시간
-												</th>
-												<th class="text-center text-uppercase text-secondary text-lg font-weight-bolder opacity-7">
-													요금
-												</th>
-												<th class="text-center text-uppercase text-secondary text-lg font-weight-bolder opacity-7">
-													등급
-												</th>
-												<th class="text-center text-uppercase text-secondary text-lg font-weight-bolder opacity-7">
-													예매하기
-												</th>
-											</tr>
-										</thead>
-										<tbody>
-											
-											<tr>
-												<td>
-													<h6 class="my-sm-2 text-md">John Michael</h6>
-												</td>
-												<td>
-													<h6 class="my-sm-2 text-md">John Michael</h6>
-												</td>
-												<td>
-													<h6 class="my-sm-2 text-md">John Michael</h6>
-												</td>
-												<td>
-													<h6 class="my-sm-2 text-md">John Michael</h6>
-												</td>
-												<td>
-													<h6 class="my-sm-2 text-md">John Michael</h6>
-												</td>
-												<td>
-													<h6 class="my-sm-2 text-md">John Michael</h6>
-												</td>
-												<td>
-													<button class="custom-btn btn-5"><span>예매하기</span></button>
-												</td>
+											<div class="input-group input-group-outline mb-3">
+												<input class="metanet-hide-date form-control datepicker" id="birthDate" name="birthDate"
+													aria-required="true" required data-placeholder="생년 월일 선택" type="date">
+											</div>
 
-											</tr>
-											<tr>
-												<td>
-													<h6 class="my-sm-2 text-md">John Michael</h6>
-												</td>
-												<td>
-													<h6 class="my-sm-2 text-md">John Michael</h6>
-												</td>
-												<td>
-													<h6 class="my-sm-2 text-md">John Michael</h6>
-												</td>
-												<td>
-													<h6 class="my-sm-2 text-md">John Michael</h6>
-												</td>
-												<td>
-													<h6 class="my-sm-2 text-md">John Michael</h6>
-												</td>
-												<td>
-													<h6 class="my-sm-2 text-md">John Michael</h6>
-												</td>
-												<td>
-													<button class="custom-btn btn-5"><span>예매하기</span></button>
-												</td>
+											<div class="nav-wrapper position-relative end-0 mb-4">
+												<ul class="nav nav-pills nav-fill p-1" role="tablist">
+													<li class="nav-item" onclick="setGender('MALE', event)">
+														<a class="nav-link mb-0 px-0 py-1 active" data-bs-toggle="tab" href="#profile-tabs-simple"
+															role="tab" aria-controls="profile" aria-selected="false" data-gender="MALE">
+															남성
+														</a>
+													</li>
+													<li class="nav-item" onclick="setGender('FEMALE', event)">
+														<a class="nav-link mb-0 px-0 py-1" data-bs-toggle="tab" href="#dashboard-tabs-simple"
+															role="tab" aria-controls="dashboard" aria-selected="false" data-gender="FEMALE">
+															여성
+														</a>
+													</li>
+												</ul>
+											</div>
+											<input type="hidden" id="selectedGender" name="sex" value="MALE" autocomplete="off" />
 
-											</tr>
-											<tr>
-												<td>
-													<h6 class="my-sm-2 text-md">John Michael</h6>
-												</td>
-												<td>
-													<h6 class="my-sm-2 text-md">John Michael</h6>
-												</td>
-												<td>
-													<h6 class="my-sm-2 text-md">John Michael</h6>
-												</td>
-												<td>
-													<h6 class="my-sm-2 text-md">John Michael</h6>
-												</td>
-												<td>
-													<h6 class="my-sm-2 text-md">John Michael</h6>
-												</td>
-												<td>
-													<h6 class="my-sm-2 text-md">John Michael</h6>
-												</td>
-												<td>
-													<button class="custom-btn btn-5"><span>예매하기</span></button>
-												</td>
-
-											</tr>
-											<tr>
-												<td>
-													<h6 class="my-sm-2 text-md">John Michael</h6>
-												</td>
-												<td>
-													<h6 class="my-sm-2 text-md">John Michael</h6>
-												</td>
-												<td>
-													<h6 class="my-sm-2 text-md">John Michael</h6>
-												</td>
-												<td>
-													<h6 class="my-sm-2 text-md">John Michael</h6>
-												</td>
-												<td>
-													<h6 class="my-sm-2 text-md">John Michael</h6>
-												</td>
-												<td>
-													<h6 class="my-sm-2 text-md">John Michael</h6>
-												</td>
-												<td>
-													<button class="custom-btn btn-5"><span>예매하기</span></button>
-												</td>
-
-											</tr>
-											<tr>
-												<td>
-													<h6 class="my-sm-2 text-md">John Michael</h6>
-												</td>
-												<td>
-													<h6 class="my-sm-2 text-md">John Michael</h6>
-												</td>
-												<td>
-													<h6 class="my-sm-2 text-md">John Michael</h6>
-												</td>
-												<td>
-													<h6 class="my-sm-2 text-md">John Michael</h6>
-												</td>
-												<td>
-													<h6 class="my-sm-2 text-md">John Michael</h6>
-												</td>
-												<td>
-													<h6 class="my-sm-2 text-md">John Michael</h6>
-												</td>
-												<td>
-													<button class="custom-btn btn-5"><span>예매하기</span></button>
-												</td>
-
-											</tr>
-											<tr>
-												<td>
-													<h6 class="my-sm-2 text-md">John Michael</h6>
-												</td>
-												<td>
-													<h6 class="my-sm-2 text-md">John Michael</h6>
-												</td>
-												<td>
-													<h6 class="my-sm-2 text-md">John Michael</h6>
-												</td>
-												<td>
-													<h6 class="my-sm-2 text-md">John Michael</h6>
-												</td>
-												<td>
-													<h6 class="my-sm-2 text-md">John Michael</h6>
-												</td>
-												<td>
-													<h6 class="my-sm-2 text-md">John Michael</h6>
-												</td>
-												<td>
-													<button class="custom-btn btn-5"><span>예매하기</span></button>
-												</td>
-
-											</tr>
-											
+											<div class="input-group input-group-outline mb-3">
+												<label class="form-label" for="phoneNum">휴대폰 번호 입력</label>
+												<input type="tel" class="form-control" name="phoneNum" id="phoneNum">
+												<button type="button" class="btn btn-sm bg-gradient-primary mb-0 me-1 my-2 mt-md-0"
+													onclick="showInputCertificationNumber()">
+													인증번호받기
+												</button>
+											</div>
+											<div class="metanet-display-hidden input-group input-group-outline mb-3" id="certificationNumber">
+												<label class="form-label">인증 번호 입력</label>
+												<input type="text" class="form-control" id="inputNumber" name="inputNumber">
+												<button type="button" class="btn btn-sm bg-gradient-primary mb-0 me-1 my-2 mt-md-0"
+													onclick="submitAuthentication()">
+													본인인증하기
+												</button>
+											</div>
+											<p id="authenticationResult"></p>
+											<div class="text-center">
+												<input value="회원가입" class="btn bg-gradient-primary w-100 my-1 mb-2" onclick="validateAndSubmit()">
 
 
-
-
-										</tbody>
-									</table>
+											</div>
+										</form>
+									</div>
 								</div>
 							</div>
 						</div>
 					</div>
 				</div>
 
-
 			</div>
 		</div>
+
+
+	</div>
+	</div>
 	</div>
 
 
-	<!-- Modal -->
-	<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true"
-		style="margin-top: 48px;">
-		<div class="modal-dialog">
-			<div class="modal-content">
-				<div class="modal-header">
-					<h5 class="modal-title" id="exampleModalLabel">터미널 검색하기</h5>
-					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-				</div>
-				<div class="modal-body">
-					<div class="row">
-						<h6>출발 지역 선택</h6>
-						<div class="col-lg-3"><button type="button" class="btn bg-gradient-dark mb-0"
-								style="margin-top: 8px;">서울</button></div>
-						<div class="col-lg-3"><button type="button" class="btn bg-gradient-dark mb-0"
-								style="margin-top: 8px;">서울</button></div>
-						<div class="col-lg-3"><button type="button" class="btn bg-gradient-dark mb-0"
-								style="margin-top: 8px;">서울</button></div>
-						<div class="col-lg-3"><button type="button" class="btn bg-gradient-dark mb-0"
-								style="margin-top: 8px;">서울</button></div>
-						<div class="col-lg-3"><button type="button" class="btn bg-gradient-dark mb-0"
-								style="margin-top: 8px;">서울</button></div>
-						<div class="col-lg-3"><button type="button" class="btn bg-gradient-dark mb-0"
-								style="margin-top: 8px;">서울</button></div>
-					</div>
-				</div>
-				<div class="modal-body" style="max-height: 400px; overflow-y: auto;">
-					<div class="row">
-						<h6>터미널 선택</h6>
-						<table class="table">
-							<tbody>
-								<tr class="row" style="padding: 16px; text-align: center;">
-									<td class="col-lg-6">John</td>
-									<td class="col-lg-6">John</td>
-									<td class="col-lg-6">John</td>
-									<td class="col-lg-6">John</td>
-									<td class="col-lg-6">John</td>
-									<td class="col-lg-6">John</td>
-									<td class="col-lg-6">John</td>
-									<td class="col-lg-6">John</td>
-									<td class="col-lg-6">John</td>
-									<td class="col-lg-6">John</td>
-									<td class="col-lg-6">John</td>
-									<td class="col-lg-6">John</td>
-									<td class="col-lg-6">John</td>
-									<td class="col-lg-6">John</td>
-									<td class="col-lg-6">John</td>
-									<td class="col-lg-6">John</td>
-									<td class="col-lg-6">John</td>
-									<td class="col-lg-6">John</td>
-									<td class="col-lg-6">John</td>
-									<td class="col-lg-6">John</td>
-									<td class="col-lg-6">John</td>
-								</tr>
-							</tbody>
-						</table>
-					</div>
-				</div>
-				<div class="modal-footer justify-content-between">
-					<button type="button" class="btn bg-gradient-dark mb-0" data-bs-dismiss="modal">Close</button>
-					<button type="button" class="btn bg-gradient-primary mb-0">Save changes</button>
-				</div>
-			</div>
-		</div>
-	</div>
+
 
 
 	<!-- footer -->
@@ -371,32 +154,117 @@
 	<script src="./assets/js/plugins/perfect-scrollbar.min.js"></script>
 
 
+	<!--성별-->
+	<script>
+		document.addEventListener('DOMContentLoaded', () => {
+		console.log('slkjdnflksnlk');
+		var token = sessionStorage.getItem("X-AUTH-TOKEN");
+		console.log(token);
+		//document.getElementById('testbutton').addEventListener('click', showAlert);
+		//function showAlert()
+		//alert('test');
+		
+		});
+		
+		function setGender(gender) {
+			// Set the selected gender value to the hidden input field
+			document.getElementById('selectedGender').value = gender;
+		}
+	</script>
 
+	<!--핸드폰 번호 인증 버튼 클릭 시 인증번호 입력 활성화-->
+	<script>
+		function showInputCertificationNumber() {
+			var certificationNumber = document.getElementById('certificationNumber');
+			certificationNumber.style.display = 'flex';
+
+			var phoneNumber = $('#phoneNum').val();
+			alert(phoneNumber);
+			// AJAX를 사용하여 서버에 비동기 요청 보내기
+			$.ajax({
+				type: 'GET',
+				url: '/certification-phonenumber',
+				data: {'phonenum': phoneNumber},
+				success: function (data) {
+					alert("인증번호를 전송했습니다.");
+				},
+				error: function (error) {
+					console.error('There was a problem with the AJAX request:', error);
+				}
+			});
+		}
+	</script>
+
+	<script>
+		function submitAuthentication() {
+			// 입력된 인증번호, 전화번호 가져오기
+			var inputNumber = $('#inputNumber').val();
+			var phonenum = $('#phoneNum').val();
+			// AJAX를 사용하여 서버에 비동기 POST 요청 보내기
+			$.ajax({
+				type: 'POST',
+				url: '/certification-phonenumber',
+				data: {
+					'phonenum': phonenum,
+					'inputNumber': inputNumber
+				},
+				success: function (result) {
+					// 서버 응답 처리
+					$('#authenticationResult').text(result);
+				},
+				error: function (error) {
+					console.error('There was a problem with the AJAX request:', error);
+				}
+			});
+		}
+	</script>
+
+	<script>
+		function validateAndSubmit() {
+			// 각 필드의 값을 가져옴
+			var signUpForm = document.getElementById('signUpForm');
+			var idValue = document.getElementById('id').value;
+			var passwordValue = document.getElementById('password').value;
+			var password2Value = document.getElementById('password2').value;
+			var nameValue = document.getElementById('name').value;
+			var emailValue = document.getElementById('email').value;
+			var birthDateValue = document.getElementById('birthDate').value;
+			var phoneNumValue = document.getElementById('phoneNum').value;
+			var inputNumber = document.getElementById('inputNumber').value;
+			
+
+			// 미입력된 필드를 확인하고 알림창 띄우기
+			var errorMessage = '';
+			if (!idValue) errorMessage += '아이디를 입력하세요.\n';
+			if (!passwordValue) errorMessage += '비밀번호를 입력하세요.\n';
+			if (!password2Value) errorMessage += '비밀번호 확인을 입력하세요.\n';
+			if (!nameValue) errorMessage += '이름을 입력하세요.\n';
+			if (!emailValue) errorMessage += '이메일을 입력하세요.\n';
+			if (!birthDateValue) errorMessage += '생년 월일을 입력하세요.\n';
+			if (!phoneNumValue) errorMessage += '휴대폰 번호를 입력하세요.\n';
+			if (!inputNumber) errorMessage += '본인 인증을 진행하세요\n';
+
+			if (errorMessage) {
+				// 미입력된 필드가 있으면 알림창 띄우고 폼 제출 취소
+				alert(errorMessage);
+			} else {
+				// 미입력된 필드가 없으면 폼 제출
+				signUpForm.submit();
+			}
+		}
+	</script>
 
 	<!--  Plugin for TypedJS, full documentation here: https://github.com/inorganik/CountUp.js -->
 	<script src="./assets/js/plugins/countup.min.js"></script>
-
-
-
-
-
 	<script src="./assets/js/plugins/choices.min.js"></script>
-
-
-
 	<script src="./assets/js/plugins/prism.min.js"></script>
 	<script src="./assets/js/plugins/highlight.min.js"></script>
-
-
-
 	<!--  Plugin for Parallax, full documentation here: https://github.com/dixonandmoe/rellax -->
 	<script src="./assets/js/plugins/rellax.min.js"></script>
 	<!--  Plugin for TiltJS, full documentation here: https://gijsroge.github.io/tilt.js/ -->
 	<script src="./assets/js/plugins/tilt.min.js"></script>
 	<!--  Plugin for Selectpicker - ChoicesJS, full documentation here: https://github.com/jshjohnson/Choices -->
 	<script src="./assets/js/plugins/choices.min.js"></script>
-
-
 	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDTTfWur0PDbZWPr7Pmq8K3jiDp0_xUziI"></script>
 	<script src="./assets/js/material-kit.min.js?v=3.0.4" type="text/javascript"></script>
 </body>

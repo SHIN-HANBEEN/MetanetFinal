@@ -11,6 +11,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 
 import lombok.extern.slf4j.Slf4j;
 import metanet.kosa.metanetfinal.reservation.service.IReservationService;
@@ -35,13 +36,13 @@ public class HomeController {
 	
 	@GetMapping(value="/mypage")
 	public String mypage() {
+		//System.out.println("토큰 테스트 : "+ authToken);
 		return "mypage";
 	}
 	
-	@GetMapping(value="/signin")
-	public String signin() {
-		return "signin";
-	}
+	/*
+	 * @GetMapping(value="/signin") public String signin() { return "signin"; }
+	 */
 	
 	/*
 	 * 출발지, 도착지, 출발시간(출발일자 아님, 배차조회까지 끝낸 다음 선택한 출발시간) 입력

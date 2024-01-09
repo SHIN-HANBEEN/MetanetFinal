@@ -1,13 +1,16 @@
 package metanet.kosa.metanetfinal.member.service;
 
+import java.util.List;
+
 import metanet.kosa.metanetfinal.member.model.Members;
 
 public interface IMemberService {
 	Members login(String id, String password);
-	void register(Members member); 
+	void signin(Members member); 
 	String getIdByPhoneNumber(String phoNum);
 	String resetPwById(String id);
 	void signOut(String id, String password);
 	void updateMember(String userId, String email, String phoNum);
-	
+	Members getMemberInfo(String id);
+	List<String> getRoles(String id);
 }

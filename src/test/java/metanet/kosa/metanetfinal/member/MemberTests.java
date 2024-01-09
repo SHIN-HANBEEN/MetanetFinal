@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import metanet.kosa.metanetfinal.member.model.Members;
-import metanet.kosa.metanetfinal.member.model.Members.MembersBuilder;
 import metanet.kosa.metanetfinal.member.repository.IMemberRepository;
 import metanet.kosa.metanetfinal.member.service.MemberService;
 
@@ -33,7 +32,7 @@ public class MemberTests {
 			.phoneNum("01011111111")
 			.role("USER")
 			.mileage(1100).build();
-		memberService.register(member);
+		memberService.signin(member);
 	}
 	
 	@Test
