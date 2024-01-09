@@ -92,6 +92,7 @@ public class ReservationService implements IReservationService{
 		String depPlaceNm = routeRepository.getTerminalNameByTerminalId(departureId);
 		
 		//departureTime = 202401082140 같은 형식으로 들어옵니다.
+		// 에러 발생 안하는 것 확인 완료.
 		Routes route = routeRepository.getRoute(departureId, arrivalId, departureTime);
 		
 		List<Integer> occupiedBusSeats = 

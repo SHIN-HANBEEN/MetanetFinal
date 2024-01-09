@@ -46,7 +46,7 @@ public interface IRouteRepository {
 	 */
 	Routes getRoute(@Param("departureId") String departureId, 
 			@Param("arrivalId") String arrivalId, 
-			@Param("departureTime") String departureTime);
+			@Param("departureTime") String departureTime); 
 	
 	
 	/*

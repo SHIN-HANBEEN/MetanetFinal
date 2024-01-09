@@ -112,6 +112,8 @@ public class RouteRestController {
 			@RequestParam String arrPlandTime, 
 			@RequestParam String gradeNm,
 			@RequestParam String charge) {
+		// 'YYYY-MM-DD HH:mm' 형태로 time 데이터가 들어온다.
+		
 		String departureId = routeService.getTerminalIdByTerminalName(depPlaceNm.trim());
 		String arrivalId = routeService.getTerminalIdByTerminalName(arrPlaceNm.trim());
 		String trimedDepPlandTime = depPlandTime.trim();
