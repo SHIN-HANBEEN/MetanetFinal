@@ -185,6 +185,8 @@ document.getElementById('terminalTable2').addEventListener('click', function(eve
 // 검색 버튼에 이벤트 리스너 설정 해주기
 document.getElementById('submitButton1').addEventListener('click', async function() {
 	const dpTerminalName = document.getElementById('TerminalSearchInput1').value.trim();
+	//시간 데이터 형식 찍어보기
+	console.log(dpTerminalName);
 	const arrTerminalName = document.getElementById('TerminalSearchInput2').value.trim();
 	const dpDate = document.getElementById('dpDate').value.trim();
 
@@ -228,6 +230,36 @@ function getSevenDaysAgo(dateString) {
 	return formattedResult;
 }
 
+function getSevenDaysAfter(dateString) {
+	console.log("dateString 찍어보기 : " + dateString);
+	
+	/*const year = dateString.substring(0, 4);
+	const month = dateString.substring(4, 6);
+	const day = dateString.substring(6, 8);
+	const hour = dateString.substring(8, 10);
+	const min = dateString.substring(10, 12);
+
+	const timeDate = year +
+		'-' + month +
+		'-' + day +
+		'-' + hour +
+		'-' + min;
+
+
+	// Parse the input date string to create a Date object
+	const inputDate = new Date(timeDate);
+
+
+	// Calculate the date 7 days ago
+	const sevenDaysAfter = new Date(inputDate);
+	sevenDaysAfter.setDate(sevenDaysAfter.getDate() + 7);
+
+	// Format the result as 'YYYY-MM-DD HH-mm-ss'
+	const formattedResult = sevenDaysAfter.toISOString();
+
+	return formattedResult;*/
+}
+
 // Function to send GET request and update table
 async function getSchedule(dpTerminalName, arrTerminalName, dpDate) {
 	console.log("[[AOP Before]] - getSevenDaysAgo");
@@ -250,18 +282,26 @@ async function getSchedule(dpTerminalName, arrTerminalName, dpDate) {
 		console.log(response);
 
 		if (!response.ok) {
-			throw new Error('Network response was not ok');
+			alert('API 요청 오류 입니다.');
 		}
 
 		const data = await response.json();
 
 		console.log(data);
 
+		// 없는 경로 검색한 경우 알려주기
+		let items = data.response.body.items;
+		if (items == "") {
+			alert('검색하신 경로는 없는 경로입니다.');
+		}
+
 		// Get the table body element
 		const tableBody = document.getElementById('scheduleTable1').getElementsByTagName('tbody')[0];
 
 		// Clear existing table rows
 		tableBody.innerHTML = '';
+
+
 
 		// Add new rows based on the returned data
 		data.response.body.items.item.forEach(async schedule => {
@@ -274,7 +314,21 @@ async function getSchedule(dpTerminalName, arrTerminalName, dpDate) {
 
 			const depTimeCell = row.insertCell(1);
 			let depPlandTime = schedule.depPlandTime;
-			depTimeCell.textContent = depPlandTime;
+			try {
+				// Assuming getSevenDaysAfter returns a promise
+				const result = await getSevenDaysAfter(depPlandTime);
+				depTimeCell.textContent = result;
+			} catch (error) {
+				console.error("Error retrieving data:", error);
+			}
+			//depTimeCell.textContent = getSevenDaysAfter(depPlandTime);
+			/*getSevenDaysAfter(depPlandTime)
+				.then(result => {
+					depTimeCell.textContent = result;
+				})
+				.catch(error => {
+					console.error("Error retrieving data:", error);
+				});*/
 
 			const arrPlaceCell = row.insertCell(2);
 			let arrPlaceNm = schedule.arrPlaceNm;
@@ -282,7 +336,21 @@ async function getSchedule(dpTerminalName, arrTerminalName, dpDate) {
 
 			const arrTimeCell = row.insertCell(3);
 			let arrPlandTime = schedule.arrPlandTime;
-			arrTimeCell.textContent = arrPlandTime;
+			try {
+				// Assuming getSevenDaysAfter returns a promise
+				const result = await getSevenDaysAfter(arrPlandTime);
+				arrTimeCell.textContent = result;
+			} catch (error) {
+				console.error("Error retrieving data:", error);
+			}
+			//arrTimeCell.textContent = getSevenDaysAfter(arrPlandTime);
+			/*getSevenDaysAfter(arrPlandTime)
+				.then(result => {
+					arrTimeCell.textContent = result;
+				})
+				.catch(error => {
+					console.error("Error retrieving data:", error);
+				});*/
 
 			const chargeCell = row.insertCell(4);
 			let charge = schedule.charge;
@@ -318,7 +386,10 @@ async function getSchedule(dpTerminalName, arrTerminalName, dpDate) {
 			infoButton.addEventListener("click", async () => {
 				try {
 					// Include the parameters in the URL
-					const url = `/reservation/seats-selection?dpTerminalName=${encodeURIComponent(depPlaceNm)}&arrTerminalName=${encodeURIComponent(arrPlaceNm)}&departureTime=${encodeURIComponent(depPlandTime)}`;
+					const url = `/reservation/seats-selection
+					?dpTerminalName=${encodeURIComponent(depPlaceNm)}
+					&arrTerminalName=${encodeURIComponent(arrPlaceNm)}
+					&departureTime=${encodeURIComponent(depPlandTime)}`;
 
 					// Redirect to the URL
 					window.location.href = url;
@@ -384,14 +455,14 @@ function onButtonClick(cityName) {
 // Function to update table body with the returned data
 function updateTableBody(data) {
 	// Get the tbody element
-	var tbody = $('table tbody');
+	var tbody = $('.modal-body table tbody');
 
 	// Clear existing data
 	tbody.empty();
 
 	// Iterate through the data and append rows to the tbody
 	for (var i = 0; i < data.length; i++) {
-		var row = '<tr><td>' + data[i] + '</td></tr>';
+		var row = '<tr><td style="cursor: pointer;">' + data[i] + '</td></tr>';
 		tbody.append(row);
 	}
 }
@@ -413,18 +484,14 @@ function onRowClick(cityName, inputId) {
 	// Insert the clicked data into the input
 	inputElement.val(cityName);
 
-	// Close the modal if needed (assuming your modal has an ID of 'exampleModal')
-	$('#exampleModal').modal('hide');
-}
+	// <button type="button" class="btn bg-gradient-dark mb-0" data-bs-dismiss="modal">Close</button>
+	// add js code click the button tag
+	// Get the button element by its ID
+	var closeButton1 = document.getElementById('closeButton1');
+	var closeButton2 = document.getElementById('closeButton2');
 
-// Function to handle hover effect on table rows
-function onRowHover(row) {
-	row.addClass('table-primary'); // Add a hover effect using Bootstrap's 'table-primary' class
-}
-
-// Function to handle mouse leave on table rows
-function onRowLeave(row) {
-	row.removeClass('table-primary'); // Remove the hover effect
+	closeButton1.click();
+	closeButton2.click();
 }
 
 // Attach click event handlers to table rows
