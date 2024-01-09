@@ -32,10 +32,20 @@ public class reservationPageController {
 	) {
 		String departureId = routeService.getTerminalIdByTerminalName(dpTerminalName);
 		String arrivalId = routeService.getTerminalIdByTerminalName(arrTerminalName);
-
+		
+		System.out.println("departureTime : " + departureTime);
+		
+		String parsedDepartureTime = departureTime.substring(0, 4) +
+				departureTime.substring(5,7) +
+				departureTime.substring(8,10) +
+				departureTime.substring(11, 13) +
+				departureTime.substring(14, 16);
+		
+		System.out.println("parsedDepartureTime  : " + parsedDepartureTime);
+		
 		Map<String, Object> dataForSeatsSelection = 
 				reservationService.getDataForSeatsSelection(departureId, 
-						arrivalId, departureTime);
+						arrivalId, parsedDepartureTime);
 		
 		model.addAttribute("mapData", dataForSeatsSelection);
 

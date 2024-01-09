@@ -77,12 +77,16 @@ public class RouteRestController {
 		headers.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));
 		HttpEntity<?> entity = new HttpEntity<>(headers);
 
-		// Build the URL using UriComponentsBuilder
+		// 비동기 요청보내기. 포스트맨의 출/도착지기반 조회 Copy 에 해당한다.
 		String apiUrl = "http://apis.data.go.kr/1613000/SuburbsBusInfoService/getStrtpntAlocFndSuberbsBusInfo";
 		UriComponents uri = UriComponentsBuilder.fromHttpUrl(apiUrl).queryParam("serviceKey", serviceKey)
-				.queryParam("depTerminalId", dpTerminalId).queryParam("arrTerminalId", arrTerminalId)
-				.queryParam("depPlandTime", parsedDpDate).queryParam("numOfRows", numOfRows)
-				.queryParam("pageNo", pageNo).queryParam("_type", type).build();
+				.queryParam("depTerminalId", dpTerminalId)
+				.queryParam("arrTerminalId", arrTerminalId)
+				.queryParam("depPlandTime", parsedDpDate)
+				.queryParam("numOfRows", numOfRows)
+				.queryParam("pageNo", pageNo)
+				.queryParam("_type", type)
+				.build();
 
 		// Create a RestTemplate instance
 		RestTemplate restTemplate = new RestTemplate();
@@ -117,23 +121,24 @@ public class RouteRestController {
 		int price = Integer.valueOf(trimedCharge);
 		Date departureTime = null;
 		Date arrivalTime = null;
+		// 'YYYY-MM-DD HH:mm' 형태로 들어오는 출발, 도착 시간 데이터
 		try {
 			// Parse the string into separate components
 			int year = Integer.parseInt(trimedDepPlandTime.substring(0, 4));
-			int month = Integer.parseInt(trimedDepPlandTime.substring(4, 6));
-			int day = Integer.parseInt(trimedDepPlandTime.substring(6, 8));
-			int hour = Integer.parseInt(trimedDepPlandTime.substring(8, 10));
-			int minute = Integer.parseInt(trimedDepPlandTime.substring(10, 12));
+			int month = Integer.parseInt(trimedDepPlandTime.substring(5, 7));
+			int day = Integer.parseInt(trimedDepPlandTime.substring(8, 10));
+			int hour = Integer.parseInt(trimedDepPlandTime.substring(11, 13));
+			int minute = Integer.parseInt(trimedDepPlandTime.substring(14, 16));
 
 			// departureTime 설정
 			departureTime = getSqlDate(year, month, day, hour, minute);
 
 			// Parse the string into separate components
 			int year2 = Integer.parseInt(trimedArrPlandTime.substring(0, 4));
-			int month2 = Integer.parseInt(trimedArrPlandTime.substring(4, 6));
-			int day2 = Integer.parseInt(trimedArrPlandTime.substring(6, 8));
-			int hour2 = Integer.parseInt(trimedArrPlandTime.substring(8, 10));
-			int minute2 = Integer.parseInt(trimedArrPlandTime.substring(10, 12));
+			int month2 = Integer.parseInt(trimedArrPlandTime.substring(5, 7));
+			int day2 = Integer.parseInt(trimedArrPlandTime.substring(8, 10));
+			int hour2 = Integer.parseInt(trimedArrPlandTime.substring(11, 13));
+			int minute2 = Integer.parseInt(trimedArrPlandTime.substring(14, 16));
 
 			// departureTime 설정
 			arrivalTime = getSqlDate(year2, month2, day2, hour2, minute2);
@@ -148,6 +153,7 @@ public class RouteRestController {
 //		System.out.println(trimedGradeNm);
 //		System.out.println(charge);
 		
+		//잔여좌석 결과를 조회할 때, 이전에 조회한 적이 없다면 새로운 Route, Bus, Seat 이 생성이 됩니다.
 		System.out.println("잔여좌석 결과 : " + reservationService.getRemainingSeatCount(
 				departureId, 
 				arrivalId, 

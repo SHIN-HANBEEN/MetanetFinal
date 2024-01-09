@@ -254,7 +254,7 @@ function getSevenDaysAfter(date) {
 	const sevenDaysAfter = new Date(inputDate);
 	sevenDaysAfter.setDate(sevenDaysAfter.getDate() + 7);
 
-	// Format the result as 'YYYY-MM-DD HH:mm:ss'
+	// Format the result as 'YYYY-MM-DD HH:mm' 초는 빼고 내보내기.
 	const formattedResult = sevenDaysAfter.toISOString().slice(0, 16).replace("T", " ");
 
 	return formattedResult;
@@ -316,10 +316,12 @@ async function getSchedule(dpTerminalName, arrTerminalName, dpDate) {
 
 			const depTimeCell = row.insertCell(1);
 			let depPlandTime = schedule.depPlandTime;
+			let depResultTime;
 			try {
 				// Assuming getSevenDaysAfter returns a promise
 				const result = await getSevenDaysAfter(depPlandTime);
 				depTimeCell.textContent = result;
+				depResultTime = result;
 			} catch (error) {
 				console.error("Error retrieving data:", error);
 			}
@@ -338,9 +340,11 @@ async function getSchedule(dpTerminalName, arrTerminalName, dpDate) {
 
 			const arrTimeCell = row.insertCell(3);
 			let arrPlandTime = schedule.arrPlandTime;
+			let arrResultTime;
 			try {
 				console.log("before get SevenDaysAfter. arrPlandTime : " + arrPlandTime)
 				const result = await getSevenDaysAfter(arrPlandTime);
+				arrResultTime = result;
 				arrTimeCell.textContent = result;
 			} catch (error) {
 				console.error("Error retrieving data:", error);
@@ -365,10 +369,10 @@ async function getSchedule(dpTerminalName, arrTerminalName, dpDate) {
 			const remainingSeats = row.insertCell(6);
 			console.log("[[AOP Before]] - getRemainingSeats");
 
-			// 문제였던 부분
+			// 'YYYY-MM-DD HH:mm' 형태로 들어오는 출발, 도착 시간 데이터를 /get-remaining-seats 로 보낸다.
 			try {
 				const remainingSeatsValue = await getRemainingSeats(depPlaceNm, arrPlaceNm,
-					depPlandTime, arrPlandTime, gradeNm, charge);
+					depResultTime, arrResultTime, gradeNm, charge);
 
 				console.log("잔여좌석 뿌리기 전 최종 값 : " + remainingSeatsValue);
 
@@ -376,13 +380,14 @@ async function getSchedule(dpTerminalName, arrTerminalName, dpDate) {
 			} catch (error) {
 				console.error('Error fetching remaining seats:', error);
 			}
-
+			
+			// make button
 			const reservationCell = row.insertCell(7);
 			// Create the Info button with a link that includes parameters
 			const infoButton = document.createElement("button");
 			infoButton.type = "button";
 			infoButton.className = "btn bg-gradient-info my-2";
-			infoButton.textContent = "Info";
+			infoButton.textContent = "예매하기";
 
 			// Attach a click event listener to handle the button click
 			infoButton.addEventListener("click", async () => {
@@ -391,7 +396,7 @@ async function getSchedule(dpTerminalName, arrTerminalName, dpDate) {
 					const url = `/reservation/seats-selection
 					?dpTerminalName=${encodeURIComponent(depPlaceNm)}
 					&arrTerminalName=${encodeURIComponent(arrPlaceNm)}
-					&departureTime=${encodeURIComponent(depPlandTime)}`;
+					&departureTime=${encodeURIComponent(depResultTime)}`;
 
 					// Redirect to the URL
 					window.location.href = url;
