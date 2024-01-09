@@ -1,11 +1,19 @@
 package metanet.kosa.metanetfinal.reservation.service;
 
 import java.sql.Date;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Queue;
 import java.util.Random;
 import java.util.UUID;
 
@@ -13,13 +21,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import lombok.extern.slf4j.Slf4j;
 import metanet.kosa.metanetfinal.bus.repository.IBusesRepository;
+import metanet.kosa.metanetfinal.reservation.model.Reservations;
 import metanet.kosa.metanetfinal.reservation.repository.IReservationRepository;
 import metanet.kosa.metanetfinal.reservation.repository.IReservationScheduleRepository;
 import metanet.kosa.metanetfinal.route.model.Routes;
 import metanet.kosa.metanetfinal.route.repository.IRouteRepository;
 
-
+@Slf4j
 @Service
 public class ReservationService implements IReservationService{
 	@Autowired
@@ -27,6 +37,9 @@ public class ReservationService implements IReservationService{
 	
 	@Autowired
 	IBusesRepository busesRepository;
+	
+	@Autowired
+	IReservationRepository reservationRepository;
 	
 	@Transactional
 	@Override
@@ -114,6 +127,72 @@ public class ReservationService implements IReservationService{
 		System.out.println("DB카운트:" + selectedSeatsList.size());
 		if(selectedSeatsList.size() != reservedSeatsCnt) return false;
 		return true;
+	}
+	
+	@Transactional
+	public boolean reservationPaymentComplete(Map<String, Object> payData, List<Integer> selectedSeatsList) {
+		int adultNum = Integer.parseInt(payData.get("adultNum").toString());
+		int middleChildNum = Integer.parseInt(payData.get("middleChildNum").toString());
+		int childNum = Integer.parseInt(payData.get("childNum").toString());
+		
+		Queue<Integer> q = new LinkedList<>();
+		
+		for (int i = 0; i < adultNum; i++) q.add(1);
+		for (int i = 0; i < middleChildNum; i++) q.add(2);
+		for (int i = 0; i < childNum; i++) q.add(3);
+		
+		for (Integer seatId : selectedSeatsList) {
+			Reservations reservation = 
+					Reservations.builder()
+								.resId(0)
+								.memberId(1)
+								.phoneNum(payData.get("phoneNum").toString())
+								.routeId(payData.get("routeId").toString())
+								.busId(Integer.parseInt(payData.get("busId").toString()) )
+								.seatId(seatId)
+								.discountId(q.poll())
+								.resDate(new Date(System.currentTimeMillis()))
+								.payId(payData.get("payId").toString())
+								.totalPrice(Integer.parseInt(payData.get("totalPrice").toString()))
+								.cancledDate(null)
+								.build();
+			try {
+				reservationRepository.insertReservationData(reservation);
+				//회원이면 마일리지 차감 필요
+			} catch (Exception e) {
+				
+				log.info("결제실패 @@#@#@#@#@");
+				e.printStackTrace();
+				return false;
+			}
+		}
+		log.info("결제성공______________@@@@@@@@@!!!!!!!");
+		return true;
+	}
+
+	public Date nowSqlDate() {
+		// 현재 날짜 구하기        
+		LocalDate day = LocalDate.now();
+		LocalTime time = LocalTime.now();
+		String hr = time.toString().split(":")[0];
+		String mm = time.toString().split(":")[1];
+		// 포맷 정의        
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMdd");         
+		// 포맷 적용       
+		String formatedDay = day.format(formatter);
+		String timeNow = formatedDay+hr+mm;
+		DateFormat dateFormat = new SimpleDateFormat("yyyyMMddHHmm");
+		java.util.Date utilDate;
+		Date sqlTime = null;
+		try {
+			utilDate = dateFormat.parse(timeNow);
+			sqlTime = new Date(utilDate.getTime());
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		System.out.println(timeNow);
+		return sqlTime;
 	}
 //	@Autowired
 //	IReservationRepository reservationRepository;

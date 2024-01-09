@@ -37,9 +37,10 @@ public class RouteApiTest {
 		 */
 		String arrTime = "202401050930";
 		String depTime = "202401050640";
-		DateFormat dateFormat = new SimpleDateFormat("yyyyMMddHHmm");
+		
 		
 		try {
+			DateFormat dateFormat = new SimpleDateFormat("yyyyMMddHHmm");
 			java.util.Date utilDate = dateFormat.parse(arrTime);
 			Date sqlArrTime = new Date(utilDate.getTime());
 			java.util.Date depDate = dateFormat.parse(depTime);
@@ -73,5 +74,11 @@ public class RouteApiTest {
 	void testData() {
 		Map<String, Object> data = reservationService.getDataForSeatsSelection("NAI0511601", "NAI2551901", "202401050640");
 		System.out.println(data);
+	}
+	
+	@Test
+	void testDate() {
+		Date nowSqlDate = reservationService.nowSqlDate();
+		System.out.println(nowSqlDate.toString());
 	}
 }
