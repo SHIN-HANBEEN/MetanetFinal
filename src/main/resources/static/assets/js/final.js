@@ -284,7 +284,7 @@ async function getSchedule(dpTerminalName, arrTerminalName, dpDate) {
 		console.log(response);
 
 		if (!response.ok) {
-			alert('API 요청 오류 입니다.');
+			alert('출발지, 도착지, 출발일자 중 잘못 입력된 값이 있습니다.');
 		}
 
 		const data = await response.json();

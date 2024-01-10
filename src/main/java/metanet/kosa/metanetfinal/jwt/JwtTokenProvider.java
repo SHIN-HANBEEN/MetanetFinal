@@ -31,7 +31,11 @@ public class JwtTokenProvider {
 	 * 토큰 유효기간, 30분
 	 */
 	private long tokenValidTime = 30 * 60 * 1000L;
-
+	
+	/*
+	 * 토큰으로부터 사용자 ID를 찾아 사용자 정보를 조회하기 위한 서비스 
+	 * 빈 의존성 설정
+	 */
 	@Autowired
 	UserDetailsService userDetailsService;
 
@@ -42,12 +46,16 @@ public class JwtTokenProvider {
 	 * @return 생성된 토큰
 	 */
 	public String generateToken(Members member) {
-		Claims claims = Jwts.claims().subject(member.getId()).issuer(member.getName()).add("roles", member.getRole())
+		Claims claims = Jwts.claims()
+				.subject(member.getId())
+				.issuer(member.getName())
+				.add("roles", member.getRole())
 				.build();
 		Date now = new Date();
 		return Jwts.builder().claims(claims) // sub, iss, roles
 				.issuedAt(now) // iat
-				.expiration(new Date(now.getTime() + tokenValidTime)).signWith(key) // 암호화에 사용할 키 설정
+				.expiration(new Date(now.getTime() + tokenValidTime))
+				.signWith(key) // 암호화에 사용할 키 설정
 				.compact();
 	}
 
@@ -58,6 +66,7 @@ public class JwtTokenProvider {
 	 * @return 토큰
 	 */
 	public String resolveToken(HttpServletRequest request) {
+		
 		Cookie[] cookies = request.getCookies();
 		String accessToken = null;
 		if (cookies != null) {
@@ -80,7 +89,12 @@ public class JwtTokenProvider {
 	 */
 	public String getUserId(String token) {
 		log.info(token);
-		return Jwts.parser().verifyWith(key).build().parseSignedClaims(token).getPayload().getSubject();
+		return Jwts.parser()
+				.verifyWith(key)
+				.build()
+				.parseSignedClaims(token)
+				.getPayload()
+				.getSubject();
 	}
 
 	/**
@@ -90,9 +104,13 @@ public class JwtTokenProvider {
 	 * @return 인증정보 Authentication 객체
 	 */
 	public Authentication getAuthentication(String token) {
-		UserDetails userDetails = userDetailsService.loadUserByUsername(this.getUserId(token));
+		UserDetails userDetails = 
+				userDetailsService.loadUserByUsername(this.getUserId(token));
 		log.info(userDetails.getUsername());
-		return new UsernamePasswordAuthenticationToken(userDetails, "", userDetails.getAuthorities());
+		return new UsernamePasswordAuthenticationToken(
+				userDetails, 
+				"", 
+				userDetails.getAuthorities());
 	}
 
 	/**
@@ -103,7 +121,11 @@ public class JwtTokenProvider {
 	 */
 	public boolean validateToken(String token) {
 		try {
-			Jws<Claims> claims = Jwts.parser().verifyWith(key).build().parseSignedClaims(token);
+			Jws<Claims> claims = Jwts
+					.parser()
+					.verifyWith(key)
+					.build()
+					.parseSignedClaims(token);
 			return !claims.getPayload().getExpiration().before(new Date());
 		} catch (Exception e) {
 			return false;

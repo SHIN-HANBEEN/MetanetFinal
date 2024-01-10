@@ -72,7 +72,11 @@ public class RouteRestController {
 		System.out.println(dpTerminalId);
 		System.out.println(arrTerminalId);
 		System.out.println(parsedDpDate);
-
+		
+		if (dpTerminalId.isEmpty() || arrTerminalId.isEmpty() || parsedDpDate.isEmpty()) {
+			return null;
+		}
+		
 		HttpHeaders headers = new HttpHeaders();
 		headers.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));
 		HttpEntity<?> entity = new HttpEntity<>(headers);

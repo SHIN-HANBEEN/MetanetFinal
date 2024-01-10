@@ -61,8 +61,9 @@ public class MemberController {
 		/*
 		 * 비밀번호 검증이 완료 되면 쿠키에 JWT 토큰을 넣어서 생성
 		 */
-		Cookie cookie = new Cookie("access_token", tokenProvider.generateToken(member));
-		cookie.setMaxAge(60*60*24*7);
+		Cookie cookie = new Cookie(
+				"access_token", tokenProvider.generateToken(member));
+		cookie.setMaxAge(60*60*24*7); //어차피 token 에 유효기간을 설정을 해두었기 때문에 의미는 없다.
 		cookie.setHttpOnly(true);
 		cookie.setPath("/");
 		
@@ -70,6 +71,8 @@ public class MemberController {
 
 		return ResponseEntity.ok("Login successful");
 	}
+	
+	
 
 	@GetMapping(value = "/signin")
 	public String signin(HttpSession session, Model model) {
