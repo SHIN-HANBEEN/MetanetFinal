@@ -42,7 +42,10 @@ public class JwtTokenProvider {
 	 * @return 생성된 토큰
 	 */
 	public String generateToken(Members member) {
-		Claims claims = Jwts.claims().subject(member.getId()).issuer(member.getName()).add("roles", member.getRole())
+		Claims claims = Jwts.claims()
+				.subject(member.getId())
+				.issuer(String.valueOf(member.getMemberId()))
+				.add("roles", member.getRole())
 				.build();
 		Date now = new Date();
 		return Jwts.builder().claims(claims) // sub, iss, roles
@@ -82,6 +85,17 @@ public class JwtTokenProvider {
 		log.info(token);
 		return Jwts.parser().verifyWith(key).build().parseSignedClaims(token).getPayload().getSubject();
 	}
+	/**
+	 * 토큰에서 Memeber PK값 조회
+	 * @param token
+	 * @return
+	 */
+	public String getUserMemberId(String token) {
+		log.info(token);
+		return Jwts.parser().verifyWith(key).build().parseSignedClaims(token).getPayload().getIssuer();
+	}
+	
+	
 
 	/**
 	 * JWT 토큰에서 인증 정보 조회
