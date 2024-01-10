@@ -24,6 +24,16 @@
 	]]>
 	</select>
 	
+	<select id="getMemberByMemberId" parameterType="int" resultType="metanet.kosa.metanetfinal.member.model.Members">
+	<![CDATA[
+		SELECT 
+			*
+		FROM 
+			MEMBERS 
+		WHERE MEMBER_ID=#{memberId}
+	]]>
+	</select>
+	
 	<select id="getRoles" parameterType="string" resultType="string">
 	    <![CDATA[
 	        SELECT 

@@ -111,6 +111,10 @@ public class MemberService implements IMemberService{
 	public List<String> getRoles(String id) {
 		return memberRepository.getRoles(id);
 	}
+	
+	public Members getMemberByMemberId(int memberId) {
+		return memberRepository.getMemberByMemberId(memberId);
+	}
 
 	
 	

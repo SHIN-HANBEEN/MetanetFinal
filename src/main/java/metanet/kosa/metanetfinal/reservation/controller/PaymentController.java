@@ -1,6 +1,7 @@
 package metanet.kosa.metanetfinal.reservation.controller;
 
 import java.io.IOException;
+import java.security.Principal;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -23,6 +24,8 @@ import com.siot.IamportRestClient.exception.IamportResponseException;
 import com.siot.IamportRestClient.response.IamportResponse;
 import com.siot.IamportRestClient.response.Payment;
 
+import metanet.kosa.metanetfinal.member.model.Members;
+import metanet.kosa.metanetfinal.member.service.MemberService;
 import metanet.kosa.metanetfinal.reservation.service.PaymentService;
 
 @RestController
@@ -30,6 +33,8 @@ public class PaymentController {
 
 	@Autowired
 	PaymentService paymentService;
+	@Autowired
+	MemberService memberService;
 	
 	private final IamportClient iamportClient;
 
@@ -96,13 +101,24 @@ public class PaymentController {
 
 	
 	@GetMapping("/paymentid")
-	public Map<String, String> getMerchant_uid() {
-		//결제요청됨
+	public Map<String, String> getMerchant_uid(Principal principal) {
 		Map<String, String> merchantUid = new HashMap<>();
 		Date date = new Date();
 		String uuid = UUID.randomUUID().toString();
 		String uid = date.toString().substring(11,date.toString().length()-9) + uuid.substring(3,11);
 		merchantUid.put("paymentId", uid);
+		try {
+			String memberId = principal.getName();
+			merchantUid.put("memberId", memberId);
+			Members member = memberService.getMemberInfo(memberId);
+			
+			merchantUid.put("memberMileage", String.valueOf(member.getMileage()));
+			merchantUid.put("isMember", "true");
+			
+		} catch (Exception e) {
+			// TODO: handle exception
+			merchantUid.put("isMember", "false");
+		}
 		return merchantUid;
 	}
 	
