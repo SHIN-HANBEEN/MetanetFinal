@@ -46,17 +46,31 @@
 					</tbody>
 				  </table>
 
-				  <form class="row g-3" style="margin-top: 160px;">
+				  <form class="row g-3 notmember" style="margin-top: 160px;" >
 					<div class="col-auto">
 					  <label for="staticEmail2" class="visually-hidden">전화번호인증</label>
 					  <input type="text" readonly class="form-control-plaintext" id="staticEmail2" value="전화번호인증">
 					</div>
 					<div class="col-auto">
 					  <label for="inputPassword2" class="visually-hidden">전화번호</label>
-					  <input type="password" class="form-control" id="phoneNumber" placeholder="01012345678">
+					  <input type="text" class="form-control" id="phoneNumber" placeholder="01012345678">
 					</div>
 					<div class="col-auto">
 					  <button id="callNumberAuthButton" class="btn btn-primary mb-3">인증번호발송</button>
+					</div>
+				  </form>
+				  
+				  <form class="row g-3 member" style="margin-top: 160px;" >
+					<div class="col-auto">
+					  <label for="staticEmail2" class="visually-hidden">전화번호인증</label>
+					  <input type="text" readonly class="form-control-plaintext" id="staticEmail2" value="마일리지">
+					</div>
+					<div class="col-auto">
+					  <label for="inputPassword2" class="visually-hidden">전화번호</label>
+					  <input type="text" class="form-control" id="phoneNumber" placeholder="5000">
+					</div>
+					<div class="col-auto">
+					  <button id="callNumberAuthButton" class="btn btn-primary mb-3">마일리지</button>
 					</div>
 				  </form>
 
@@ -81,6 +95,9 @@
 	<script>
 		var localData;
 		var payId;
+		var isMember = 'false';
+		var memberMileage;
+		var memberId;
 		//문서가 준비되면 제일 먼저 실행
 		$(document).ready(function () {
 			
@@ -101,7 +118,15 @@
 		      // 성공적으로 응답을 받았을 때 실행할 코드
 		      console.log('성공:', data);
 		      payId = data.paymentId;
-
+		      isMember = data.isMember;
+		      if(isMember == 'true'){
+				  memberId = data.memberId;
+				  memberMileage = data.memberMileage;
+				  document.querySelector('.notmember').remove();
+			  }
+			  else{
+				  document.querySelector('.member').remove();
+			  }
 		    },
 		    error: function(error) {
 		      // 요청이 실패했을 때 실행할 코드

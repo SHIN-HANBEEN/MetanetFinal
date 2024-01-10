@@ -55,6 +55,10 @@ public interface IMemberRepository {
 	 */
 	Members getMemberById(String id);
 	/*
+	 * PK로 회원조회
+	 */
+	Members getMemberByMemberId(int memberId);
+	/*
 	 * 로그인 By ID and Password
 	 */
 	Members getMemberByIdAndPassword(@Param("id")String id, @Param("password") String password);
