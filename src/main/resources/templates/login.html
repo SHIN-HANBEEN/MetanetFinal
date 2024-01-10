@@ -71,11 +71,11 @@
 											onsubmit="submitForm(event)">
 											<div class="input-group input-group-outline my-3">
 												<label class="form-label">아이디</label>
-												<input type="text" class="form-control" id="id" name="id">
+												<input type="text" class="form-control" id="id" name="id" autocomplete="off">
 											</div>
 											<div class="input-group input-group-outline mb-3">
 												<label class="form-label">비밀번호</label>
-												<input type="password" class="form-control" id="password" name="password">
+												<input type="password" class="form-control" id="password" name="password" autocomplete="off">
 											</div>
 
 											<div class="form-check form-switch d-flex align-items-center mb-3">
@@ -119,28 +119,75 @@
 
 	<!--입력한 폼을 검증 후 JWT 토큰을 발급 받아 sessionStorage에 저장-->
 	<script>
-		function submitForm(event) {
-			// preventDefault로 form의 submit 중지
+
+		async function submitForm(event) {
 			event.preventDefault();
 
-			// 폼 데이터를 가져와서 서버로 전송
-			const formData = new FormData(document.getElementById('loginForm'));
-			fetch('/login', {
-				method: 'POST',
-				body: formData
-			})
-				.then(response => {
-					// HTTP 응답 코드가 OK(200)인지 확인
-					if (response.ok) {
-						// 토큰을 세션 스토리지에 저장
-							window.location.href = '/';
+			try {
+				const formData = new FormData(document.getElementById('loginForm'));
+				const response = await fetch('/login', {
+					method: 'POST',
+					body: formData
+				});
+
+				if (response.ok) {
+					// Get the token from the response body
+					const token = await response.text();
+					console.log("로그인 토큰 : " + token);
+
+					// Save the token in local storage
+					window.localStorage.setItem('X-AUTH-TOKEN', token);
+
+					//localStorage 에서 token 꺼내기
+					/*const localToken = window.localStorage.getItem('X-Auth-Token');
+					console.log("login 페이지에서 localStorage 토큰꺼내기 : " + localToken);*/
+
+					const localToken = token;
+
+					// Check if the token is present
+					if (localToken) {
+						// 홈디렉토리
+						const apiUrl = '/';
+
+						const xhr = new XMLHttpRequest();
+						xhr.open('GET', apiUrl, true);
+						xhr.setRequestHeader('X-AUTH-TOKEN', `${localToken}`);
+						xhr.setRequestHeader('Content-Type', 'application/json');
+
+						// Set up event listeners for handling the response
+						xhr.onload = function () {
+							if (xhr.status >= 200 && xhr.status < 300) {
+								// Success logic
+								console.log('Login 에서 Home XHR Request successful');
+								// Add the logic to redirect here
+								window.location.href = '/'; // Adjust the path as needed
+							} else {
+								// Error handling logic
+								console.error('Failed to make the request. Status:', xhr.status);
+							}
+						};
+
+						xhr.onerror = function () {
+							// Error handling logic
+							console.error('Network error occurred');
+						};
+
+						console.log("login 에서 xhr send 보내기 직전");
+						// Send the request
+						xhr.send();
+
 					} else {
-						// HTTP 응답이 OK가 아닌 경우 에러를 발생시키고 에러 메시지 출력
-						alert("아이디 또는 비밀번호가 틀렸습니다.");
-						throw new Error('Invalid credentials');
+						// Handle the case where the token is not present
+						console.error('Token not found in local storage.');
 					}
-				})
-				.catch(error => console.error('Error:', error.message));
+				} else {
+					alert("아이디 또는 비밀번호가 틀렸습니다.");
+				}
+			} catch (error) {
+				console.error('Error:', error.message);
+			}
+
+
 		}
 
 	</script>
