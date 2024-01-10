@@ -62,12 +62,12 @@
 				  
 				  <form class="row g-3 member" style="margin-top: 160px;" >
 					<div class="col-auto">
-					  <label for="staticEmail2" class="visually-hidden">전화번호인증</label>
+					  <label for="staticEmail2" class="visually-hidden"></label>
 					  <input type="text" readonly class="form-control-plaintext" id="staticEmail2" value="마일리지">
 					</div>
 					<div class="col-auto">
-					  <label for="inputPassword2" class="visually-hidden">전화번호</label>
-					  <input type="text" class="form-control" id="phoneNumber" placeholder="5000">
+					  <label for="inputPassword2" class="visually-hidden"></label>
+					  <input type="text" class="form-control" id="mileageInput" placeholder="">
 					</div>
 					<div class="col-auto">
 					  <button id="callNumberAuthButton" class="btn btn-primary mb-3">마일리지</button>
@@ -96,8 +96,13 @@
 		var localData;
 		var payId;
 		var isMember = 'false';
-		var memberMileage;
+		var phoneNum;
+		var memberMileage = 0;
 		var memberId;
+		var finalPrice;
+		var inputMileage;
+		var enterTime;
+		var preUrl;
 		//문서가 준비되면 제일 먼저 실행
 		$(document).ready(function () {
 			
@@ -108,8 +113,10 @@
 			document.querySelector('#grade').textContent = localData.routeData.gradeNm;
 			document.querySelector('#ageType').textContent = '성인 '+ localData.adultNum + ' 중고생 ' + localData.middleChildNum + ' 아동 ' + localData.childNum;
 			document.querySelector('#selectedSeats').textContent = localData.selectedSeats;
-			document.querySelector('#totalPrice').textContent = localData.totalPrice;
-			
+			document.querySelector('#totalPrice').textContent = localData.totalPrice.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
+			finalPrice = localData.totalPrice;
+			enterTime = localData.enterTime;
+			preUrl = localData.seatUrl;
 			$.ajax({
 		    url: 'http://localhost:8083/paymentid', // 요청을 보낼 URL
 		    method: 'GET', // HTTP 메서드 (GET, POST, 등)
@@ -122,7 +129,13 @@
 		      if(isMember == 'true'){
 				  memberId = data.memberId;
 				  memberMileage = data.memberMileage;
+				  phoneNum = data.memberPhoneNum;
 				  document.querySelector('.notmember').remove();
+				  var milInput = document.querySelector('#mileageInput');
+				  milInput.placeholder = memberMileage;
+				  milInput.value = memberMileage;
+				  document.querySelector('#totalPrice').textContent = (localData.totalPrice - parseInt(memberMileage)).toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");;
+				  
 			  }
 			  else{
 				  document.querySelector('.member').remove();
@@ -135,8 +148,22 @@
 		  });
 			//sessionStorage.removeItem("reservationData");
 		});
-
-		//전화번호
+		
+		//마일리지 인풋이 변할때마다 총결제금액 변경
+		document.querySelector('#mileageInput').addEventListener("input", function(e){
+			inputMileage = parseInt(e.target.value);
+			if(parseInt(e.target.value) > parseInt(memberMileage)) {
+				e.target.value = memberMileage;
+				inputMileage = e.target.value;
+			}
+			
+			if(isNaN(inputMileage)) inputMileage = 0;
+			document.querySelector('#totalPrice').textContent = (localData.totalPrice - parseInt(inputMileage)).toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
+			finalPrice = localData.totalPrice - parseInt(inputMileage);
+			console.log(finalPrice);
+		});
+		
+		//전화번호 인증 클릭
 		document.getElementById("callNumberAuthButton").addEventListener("click", AuthBtnClick);
         function AuthBtnClick() {
 			/*
@@ -184,29 +211,58 @@
         }
 		
         
+		var interval = setInterval(function () { 
+			//console.log(enterTime);
+			const dateA = new Date();
+			const dateB = new Date(enterTime);
+			const diffMSec = dateA.getTime() - dateB.getTime();
+			const diffMin = diffMSec / (60 * 1000);
+			console.log(diffMin);
+			if(diffMin >= 10){
+				alert('결제 시간초과');
+				clearInterval(interval);
+				location.href=preUrl;
+				
+			};
+		 }, 1000);
 
+		function dateFormat(date) {
+        let month = date.getMonth() + 1;
+        let day = date.getDate();
+        let hour = date.getHours();
+        let minute = date.getMinutes();
+        let second = date.getSeconds();
 
+        month = month >= 10 ? month : '0' + month;
+        day = day >= 10 ? day : '0' + day;
+        hour = hour >= 10 ? hour : '0' + hour;
+        minute = minute >= 10 ? minute : '0' + minute;
+        second = second >= 10 ? second : '0' + second;
 
+        return date.getFullYear() + '-' + month + '-' + day + ' ' + hour + ':' + minute + ':' + second;
+}
 
 
 		//결제 프로세스 ----------------------------------------------------
 		$("#iamportPayment").click(function () {
+			//진입시간과 결제 시간이 
 			payment(); //버튼 클릭하면 함수 호출
 		});
 		//버튼 클릭하면 실행
 		function payment(data) {
 			//var paymentId = createPaymentId();
+			if(isMember == 'false') phoneNum = document.querySelector('#phoneNumber').value;
 			IMP.init('imp33561285'); //아임포트 관리자 콘솔에서 확인한 '가맹점 식별코드' 입력
 			IMP.request_pay({ // param
 				pg: "inicis", //pg사명 or pg사명.CID (잔액 일시불 할부 등, 기본 PG사가 따로 있음)
 				pay_method: "card", //결제 방법
 				merchant_uid: payId, //가맹점 주문번호 (아임포트를 사용하는 가맹점에서 임의로 지정)
 				name: "메타버스 결제", //결제창에서 보여질 상품명
-				amount: localData.totalPrice, //금액
+				amount: finalPrice, //금액
 				buyer_email: "gildong0405@gmail.com",
 				buyer_name: "길동이",
 				buyer_postcode: "1",
-				buyer_tel: "01052016412"
+				buyer_tel: phoneNum
 			}, function (rsp) { // callback
 				console.log(rsp);
 				if (rsp.success) {
@@ -223,18 +279,12 @@
 					data.routeId = localData.routeData.routeId;
 					data.busId = localData.busId;
 					data.selectedSeats = localData.selectedSeats;
-					data.isMember = 'false';
+					data.isMember = isMember;
 					data.adultNum = localData.adultNum;
 					data.middleChildNum = localData.middleChildNum;
 					data.childNum = localData.childNum;
-					data.mileage = 300;
-					// resId (예매 아이디)
-					// memberId (회원 아이디)
-					// nmemberId (비회원 아이디)
-					// routeId (노선 아이디)
-					// busId (버스 아이디)
-					// seatId (좌석 번호)
-					// resDate (예매일자) data에 넣기
+					data.mileage = inputMileage;
+					data.memberId = memberId;
 					console.log(data);
 					// 성공하면 데이터 전송~ -> 테스트 전송 성공
 					$.ajax({

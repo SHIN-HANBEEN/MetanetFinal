@@ -2,6 +2,7 @@ package metanet.kosa.metanetfinal.reservation.controller;
 
 import java.io.IOException;
 import java.security.Principal;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -113,7 +114,9 @@ public class PaymentController {
 			Members member = memberService.getMemberInfo(memberId);
 			
 			merchantUid.put("memberMileage", String.valueOf(member.getMileage()));
+			merchantUid.put("memberPhoneNum", member.getPhoneNum());
 			merchantUid.put("isMember", "true");
+			
 			
 		} catch (Exception e) {
 			// TODO: handle exception

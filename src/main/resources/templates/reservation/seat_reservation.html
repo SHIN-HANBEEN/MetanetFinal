@@ -437,7 +437,9 @@
 		                    totalPrice: totalPrice,
 		                    adultNum: adultNum,
 		                    middleChildNum: middleChildNum,
-		                    childNum: childNum
+		                    childNum: childNum,
+		                    enterTime: new Date(),
+		                    seatUrl: window.location.href
 	                	}));
                 		if(status!=400) location.href="/reservation/payment";
 				}).catch(error => console.log('FetchError'));
