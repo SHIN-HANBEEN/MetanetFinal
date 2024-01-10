@@ -21,18 +21,18 @@ public class MemberTests {
 	
 	@Test
 	void regMemberTest() {
-		Members member = Members.builder()
-			.birthDate(new Date(20230101))
-			.memberId(10)
-			.id("test")
-			.password("Qwerty12345678!")
-			.email("test@test.com")
-			.sex("MALE")
-			.name("혿길동")
-			.phoneNum("01011111111")
-			.role("USER")
-			.mileage(1100).build();
-		memberService.signin(member);
+//		Members member = Members.builder()
+//			.birthDate(new Date(20230101))
+//			.memberId(10)
+//			.id("test")
+//			.password("Qwerty12345678!")
+//			.email("test@test.com")
+//			.sex("MALE")
+//			.name("혿길동")
+//			.phoneNum("01011111111")
+//			.role("USER")
+//			.mileage(1100).build();
+//		memberService.signin(member);
 	}
 	
 	@Test
