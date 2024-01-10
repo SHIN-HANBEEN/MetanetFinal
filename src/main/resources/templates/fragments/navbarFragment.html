@@ -1,5 +1,8 @@
 <!-- Navbar Transparent -->
 <!-- <nav class="navbar navbar-expand-lg position-absolute top-0 z-index-3 w-100 shadow-none my-3 navbar-transparent"> -->
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
 <div class="container position-sticky z-index-sticky top-0" th:fragment="navbar">
 	<div class="row">
 		<div class="col-12">
@@ -23,9 +26,14 @@
 					<div class="collapse navbar-collapse w-100 pt-3 pb-2 py-lg-0 ms-lg-8 ps-lg-5" id="navigation">
 						<ul class="navbar-nav navbar-nav-hover ms-auto">
 							<li class="nav-item dropdown dropdown-hover mx-2 ms-lg-6">
-								<a href="mypage" id="mypageLink" class="nav-link ps-2 d-flex cursor-pointer align-items-center"
+								<!-- 로그인한 사용자만 보임 -->
+								<a sec:authorize="isAuthenticated()" 
+									href="mypage" 
+									id="mypageLink" 
+									class="nav-link ps-2 d-flex cursor-pointer align-items-center"
 									aria-expanded="false">
-									<i class="material-icons opacity-6 me-2 text-md">dashboard</i>
+									<!--<i 
+										class="material-icons opacity-6 me-2 text-md">dashboard</i>-->
 									마이페이지
 
 								</a>
@@ -41,7 +49,8 @@
 							</li>
 
 							<li class="nav-item  mx-2">
-								<a href="nreservation" class="nav-link ps-2 d-flex cursor-pointer align-items-center"
+								<a sec:authorize="isAnonymous()" 
+								href="nreservation" class="nav-link ps-2 d-flex cursor-pointer align-items-center"
 									aria-expanded="false">
 									<i class="material-icons opacity-6 me-2 text-md">article</i>
 									비회원예매조회
