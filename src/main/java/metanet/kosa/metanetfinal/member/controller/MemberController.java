@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
 
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
@@ -27,7 +26,7 @@ import metanet.kosa.metanetfinal.member.model.Members;
 import metanet.kosa.metanetfinal.member.service.IMemberService;
 import metanet.kosa.metanetfinal.member.service.PhoneNumCertificationService;
 
-@RestController
+@Controller
 public class MemberController {
 
 	@Autowired
@@ -46,9 +45,7 @@ public class MemberController {
 	
 	@PostMapping("/login")
 	@ResponseBody
-	public ResponseEntity<String> login(
-			@RequestParam String id, 
-			@RequestParam String password, 
+	public ResponseEntity<String> login(@RequestParam String id, @RequestParam String password, 
 			HttpServletResponse response) {
 		/*
 		 * web 에서 보낸 데이터에서 "userid" 키 값을 꺼내서 그걸로 Member 객체를 얻어내고, 유효성 검사를 마친 후에는 token 을
@@ -56,32 +53,23 @@ public class MemberController {
 		 */
 		Members member = memberService.getMemberInfo(id);
 		if (member == null) {
-			return null;
-			//throw new IllegalArgumentException("사용자가 없습니다");
+			throw new IllegalArgumentException("사용자가 없습니다");
 		}
 		if (!passwordEncoder.matches(password, member.getPassword())) {
-			return null;
-			//throw new IllegalArgumentException("비밀번호 오류");
+			throw new IllegalArgumentException("비밀번호 오류");
 		}
-		
-		
 		/*
-		 * 비밀번호 검증이 완료 되면 쿠키에 JWT 토큰을 넣어서 생성	 
+		 * 비밀번호 검증이 완료 되면 쿠키에 JWT 토큰을 넣어서 생성
+		 */
 		Cookie cookie = new Cookie(
 				"access_token", tokenProvider.generateToken(member));
 		cookie.setMaxAge(60*60*24*7); //어차피 token 에 유효기간을 설정을 해두었기 때문에 의미는 없다.
 		cookie.setHttpOnly(true);
 		cookie.setPath("/");
 		
-		response.addCookie(cookie);*/
-		
+		response.addCookie(cookie);
 
-		/*
-	     * 비밀번호 검증이 완료되면 JWT 토큰을 생성하고 바로 반환
-	     */
-	    String token = tokenProvider.generateToken(member);
-    	System.out.println("로그인 인증에 성공했습니다. Login 컨트롤러에서 생성된 토큰은 : " + token);
-	    return ResponseEntity.ok(token);
+		return ResponseEntity.ok("Login successful");
 	}
 	
 	

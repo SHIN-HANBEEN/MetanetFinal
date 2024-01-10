@@ -66,8 +66,19 @@ public class JwtTokenProvider {
 	 * @return 토큰
 	 */
 	public String resolveToken(HttpServletRequest request) {
-		System.out.println("resolveToken() 의 토큰 : " + request.getHeader("X-AUTH-TOKEN"));
-		return request.getHeader("X-AUTH-TOKEN");
+		
+		Cookie[] cookies = request.getCookies();
+		String accessToken = null;
+		if (cookies != null) {
+			for (Cookie cookie : cookies) {
+				if ("access_token".equals(cookie.getName())) {
+					accessToken = cookie.getValue();
+					// 여기에서 accessToken 활용
+					// 예: 사용자의 인증 정보를 확인하거나 다른 작업 수행
+				}
+			}
+		}
+		return accessToken;
 	}
 
 	/**
