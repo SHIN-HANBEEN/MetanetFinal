@@ -7,19 +7,11 @@
 			<nav class="navbar navbar-expand-lg  blur border-radius-xl 
 				top-0 z-index-fixed shadow position-absolute my-3 py-2 start-0 end-0 mx-4">
 				<div class="container">
-					<a class="navbar-brand  text-black" href="../home.html" rel="tooltip" title="시외버스 예매 시스템"
-						data-placement="bottom" target="_blank">
+					<a class="navbar-brand  text-black" href="/" rel="tooltip" title="시외버스 예매 시스템"
+						data-placement="bottom">
 						<img src="../assets/img/logo-white.png" class="img-fluid" style="width: 30%; max-height:50%;" />
 					</a>
-					<button class="navbar-toggler shadow-none ms-2" type="button" data-bs-toggle="collapse"
-						data-bs-target="#navigation" aria-controls="navigation" aria-expanded="false"
-						aria-label="Toggle navigation">
-						<span class="navbar-toggler-icon mt-2">
-							<span class="navbar-toggler-bar bar1"></span>
-							<span class="navbar-toggler-bar bar2"></span>
-							<span class="navbar-toggler-bar bar3"></span>
-						</span>
-					</button>
+
 					<div class="collapse navbar-collapse w-100 pt-3 pb-2 py-lg-0 ms-lg-8 ps-lg-5" id="navigation">
 						<ul class="navbar-nav navbar-nav-hover ms-auto">
 							<li class="nav-item mx-2 my-2">
@@ -79,7 +71,6 @@
 								class="nav-item my-2 mx-2 metanet-width-100p"
 								style="display: flex; justify-content: right;">
 								<a 
-									sec:authorize="isAuthenticated()" 
 									href="logout" 
 									class="btn btn-sm btn-secondary my-2 py-2">
 									Logout
