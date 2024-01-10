@@ -1,6 +1,5 @@
 <!-- Navbar Transparent -->
 <!-- <nav class="navbar navbar-expand-lg position-absolute top-0 z-index-3 w-100 shadow-none my-3 navbar-transparent"> -->
-<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
 <div class="container position-sticky z-index-sticky top-0" th:fragment="navbar">
 	<div class="row">
@@ -67,15 +66,18 @@
 								</a>
 							</li>
 							
-							<li class="nav-item my-2 mx-2 ">
+							<li th:if="${#authorization.expression('isAnonymous()')}" 
+								class="nav-item my-2 mx-2 metanet-width-100p" 
+								style="display: flex; justify-content: right;">
 								<a 
-									sec:authorize="isAnonymous()" 
 									href="login" 
 									class="btn btn-sm btn-success my-2 py-2">
 									Login
 								</a>
 							</li>
-							<li class="nav-item my-2 mx-2">
+							<li th:if="${#authorization.expression('isAuthenticated()')}"
+								class="nav-item my-2 mx-2 metanet-width-100p"
+								style="display: flex; justify-content: right;">
 								<a 
 									sec:authorize="isAuthenticated()" 
 									href="logout" 
