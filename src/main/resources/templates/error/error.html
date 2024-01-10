@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <!-- 필요한 CSS 및 JS 파일 포함 -->
+    <th:block th:replace="/WEB-INF/views/include/staticFiles :: staticFiles"></th:block>
+</head>
+<body>
+    <!-- Header 포함 -->
+    <th:block th:replace="/WEB-INF/views/include/bodyHeader :: bodyHeader"></th:block>
+
+    <div class="container">
+        <div class="content">
+            <div class="jumbotron">
+                <h2 style="color:red;" th:text="${exception.message}">에러 메시지</h2>
+                <p>
+                    <!-- 주석 처리된 예외 스택 추적 -->
+                    <!--
+                    <ul>
+                        <th:block th:each="ste : ${exception.stackTrace}">
+                            <li th:text="${ste}"></li>
+                        </th:block>
+                    </ul>
+                    -->
+                </p>
+                <p><a class="btn btn-primary" th:href="@{/}">Home</a></p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer 포함 -->
+    <th:block th:replace="/WEB-INF/views/include/footer :: footer"></th:block>
+</body>
+</html>

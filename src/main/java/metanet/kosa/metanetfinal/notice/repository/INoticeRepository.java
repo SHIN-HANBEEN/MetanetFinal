@@ -19,6 +19,14 @@ public interface INoticeRepository {
 	Notices getNotice(int noticeId);
 	// 공지사항 총 게시글 갯수 조회
 	int getTotalNoticeNum();
+	// 공지사항 게시글 아이디 최댓값 조회
+	int getMaxNoticeId();
 	// 공지사항 검색 총 게시글 갯수 조회
 	int getTotalNoticSearcheNum(@Param("keyword") String keyword);
+	// 공지사항 글 작성
+	void insertNotice(Notices notice);
+	// 공지사항 글 삭제
+	void deleteNotice(int noticeId);
+	// 공지사항 글 수정
+	void updateNotice(@Param("noticeId")int noticeId, @Param("notice") Notices notice);
 }
