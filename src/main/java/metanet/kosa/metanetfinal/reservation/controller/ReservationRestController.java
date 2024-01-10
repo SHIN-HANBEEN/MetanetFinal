@@ -69,7 +69,7 @@ public class ReservationRestController {
 	 // 결제 후 정보 받기	
 	@PostMapping("/reservation/payOk")
 	public ResponseEntity<Map<String, Object>> paytestOk(@RequestBody Map<String, Object> request) {
-		System.out.println(request.toString());
+		System.out.println("결제후 정보:"+request.toString());
 		
 		List<Object> li = (ArrayList<Object>) request.get("selectedSeats");
 		List<Integer> selectedSeatsList =  new ArrayList<>();

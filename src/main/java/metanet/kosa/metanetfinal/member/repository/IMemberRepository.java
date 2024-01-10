@@ -62,4 +62,7 @@ public interface IMemberRepository {
 	 * 로그인 By ID and Password
 	 */
 	Members getMemberByIdAndPassword(@Param("id")String id, @Param("password") String password);
+	void updateMemberMileage(@Param("memberId")int memberId, @Param("mileage") int mileage,
+			@Param("mileageRate") int mileageRate, @Param("totalPrice") int totalPrice);
+
 }

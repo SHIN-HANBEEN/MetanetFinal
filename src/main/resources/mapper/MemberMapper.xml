@@ -101,4 +101,9 @@
 	]]>
 	</select>
 	
+	<update id="updateMemberMileage">
+	UPDATE MEMBERS SET MILEAGE=(select mileage from members where member_id=#{memberId}) - #{mileage} + #{totalPrice}*0.01 * #{mileageRate}
+	WHERE MEMBER_ID=#{memberId}
+	</update>
+	
 </mapper>

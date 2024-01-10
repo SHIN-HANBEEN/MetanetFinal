@@ -110,9 +110,9 @@ public class PaymentController {
 		merchantUid.put("paymentId", uid);
 		try {
 			String memberId = principal.getName();
-			merchantUid.put("memberId", memberId);
-			Members member = memberService.getMemberInfo(memberId);
 			
+			Members member = memberService.getMemberInfo(memberId);
+			merchantUid.put("memberId", String.valueOf(member.getMemberId()));
 			merchantUid.put("memberMileage", String.valueOf(member.getMileage()));
 			merchantUid.put("memberPhoneNum", member.getPhoneNum());
 			merchantUid.put("isMember", "true");
