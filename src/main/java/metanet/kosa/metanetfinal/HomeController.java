@@ -31,6 +31,7 @@ public class HomeController {
 	
 	@GetMapping(value="/login")
 	public String login() {
+		System.out.println("로그인 성공");
 		return "login";
 	}
 	

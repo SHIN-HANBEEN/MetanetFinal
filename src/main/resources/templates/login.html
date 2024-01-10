@@ -133,7 +133,7 @@
 					// HTTP 응답 코드가 OK(200)인지 확인
 					if (response.ok) {
 						// 토큰을 세션 스토리지에 저장
-							window.location.href = '/';
+						window.location.href = '/';
 					} else {
 						// HTTP 응답이 OK가 아닌 경우 에러를 발생시키고 에러 메시지 출력
 						alert("아이디 또는 비밀번호가 틀렸습니다.");
@@ -142,6 +142,9 @@
 				})
 				.catch(error => console.error('Error:', error.message));
 		}
+		
+
+
 
 	</script>
 	<!--   Core JS Files   -->
