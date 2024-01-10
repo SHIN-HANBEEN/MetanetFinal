@@ -119,6 +119,7 @@
 
 	<!--입력한 폼을 검증 후 JWT 토큰을 발급 받아 sessionStorage에 저장-->
 	<script>
+
 		async function submitForm(event) {
 			event.preventDefault();
 
@@ -126,154 +127,69 @@
 				const formData = new FormData(document.getElementById('loginForm'));
 				const response = await fetch('/login', {
 					method: 'POST',
-					body: formData,
+					body: formData
 				});
 
 				if (response.ok) {
-					const responseData = await response.text();
-					console.log("login 컨트롤러 반환 값 text(responseData): " + responseData);
+					// Get the token from the response body
+					const token = await response.text();
+					console.log("로그인 토큰 : " + token);
 
-					window.localStorage.setItem('X-AUTH-TOKEN', responseData);
+					// Save the token in local storage
+					window.localStorage.setItem('X-AUTH-TOKEN', token);
 
-					// Redirect after successful login
-					await redirectToHome(responseData);
-				} else {
-					console.error('Error during the request. Status: ' + response.status);
-				}
-			} catch (error) {
-				console.error('Error:', error.message);
-			}
-		}
+					//localStorage 에서 token 꺼내기
+					/*const localToken = window.localStorage.getItem('X-Auth-Token');
+					console.log("login 페이지에서 localStorage 토큰꺼내기 : " + localToken);*/
 
-		async function redirectToHome(responseData) {
-			try {
-				if (responseData !== null || responseData !== "") {
-					const localToken = responseData;
-					console.log("로그인 토큰 : " + localToken);
+					const localToken = token;
 
-					// 홈디렉토리
-					const apiUrl = '/';
+					// Check if the token is present
+					if (localToken) {
+						// 홈디렉토리
+						const apiUrl = '/';
 
-					const response = await fetch(apiUrl, {
-						method: 'GET',
-						headers: {
-							'X-AUTH-TOKEN': localToken,
-							'Content-Type': 'application/json',
-						},
-					});
+						const xhr = new XMLHttpRequest();
+						xhr.open('GET', apiUrl, true);
+						xhr.setRequestHeader('X-AUTH-TOKEN', `${localToken}`);
+						xhr.setRequestHeader('Content-Type', 'application/json');
 
-					if (response.ok) {
-						console.log('Login 에서 Home XHR Request successful');
-						alert('xhr(로그인) 요청이 성공했습니다. 홈으로 이동합니다.');
-						window.location.href = "/";
-					} else {
-						console.error('Failed to make the request. Status:', response.status);
-					}
-				} else {
-					// Handle the case where the token is not present
-					alert("아이디 또는 비밀번호가 틀렸습니다.");
-					console.error('Token not found in local storage.');
-				}
-			} catch (error) {
-				console.error('Error:', error.message);
-			}
-		}
+						// Set up event listeners for handling the response
+						xhr.onload = function () {
+							if (xhr.status >= 200 && xhr.status < 300) {
+								// Success logic
+								console.log('Login 에서 Home XHR Request successful');
+								// Add the logic to redirect here
+								window.location.href = '/'; // Adjust the path as needed
+							} else {
+								// Error handling logic
+								console.error('Failed to make the request. Status:', xhr.status);
+							}
+						};
 
-
-		/*
-		async function submitForm(event) {
-			event.preventDefault();
-
-			try {
-				const formData = new FormData(document.getElementById('loginForm'));
-
-				const xhr = new XMLHttpRequest();
-				xhr.open('POST', '/login', false); //동기 처리 : false 로 설정
-
-				let responseData; //받아올 token 값
-
-				xhr.onreadystatechange = function () {
-					if (xhr.readyState === 4 && xhr.status === 200) {
-						// Handle successful response
-						responseData = xhr.responseText; //return 으로 token 날아온다.
-						console.log("login 컨트롤러 반환 값 text(responseData) : " + responseData);
-
-						window.localStorage.setItem('X-AUTH-TOKEN', responseData);
-
-					} else if (xhr.readyState === 4 && xhr.status !== 200) {
-						// Handle error response
-						console.error('Error during the request. Status: ' + xhr.status);
-					}
-				};
-
-				xhr.send(formData); //formData 를 body 에 담아서 send 한다.
-
-				//여기서 redirectToHome() 을 사용하자.
-				redirectToHome(responseData);
-			} catch (error) {
-				console.error('Error:', error.message);
-			}
-		}
-
-		async function redirectToHome(responseData) {
-			let promise = new Promise(function (resolve, reject) {
-				if (responseData !== null || responseData !== "") {
-					const localToken = responseData;
-					console.log("로그인 토큰 : " + localToken);
-
-
-
-					// 홈디렉토리
-					const apiUrl = '/';
-
-					const xhr = new XMLHttpRequest();
-					console.log("localToken : " + localToken);
-					xhr.open('GET', apiUrl, false);
-					xhr.setRequestHeader('X-AUTH-TOKEN', `${localToken}`);
-					xhr.setRequestHeader('Content-Type', 'application/json');
-
-
-					// Set up event listeners for handling the response
-					xhr.onload = function () {
-						if (xhr.status >= 200 && xhr.status < 300) {
-							// Success logic
-							console.log('Login 에서 Home XHR Request successful');
-							alert('xhr(로그인) 요청이 성공했습니다. 홈으로 이동합니다.');
-
-							// Add the logic to redirect here
-
-						} else {
+						xhr.onerror = function () {
 							// Error handling logic
-							console.error('Failed to make the request. Status:', xhr.status);
-						}
-					};
+							console.error('Network error occurred');
+						};
 
-					xhr.onerror = function () {
-						// Error handling logic
-						console.error('Network error occurred');
-					};
+						console.log("login 에서 xhr send 보내기 직전");
+						// Send the request
+						xhr.send();
 
-					console.log("login 에서 xhr send 보내기 직전");
-					// Send the request
-					xhr.send();
-
+					} else {
+						// Handle the case where the token is not present
+						console.error('Token not found in local storage.');
+					}
 				} else {
-					// Handle the case where the token is not present
 					alert("아이디 또는 비밀번호가 틀렸습니다.");
-					reject("홈으로 보내기 실패");
-					console.error('Token not found in local storage.');
 				}
-			});
+			} catch (error) {
+				console.error('Error:', error.message);
+			}
 
-			promise.then(function (dataValue) {
-				console.log(dataValue);
-			});
 
-			promise.catch(function (err) {
-				console.log(err);
-			});
 		}
-		*/
+
 	</script>
 	<!--   Core JS Files   -->
 	<script src="./assets/js/core/popper.min.js" type="text/javascript"></script>
