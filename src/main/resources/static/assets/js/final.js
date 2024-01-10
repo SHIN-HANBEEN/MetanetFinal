@@ -526,7 +526,7 @@ $(document).ready(function() {
 
 //달력에서 날짜 7일 이후까지만 가능하도록 제한하기
 $(document).ready(function() {
-	// Set the minimum date to today
+	// Set the minimum date to today YYYY-MM-ddTHH:mm:ss
 	const today = new Date().toISOString().split('T')[0];
 	document.getElementById('dpDate').min = today;
 

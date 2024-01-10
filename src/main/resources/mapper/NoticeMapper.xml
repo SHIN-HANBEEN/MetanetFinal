@@ -31,6 +31,12 @@
 		]]>
 	</select>
 	
+	<select id="getMaxNoticeId" resultType="int">
+		<![CDATA[
+			SELECT MAX(notice_id) FROM notices
+		]]>
+	</select>
+	
 	<select id="getNotice" parameterType="int" resultType="metanet.kosa.metanetfinal.notice.model.Notices">
 		<![CDATA[
 		SELECT 
@@ -73,4 +79,29 @@
 			WHERE title LIKE #{keyword} OR content LIKE #{keyword}
 		]]>
 	</select>
+	
+	<insert id="insertNotice" parameterType="metanet.kosa.metanetfinal.notice.model.Notices">
+		<![CDATA[
+			INSERT INTO notices
+				(notice_id, member_id, title, content, dir_path)
+			VALUES
+				(#{noticeId}, 1, #{title}, #{content}, #{dirPath})
+		]]>
+	</insert>
+	
+	<delete id="deleteNotice" parameterType="int">
+		<![CDATA[
+			DELETE FROM notices
+			WHERE notice_id = #{noticeId}
+		]]>
+	</delete>
+	
+	<update id="updateNotice">
+		UPDATE notices
+		SET title = #{notice.title},
+			member_id = 1,
+			content = #{notice.content},
+			dir_Path = #{notice.dirPath}
+		WHERE notice_id = #{noticeId}
+	</update>
 </mapper>

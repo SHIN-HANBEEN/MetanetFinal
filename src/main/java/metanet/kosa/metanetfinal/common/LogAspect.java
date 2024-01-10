@@ -21,7 +21,7 @@ public class LogAspect {
 //		String methodName = signature.getName();
 //		log.info("[[[AOP-before Log]]]-{}", methodName);
 //	}
-//	
+
 //	@AfterThrowing(pointcut = "* metanet.kosa.metanetfinal..*.*(..)", throwing = "exception")
 //	public void afterThrowingLog(JoinPoint joinPoint, Exception exception) {
 //		Signature signature = joinPoint.getSignature();

@@ -46,7 +46,7 @@ public class SeatsLockSystemService {
 		}
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HHmm");
 		
-		log.info("현재시간:{}", now.format(formatter) );
+//		log.info("현재시간:{}", now.format(formatter) );
 	}
 	
 	/*

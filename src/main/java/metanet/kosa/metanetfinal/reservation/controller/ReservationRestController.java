@@ -81,7 +81,6 @@ public class ReservationRestController {
 		if(!isInserted) {
 			//Insert 실패시
 			return new ResponseEntity<>(HttpStatusCode.valueOf(500));
-			 
 		}
 		return new ResponseEntity<Map<String, Object>>(request, HttpStatusCode.valueOf(200));
 		

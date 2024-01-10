@@ -14,6 +14,26 @@
 	]]>
 	</select>
 	
+	<select id="getMemberById" parameterType="string" resultType="metanet.kosa.metanetfinal.member.model.Members">
+	<![CDATA[
+		SELECT 
+			*
+		FROM 
+			MEMBERS 
+		WHERE ID=#{id}
+	]]>
+	</select>
+	
+	<select id="getRoles" parameterType="string" resultType="string">
+	    <![CDATA[
+	        SELECT 
+	            ROLE AS "role",
+	            ID AS "Id"
+	        FROM MEMBERS
+	        WHERE ID=#{id}
+	    ]]>
+	</select>
+	
 	<insert id="register" useGeneratedKeys="true" keyProperty="memberId" keyColumn="MEMBER_ID">
 	INSERT INTO MEMBERS
 	(MEMBER_ID,ID,PASSWORD, EMAIL, BIRTH_DATE, SEX, NAME, PHONE_NUM, ROLE, MILEAGE)

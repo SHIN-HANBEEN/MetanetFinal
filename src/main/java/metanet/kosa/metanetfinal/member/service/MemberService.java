@@ -1,6 +1,7 @@
 package metanet.kosa.metanetfinal.member.service;
 
 
+import java.util.List;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,7 +44,7 @@ public class MemberService implements IMemberService{
 	 * 등록하려는 아이디가 유일하면 회원 가입을 진행한다.
 	 */
 	@Override
-	public void register(Members member) {
+	public void signin(Members member) {
 		System.out.println(memberRepository.isUniqueId(member.getId()));
 		if (memberRepository.isUniqueId(member.getId()) == null) {
 			//비밀번호 암호화 필요
@@ -104,6 +105,11 @@ public class MemberService implements IMemberService{
 	@Override
 	public void updateMember(String userId, String email, String phoneNum) {
 		memberRepository.updateMemberByID(userId, email, phoneNum);
+	}
+
+	@Override
+	public List<String> getRoles(String id) {
+		return memberRepository.getRoles(id);
 	}
 
 	

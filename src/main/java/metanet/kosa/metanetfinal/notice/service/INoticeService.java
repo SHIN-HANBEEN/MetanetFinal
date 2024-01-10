@@ -2,7 +2,7 @@ package metanet.kosa.metanetfinal.notice.service;
 
 import java.util.List;
 
-import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import metanet.kosa.metanetfinal.notice.model.Notices;
 
@@ -17,4 +17,10 @@ public interface INoticeService {
 	int getTotalNoticeNum();
 	// 공지사항 검색 게시글 총 개수 조회
 	int getTotalNoticSearcheNum(String keyword);
+	// 공지사항 글 작성
+	void insertNotice(Notices notice, MultipartFile file);
+	// 공지사항 글 삭제
+	void deleteNotice(int noticeId);
+	// 공지사항 글 수정
+	void updateNotice(int noticeId, Notices notice, MultipartFile file);
 }

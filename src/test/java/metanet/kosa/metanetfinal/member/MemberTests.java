@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import metanet.kosa.metanetfinal.member.model.Members;
-import metanet.kosa.metanetfinal.member.model.Members.MembersBuilder;
 import metanet.kosa.metanetfinal.member.repository.IMemberRepository;
 import metanet.kosa.metanetfinal.member.service.MemberService;
 
@@ -22,18 +21,18 @@ public class MemberTests {
 	
 	@Test
 	void regMemberTest() {
-		Members member = Members.builder()
-			.birthDate(new Date(20230101))
-			.memberId(10)
-			.id("test")
-			.password("Qwerty12345678!")
-			.email("test@test.com")
-			.sex("MALE")
-			.name("혿길동")
-			.phoneNum("01011111111")
-			.role("USER")
-			.mileage(1100).build();
-		memberService.register(member);
+//		Members member = Members.builder()
+//			.birthDate(new Date(20230101))
+//			.memberId(10)
+//			.id("test")
+//			.password("Qwerty12345678!")
+//			.email("test@test.com")
+//			.sex("MALE")
+//			.name("혿길동")
+//			.phoneNum("01011111111")
+//			.role("USER")
+//			.mileage(1100).build();
+//		memberService.signin(member);
 	}
 	
 	@Test

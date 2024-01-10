@@ -35,56 +35,6 @@
 		<span class="mask bg-gradient-dark opacity-6"></span>
 		<div class="card card-body shadow-xl mx-3 mx-md-11 mt-n12">
 			<!-- 여기 -->
-			<div class="container">
-        <div class="pg-opt">
-            <div class="row">
-                <div class="col-md-6 pc">
-                    <h2>Content</h2> <!-- 국제화 요소 제거 -->
-                </div>
-            </div>
-        </div>
-        <div class="content">
-            <table class="table table-bordered">
-                <tr>
-                    <td width="30%">제목</td> 
-                    <td class="title" th:text="${notice.title}">notice title</td>
-                </tr>
-                <tr>
-                    <td width="30%">내용</td> 
-                    <td class="content" th:text="${notice.content}">notice Content</td>
-                </tr>
-                <th:block th:if="${notice.dirPath != null and notice.dirPath != ''}">
-                    <tr>
-                        <td>File</td> 
-                        <td>
-                            <th:block th:if="${#strings.endsWith(notice.dirPath, '.jpg') || #strings.endsWith(notice.dirPath, '.jpeg') || #strings.endsWith(notice.dirPath, '.png') || #strings.endsWith(notice.dirPath, '.gif')}">
-                                <!--<img th:src="@{/file/{fileId}(fileId=${board.fileId})}" class="img-thumbnail" /><br/>-->
-                            </th:block>
-                            <!--<a th:href="@{${notice.dirPath}}">파일 보기</a>-->
-                            <a th:href="@{'/download' + ${notice.dirPath}}">파일 다운로드</a>
-                        </td>
-                    </tr>
-                </th:block>
-                <tr>
-				    <td colspan="2" align="right">
-				        <a th:href="@{/notice/list/{page}(page=${page})}">
-				            <button type="button" class="btn btn-info">목록</button>
-				        </a>
-				        <a th:href="@{/notice/write}">
-				            <button type="button" class="btn btn-info">새 글 작성</button>
-				        </a>
-				        <a th:href="@{/notice/update/{noticeId}(noticeId=${notice.noticeId})}">
-				            <button type="button" class="btn btn-info">수정</button>
-				        </a>
-				        <a th:href="@{/notice/delete/{noticeId}(noticeId=${notice.noticeId})}">
-				            <button type="button" class="btn btn-info">삭제</button>
-				        </a>
-				    </td>
-				</tr>
-            </table>
-        </div>
-    </div>
-			<!-- -->
 		</div>
 	</div>
 
