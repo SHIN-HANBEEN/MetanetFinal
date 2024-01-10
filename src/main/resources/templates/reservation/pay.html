@@ -156,7 +156,8 @@
 			//var paymentId = createPaymentId();
 			IMP.init('imp33561285'); //아임포트 관리자 콘솔에서 확인한 '가맹점 식별코드' 입력
 			IMP.request_pay({ // param
-				pg: "inicis", //pg사명 or pg사명.CID (잔액 일시불 할부 등, 기본 PG사가 따로 있음)
+				// pg: "inicis", //pg사명 or pg사명.CID (잔액 일시불 할부 등, 기본 PG사가 따로 있음)
+				pg: "kakao",
 				pay_method: "card", //결제 방법
 				merchant_uid: payId, //가맹점 주문번호 (아임포트를 사용하는 가맹점에서 임의로 지정)
 				name: "메타버스 결제", //결제창에서 보여질 상품명
