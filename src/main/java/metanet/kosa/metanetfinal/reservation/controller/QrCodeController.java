@@ -1,11 +1,15 @@
 package metanet.kosa.metanetfinal.reservation.controller;
 
-import java.io.ByteArrayOutputStream;
-import java.util.Base64;
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Map;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -13,34 +17,39 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.google.zxing.BarcodeFormat;
-import com.google.zxing.client.j2se.MatrixToImageWriter;
-import com.google.zxing.common.BitMatrix;
-import com.google.zxing.qrcode.QRCodeWriter;
+import org.springframework.web.bind.annotation.RequestParam;
+
+
+import metanet.kosa.metanetfinal.reservation.service.IReservationService;
 
 @Controller
 public class QrCodeController {
 	
+	@Autowired
+	IReservationService reservationService;
 	
-	@RequestMapping("reservation/ticket/{resId}")
-	public String getQrcode(Model model, @PathVariable int resId) throws Exception {
-
-		String text = String.valueOf(resId);
-		int width = 150;
-		int height = 150;
+	@GetMapping("reservation/ticket")
+	public String getTicket2(@RequestParam String payId, Model model) {
 		
-		QRCodeWriter qrCodeWriter = new QRCodeWriter();
-		BitMatrix bitMatrix = qrCodeWriter.encode(text, BarcodeFormat.QR_CODE, width, height);
-
-		ByteArrayOutputStream pngOutputStream = new ByteArrayOutputStream();
-
-		MatrixToImageWriter.writeToStream(bitMatrix, "PNG", pngOutputStream);
-
-		String img = Base64.getEncoder().encodeToString(pngOutputStream.toByteArray());
-
+		Map<String, Object> info = reservationService.getReservationInfo(payId);
 		
-		model.addAttribute("img", img);
-
+		// 날짜 형식 변환
+        LocalDateTime departureTime = ((Timestamp) info.get("DEPARTURE_TIME")).toLocalDateTime();
+        LocalDateTime arrivalTime = ((Timestamp) info.get("ARRIVAL_TIME")).toLocalDateTime();
+        LocalDateTime resDate = ((Timestamp) info.get("RES_DATE")).toLocalDateTime();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+        DateTimeFormatter formatter2 = DateTimeFormatter.ofPattern("HH:mm");
+        String formattedDepartureTime = departureTime.format(formatter);
+        String depTime = departureTime.format(formatter2);
+        String arrTime = arrivalTime.format(formatter2);
+        
+        info.put("DEPARTURE_TIME", formattedDepartureTime);
+        info.put("ARRIVAL_TIME", arrivalTime);
+        info.put("RES_DATE", resDate);
+        info.put("depTime", depTime);
+        info.put("arrTime", arrTime);
+        
+        model.addAttribute("info", info);
 		
 		return "reservation/ticket";
 	}
@@ -51,6 +60,7 @@ public class QrCodeController {
 		
 	}
 
+ 
 
 
 }

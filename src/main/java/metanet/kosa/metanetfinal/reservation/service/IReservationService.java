@@ -1,7 +1,6 @@
 package metanet.kosa.metanetfinal.reservation.service;
 
 import java.sql.Date;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -87,5 +86,8 @@ public interface IReservationService {
 	boolean verifySeatsCount(int busId, List<Integer> selectedSeatsList);
 	
 	Map<String, Object> getDataForSeatsSelection(String departureId, String arrivalId, String departureTime);
+	
+	Map<String, Object> getReservationInfo(String payId);
+
 	
 }

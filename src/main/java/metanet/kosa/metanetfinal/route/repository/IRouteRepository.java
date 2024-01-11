@@ -64,4 +64,6 @@ public interface IRouteRepository {
 	 * 도시 아이디로 터미널 이름 리스트 가져오기
 	 */
 	List<String> getTerminalNamesByCityId(int cityId);
+
+	
 }
