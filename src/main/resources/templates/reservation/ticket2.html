@@ -47,28 +47,28 @@
         <div>
             <!-- qr -->
             <div id="qrcode" style="width:100px; height:100px; margin:auto; margin-top:15px;"></div>
-            <div class="text-center pb-4" th:text="${PAY_ID}">20230423080424</p>
+            <div class="text-center pb-4" th:text="${info['PAY_ID']}"></p>
         </div>
         
         <table class="table table-bordered">
             <tbody class="[&amp;_tr:last-child]:border-0">
                 <tr class="border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted">
-                    <td class="col-md-6 align-middle" text=${info['departure_time']}><b>동서울역</b><br> 출발 </td>
-                    <td class="col-md-6 align-middle"><b>부산역</b> <br> 도착</td>
+                    <td class="col-md-6 align-middle"><b th:text="${info['DEPARTURE_NAME']}"></b><br> 출발 </td>
+                    <td class="col-md-6 align-middle"><b th:text="${info['ARRIVAL_NAME']}"></b> <br> 도착</td>
                 </tr>
             </tbody>
         </table>
-        <p class="text-xl text-center fw-bold"> 요금 3,000원 (부가가치세 포함)</p>
+        <p class="text-xl text-center fw-bold"> 요금 <span th:text="${info['TOTAL_PRICE']}"> </span>원 (부가가치세 포함)</p>
         <table class="table table-bordered">
             <tbody class="[&amp;_tr:last-child]:border-0">
                 <tr class="border-b ">
-                    <td class="col-md-6 align-middle ">출발시간 <br> Time <span style="float: right;"> 13:30</span></td>
-                    <td class="col-md-6 align-middle ">좌석 <br> Seat <span style="float: right;"> 6</span></td>
+                    <td class="col-md-6 align-middle ">출발시간 <br> Time <span style="float: right;" th:text="${info['depTime']}"></span></td>
+                    <td class="col-md-6 align-middle ">좌석 <br> Seat <span style="" th:text="${info['SEAT_ID']}"></span></td>
                 </tr>
                 <tr class="border-b ">
-                    <td class="col-md-6 align-middle">도착시간 <br> Time <span style="float: right;"> 13:30</span></td>
-                        <span style="float: right;"> 금호</span></td>
-                    <td class="col-md-6 align-middle ">승차홈 <br> platform
+                    <td class="col-md-6 align-middle">도착시간 <br> Time <span style="float: right;" th:text="${info['arrTime']}"></span></td>
+                    <td class="col-md-6 align-middle ">인원 수 <br> 어른 <span th:text="${info['ADULT']}"></span>명  
+                    	청소년 <span th:text="${info['MIDDLE_CHILD']}"></span>명  어린이 <span th:text="${info['CHILD']}"></span>명  
                     </td>
                 </tr>
             </tbody>
@@ -85,81 +85,6 @@
 
 </body>
 <script>
-	/*
-	document.addEventListener('DOMContentLoaded', function() {
-		localData = JSON.parse(sessionStorage.getItem("reservationData"));
-		
-		$.ajax({
-			url: "/reservation/tickets",
-			method: "POST",
-			data: localData,
-			contentType: "application/json",
-			success: function (response) {
-				console.log("response: ", response);
-				alert("결제 정보가 성공적으로 전송되었습니다");
-				responseData = response.img;
-				console.log(responseData);
-				
-			},
-			error: function (xhr, status, error) {
-				//console.error("결제 정보 전송 실패 : ", error);
-				alert("결제 정보 전송에 실패");
-			}
-		});
-		
-		var arrivalTime = info.get("arrival_time");
-		console.log("arrivalTime: ",info);
-		
-		/*
-        var departureTime = sessionStorage.getItem("departureTime");
-        var arrival = sessionStorage.getItem("arrival");
-        var arrivalTime = sessionStorage.getItem("arrivalTime");
-        var departure = sessionStorage.getItem("departure");
-        var totalPrice = sessionStorage.getItem("totalPrice");
-        var selectedSeats = sessionStorage.getItem("selectedSeats");
-        var adultNum = sessionStorage.getItem("adultNum");
-        var middleChildNum = sessionStorage.getItem("middleChildNum");
-        var childNum = sessionStorage.getItem("childNum");
-        var payId = sessionStorage.getItem("payId");
-        console.log("selectedSeats: ", selectedSeats);
-        
-        document.getElementByClass("departureDiv").textContent = departure;
-        document.getElementById("arrivalDiv").textContent = arrival;
-        document.getElementById("departureTimeDiv").textContent = departureTime;
-        document.getElementById("arrivalTimeDiv").textContent = arrivalTime;
-        document.getElementByClass("totalPriceDiv").textContent = totalPrice;
-        document.getElementById("selectedSeatsDiv").textContent = selectedSeats;
-        document.getElementById("adultNumDiv").textContent = adultNum;
-        document.getElementById("middleChildNumDiv").textContent = middleChildNum;
-        document.getElementById("childNumDiv").textContent = childNum;
-        document.getElementById("payIdDiv").textContent = payId;
-    });
-	*/
-	
-	$(document).ready(function() {
-        // AJAX 요청을 보냅니다.
-        $.ajax({
-            url: '/reservation/ticket2',
-            type: 'GET',
-            
-            data: {
-                payId: '여기에 원하는 payId 값 입력'
-            },
-            
-            success: function(info) {
-                // 여기에서 응답받은 데이터를 처리합니다.
-                // 예를 들어, info 객체의 필드를 HTML 요소에 채워 넣을 수 있습니다.
-                //$('#someElement').text(info.someField);
-                // 추가적으로 필요한 데이터 처리 코드를 여기에 작성합니다.
-                console.log(info);
-            },
-            error: function(error) {
-                console.log('에러 발생', error);
-                // 에러 처리 로직을 여기에 작성합니다.
-            }
-        });
-    });
-	
     $(function () {
             $("#save").click(function () {
                 html2canvas($('#screenshot').get(0)).then(function (canvas) {
