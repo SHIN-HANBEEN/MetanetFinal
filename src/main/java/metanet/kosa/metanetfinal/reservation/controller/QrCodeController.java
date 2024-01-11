@@ -6,7 +6,11 @@ import java.util.Base64;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.client.j2se.MatrixToImageWriter;
@@ -38,6 +42,12 @@ public class QrCodeController {
 
 		
 		return "reservation/ticket";
+	}
+	
+	@PostMapping
+	@ResponseBody
+	public void printTicket(@RequestParam String payId) {
+		
 	}
 
 
