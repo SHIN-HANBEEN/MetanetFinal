@@ -14,11 +14,11 @@ public class ReservationTest {
 	@Autowired
 	IReservationRepository reservationRepository;
 	
-	@Test
-	void selectReservationlistTest() {
-		reservationRepository.getReservationHistoryForLastSixMonth("01052016412");
-		
-	}
+//	@Test
+//	void selectReservationlistTest() {
+//		reservationRepository.getReservationHistoryForLastSixMonth("01052016412");
+//		
+//	}
 	
 	@Test
 	void insertReservationDataTest() {

@@ -56,11 +56,6 @@ public class MemberController {
 		return "login";
 	}
 	
-	@GetMapping(value="/mypage")
-	public String mypage() {
-		//System.out.println("토큰 테스트 : "+ authToken);
-		return "mypage";
-	}
 	
 	@PostMapping("/login")
 	@ResponseBody
