@@ -1,5 +1,8 @@
 package metanet.kosa.metanetfinal.member.controller;
 
+import java.awt.Dialog.ModalExclusionType;
+import java.security.Principal;
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
@@ -25,6 +28,9 @@ import metanet.kosa.metanetfinal.jwt.JwtTokenProvider;
 import metanet.kosa.metanetfinal.member.model.Members;
 import metanet.kosa.metanetfinal.member.service.IMemberService;
 import metanet.kosa.metanetfinal.member.service.PhoneNumCertificationService;
+import metanet.kosa.metanetfinal.reservation.model.DetailedReservation;
+import metanet.kosa.metanetfinal.reservation.model.Reservations;
+import metanet.kosa.metanetfinal.reservation.service.ReservationService;
 
 @Controller
 public class MemberController {
@@ -37,6 +43,9 @@ public class MemberController {
 
 	@Autowired
 	JwtTokenProvider tokenProvider;
+	
+	@Autowired
+	ReservationService reservationService;
 
 	
 	@Autowired
@@ -82,6 +91,7 @@ public class MemberController {
 		return ResponseEntity.ok("Login successful");
 	}
 	
+
 	@GetMapping("/logout2")
 	public String logout(HttpServletResponse response) {
 		Cookie cookie = new Cookie(
@@ -96,6 +106,27 @@ public class MemberController {
 	}
 	
 	
+
+	@GetMapping(value="/mypage")
+	public String mypage(Principal principal, Model model) {
+		System.out.println(principal.getName());
+		//전화번호, memberid, cancel
+		String phoneNum = memberService.getPhoneNumberById(principal.getName());
+		System.out.println(phoneNum);
+		//전화번호를 기반으로 현재 날짜를 기준으로 6개월 간 예매 정보를 가져옴.
+		List<DetailedReservation> ReservationList = reservationService.getReservationHistoryForLastSixMonth(false,phoneNum); 
+		//전화번호를 기반으로 출발일이 현재 날짜 이후 인 예매 정보 조회
+		List<DetailedReservation> ReservationNotUsedList = reservationService.getReservationHistoryNotUsed(phoneNum); 
+		//최근 6개월의 예매 취소 내역 조회
+		List<DetailedReservation> cancelReservationList = reservationService.getReservationHistoryForLastSixMonth(true,phoneNum); 
+		
+		model.addAttribute("ReservationList",ReservationList);
+		model.addAttribute("ReservationNotUsedList",ReservationNotUsedList);
+		model.addAttribute("cancelReservationList",cancelReservationList);
+		//System.out.println("토큰 테스트 : "+ authToken);
+		return "mypage";
+	}
+
 
 	@GetMapping(value = "/signin")
 	public String signin(HttpSession session, Model model) {

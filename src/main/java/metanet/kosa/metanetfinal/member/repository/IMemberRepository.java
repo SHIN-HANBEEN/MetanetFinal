@@ -33,6 +33,10 @@ public interface IMemberRepository {
 	String getIdByPhoneNumber(String phoneNum); 
 	
 	/*
+	 * 전화 번호 가져오기
+	 */
+	String getPhoneNumberById(String id);
+	/*
 	 * 비밀번호 찾기 : 아이디로 비밀번호 초기화 및 임시 비밀번호 발송
 	 * 1. 생성된 임시비밀번호로 바꾸기
 	 */

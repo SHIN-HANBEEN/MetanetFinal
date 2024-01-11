@@ -5,20 +5,14 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.ibatis.annotations.Param;
+
+import metanet.kosa.metanetfinal.reservation.model.DetailedReservation;
+import metanet.kosa.metanetfinal.reservation.model.Reservations;
+
 
 public interface IReservationService {
-//	/*
-//	 * 마이페이지 예매내역 및 취소내역 조회 :
-//	 * 과거 6개월까지 예매내역과 취소내역을 조회한다. 
-//	 */
-//	List<DetailedReservation> getReservationHistoryForLastSixMonth(int id);
-//	
-//	/*
-//	 * 예매_회원 예매 정보 조회 : 
-//	 * 아직 출발 시간이 지나지 않은 예매 내역을 보여줍니다. 
-//	 */
-//	List<DetailedReservation> getReservationHistoryNotUsed(int id);
-//	
+
 //	/*
 //	 * 예매 변경(같은 노선, 다른 날짜, 다른 시간, 다른 좌석)
 //	 * 배차아이디, 예매-배차 아이디, 좌석 번호 리스트를 받아서 업데이트를 해야 한다.
@@ -67,6 +61,19 @@ public interface IReservationService {
 //	// 매수 및 좌석 선택
 //	void selectSeat(int adult, int child, int special, int[] seats);
 	
+	/*
+	 * 마이페이지 예매내역 및 취소내역 조회 :
+	 * 과거 6개월까지 예매내역과 취소내역을 조회한다. 
+	 */
+	List<DetailedReservation> getReservationHistoryForLastSixMonth(@Param("canceledDate") Boolean canceledDate, @Param("phoneNum") String phoneNum);
+
+	
+	/*
+	 * 예매_회원 예매 정보 조회 : 
+	 * 아직 출발 시간이 지나지 않은 예매 내역을 보여줍니다. 
+	 */
+	List<DetailedReservation> getReservationHistoryNotUsed(String phoneNum);
+	
 	
 	/*
 	 * 홈 화면에서 출발지, 도착지, 출발시간 골랐을 때, 잔여좌석 보여주기
@@ -80,4 +87,5 @@ public interface IReservationService {
 	boolean verifySeatsCount(int busId, List<Integer> selectedSeatsList);
 	
 	Map<String, Object> getDataForSeatsSelection(String departureId, String arrivalId, String departureTime);
+	
 }

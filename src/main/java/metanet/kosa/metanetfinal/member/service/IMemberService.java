@@ -8,9 +8,11 @@ public interface IMemberService {
 	Members login(String id, String password);
 	void signin(Members member); 
 	String getIdByPhoneNumber(String phoNum);
+	String getPhoneNumberById(String id);
 	String resetPwById(String id);
 	void signOut(String id, String password);
 	void updateMember(String userId, String email, String phoNum);
 	Members getMemberInfo(String id);
 	List<String> getRoles(String id);
+	
 }
