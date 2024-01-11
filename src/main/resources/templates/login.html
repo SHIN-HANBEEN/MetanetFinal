@@ -71,11 +71,11 @@
 											onsubmit="submitForm(event)">
 											<div class="input-group input-group-outline my-3">
 												<label class="form-label">아이디</label>
-												<input type="text" class="form-control" id="id" name="id">
+												<input type="text" class="form-control" id="id" name="id" autocomplete="off">
 											</div>
 											<div class="input-group input-group-outline mb-3">
 												<label class="form-label">비밀번호</label>
-												<input type="password" class="form-control" id="password" name="password">
+												<input type="password" class="form-control" id="password" name="password" autocomplete="off">
 											</div>
 
 											<div class="form-check form-switch d-flex align-items-center mb-3">
@@ -84,7 +84,8 @@
 													저장</label>
 											</div>
 											<div class="text-center">
-												<button type="submit" class="btn bg-gradient-primary w-100 my-2 mb-2">로그인</button>
+												<button type="submit" class="btn bg-gradient-primary w-100 my-2 mb-2"
+													id="loginButton">로그인</button>
 											</div>
 
 											<p class="mt-4 text-sm text-center">
@@ -117,6 +118,26 @@
 	<div th:replace="~{fragments/footerFragment :: footer}"></div>
 
 
+
+	<!--   Core JS Files   -->
+	<script src="./assets/js/core/popper.min.js" type="text/javascript"></script>
+	<script src="./assets/js/core/bootstrap.min.js" type="text/javascript"></script>
+	<script src="./assets/js/plugins/perfect-scrollbar.min.js"></script>
+	<!--  Plugin for TypedJS, full documentation here: https://github.com/inorganik/CountUp.js -->
+	<script src="./assets/js/plugins/countup.min.js"></script>
+	<script src="./assets/js/plugins/choices.min.js"></script>
+	<script src="./assets/js/plugins/prism.min.js"></script>
+	<script src="./assets/js/plugins/highlight.min.js"></script>
+	<!--  Plugin for Parallax, full documentation here: https://github.com/dixonandmoe/rellax -->
+	<script src="./assets/js/plugins/rellax.min.js"></script>
+	<!--  Plugin for TiltJS, full documentation here: https://gijsroge.github.io/tilt.js/ -->
+	<script src="./assets/js/plugins/tilt.min.js"></script>
+	<!--  Plugin for Selectpicker - ChoicesJS, full documentation here: https://github.com/jshjohnson/Choices -->
+	<script src="./assets/js/plugins/choices.min.js"></script>
+
+	<script src="./assets/js/material-kit.min.js?v=3.0.4" type="text/javascript"></script>
+
+
 	<!--입력한 폼을 검증 후 JWT 토큰을 발급 받아 sessionStorage에 저장-->
 	<script>
 		function submitForm(event) {
@@ -142,28 +163,81 @@
 				})
 				.catch(error => console.error('Error:', error.message));
 		}
-		
 
+		/* 
+		아이디 저장 버튼 클릭시 처리
+		우선, 로컬 스토리지에 저장된 아이디가 있는 지 확인하고 가져온다.
+		체크 박스를 체크하고 로그인을 하면, 로컬 스토리지에 저장을 해둔다.
+		*/
+		// Helper function to get the next tabbable element
+		
+		/*
+		function idFocus() {
+			console.log("click!!");
+			document.getElementById("password").focus();
+			document.getElementById("id").focus();
+			//var currentElement = document.activeElement;
+
+			
+			var nextElement = getNextTabbableElement(currentElement);
+			if (nextElement) {
+				console.log("nextElement 로 이동");
+				nextElement.focus();
+			}
+			
+			
+			var previousElement = getPreviousTabbableElement(currentElement);
+			if (previousElement) {
+				console.log("previousElement 로 이동");
+				previousElement.click();
+			}
+			
+		}
+		*/
+		/*
+		window.onload = function () {
+			idFocus();
+		};
+		*/
+		
+		/* 
+		아이디 저장 버튼과 관련되어서 동작하는 코드		
+		*/
+		document.addEventListener('DOMContentLoaded', function () {
+			const storedId = localStorage.getItem('savedId');
+			const idInput = document.getElementById('id');
+			if (storedId) {
+				idInput.value = storedId;
+				document.getElementById("id").focus();
+				setTimeout(function () {
+					document.getElementById("password").focus();
+				}, 10);
+			} else {
+				document.getElementById("password").focus();
+				setTimeout(function () {
+					document.getElementById("id").focus();
+				}, 10);
+			}
+		}); 
+
+		document.getElementById('rememberMe').addEventListener('change', function () {
+			if (this.checked) {
+				localStorage.setItem('savedId', idInput.value);
+			} else {
+				localStorage.removeItem('savedId');
+			}
+		});
+		document.getElementById('loginButton').addEventListener('click', function () {
+			const remeberMe = document.getElementById('rememberMe');
+			if (remeberMe.checked) {
+				localStorage.setItem('savedId', idInput.value);
+			} else {
+				localStorage.removeItem('savedId');
+			}
+		});
 
 
 	</script>
-	<!--   Core JS Files   -->
-	<script src="./assets/js/core/popper.min.js" type="text/javascript"></script>
-	<script src="./assets/js/core/bootstrap.min.js" type="text/javascript"></script>
-	<script src="./assets/js/plugins/perfect-scrollbar.min.js"></script>
-	<!--  Plugin for TypedJS, full documentation here: https://github.com/inorganik/CountUp.js -->
-	<script src="./assets/js/plugins/countup.min.js"></script>
-	<script src="./assets/js/plugins/choices.min.js"></script>
-	<script src="./assets/js/plugins/prism.min.js"></script>
-	<script src="./assets/js/plugins/highlight.min.js"></script>
-	<!--  Plugin for Parallax, full documentation here: https://github.com/dixonandmoe/rellax -->
-	<script src="./assets/js/plugins/rellax.min.js"></script>
-	<!--  Plugin for TiltJS, full documentation here: https://gijsroge.github.io/tilt.js/ -->
-	<script src="./assets/js/plugins/tilt.min.js"></script>
-	<!--  Plugin for Selectpicker - ChoicesJS, full documentation here: https://github.com/jshjohnson/Choices -->
-	<script src="./assets/js/plugins/choices.min.js"></script>
-	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDTTfWur0PDbZWPr7Pmq8K3jiDp0_xUziI"></script>
-	<script src="./assets/js/material-kit.min.js?v=3.0.4" type="text/javascript"></script>
 </body>
 
 </html>
