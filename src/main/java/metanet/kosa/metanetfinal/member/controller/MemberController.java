@@ -42,6 +42,17 @@ public class MemberController {
 	@Autowired
 	PasswordEncoder passwordEncoder;
 
+	@GetMapping(value="/login")
+	public String login() {
+		System.out.println("로그인 성공");
+		return "login";
+	}
+	
+	@GetMapping(value="/mypage")
+	public String mypage() {
+		//System.out.println("토큰 테스트 : "+ authToken);
+		return "mypage";
+	}
 	
 	@PostMapping("/login")
 	@ResponseBody
@@ -70,6 +81,20 @@ public class MemberController {
 		response.addCookie(cookie);
 
 		return ResponseEntity.ok("Login successful");
+	}
+	
+	@GetMapping("/logout2")
+	public String logout(HttpServletResponse response) {
+		System.out.println("로그아웃");
+		Cookie cookie = new Cookie(
+				"access_token", null);
+		cookie.setMaxAge(0); //어차피 token 에 유효기간을 설정을 해두었기 때문에 의미는 없다.
+		cookie.setHttpOnly(true);
+		cookie.setPath("/");
+		
+		response.addCookie(cookie);
+
+		return "redirect:/";
 	}
 	
 	
