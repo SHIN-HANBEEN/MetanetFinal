@@ -244,6 +244,9 @@ public class ReservationService implements IReservationService{
 		return reservationRepository.getReservationHistoryNotUsed(phoneNum);
 	}
 
+
+
+	@Override
 	public Map<String, Object> getReservationInfo(String payId) {
 		return reservationRepository.getReservationInfo(payId);
 	}

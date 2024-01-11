@@ -244,8 +244,7 @@
 			} 
 			IMP.init('imp33561285'); //아임포트 관리자 콘솔에서 확인한 '가맹점 식별코드' 입력
 			IMP.request_pay({ // param
-				// pg: "inicis", //pg사명 or pg사명.CID (잔액 일시불 할부 등, 기본 PG사가 따로 있음)
-				pg: "kakao",
+				pg: "inicis", //pg사명 or pg사명.CID (잔액 일시불 할부 등, 기본 PG사가 따로 있음)
 				pay_method: "card", //결제 방법
 				merchant_uid: payId, //가맹점 주문번호 (아임포트를 사용하는 가맹점에서 임의로 지정)
 				name: "메타버스 결제", //결제창에서 보여질 상품명
@@ -263,7 +262,6 @@
 					let data = {};
 					console.log("rsp", rsp);
 					// data.imp_uid = rsp.imp_uid;
-					
 					data.payId = rsp.merchant_uid;
 					data.totalPrice = rsp.paid_amount;
 					data.payMethod = rsp.pay_method;
@@ -275,11 +273,8 @@
 					data.adultNum = localData.adultNum;
 					data.middleChildNum = localData.middleChildNum;
 					data.childNum = localData.childNum;
-<<<<<<< HEAD
 					data.mileage = inputMileage;
 					data.memberId = memberId;
-=======
-					data.mileage = 300;
 					
 					// resId (예매 아이디)
 					// memberId (회원 아이디)
@@ -288,11 +283,9 @@
 					// busId (버스 아이디)
 					// seatId (좌석 번호)
 					// resDate (예매일자) data에 넣기
->>>>>>> refs/remotes/origin/park
+
 					console.log(data);
-						
 					// 성공하면 데이터 전송~ -> 테스트 전송 성공
-<<<<<<< HEAD
 					$.ajax({
 						url: "/reservation/payOk",
 						method: "POST",
@@ -326,48 +319,6 @@
 						    });*/
 						}
 					});
-=======
-					// 성공하면 데이터 전송~ -> 테스트 전송 성공
-	               $.ajax({
-	                  url: "/reservation/payOk",
-	                  method: "POST",
-	                  data: JSON.stringify(data),
-	                  contentType: "application/json",
-	                  success: function (response) {
-	                     console.log(response);
-	                     alert("결제 정보가 성공적으로 전송되었습니다");
-	                     //window.location.href = "/reservation/refund";
-	                     window.location.href="/reservation/ticket2";
-	                  },
-	                  error: function (xhr, status, error) {
-	                     //console.error("결제 정보 전송 실패 : ", error);
-	                     //alert("결제 정보 전송에 실패");
-	                     /*$.ajax.ajax({
-	                        // 예: http://www.myservice.com/payments/cancel
-	                        "url": "{환불정보를 수신할 가맹점 서비스 URL}", 
-	                        "type": "POST",
-	                        "contentType": "application/json",
-	                        "data": JSON.stringify({
-	                          "merchant_uid": payId, // 예: ORD20180131-0000011
-	                          "cancel_request_amount": 2000, // 환불금액
-	                          "reason": "테스트 결제 환불", // 환불사유
-	                          // [가상계좌 환불시 필수입력] 환불 수령계좌 예금주
-	                          "refund_holder": "홍길동", 
-	                          // [가상계좌 환불시 필수입력] 환불 수령계좌 은행코드(예: KG이니시스의 경우 신한은행은 88번)
-	                          "refund_bank": "88", 
-	                          // [가상계좌 환불시 필수입력] 환불 수령계좌 번호
-	                          "refund_account": "56211105948400" 
-	                        }),
-	                        "dataType": "json"
-	                      });*/
-	                  }
-	               });
-					
-					
-					
->>>>>>> refs/remotes/origin/park
-
-
 				} else {
 					alert("실패 : 코드(" + rsp.error_code + ") 메시지(" + rsp.error_msg + ")");
 				}
