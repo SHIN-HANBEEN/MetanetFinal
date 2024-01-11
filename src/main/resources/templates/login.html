@@ -221,6 +221,7 @@
 		}); 
 
 		document.getElementById('rememberMe').addEventListener('change', function () {
+			const idInput = document.getElementById('rememberMe');
 			if (this.checked) {
 				localStorage.setItem('savedId', idInput.value);
 			} else {
@@ -228,7 +229,7 @@
 			}
 		});
 		document.getElementById('loginButton').addEventListener('click', function () {
-			const remeberMe = document.getElementById('rememberMe');
+			const idInput = document.getElementById('rememberMe');
 			if (remeberMe.checked) {
 				localStorage.setItem('savedId', idInput.value);
 			} else {
