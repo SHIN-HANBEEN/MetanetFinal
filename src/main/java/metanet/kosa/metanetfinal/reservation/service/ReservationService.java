@@ -7,14 +7,11 @@ import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Queue;
-import java.util.Random;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,7 +22,6 @@ import lombok.extern.slf4j.Slf4j;
 import metanet.kosa.metanetfinal.bus.repository.IBusesRepository;
 import metanet.kosa.metanetfinal.reservation.model.Reservations;
 import metanet.kosa.metanetfinal.reservation.repository.IReservationRepository;
-import metanet.kosa.metanetfinal.reservation.repository.IReservationScheduleRepository;
 import metanet.kosa.metanetfinal.route.model.Routes;
 import metanet.kosa.metanetfinal.route.repository.IRouteRepository;
 
@@ -207,6 +203,12 @@ public class ReservationService implements IReservationService{
 		System.out.println(timeNow);
 		return sqlTime;
 	}
+	
+	public Map<String, Object> getReservationInfo(String payId) {
+		return reservationRepository.getReservationInfo(payId);
+	}
+	
+	
 //	@Autowired
 //	IReservationRepository reservationRepository;
 //	
@@ -377,14 +379,7 @@ public class ReservationService implements IReservationService{
 //		reservationRepository.selectSeat(adult, child, special, seats);
 //		
 //	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
+
+
 	
 }
