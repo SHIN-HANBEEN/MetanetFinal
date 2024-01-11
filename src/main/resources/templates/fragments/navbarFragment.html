@@ -36,9 +36,10 @@
 								</a>
 							</li>
 
-							<li class="nav-item  mx-2 my-2">
+							<li 
+								class="nav-item  mx-2 my-2"
+								th:if="${#authorization.expression('isAnonymous()')}"  >
 								<a 
-									sec:authorize="isAnonymous()" 
 									href="nreservation" 
 									class="nav-link d-flex cursor-pointer align-items-center
 										ps-2 my-2 metanet-width-100p metanet-justify-center" 
@@ -47,9 +48,9 @@
 								</a>
 							</li>
 
-							<li class="nav-item mr-2 my-2">
+							<li class="nav-item mr-2 my-2"
+								th:if="${#authorization.expression('isAuthenticated()')}">
 								<a 
-									sec:authorize="isAuthenticated()" 
 									href="reservation" 
 									class="nav-link d-flex cursor-pointer align-items-center
 										ps-2 my-2 metanet-width-100p metanet-justify-center" 
@@ -72,7 +73,7 @@
 								style="display: flex; justify-content: right;">
 								<a 
 									href="logout2" 
-									class="btn btn-sm btn-secondary my-2 py-2">
+									class="btn btn-sm btn-info my-2 py-2">
 									Logout
 								</a>
 							</li>
