@@ -1,5 +1,7 @@
 package metanet.kosa.metanetfinal.reservation.controller;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -67,8 +69,11 @@ public class ReservationPageController {
 	}
 	
 	@GetMapping("/reservation/complete")
-	public String reservationComplete() {
-		return "/reservation/paymentComplete";
+	public String reservationComplete(@RequestParam String payId, Model model) {
+		Map<String, Object> info = reservationService.getReservationInfo(payId);
+		model.addAttribute("info",info);
+		
+		return "reservation/paymentComplete";
 	}
 
 }

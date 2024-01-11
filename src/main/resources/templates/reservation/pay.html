@@ -275,6 +275,15 @@
 					data.childNum = localData.childNum;
 					data.mileage = inputMileage;
 					data.memberId = memberId;
+					
+					// resId (예매 아이디)
+					// memberId (회원 아이디)
+					// nmemberId (비회원 아이디)
+					// routeId (노선 아이디)
+					// busId (버스 아이디)
+					// seatId (좌석 번호)
+					// resDate (예매일자) data에 넣기
+
 					console.log(data);
 					// 성공하면 데이터 전송~ -> 테스트 전송 성공
 					$.ajax({
@@ -310,8 +319,6 @@
 						    });*/
 						}
 					});
-
-
 				} else {
 					alert("실패 : 코드(" + rsp.error_code + ") 메시지(" + rsp.error_msg + ")");
 				}

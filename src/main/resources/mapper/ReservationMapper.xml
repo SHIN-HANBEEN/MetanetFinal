@@ -59,62 +59,71 @@
     ORDER BY
         res.res_date
     ]]>
-</select>
+	</select>
 
 	<select id="getReservationHistoryForLastSixMonth"
 		resultType="metanet.kosa.metanetfinal.reservation.model.DetailedReservation">
-    SELECT
-        LISTAGG(res.seat_id, ' , ') WITHIN GROUP (ORDER BY res.seat_id) AS seatIds,
-        dt.terminal_name AS departureTerminalName,
-        at.terminal_name AS arrivalTerminalName,
-        r.DEPARTURE_TIME AS departureTime,
-        r.arrival_time AS arrivalTime,
-        res.res_date AS resDate,
-        res.pay_id as payId,
-        res.total_price as totalPrice
-    FROM
-        reservations res
-    JOIN
-        routes r ON res.route_id = r.route_id
-    JOIN
-        terminals dt ON r.departure_id = dt.terminal_id
-    JOIN
-        terminals at ON r.arrival_id = at.terminal_id
-    WHERE
-        res.phone_num = #{phoneNum}
-         <if test="canceledDate">
-        AND res.cancled_date IS NOT NULL
-		    </if>
-		    <if test="!canceledDate">
-		    AND res.cancled_date IS NULL
-		    </if> 
-        and res.res_date >= ADD_MONTHS(SYSDATE, -6)
-    GROUP BY
-        res.pay_id, r.route_id, r.departure_id, dt.terminal_name, r.arrival_id,
-        at.terminal_name, r.DEPARTURE_TIME, r.arrival_time, res.res_date, res.total_price
-    ORDER BY
-        res.res_date
-</select>
+		SELECT
+		LISTAGG(res.seat_id, ' , ') WITHIN GROUP (ORDER BY res.seat_id) AS seatIds,
+		dt.terminal_name AS departureTerminalName,
+		at.terminal_name AS arrivalTerminalName,
+		r.DEPARTURE_TIME AS departureTime,
+		r.arrival_time AS arrivalTime,
+		res.res_date AS resDate,
+		res.pay_id as payId,
+		res.total_price as totalPrice
+		FROM
+		reservations res
+		JOIN
+		routes r ON res.route_id = r.route_id
+		JOIN
+		terminals dt ON r.departure_id = dt.terminal_id
+		JOIN
+		terminals at ON r.arrival_id = at.terminal_id
+		WHERE
+		res.phone_num = #{phoneNum}
+		<if test="canceledDate">
+			AND res.cancled_date IS NOT NULL
+		</if>
+		<if test="!canceledDate">
+			AND res.cancled_date IS NULL
+		</if>
+		and res.res_date >= ADD_MONTHS(SYSDATE, -6)
+		GROUP BY
+		res.pay_id, r.route_id, r.departure_id, dt.terminal_name, r.arrival_id,
+		at.terminal_name, r.DEPARTURE_TIME, r.arrival_time, res.res_date,
+		res.total_price
+		ORDER BY
+		res.res_date
+	</select>
 
 	<select id="testCount">
 		select count(*) from reservations
 	</select>
-	
-	<select id="getReservationInfo" parameterType="string" resultType="map">
-	   select d.pay_id, res_date, seat_id, total_price, departure_time, arrival_time, departure_name, arrival_name, adult, middle_child, child from
-	   (select * from
-	   (select route_id, pay_id, res_date, LISTAGG(seat_id, ',') WITHIN GROUP(ORDER BY seat_id) AS seat_id, total_price
-	   from reservations group by route_id, pay_id, res_date, total_price having pay_id = #{payId}) a
-	   join
-	   (select route_id, departure_time, arrival_time, b.terminal_name as departure_name, c.terminal_name as arrival_name
-	   from routes a join terminals b on a.departure_id = b.terminal_id join terminals c on a.arrival_id = c.terminal_id) b
-	   on a.route_id = b.route_id) d
-	   left outer join
-	   (select pay_id, 
-	   count(case when discount_id =1 then 1 else null end) as adult,
-	   count(case when discount_id =2 then 1 else null end) as middle_child,
-	   count(case when discount_id =3 then 1 else null end) as child
-	   from reservations group by pay_id) e
-	   on d.pay_id = e.pay_id
-   </select>
+
+	<select id="getReservationInfo" parameterType="string"
+		resultType="map">
+		select d.pay_id, res_date, seat_id, total_price, departure_time,
+		arrival_time, departure_name, arrival_name, adult, middle_child, child
+		from
+		(select * from
+		(select route_id, pay_id, res_date, LISTAGG(seat_id, ',') WITHIN GROUP(ORDER
+		BY seat_id) AS seat_id, total_price
+		from reservations group by route_id, pay_id, res_date, total_price having
+		pay_id = #{payId}) a
+		join
+		(select route_id, departure_time, arrival_time, b.terminal_name as
+		departure_name, c.terminal_name as arrival_name
+		from routes a join terminals b on a.departure_id = b.terminal_id join
+		terminals c on a.arrival_id = c.terminal_id) b
+		on a.route_id = b.route_id) d
+		left outer join
+		(select pay_id,
+		count(case when discount_id =1 then 1 else null end) as adult,
+		count(case when discount_id =2 then 1 else null end) as middle_child,
+		count(case when discount_id =3 then 1 else null end) as child
+		from reservations group by pay_id) e
+		on d.pay_id = e.pay_id
+	</select>
+
 </mapper>

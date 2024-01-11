@@ -86,7 +86,7 @@ public interface IReservationService {
 	boolean verifySeatsCount(int busId, List<Integer> selectedSeatsList);
 	
 	Map<String, Object> getDataForSeatsSelection(String departureId, String arrivalId, String departureTime);
-	
+
 	Map<String, Object> getReservationInfo(String payId);
 
 	

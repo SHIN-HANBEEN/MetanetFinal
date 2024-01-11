@@ -226,7 +226,6 @@ public class ReservationService implements IReservationService{
 		return sqlTime;
 	}
 	
-
 	/*
 	 * 마이페이지 예매내역 및 취소내역 조회 :
 	 * 과거 6개월까지 예매내역과 취소내역을 조회한다. 
@@ -246,12 +245,11 @@ public class ReservationService implements IReservationService{
 	}
 
 
+
 	@Override
 	public Map<String, Object> getReservationInfo(String payId) {
 		return reservationRepository.getReservationInfo(payId);
 	}
-
-	
 
 //	@Autowired
 //	IReservationRepository reservationRepository;
@@ -406,6 +404,5 @@ public class ReservationService implements IReservationService{
 //		reservationRepository.selectSeat(adult, child, special, seats);
 //		
 //	}
-
 	
 }
