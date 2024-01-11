@@ -59,12 +59,12 @@
 							<div class="container bg-body-tertiary rounded-4 mt-n12">
 
 								<div class="section text-center">
-									<h2 class="title pb-3 pt-3">시외버스 예매하기</h2>
+									<h2 class="title pb-3 pt-4">시외버스 예매하기</h2>
 									<div class="container">
 										<div class="row justify-content-md-center">
 											<div class="position-relative m-4">
 												<div class="progress" style="height: 1px;">
-													<div class="progress-bar" role="progressbar" style="width: 35%;" aria-valuenow="50"
+													<div class="progress-bar" role="progressbar" style="width: 65%;" aria-valuenow="50"
 														aria-valuemin="0" aria-valuemax="100"></div>
 												</div>
 												<button type="button"
@@ -74,22 +74,140 @@
 													class="position-absolute top-0 start-35 translate-middle btn btn-sm btn-primary rounded-pill"
 													style="width: 7rem; height:2rem; padding-right: 22px;">좌석선택</button>
 												<button type="button"
-													class="position-absolute top-0 start-65 translate-middle btn btn-sm bg-gradient-secondary rounded-pill"
+													class="position-absolute top-0 start-65 translate-middle btn btn-sm btn-primary rounded-pill"
 													style="width: 7rem; height:2rem; padding-right: 22px;">결제진행</button>
 												<button type="button"
 													class="position-absolute top-0 start-95 translate-middle btn btn-sm bg-gradient-secondary rounded-pill"
 													style="width: 7rem; height:2rem; padding-right: 22px;">결제완료</button>
 											</div>
 										</div>
-										
+
 										<!-- 
 											
 											여기에 넣고 싶은 것을 넣으세요.
 											
 										-->
-										
-										
-										
+										<!-- <div class="col col-md-auto"> -->
+										<div class="col-12 col-md-10 mt-5">
+											<div class="container bg-secondary-subtle text-secondary-emphasis rounded-4">
+												<div class="">
+													<h4 class=" pt-2">선택 예매 정보</h4>
+													<div class="table-responsive">
+														<table class="table align-items-center mt-3 mb-0">
+															<thead>
+																<tr>
+																	<th class="text-secondary-emphasis">노선 정보</th>
+																	<th class="text-secondary-emphasis">버스 등급</th>
+																	<th class="text-secondary-emphasis">출발 시간</th>
+																	<th class="text-secondary-emphasis">도착 시간</th>
+																	<th class="text-secondary-emphasis">선택 좌석</th>
+																</tr>
+															</thead>
+															<tbody>
+																<tr>
+																	<td id="routeName" class="text-secondary-emphasis" style="width: 25%;">
+																		<span id="dep" style="line-height: 100px;">출발지</span>
+																		<div class="" style="display: inline-block; max-height: 100%; line-height: 100%;">
+																			<span class="material-symbols-outlined fa-2x">
+																				trending_flat
+																			</span>
+																		</div>
+																		<span id="arr">도착지</span>
+																	</td>
+																	<td id="gradeNm" class="text-secondary-emphasis" style="width: 25%;">
+																		강원고속 [일반]
+																	</td>
+																	<td id="depPlandTime" class="text-secondary-emphasis" style="width: 25%;">
+																		06:45 출발
+																	</td>
+																	<td id="arrPlandTime" class="text-secondary-emphasis" style="width: 25%;">
+																		06:45 출발
+																	</td>
+																	<td id="arrPlandTime" class="text-secondary-emphasis" style="width: 25%;">
+																		선택좌석
+																	</td>
+																</tr>
+															</tbody>
+														</table>
+													</div>
+												</div>
+											</div>
+										</div>
+
+
+
+
+
+
+
+
+										<div class="container mt-4 pb-3">
+											<div class="row justify-content-md-center">
+												<div class="position-relative m-4 border rounded"
+													style="padding: 50px 30px 50px 30px; width: 700px; margin-top: 60px;">
+													<h2 style="text-align: center;">IAMPORT 결제 테스트</h2>
+													<table class="table" style="text-align: center; margin-top: 60px;">
+														<tbody>
+															<tr>
+																<td id="startToEnd" style="width: 50%;">출발지 --- 도착지</td>
+																<td id="depPlandTime">출발시간</td>
+															</tr>
+															<tr>
+																<td id="grade"></td>
+																<td id="ageType" style="width: 50%;"></td>
+															</tr>
+															<tr>
+																<td colspan="2">좌석 <span id="selectedSeats"> </span> 번</td>
+															</tr>
+														</tbody>
+													</table>
+
+													<form class="row g-3 notmember" style="margin-top: 160px;">
+														<div class="col-auto">
+															<label for="staticEmail2" class="visually-hidden">전화번호인증</label>
+															<input type="text" readonly class="form-control-plaintext" id="staticEmail2"
+																value="전화번호인증">
+														</div>
+														<div class="col-auto">
+															<label for="inputPassword2" class="visually-hidden">전화번호</label>
+															<input type="text" class="form-control" id="phoneNumber" placeholder="01012345678">
+														</div>
+														<div class="col-auto">
+															<button id="callNumberAuthButton" class="btn btn-primary mb-3">인증번호발송</button>
+														</div>
+													</form>
+
+													<form class="row g-3 member" style="margin-top: 160px;">
+														<div class="col-auto">
+															<label for="staticEmail2" class="visually-hidden"></label>
+															<input type="text" readonly class="form-control-plaintext" id="staticEmail2" value="마일리지">
+														</div>
+														<div class="col-auto">
+															<label for="inputPassword2" class="visually-hidden"></label>
+															<input type="text" class="form-control" id="mileageInput" placeholder="">
+														</div>
+														<div class="col-auto">
+															<button id="callNumberAuthButton" class="btn btn-primary mb-3">마일리지</button>
+														</div>
+													</form>
+
+													<table class="table table-bordered" style="text-align: center; margin-top: 60px;">
+														<tbody>
+															<tr>
+																<td style="width: 50%;">결제금액</td>
+																<td id="totalPrice">50만원</td>
+															</tr>
+														</tbody>
+													</table>
+													<li>
+														<button id="iamportPayment" type="button">결제테스트</button>
+													</li>
+												</div>
+											</div>
+										</div>
+
+
+
 									</div>
 
 
@@ -121,69 +239,6 @@
 
 
 
-	<div class="container ">
-		<div class="row justify-content-md-center " style="margin-top: 60px;">
-			<div class="position-relative m-4 border rounded"
-				style="padding: 50px 30px 50px 30px; width: 700px; margin-top: 60px;">
-				<h2 style="text-align: center;">IAMPORT 결제 테스트</h2>
-				<table class="table" style="text-align: center; margin-top: 60px;">
-					<tbody>
-						<tr>
-							<td id="startToEnd" style="width: 50%;">출발지 --- 도착지</td>
-							<td id="depPlandTime">출발시간</td>
-						</tr>
-						<tr>
-							<td id="grade"></td>
-							<td id="ageType" style="width: 50%;"></td>
-						</tr>
-						<tr>
-							<td colspan="2">좌석 <span id="selectedSeats"> </span> 번</td>
-						</tr>
-					</tbody>
-				</table>
-
-				<form class="row g-3 notmember" style="margin-top: 160px;">
-					<div class="col-auto">
-						<label for="staticEmail2" class="visually-hidden">전화번호인증</label>
-						<input type="text" readonly class="form-control-plaintext" id="staticEmail2" value="전화번호인증">
-					</div>
-					<div class="col-auto">
-						<label for="inputPassword2" class="visually-hidden">전화번호</label>
-						<input type="text" class="form-control" id="phoneNumber" placeholder="01012345678">
-					</div>
-					<div class="col-auto">
-						<button id="callNumberAuthButton" class="btn btn-primary mb-3">인증번호발송</button>
-					</div>
-				</form>
-
-				<form class="row g-3 member" style="margin-top: 160px;">
-					<div class="col-auto">
-						<label for="staticEmail2" class="visually-hidden"></label>
-						<input type="text" readonly class="form-control-plaintext" id="staticEmail2" value="마일리지">
-					</div>
-					<div class="col-auto">
-						<label for="inputPassword2" class="visually-hidden"></label>
-						<input type="text" class="form-control" id="mileageInput" placeholder="">
-					</div>
-					<div class="col-auto">
-						<button id="callNumberAuthButton" class="btn btn-primary mb-3">마일리지</button>
-					</div>
-				</form>
-
-				<table class="table table-bordered" style="text-align: center; margin-top: 60px;">
-					<tbody>
-						<tr>
-							<td style="width: 50%;">결제금액</td>
-							<td id="totalPrice">50만원</td>
-						</tr>
-					</tbody>
-				</table>
-				<li>
-					<button id="iamportPayment" type="button">결제테스트</button>
-				</li>
-			</div>
-		</div>
-	</div>
 
 
 
