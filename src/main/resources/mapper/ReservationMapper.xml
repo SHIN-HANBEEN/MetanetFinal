@@ -99,4 +99,22 @@
 	<select id="testCount">
 		select count(*) from reservations
 	</select>
+	
+	<select id="getReservationInfo" parameterType="string" resultType="map">
+	select d.pay_id, res_date, seat_id, departure_time, arrival_time, departure_name, arrival_name, adult, middle_child, child from
+	(select * from
+	(select route_id, pay_id, res_date, LISTAGG(seat_id, ',') WITHIN GROUP(ORDER BY seat_id) AS seat_id
+	from reservations group by route_id, pay_id, res_date having pay_id = #{payId}) a
+	join
+	(select route_id, departure_time, arrival_time, b.terminal_name as departure_name, c.terminal_name as arrival_name
+	from routes a join terminals b on a.departure_id = b.terminal_id join terminals c on a.arrival_id = c.terminal_id) b
+	on a.route_id = b.route_id) d
+	left outer join
+	(select pay_id, 
+	count(case when discount_id =1 then 1 else null end) as adult,
+	count(case when discount_id =2 then 1 else null end) as middle_child,
+	count(case when discount_id =3 then 1 else null end) as child
+	from reservations group by pay_id) e
+	on d.pay_id = e.pay_id
+	</select>
 </mapper>

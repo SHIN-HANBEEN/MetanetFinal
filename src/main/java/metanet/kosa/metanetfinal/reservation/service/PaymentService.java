@@ -6,32 +6,18 @@ import java.io.BufferedWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
-import java.math.BigDecimal;
 import java.net.URL;
-import java.net.http.HttpClient;
 import java.text.ParseException;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.Collectors;
 
 import javax.net.ssl.HttpsURLConnection;
 
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestTemplate;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
-import com.siot.IamportRestClient.IamportClient;
-import com.siot.IamportRestClient.request.CancelData;
-import com.siot.IamportRestClient.response.IamportResponse;
-import com.siot.IamportRestClient.response.Payment;
 
 @Service
 public class PaymentService {
@@ -103,4 +89,5 @@ public class PaymentService {
         conn.disconnect();
 
 	}
+
 }

@@ -1,7 +1,7 @@
 package metanet.kosa.metanetfinal.reservation.repository;
 
-import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -84,5 +84,8 @@ public interface IReservationRepository {
 	 * 홈 화면에서 출발지, 도착지, 출발시간 골랐을 때, 잔여좌석 보여주기
 	 */
 	int getRemainingSeatCount(String departureId, String arrivalId, String departureTime);
-	
+	/*
+	 * 노선번호로 출발터미널, 도착터미널 받기
+	 */
+	Map<String, Object> getReservationInfo(@Param("payId") String payId);
 }

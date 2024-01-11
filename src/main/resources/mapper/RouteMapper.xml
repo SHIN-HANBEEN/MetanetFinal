@@ -74,6 +74,9 @@
     WHERE CITY_ID=#{cityId}
     ORDER BY TERMINAL_NAME
 	</select>
+	
+    
+	
 
 	<!--  
 	<insert id="insertBoard" parameterType="Notice" useGeneratedKeys="true" keyProperty="NTC_ID">

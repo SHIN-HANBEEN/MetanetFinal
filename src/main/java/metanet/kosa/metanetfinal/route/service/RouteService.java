@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import metanet.kosa.metanetfinal.route.model.Routes;
 import metanet.kosa.metanetfinal.route.model.Terminals;
 import metanet.kosa.metanetfinal.route.repository.IRouteRepository;
 
@@ -32,4 +33,12 @@ public class RouteService implements IRouteService{
 	public List<String> getTerminalNamesByCityId(int cityId) {
 		return routeRepository.getTerminalNamesByCityId(cityId);
 	}
+
+/*
+	@Override
+	public String getTerminalNameByTerminalId(String terminalId) {
+		return routeRepository.getTerminalNameByTerminalId(terminalId);
+	}
+*/
+
 }
