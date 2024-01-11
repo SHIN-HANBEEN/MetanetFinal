@@ -38,9 +38,14 @@ public class SecurityConfig {
 
 		// 토큰을 사용하는 경우 인가를 적용한 URI 설정
 		http.authorizeHttpRequests((authorizeHttpRequests) -> authorizeHttpRequests
-				.requestMatchers("/mypage").hasAnyRole("USER","ADMIN")
-				.requestMatchers("/**", "/css/**", "/js/**", "/images/**").permitAll()
-				.requestMatchers("/login", "/signin").permitAll());
+				.requestMatchers(
+						"/**" //프로젝트 모든 요청에 대해 permitAll 을 걸어주기
+						).permitAll()
+				.requestMatchers(
+						"/mypage"
+						).hasAnyRole("USER","ADMIN")
+		);
+				//requestMatchers("/login", "/signin").permitAll());
 
 		// Session 기반의 인증기반을 사용하지 않고 추후 JWT를 이용하여서 인증 예정
 		http.sessionManagement((session) -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));

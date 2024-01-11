@@ -44,7 +44,6 @@ public class MemberController {
 
 	@GetMapping(value="/login")
 	public String login() {
-		System.out.println("로그인 성공");
 		return "login";
 	}
 	
@@ -85,7 +84,6 @@ public class MemberController {
 	
 	@GetMapping("/logout2")
 	public String logout(HttpServletResponse response) {
-		System.out.println("로그아웃");
 		Cookie cookie = new Cookie(
 				"access_token", null);
 		cookie.setMaxAge(0); //어차피 token 에 유효기간을 설정을 해두었기 때문에 의미는 없다.

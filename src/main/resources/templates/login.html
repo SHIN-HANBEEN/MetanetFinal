@@ -71,11 +71,11 @@
 											onsubmit="submitForm(event)">
 											<div class="input-group input-group-outline my-3">
 												<label class="form-label">아이디</label>
-												<input type="text" class="form-control" id="id" name="id">
+												<input type="text" class="form-control" id="id" name="id" autocomplete="off">
 											</div>
 											<div class="input-group input-group-outline mb-3">
 												<label class="form-label">비밀번호</label>
-												<input type="password" class="form-control" id="password" name="password">
+												<input type="password" class="form-control" id="password" name="password" autocomplete="off">
 											</div>
 
 											<div class="form-check form-switch d-flex align-items-center mb-3">
@@ -84,7 +84,8 @@
 													저장</label>
 											</div>
 											<div class="text-center">
-												<button type="submit" class="btn bg-gradient-primary w-100 my-2 mb-2">로그인</button>
+												<button type="submit" class="btn bg-gradient-primary w-100 my-2 mb-2"
+													id="loginButton">로그인</button>
 											</div>
 
 											<p class="mt-4 text-sm text-center">
@@ -117,36 +118,7 @@
 	<div th:replace="~{fragments/footerFragment :: footer}"></div>
 
 
-	<!--입력한 폼을 검증 후 JWT 토큰을 발급 받아 sessionStorage에 저장-->
-	<script>
-		function submitForm(event) {
-			// preventDefault로 form의 submit 중지
-			event.preventDefault();
 
-			// 폼 데이터를 가져와서 서버로 전송
-			const formData = new FormData(document.getElementById('loginForm'));
-			fetch('/login', {
-				method: 'POST',
-				body: formData
-			})
-				.then(response => {
-					// HTTP 응답 코드가 OK(200)인지 확인
-					if (response.ok) {
-						// 토큰을 세션 스토리지에 저장
-						window.location.href = '/';
-					} else {
-						// HTTP 응답이 OK가 아닌 경우 에러를 발생시키고 에러 메시지 출력
-						alert("아이디 또는 비밀번호가 틀렸습니다.");
-						throw new Error('Invalid credentials');
-					}
-				})
-				.catch(error => console.error('Error:', error.message));
-		}
-		
-
-
-
-	</script>
 	<!--   Core JS Files   -->
 	<script src="./assets/js/core/popper.min.js" type="text/javascript"></script>
 	<script src="./assets/js/core/bootstrap.min.js" type="text/javascript"></script>
@@ -162,8 +134,120 @@
 	<script src="./assets/js/plugins/tilt.min.js"></script>
 	<!--  Plugin for Selectpicker - ChoicesJS, full documentation here: https://github.com/jshjohnson/Choices -->
 	<script src="./assets/js/plugins/choices.min.js"></script>
-	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDTTfWur0PDbZWPr7Pmq8K3jiDp0_xUziI"></script>
+
 	<script src="./assets/js/material-kit.min.js?v=3.0.4" type="text/javascript"></script>
+
+
+	<!--입력한 폼을 검증 후 JWT 토큰을 발급 받아 sessionStorage에 저장-->
+	<script>
+		function submitForm(event) {
+			// preventDefault로 form의 submit 중지
+			event.preventDefault();
+
+			// 폼 데이터를 가져와서 서버로 전송
+			const formData = new FormData(document.getElementById('loginForm'));
+			fetch('/login', {
+				method: 'POST',
+				body: formData
+			})
+			.then(response => {
+				// HTTP 응답 코드가 OK(200)인지 확인
+				if (response.ok) {
+					// 토큰을 세션 스토리지에 저장
+					window.location.href = '/';
+				} else {
+					// HTTP 응답이 OK가 아닌 경우 에러를 발생시키고 에러 메시지 출력
+					alert("아이디 또는 비밀번호가 틀렸습니다.");
+					throw new Error('Invalid credentials');
+				}
+			})
+			.catch(error => console.error('Error:', error.message));
+			
+			//아이디 저장 선택 시, 로컬 스토리지에 아이디 저장
+			const idInput = document.getElementById('id');
+			if (remeberMe.checked) {
+				localStorage.setItem('savedId', idInput.value);
+			} else {
+				localStorage.removeItem('savedId');
+			}
+		}
+
+		/* 
+		아이디 저장 버튼 클릭시 처리
+		우선, 로컬 스토리지에 저장된 아이디가 있는 지 확인하고 가져온다.
+		체크 박스를 체크하고 로그인을 하면, 로컬 스토리지에 저장을 해둔다.
+		*/
+		// Helper function to get the next tabbable element
+		
+		/*
+		function idFocus() {
+			console.log("click!!");
+			document.getElementById("password").focus();
+			document.getElementById("id").focus();
+			//var currentElement = document.activeElement;
+
+			
+			var nextElement = getNextTabbableElement(currentElement);
+			if (nextElement) {
+				console.log("nextElement 로 이동");
+				nextElement.focus();
+			}
+			
+			
+			var previousElement = getPreviousTabbableElement(currentElement);
+			if (previousElement) {
+				console.log("previousElement 로 이동");
+				previousElement.click();
+			}
+			
+		}
+		*/
+		/*
+		window.onload = function () {
+			idFocus();
+		};
+		*/
+		
+		/* 
+		아이디 저장 버튼과 관련되어서 동작하는 코드		
+		*/
+		document.addEventListener('DOMContentLoaded', function () {
+			const storedId = localStorage.getItem('savedId');
+			const idInput = document.getElementById('id');
+			if (storedId) {
+				idInput.value = storedId;
+				document.getElementById("id").focus();
+				setTimeout(function () {
+					document.getElementById("password").focus();
+				}, 20);
+			} else {
+				document.getElementById("password").focus();
+				setTimeout(function () {
+					document.getElementById("id").focus();
+				}, 20);
+			}
+		}); 
+
+		document.getElementById('rememberMe').addEventListener('change', function () {
+			const idInput = document.getElementById('id');
+			if (this.checked) {
+				localStorage.setItem('savedId', idInput.value);
+			} else {
+				localStorage.removeItem('savedId');
+			}
+		});
+		/*
+		document.getElementById('loginButton').addEventListener('click', function () {
+			const idInput = document.getElementById('id');
+			if (remeberMe.checked) {
+				localStorage.setItem('savedId', idInput.value);
+			} else {
+				localStorage.removeItem('savedId');
+			}
+		});
+		*/
+
+	</script>
 </body>
 
 </html>
