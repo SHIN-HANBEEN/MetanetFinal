@@ -96,6 +96,17 @@ public class JwtTokenProvider {
 				.getPayload()
 				.getSubject();
 	}
+	/**
+	 * 토큰에서 Memeber PK값 조회
+	 * @param token
+	 * @return
+	 */
+	public String getUserMemberId(String token) {
+		log.info(token);
+		return Jwts.parser().verifyWith(key).build().parseSignedClaims(token).getPayload().getIssuer();
+	}
+	
+	
 
 	/**
 	 * JWT 토큰에서 인증 정보 조회

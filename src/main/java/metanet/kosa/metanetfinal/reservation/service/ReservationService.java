@@ -23,6 +23,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import lombok.extern.slf4j.Slf4j;
 import metanet.kosa.metanetfinal.bus.repository.IBusesRepository;
+import metanet.kosa.metanetfinal.member.repository.IMemberRepository;
 import metanet.kosa.metanetfinal.reservation.model.Reservations;
 import metanet.kosa.metanetfinal.reservation.repository.IReservationRepository;
 import metanet.kosa.metanetfinal.reservation.repository.IReservationScheduleRepository;
@@ -40,6 +41,9 @@ public class ReservationService implements IReservationService{
 	
 	@Autowired
 	IReservationRepository reservationRepository;
+	
+	@Autowired
+	IMemberRepository memberRepository;
 	
 	@Transactional
 	@Override
@@ -150,7 +154,15 @@ public class ReservationService implements IReservationService{
 		int childNum = Integer.parseInt(payData.get("childNum").toString());
 		//할인아이디 집어넣는 큐
 		Queue<Integer> q = new LinkedList<>();
-		
+		int memberId = 0;
+		int subtractMileage = 0;
+		//마일리지 계산
+		if(payData.get("isMember").equals("true")) {
+			memberId = Integer.parseInt(payData.get("memberId").toString());
+			int totalPrice = Integer.parseInt(payData.get("totalPrice").toString());
+			subtractMileage = Integer.parseInt(payData.get("mileage").toString());
+			memberRepository.updateMemberMileage(memberId, subtractMileage, 2, totalPrice);
+		}
 		for (int i = 0; i < adultNum; i++) q.add(1);
 		for (int i = 0; i < middleChildNum; i++) q.add(2);
 		for (int i = 0; i < childNum; i++) q.add(3);
@@ -158,7 +170,7 @@ public class ReservationService implements IReservationService{
 			Reservations reservation = 
 					Reservations.builder()
 								.resId(0)
-								.memberId(0)
+								.memberId(memberId)
 								.phoneNum(payData.get("phoneNum").toString())
 								.routeId(payData.get("routeId").toString())
 								.busId(Integer.parseInt(payData.get("busId").toString()) )
