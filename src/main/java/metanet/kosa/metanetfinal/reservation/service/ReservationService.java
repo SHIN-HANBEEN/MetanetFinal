@@ -166,6 +166,7 @@ public class ReservationService implements IReservationService{
 		for (int i = 0; i < adultNum; i++) q.add(1);
 		for (int i = 0; i < middleChildNum; i++) q.add(2);
 		for (int i = 0; i < childNum; i++) q.add(3);
+		long currentTimeMillis = System.currentTimeMillis();
 		for (Integer seatId : selectedSeatsList) {
 			Reservations reservation = 
 					Reservations.builder()
@@ -176,7 +177,7 @@ public class ReservationService implements IReservationService{
 								.busId(Integer.parseInt(payData.get("busId").toString()) )
 								.seatId(seatId)
 								.discountId(q.poll())
-								.resDate(new Date(System.currentTimeMillis()))
+								.resDate(new Date(currentTimeMillis))
 								.payId(payData.get("payId").toString())
 								.totalPrice(Integer.parseInt(payData.get("totalPrice").toString()))
 								.cancledDate(null)
