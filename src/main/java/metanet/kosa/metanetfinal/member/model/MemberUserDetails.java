@@ -16,16 +16,22 @@ public class MemberUserDetails extends User {
 	private static final long serialVersionUID = -3906158559151971401L;
 
 	private int mileage;
+	private int member_id;
 
-	public MemberUserDetails(String username, String password, 
-			Collection<? extends GrantedAuthority> authorities, int mileage) {
+	public MemberUserDetails(String username, String password, Collection<? extends GrantedAuthority> authorities,
+			int mileage, int member_id) {
 		super(username, password, authorities);
 		this.mileage = mileage;
 	}
-	
-	public int getUserEmail() {
-		
+
+	public int getMileage() {
+
 		return this.mileage;
+	}
+
+	public int getMemberId() {
+
+		return this.member_id;
 	}
 }
 

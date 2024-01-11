@@ -27,7 +27,7 @@ public class ReservationPageController {
 	public String seatsSelectPage(
 			@RequestParam String dpTerminalName, 
 			@RequestParam String arrTerminalName,
-			@RequestParam String departureTime, 
+			@RequestParam String departureTime,
 			Model model
 	) {
 		String departureId = routeService.getTerminalIdByTerminalName(dpTerminalName);

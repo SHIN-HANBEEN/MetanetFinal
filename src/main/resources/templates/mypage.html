@@ -41,108 +41,184 @@
 				<div class="row justify-content-center">
 					<div class="col-lg-8 text-center mx-auto my-auto">
 						<h1 class="text-white">마이페이지</h1>
-						<p class="lead mb-4 text-white opacity-8">We’re constantly trying to express ourselves and actualize our
-							dreams. If you have the opportunity to play this game</p>
 
-				</div>
-						<div class="row">
-							<div class="col-lg-4 text-center">
-								<div class="col-lg-10 ms-auto me-auto p-lg-2 mt-lg-0 mt-4">
-<div class="rotating-card-container">
-<div class="card card-rotate card-background card-background-mask-primary shadow-primary mt-md-0 mt-5">
-<div class="front front-background" style="background-image: url(https://images.unsplash.com/photo-1569683795645-b62e50fbf103?ixlib=rb-1.2.1&amp;ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&amp;auto=format&amp;fit=crop&amp;w=987&amp;q=80); background-size: cover;">
-<div class="card-body py-7 text-center">
-<i class="material-icons text-white text-4xl my-3">touch_app</i>
-<h3 class="text-white">Feel the <br> Material Kit</h3>
-<p class="text-white opacity-8">All the Bootstrap components that you need in a development have been re-design with the new look.</p>
-</div>
-</div>
-<div class="back back-background" style="background-image: url(https://images.unsplash.com/photo-1498889444388-e67ea62c464b?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&amp;ixlib=rb-1.2.1&amp;auto=format&amp;fit=crop&amp;w=1365&amp;q=80); background-size: cover;">
-<div class="card-body pt-7 text-center">
-<h3 class="text-white">Discover More</h3>
-<p class="text-white opacity-8"> You will save a lot of time going from prototyping to full-functional code because all elements are implemented.</p>
-<a href=".//sections/page-sections/hero-sections.html" target="_blank" class="btn btn-white btn-sm w-50 mx-auto mt-3">Start with Headers</a>
-</div>
-</div>
-</div>
-</div>
-</div>
-								</div>
-							<div class="col-lg-4 text-center">
-								<button type="submit" class="btn bg-white text-dark">Create Account</button>
-								<h6 class="text-white mb-2 mt-5">Find us on</h6>
-								</div>
-							<div class="col-lg-4 text-center">
-								<button type="submit" class="btn bg-white text-dark">Create Account</button>
-								<h6 class="text-white mb-2 mt-5">Find us on</h6>
-								</div>
-						</div>
 					</div>
+					<div class="row">
+						<div class="col-lg-4 text-center">
+							<!--결제 내역 조회-->
+							<div class="col-lg-12 card move-on-hover mt-4">
+								<a href="#re" id="scrollLink">
+
+									<img class="w-100 border-radius-xl"
+										src="https://raw.githubusercontent.com/creativetimofficial/public-assets/master/material-design-system/presentation/account/reset-basic.jpg"
+										loading="lazy" alt="reset-basic">
+								</a>
+							</div>
+
+
+						</div>
+
+
+						<div class="col-lg-4 text-center">
+							<div class="col-lg-12 card move-on-hover mt-4">
+								<a href="#mi">
+									<img class="w-100 border-radius-xl"
+										src="https://raw.githubusercontent.com/creativetimofficial/public-assets/master/material-design-system/presentation/account/reset-basic.jpg"
+										loading="lazy" alt="reset-basic">
+								</a>
+							</div>
+						</div>
+						<div class="col-lg-4 text-center">
+							<div class="col-lg-12 card move-on-hover mt-4">
+								<a href="#mi">
+									<img class="w-100 border-radius-xl"
+										src="https://raw.githubusercontent.com/creativetimofficial/public-assets/master/material-design-system/presentation/account/reset-basic.jpg"
+										loading="lazy" alt="reset-basic">
+								</a>
+							</div>
+						</div>
+
+					</div>
+				</div>
 			</div>
 		</div>
 	</header>
 	<!-- -------- END HEADER 7 w/ text and video ------- -->
-	<div class="card card-body py-1 shadow-xl mx-3 mx-md-4 mt-n6">
+	<div id="re" class="card card-body py-1 shadow-xl mx-3 mx-md-4 mt-n6">
 		<!-- Section with four info areas left & one card right with image and waves -->
-		<section class="py-7">
+		<section class="py-5" style="min-height: 95vh;">
 			<div class="container">
-				<div class="row align-items-center">
-					<div class="col-lg-6">
-						<div class="row justify-content-start">
-							<div class="col-md-6">
-								<div class="info">
-									<i class="material-icons text-3xl text-gradient text-info mb-3">public</i>
-									<h5>Fully integrated</h5>
-									<p>We get insulted by others, lose trust for those We get back freezes</p>
-								</div>
-							</div>
-							<div class="col-md-6">
-								<div class="info">
-									<i class="material-icons text-3xl text-gradient text-info mb-3">payments</i>
-									<h5>Payments functionality</h5>
-									<p>We get insulted by others, lose trust for those We get back freezes</p>
-								</div>
-							</div>
+				<div class="row">
+					<div class="col-md-8 text-start mb-5 mt-5" id="mi">
+						<h2 class="text-black z-index-1 position-relative"> 예매 정보 조회</h2>
+					</div>
+				</div>
+				<ul class="nav nav-tabs" id="myTab" role="tablist">
+					<li class="col-lg-4 nav-item" role="presentation">
+						<button class="nav-link active" id="userinfo-tab" data-bs-toggle="tab" data-bs-target="#userinfo"
+							type="button" role="tab" aria-controls="userinfo" aria-selected="true">현재 예매 내역</button>
+					</li>
+					<li class="col-lg-4 nav-item" role="presentation">
+						<button class="nav-link" id="myreview-tab" data-bs-toggle="tab" data-bs-target="#myreview" type="button"
+							role="tab" aria-controls="myreview" aria-selected="false">예매 내역 조회</button>
+					</li>
+					<li class="col-lg-4 nav-item" role="presentation">
+						<button class="nav-link" id="wishlist-tab" data-bs-toggle="tab" data-bs-target="#wishlist" type="button"
+							role="tab" aria-controls="wishlist" aria-selected="false">취소 내역 조회</button>
+					</li>
+				</ul>
+
+				<!-- 현재 예매 내역 -->
+				<div class="tab-content" id="myTabContent">
+					<div class="tab-pane fade show active mb-4" id="userinfo" role="tabpanel" aria-labelledby="userinfo-tab">
+						<h3 class="mt-4">예매 중인 내역</h3>
+						<div th:if="${not #lists.isEmpty(ReservationNotUsedList)}">
+
+							<table class="table table-hover table-bordered" id="totalreservationtable">
+								<thead>
+									<tr>
+										<th>출발지</th>
+										<th>도착지</th>
+										<th>출발시간</th>
+										<th>도착시간</th>
+										<th>예약시간</th>
+										<th>좌석 번호</th>
+										<th>결제 번호</th>
+										<th>총 금액</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr th:each="res : ${ReservationNotUsedList}">
+										<td th:text="${res.departureTerminalName}">출발지</td>
+										<td th:text="${res.arrivalTerminalName}">도착지</td>
+										<td th:text="${res.departureTime}">출발시간</td>
+										<td th:text="${res.arrivalTime}">도착시간</td>
+										<td th:text="${res.resDate}">예약시간</td>
+										<td th:text="${res.seatIds}">좌석 번호</td>
+										<td th:text="${res.payId}">결제 번호</td>
+										<td th:text="${res.totalPrice}">총 금액</td>
+									</tr>
+								</tbody>
+							</table>
+
 						</div>
-						<div class="row justify-content-start mt-4">
-							<div class="col-md-6">
-								<div class="info">
-									<i class="material-icons text-3xl text-gradient text-info mb-3">apps</i>
-									<h5>Prebuilt components</h5>
-									<p>We get insulted by others, lose trust for those We get back freezes</p>
-								</div>
-							</div>
-							<div class="col-md-6">
-								<div class="info">
-									<i class="material-icons text-3xl text-gradient text-info mb-3">3p</i>
-									<h5>Improved platform</h5>
-									<p>We get insulted by others, lose trust for those We get back freezes</p>
-								</div>
-							</div>
+						<div th:if="${#lists.isEmpty(ReservationNotUsedList)}">
+							<p>No items found</p>
 						</div>
 					</div>
-					<div class="col-lg-4 ms-auto mt-lg-0 mt-4">
-						<div class="card">
-							<div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
-								<a class="d-block blur-shadow-image">
-									<img
-										src="https://images.unsplash.com/photo-1544717302-de2939b7ef71?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80"
-										alt="img-colored-shadow" class="img-fluid border-radius-lg">
-								</a>
-							</div>
-							<div class="card-body text-center">
-								<h5 class="font-weight-normal">
-									<a href="javascript:;">Get insights on Search</a>
-								</h5>
-								<p class="mb-0">
-									Website visitors today demand a frictionless user expericence — especially when using search. Because
-									of the hight standards.
-								</p>
-								<button type="button" class="btn bg-gradient-info btn-sm mb-0 mt-3">Find out more</button>
-							</div>
+
+					<!--예매 내역 조회-->
+					<div class="tab-pane fade" id="myreview" role="tabpanel" aria-labelledby="myreview-tab">
+						<h3 class="mt-4">예매 취소 내역</h3>
+						<div th:if="${not #lists.isEmpty(ReservationList)}">
+
+							<table class="table table-hover table-bordered" id="totalreservationtable">
+								<thead>
+									<tr>
+										<th>출발지</th>
+										<th>도착지</th>
+										<th>출발시간</th>
+										<th>도착시간</th>
+										<th>예약시간</th>
+										<th>좌석 번호</th>
+										<th>결제 번호</th>
+										<th>총 금액</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr th:each="res : ${ReservationList}">
+										<td th:text="${res.departureTerminalName}">출발지</td>
+										<td th:text="${res.arrivalTerminalName}">도착지</td>
+										<td th:text="${res.departureTime}">출발시간</td>
+										<td th:text="${res.arrivalTime}">도착시간</td>
+										<td th:text="${res.resDate}">예약시간</td>
+										<td th:text="${res.seatIds}">좌석 번호</td>
+										<td th:text="${res.payId}">결제 번호</td>
+										<td th:text="${res.totalPrice}">총 금액</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+						<div th:if="${#lists.isEmpty(ReservationList)}">
+							<p>No items found</p>
+						</div>
+					</div>
+					<div class="tab-pane fade" id="wishlist" role="tabpanel" aria-labelledby="wishlist-tab">
+						<h3 class="mt-4">예매 취소 내역</h3>
+						<div th:if="${not #lists.isEmpty(cancelReservationList)}">
+							<table class="table table-hover table-bordered" id="totalreservationtable">
+								<thead>
+									<tr>
+										<th>출발지</th>
+										<th>도착지</th>
+										<th>출발시간</th>
+										<th>도착시간</th>
+										<th>예약시간</th>
+										<th>좌석 번호</th>
+										<th>결제 번호</th>
+										<th>총 금액</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr th:each="res : ${cancelReservationList}">
+										<td th:text="${res.departureTerminalName}">출발지</td>
+										<td th:text="${res.arrivalTerminalName}">도착지</td>
+										<td th:text="${res.departureTime}">출발시간</td>
+										<td th:text="${res.arrivalTime}">도착시간</td>
+										<td th:text="${res.resDate}">예약시간</td>
+										<td th:text="${res.seatIds}">좌석 번호</td>
+										<td th:text="${res.payId}">결제 번호</td>
+										<td th:text="${res.totalPrice}">총 금액</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+						<div th:if="${#lists.isEmpty(cancelReservationList)}">
+							<p>No items found</p>
 						</div>
 					</div>
 				</div>
+
 			</div>
 		</section>
 		<!-- END Section with four info areas left & one card right with image and waves -->
@@ -150,8 +226,8 @@
 		<section class="pb-5 position-relative bg-gradient-dark mx-n3">
 			<div class="container">
 				<div class="row">
-					<div class="col-md-8 text-start mb-5 mt-5">
-						<h3 class="text-white z-index-1 position-relative">The Executive Team</h3>
+					<div class="col-md-8 text-start mb-5 mt-5" id="mi">
+						<h3 class="text-white z-index-1 position-relative">마일리지</h3>
 						<p class="text-white opacity-8 mb-0">There’s nothing I really wanted to do in life that I wasn’t able to get
 							good at. That’s my skill.</p>
 					</div>
@@ -333,6 +409,22 @@
 	<!--  Google Maps Plugin    -->
 	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDTTfWur0PDbZWPr7Pmq8K3jiDp0_xUziI"></script>
 	<script src="../assets/js/material-kit.min.js?v=3.0.4" type="text/javascript"></script>
+
+	<script>
+		// JavaScript로 클릭 이벤트와 스크롤을 처리합니다.
+		document.getElementById('scrollLink').addEventListener('click', function (event) {
+			// 기본 동작인 href로의 이동을 막습니다.
+			//event.preventDefault();
+
+			// 클릭 시 해당 ID로 부드럽게 스크롤합니다.
+			document.getElementById('re').scrollIntoView({behavior: 'smooth', block: 'start'});
+
+			// 스크롤 위치를 조정하여 원하는 위치로 이동합니다.
+			window.scrollBy(0, -10); // 예: 현재 위치에서 위로 50px 이동
+		});
+	</script>
+
+
 	<script>
 		// get the element to animate
 		var element = document.getElementById('count-stats');
@@ -421,3 +513,32 @@
 </body>
 
 </html>
+
+
+
+
+<!--
+		<div class="col-lg-10 ms-auto me-auto p-lg-2 mt-lg-0 mt-4">
+								<div class="rotating-card-container">
+									<div
+										class="card card-rotate card-background card-background-mask-primary shadow-primary mt-md-0 mt-5">
+										<div class="front front-background"
+											style="background-image: url(https://images.unsplash.com/photo-1569683795645-b62e50fbf103?ixlib=rb-1.2.1&amp;ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&amp;auto=format&amp;fit=crop&amp;w=987&amp;q=80); background-size: cover;">
+											<div class="card-body py-7 text-center">
+												<i class="material-icons text-white text-4xl my-3">touch_app</i>
+												<h3 class="text-white">회원 정보 <br> xxx님 </h3>
+											</div>
+										</div>
+										<div class="back back-background"
+											style="background-image: url(https://images.unsplash.com/photo-1498889444388-e67ea62c464b?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&amp;ixlib=rb-1.2.1&amp;auto=format&amp;fit=crop&amp;w=1365&amp;q=80); background-size: cover;">
+											<div class="card-body pt-7 text-center">
+												<h3 class="text-white">아이디 <br> 이름 <br> 이메일</h3>
+												<p class="text-white opacity-8"> 예매 내역 상세 보기</p>
+												<a href="#re" class="btn btn-white btn-sm w-50 mx-auto mt-3">예매 확인</a>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+	
+-->

@@ -51,6 +51,16 @@
 	]]>
 	</select>
 	
+	<select id="getPhoneNumberById" parameterType="string" resultType="string">
+	<![CDATA[
+		SELECT 
+			PHONE_NUM
+		FROM 
+			MEMBERS 
+		WHERE id=#{id}
+	]]>
+	</select>
+	
 	<update id="resetPwById">
 	UPDATE MEMBERS SET PASSWORD=#{tmpPassword} WHERE ID=#{id}
 	</update>
