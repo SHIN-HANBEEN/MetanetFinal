@@ -37,6 +37,6 @@ public class MemberUserDetailsService implements UserDetailsService {
 		List<GrantedAuthority> authorities = AuthorityUtils.createAuthorityList(roles); 
 		//String 배열을 활용해서 Authority 배열을 만들 수 있는 AuthorityUtils 의 createAuthorityList 메서드
 		return new MemberUserDetails(member.getId(), 
-				member.getPassword(), authorities, member.getMileage());
+				member.getPassword(), authorities, member.getMileage(), member.getMemberId());
 	}
 }

@@ -17,13 +17,18 @@ import java.util.Queue;
 import java.util.Random;
 import java.util.UUID;
 
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import lombok.extern.slf4j.Slf4j;
 import metanet.kosa.metanetfinal.bus.repository.IBusesRepository;
+
 import metanet.kosa.metanetfinal.member.repository.IMemberRepository;
+
+import metanet.kosa.metanetfinal.reservation.model.DetailedReservation;
+
 import metanet.kosa.metanetfinal.reservation.model.Reservations;
 import metanet.kosa.metanetfinal.reservation.repository.IReservationRepository;
 import metanet.kosa.metanetfinal.reservation.repository.IReservationScheduleRepository;
@@ -92,6 +97,10 @@ public class ReservationService implements IReservationService{
 		int seatCount = getRemainingSeatCount(departureId, arrivalId, departureTime, arrivalTime, gradeName, price);
 		return seatCount;
 	}
+	
+	/*
+	 * 예매 정보 조회
+	 */
 	
 	/*
 	 * 좌석선택페이지를 위한 데이터 JSON 만들기용 01-06
@@ -220,6 +229,24 @@ public class ReservationService implements IReservationService{
 		System.out.println(timeNow);
 		return sqlTime;
 	}
+	
+	/*
+	 * 마이페이지 예매내역 및 취소내역 조회 :
+	 * 과거 6개월까지 예매내역과 취소내역을 조회한다. 
+	 */
+	@Override
+	public List<DetailedReservation> getReservationHistoryForLastSixMonth(@Param("canceledDate") Boolean canceledDate, @Param("phoneNum") String phoneNum) {
+		return reservationRepository.getReservationHistoryForLastSixMonth(canceledDate,phoneNum);
+	}
+
+	/*
+	 * 예매_회원 예매 정보 조회 : 
+	 * 아직 출발 시간이 지나지 않은 예매 내역을 보여줍니다. 
+	 */
+	@Override
+	public List<DetailedReservation> getReservationHistoryNotUsed(String phoneNum) {
+		return reservationRepository.getReservationHistoryNotUsed(phoneNum);
+	}
 //	@Autowired
 //	IReservationRepository reservationRepository;
 //	
@@ -235,23 +262,6 @@ public class ReservationService implements IReservationService{
 //	@Autowired
 //	IReservationScheduleRepository reservationScheduleRepository;
 //	
-//	/*
-//	 * 마이페이지 예매내역 및 취소내역 조회 :
-//	 * 과거 6개월까지 예매내역과 취소내역을 조회한다. 
-//	 */
-//	@Override
-//	public List<DetailedReservation> getReservationHistoryForLastSixMonth(int id) {
-//		return reservationRepository.getReservationHistoryForLastSixMonth(id);
-//	}
-//
-//	/*
-//	 * 예매_회원 예매 정보 조회 : 
-//	 * 아직 출발 시간이 지나지 않은 예매 내역을 보여줍니다. 
-//	 */
-//	@Override
-//	public List<DetailedReservation> getReservationHistoryNotUsed(int id) {
-//		return reservationRepository.getReservationHistoryNotUsed(id);
-//	}
 //	
 //	/*
 //	 * 예매 변경(같은 노선, 다른 날짜, 다른 시간, 다른 좌석)
@@ -390,6 +400,9 @@ public class ReservationService implements IReservationService{
 //		reservationRepository.selectSeat(adult, child, special, seats);
 //		
 //	}
+
+	
+
 	
 	
 	

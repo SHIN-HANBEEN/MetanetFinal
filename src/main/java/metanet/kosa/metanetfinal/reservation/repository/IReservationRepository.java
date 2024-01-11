@@ -7,6 +7,7 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
+import metanet.kosa.metanetfinal.reservation.model.DetailedReservation;
 import metanet.kosa.metanetfinal.reservation.model.Reservations;
 
 
@@ -30,18 +31,18 @@ public interface IReservationRepository {
 //	 */
 //	ReservationSchedule getReservationSchedulesByResId(int resId);
 //	
-//	/*
-//	 * 회원_마이페이지_예매내역, 취소내역 조회 : 지난 6개월 예매 내역 가져오기
-//	 * ERD에 없는 객체를 반환하기 때문에, SQL이 굉장히 길어질 것 같아요.
-//	 */
-//	List<DetailedReservation> getReservationHistoryForLastSixMonth(int id); 
-//	
-//	/*
-//	 * 사용되지 않은 예매 내역 가져오기
-//	 * ERD에 없는 객체를 반환하기 때문에, SQL이 굉장히 길어질 것 같아요.
-//	 */
-//	List<DetailedReservation> getReservationHistoryNotUsed(int id);
-//	
+	/*
+	 * 회원_마이페이지_예매내역, 취소내역 조회 : 지난 6개월 예매 내역 가져오기
+	 * ERD에 없는 객체를 반환하기 때문에, SQL이 굉장히 길어질 것 같아요.
+	 */
+	List<DetailedReservation> getReservationHistoryForLastSixMonth(@Param("canceledDate") Boolean canceledDate, @Param("phoneNum") String phoneNum); 
+	
+	/*
+	 * 사용되지 않은 예매 내역 가져오기
+	 * ERD에 없는 객체를 반환하기 때문에, SQL이 굉장히 길어질 것 같아요.
+	 */
+	List<DetailedReservation> getReservationHistoryNotUsed(String phoneNum);
+	
 //	/*
 //	 * 사용된 좌석 반환하기
 //	 */

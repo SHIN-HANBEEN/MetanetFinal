@@ -40,6 +40,7 @@ public class MemberService implements IMemberService{
 	}
 
 	
+	
 	/*
 	 * 등록하려는 아이디가 유일하면 회원 가입을 진행한다.
 	 */
@@ -62,6 +63,10 @@ public class MemberService implements IMemberService{
 		return memberRepository.getIdByPhoneNumber(phoNum);
 	}
 
+	@Override
+	public String getPhoneNumberById(String id) {
+		return memberRepository.getPhoneNumberById(id);
+	}
 	/*
 	 * 비밀번호 찾기 :
 	 * 전화번호 인증 끝난 사용자들만 사용가능하므로 
@@ -117,45 +122,6 @@ public class MemberService implements IMemberService{
 	}
 
 	
-	
 
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
