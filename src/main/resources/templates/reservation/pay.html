@@ -46,17 +46,31 @@
 					</tbody>
 				  </table>
 
-				  <form class="row g-3" style="margin-top: 160px;">
+				  <form class="row g-3 notmember" style="margin-top: 160px;" >
 					<div class="col-auto">
 					  <label for="staticEmail2" class="visually-hidden">전화번호인증</label>
 					  <input type="text" readonly class="form-control-plaintext" id="staticEmail2" value="전화번호인증">
 					</div>
 					<div class="col-auto">
 					  <label for="inputPassword2" class="visually-hidden">전화번호</label>
-					  <input type="password" class="form-control" id="phoneNumber" placeholder="01012345678">
+					  <input type="text" class="form-control" id="phoneNumber" placeholder="01012345678">
 					</div>
 					<div class="col-auto">
 					  <button id="callNumberAuthButton" class="btn btn-primary mb-3">인증번호발송</button>
+					</div>
+				  </form>
+				  
+				  <form class="row g-3 member" style="margin-top: 160px;" >
+					<div class="col-auto">
+					  <label for="staticEmail2" class="visually-hidden"></label>
+					  <input type="text" readonly class="form-control-plaintext" id="staticEmail2" value="마일리지">
+					</div>
+					<div class="col-auto">
+					  <label for="inputPassword2" class="visually-hidden"></label>
+					  <input type="text" class="form-control" id="mileageInput" placeholder="">
+					</div>
+					<div class="col-auto">
+					  <button id="callNumberAuthButton" class="btn btn-primary mb-3">마일리지</button>
 					</div>
 				  </form>
 
@@ -81,6 +95,14 @@
 	<script>
 		var localData;
 		var payId;
+		var isMember = 'false';
+		var phoneNum;
+		var memberMileage = 0;
+		var memberId;
+		var finalPrice;
+		var inputMileage = 100;
+		var enterTime;
+		var preUrl;
 		//문서가 준비되면 제일 먼저 실행
 		$(document).ready(function () {
 			
@@ -91,13 +113,62 @@
 			document.querySelector('#grade').textContent = localData.routeData.gradeNm;
 			document.querySelector('#ageType').textContent = '성인 '+ localData.adultNum + ' 중고생 ' + localData.middleChildNum + ' 아동 ' + localData.childNum;
 			document.querySelector('#selectedSeats').textContent = localData.selectedSeats;
-			document.querySelector('#totalPrice').textContent = localData.totalPrice;
+			document.querySelector('#totalPrice').textContent = localData.totalPrice.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
+			finalPrice = localData.totalPrice;
+			enterTime = localData.enterTime;
+			preUrl = localData.seatUrl;
+			$.ajax({
+		    url: 'http://localhost:8083/paymentid', // 요청을 보낼 URL
+		    method: 'GET', // HTTP 메서드 (GET, POST, 등)
+		    dataType: 'json', // 응답 데이터 타입 (json, xml, 등)
+		    success: function(data) {
+		      // 성공적으로 응답을 받았을 때 실행할 코드
+		      console.log('성공:', data);
+		      payId = data.paymentId;
+		      isMember = data.isMember;
+		      if(isMember == 'true'){
+				  memberId = data.memberId;
+				  memberMileage = data.memberMileage;
+				  phoneNum = data.memberPhoneNum;
+				  document.querySelector('.notmember').remove();
+				  var milInput = document.querySelector('#mileageInput');
+				  milInput.placeholder = memberMileage;
+				  milInput.value = memberMileage;
+				  finalPrice = localData.totalPrice - parseInt(memberMileage);
+				 
+				  document.querySelector('#totalPrice').textContent = (localData.totalPrice - parseInt(memberMileage)).toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");;
+				  
+			  }
+			  else{
+				  document.querySelector('.member').remove();
+			  }
+		    },
+		    error: function(error) {
+		      // 요청이 실패했을 때 실행할 코드
+		      console.log('실패:', error);
+		    }
+		  });
 			//sessionStorage.removeItem("reservationData");
 		});
-
-		//전화번호
+		
+		//마일리지 인풋이 변할때마다 총결제금액 변경
+		document.querySelector('#mileageInput').addEventListener("input", function(e){
+			inputMileage = parseInt(e.target.value);
+			if(parseInt(e.target.value) > parseInt(memberMileage)) {
+				e.target.value = memberMileage;
+				inputMileage = e.target.value;
+			}
+			
+			if(isNaN(inputMileage)) inputMileage = 0;
+			document.querySelector('#totalPrice').textContent = (localData.totalPrice - parseInt(inputMileage)).toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
+			finalPrice = (localData.totalPrice - parseInt(inputMileage)).toString();
+			console.log(finalPrice);
+		});
+		
+		//전화번호 인증 클릭
 		document.getElementById("callNumberAuthButton").addEventListener("click", AuthBtnClick);
         function AuthBtnClick() {
+			/*
             console.log('click!!!');
 			fetch("/routeinfotest", {
 			method: "POST",
@@ -120,7 +191,7 @@
 					//새로고침
 					window.location.reload();
 					status = 400;
-					return;
+					return; 
 				}else{
 					response.json();
 				}
@@ -138,34 +209,50 @@
 						childNum: childNum
 					}));
 					if(status!=400) location.href="/reservation/payment";
-			}).catch(error => console.log('FetchError'));
+			}).catch(error => console.log('FetchError')); */
         }
 		
-        
-
+        //1초마다 실행
+		var interval = setInterval(function () { 
+			//console.log(enterTime);
+			const dateA = new Date();
+			const dateB = new Date(enterTime);
+			const diffMSec = dateA.getTime() - dateB.getTime();
+			const diffMin = diffMSec / (60 * 1000);
+			if(diffMin >= 10){
+				alert('결제 시간초과');
+				clearInterval(interval);
+				location.href=preUrl;
+				
+			};
+		 }, 1000);
 
 
 
 
 		//결제 프로세스 ----------------------------------------------------
 		$("#iamportPayment").click(function () {
+			//진입시간과 결제 시간이 
 			payment(); //버튼 클릭하면 함수 호출
 		});
 		//버튼 클릭하면 실행
 		function payment(data) {
 			//var paymentId = createPaymentId();
+			if(isMember == 'false'){
+				phoneNum = document.querySelector('#phoneNumber').value;
+				memberId = 0;
+			} 
 			IMP.init('imp33561285'); //아임포트 관리자 콘솔에서 확인한 '가맹점 식별코드' 입력
 			IMP.request_pay({ // param
-				// pg: "inicis", //pg사명 or pg사명.CID (잔액 일시불 할부 등, 기본 PG사가 따로 있음)
-				pg: "kakao",
+				pg: "inicis", //pg사명 or pg사명.CID (잔액 일시불 할부 등, 기본 PG사가 따로 있음)
 				pay_method: "card", //결제 방법
 				merchant_uid: payId, //가맹점 주문번호 (아임포트를 사용하는 가맹점에서 임의로 지정)
 				name: "메타버스 결제", //결제창에서 보여질 상품명
-				amount: localData.totalPrice, //금액
+				amount: finalPrice, //금액
 				buyer_email: "gildong0405@gmail.com",
 				buyer_name: "길동이",
 				buyer_postcode: "1",
-				buyer_tel: "01052016412"
+				buyer_tel: phoneNum
 			}, function (rsp) { // callback
 				console.log(rsp);
 				if (rsp.success) {
@@ -175,7 +262,6 @@
 					let data = {};
 					console.log("rsp", rsp);
 					// data.imp_uid = rsp.imp_uid;
-					
 					data.payId = rsp.merchant_uid;
 					data.totalPrice = rsp.paid_amount;
 					data.payMethod = rsp.pay_method;
@@ -183,60 +269,47 @@
 					data.routeId = localData.routeData.routeId;
 					data.busId = localData.busId;
 					data.selectedSeats = localData.selectedSeats;
-					data.isMember = 'false';
+					data.isMember = isMember;
 					data.adultNum = localData.adultNum;
 					data.middleChildNum = localData.middleChildNum;
 					data.childNum = localData.childNum;
-					data.mileage = 300;
-					
-					// resId (예매 아이디)
-					// memberId (회원 아이디)
-					// nmemberId (비회원 아이디)
-					// routeId (노선 아이디)
-					// busId (버스 아이디)
-					// seatId (좌석 번호)
-					// resDate (예매일자) data에 넣기
+					data.mileage = inputMileage;
+					data.memberId = memberId;
 					console.log(data);
-						
 					// 성공하면 데이터 전송~ -> 테스트 전송 성공
-					// 성공하면 데이터 전송~ -> 테스트 전송 성공
-	               $.ajax({
-	                  url: "/reservation/payOk",
-	                  method: "POST",
-	                  data: JSON.stringify(data),
-	                  contentType: "application/json",
-	                  success: function (response) {
-	                     console.log(response);
-	                     alert("결제 정보가 성공적으로 전송되었습니다");
-	                     //window.location.href = "/reservation/refund";
-	                     window.location.href="/reservation/ticket2";
-	                  },
-	                  error: function (xhr, status, error) {
-	                     //console.error("결제 정보 전송 실패 : ", error);
-	                     //alert("결제 정보 전송에 실패");
-	                     /*$.ajax.ajax({
-	                        // 예: http://www.myservice.com/payments/cancel
-	                        "url": "{환불정보를 수신할 가맹점 서비스 URL}", 
-	                        "type": "POST",
-	                        "contentType": "application/json",
-	                        "data": JSON.stringify({
-	                          "merchant_uid": payId, // 예: ORD20180131-0000011
-	                          "cancel_request_amount": 2000, // 환불금액
-	                          "reason": "테스트 결제 환불", // 환불사유
-	                          // [가상계좌 환불시 필수입력] 환불 수령계좌 예금주
-	                          "refund_holder": "홍길동", 
-	                          // [가상계좌 환불시 필수입력] 환불 수령계좌 은행코드(예: KG이니시스의 경우 신한은행은 88번)
-	                          "refund_bank": "88", 
-	                          // [가상계좌 환불시 필수입력] 환불 수령계좌 번호
-	                          "refund_account": "56211105948400" 
-	                        }),
-	                        "dataType": "json"
-	                      });*/
-	                  }
-	               });
-					
-					
-					
+					$.ajax({
+						url: "/reservation/payOk",
+						method: "POST",
+						data: JSON.stringify(data),
+						contentType: "application/json",
+						success: function (response) {
+							console.log(response);
+							alert("결제 정보가 성공적으로 전송되었습니다");
+							//window.location.href = "/reservation/refund";
+						},
+						error: function (xhr, status, error) {
+							//console.error("결제 정보 전송 실패 : ", error);
+							//alert("결제 정보 전송에 실패");
+							/*$.ajax.ajax({
+						      // 예: http://www.myservice.com/payments/cancel
+						      "url": "{환불정보를 수신할 가맹점 서비스 URL}", 
+						      "type": "POST",
+						      "contentType": "application/json",
+						      "data": JSON.stringify({
+						        "merchant_uid": payId, // 예: ORD20180131-0000011
+						        "cancel_request_amount": 2000, // 환불금액
+						        "reason": "테스트 결제 환불", // 환불사유
+						        // [가상계좌 환불시 필수입력] 환불 수령계좌 예금주
+						        "refund_holder": "홍길동", 
+						        // [가상계좌 환불시 필수입력] 환불 수령계좌 은행코드(예: KG이니시스의 경우 신한은행은 88번)
+						        "refund_bank": "88", 
+						        // [가상계좌 환불시 필수입력] 환불 수령계좌 번호
+						        "refund_account": "56211105948400" 
+						      }),
+						      "dataType": "json"
+						    });*/
+						}
+					});
 
 
 				} else {

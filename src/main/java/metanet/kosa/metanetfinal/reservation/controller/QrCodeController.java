@@ -19,7 +19,7 @@ public class QrCodeController {
 	@Autowired
 	IReservationService reservationService;
 	
-	@GetMapping("reservation/ticket2")
+	@GetMapping("reservation/ticket")
 	public String getTicket2(@RequestParam String payId, Model model) {
 		
 		Map<String, Object> info = reservationService.getReservationInfo(payId);
@@ -42,7 +42,7 @@ public class QrCodeController {
         
         model.addAttribute("info", info);
 		
-		return "reservation/ticket2";
+		return "reservation/ticket";
 	}
 
  
