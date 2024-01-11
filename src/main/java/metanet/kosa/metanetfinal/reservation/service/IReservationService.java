@@ -40,9 +40,9 @@ public interface IReservationService {
 //	 */
 //	void updateSeat(List<Integer> satIdList, int resId);
 //	
-//	//예매 취소
-//	void cancleReservation(int resId);
-//	
+	//예매 취소
+	void cancleReservation(String payId);
+	
 //	// 비회원 예매 리스트 조회
 ////	List<Reservation> getReservation(int nmbId);
 //	// 비회원 예매 정보 조회

@@ -53,6 +53,7 @@
     WHERE
         res.phone_num = #{phoneNum} 
         and r.DEPARTURE_TIME >= sysdate
+        AND res.cancled_date IS NULL
     GROUP BY
         res.pay_id, r.route_id, r.departure_id, dt.terminal_name, r.arrival_id,
         at.terminal_name, r.DEPARTURE_TIME, r.arrival_time, res.res_date, res.total_price

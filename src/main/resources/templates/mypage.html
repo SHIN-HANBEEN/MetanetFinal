@@ -17,6 +17,9 @@
 	<link href="../assets/css/nucleo-svg.css" rel="stylesheet" />
 	<!-- Font Awesome Icons -->
 	<script src="https://kit.fontawesome.com/42d5adcbca.js" crossorigin="anonymous"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+	<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
 	<!-- Material Icons -->
 	<link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
 	<!-- CSS Files -->
@@ -114,7 +117,7 @@
 						<h3 class="mt-4">예매 중인 내역</h3>
 						<div th:if="${not #lists.isEmpty(ReservationNotUsedList)}">
 
-							<table class="table table-hover table-bordered" id="totalreservationtable">
+							<table class="table table-hover table-bordered" id="notuserdreservationtable">
 								<thead>
 									<tr>
 										<th>출발지</th>
@@ -128,7 +131,8 @@
 									</tr>
 								</thead>
 								<tbody>
-									<tr th:each="res : ${ReservationNotUsedList}">
+									<tr th:each="res : ${ReservationNotUsedList}" class="clickable-row" data-toggle="modal"
+										data-target="#reservationModal" data-reservation-id="${res.id}" style="cursor: pointer;">
 										<td th:text="${res.departureTerminalName}">출발지</td>
 										<td th:text="${res.arrivalTerminalName}">도착지</td>
 										<td th:text="${res.departureTime}">출발시간</td>
@@ -186,7 +190,7 @@
 					<div class="tab-pane fade" id="wishlist" role="tabpanel" aria-labelledby="wishlist-tab">
 						<h3 class="mt-4">예매 취소 내역</h3>
 						<div th:if="${not #lists.isEmpty(cancelReservationList)}">
-							<table class="table table-hover table-bordered" id="totalreservationtable">
+							<table class="table table-hover table-bordered" id="cancelreservationtable">
 								<thead>
 									<tr>
 										<th>출발지</th>
@@ -397,6 +401,46 @@
 		</section>
 		<!-- -------- END PRE-FOOTER 1 w/ SUBSCRIBE BUTTON AND IMAGE ------- -->
 	</div>
+
+
+
+
+	<div class="modal fade" id="reservationModal" tabindex="-1" role="dialog" aria-labelledby="reservationModalLabel"
+		aria-hidden="true">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="reservationModalLabel">예약 상세 정보</h5>
+					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+				</div>
+				<div class="modal-body">
+					<!-- 모달 내용을 표시할 위치 -->
+					<div>
+						<p>출발지: <span id="modalDepartureTerminal"></span></p>
+						<p>도착지: <span id="modalArrivalTerminal"></span></p>
+						<p>출발시간: <span id="modalDepartureTime"></span></p>
+						<p>도착시간: <span id="modalArrivalTime"></span></p>
+						<p>예약시간: <span id="modalResDate"></span></p>
+						<p>좌석 번호: <span id="modalSeatIds"></span></p>
+						<p>결제 번호: <span id="modalPayId"></span></p>
+						<p>총 금액: <span id="modalTotalPrice"></span></p>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn bg-gradient-secondary" data-bs-dismiss="modal">닫기</button>
+					<button type="button" class="btn bg-gradient-primary">저장</button>
+					<button type="button" class="btn btn-danger" id="deleteButton">삭제</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+
+
+
+
+
 	<div th:replace="~{fragments/footerFragment :: footer}"></div>
 
 	<!--   Core JS Files   -->
@@ -411,18 +455,67 @@
 	<script src="../assets/js/material-kit.min.js?v=3.0.4" type="text/javascript"></script>
 
 	<script>
-		// JavaScript로 클릭 이벤트와 스크롤을 처리합니다.
-		document.getElementById('scrollLink').addEventListener('click', function (event) {
-			// 기본 동작인 href로의 이동을 막습니다.
-			//event.preventDefault();
+		$('.clickable-row').click(function () {
+			var departureTerminal = $(this).find('td:eq(0)').text();
+			var arrivalTerminal = $(this).find('td:eq(1)').text();
+			var departureTime = $(this).find('td:eq(2)').text();
+			var arrivalTime = $(this).find('td:eq(3)').text();
+			var resDate = $(this).find('td:eq(4)').text();
+			var seatIds = $(this).find('td:eq(5)').text();
+			var payId = $(this).find('td:eq(6)').text();
+			var totalPrice = $(this).find('td:eq(7)').text();
 
-			// 클릭 시 해당 ID로 부드럽게 스크롤합니다.
-			document.getElementById('re').scrollIntoView({behavior: 'smooth', block: 'start'});
+			// 모달에 데이터 넣기
+			$('#modalDepartureTerminal').text(departureTerminal);
+			$('#modalArrivalTerminal').text(arrivalTerminal);
+			$('#modalDepartureTime').text(departureTime);
+			$('#modalArrivalTime').text(arrivalTime);
+			$('#modalResDate').text(resDate);
+			$('#modalSeatIds').text(seatIds);
+			$('#modalPayId').text(payId);
+			$('#modalTotalPrice').text(totalPrice);
 
-			// 스크롤 위치를 조정하여 원하는 위치로 이동합니다.
-			window.scrollBy(0, -10); // 예: 현재 위치에서 위로 50px 이동
+			// 모달 열기
+			$('#reservationModal').modal('show');
+			
+			$('#deleteButton').click(function () {
+			// 삭제 버튼 클릭 시 처리 (비동기로 서버에 데이터 전송 등)
+			alert(totalPrice);
+			
+			var inputData = {"payId": payId, "totalPrice": totalPrice};
+			// 비동기 처리 로직.
+			$.ajax({
+				url: '/cancelReservation', 
+				type: 'POST',
+				contentType: 'application/json',
+				data: JSON.stringify(inputData),
+				success: function (response) {
+					// 서버 응답에 대한 처리
+					console.log(response);
+				},
+				error: function (error) {
+					// 오류 발생 시 처리
+					console.error(error);
+				}
+			});
 		});
+
+		});
+
+		
+
+
 	</script>
+
+	<!--<script>
+    // 클릭한 행의 데이터를 모달에 표시하는 JavaScript 코드
+    $('.clickable-row').click(function() {
+        var modalContent = $(this).html();
+        $('#modalContent').html(modalContent);
+        $('#reservationModal').modal('show');
+    });
+</script>-->
+
 
 
 	<script>
