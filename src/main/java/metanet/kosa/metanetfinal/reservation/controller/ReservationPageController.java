@@ -65,5 +65,10 @@ public class ReservationPageController {
 
 		return "/reservation/pay";
 	}
+	
+	@GetMapping("/reservation/complete")
+	public String reservationComplete() {
+		return "/reservation/paymentComplete";
+	}
 
 }
