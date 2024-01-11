@@ -42,6 +42,17 @@ public class MemberController {
 	@Autowired
 	PasswordEncoder passwordEncoder;
 
+	@GetMapping(value="/login")
+	public String login() {
+		System.out.println("로그인 성공");
+		return "login";
+	}
+	
+	@GetMapping(value="/mypage")
+	public String mypage() {
+		//System.out.println("토큰 테스트 : "+ authToken);
+		return "mypage";
+	}
 	
 	@PostMapping("/login")
 	@ResponseBody
@@ -72,7 +83,7 @@ public class MemberController {
 		return ResponseEntity.ok("Login successful");
 	}
 	
-	@PostMapping("/logout2")
+	@GetMapping("/logout2")
 	public String logout(HttpServletResponse response) {
 		System.out.println("로그아웃");
 		Cookie cookie = new Cookie(
@@ -83,7 +94,7 @@ public class MemberController {
 		
 		response.addCookie(cookie);
 
-		return "/home2";
+		return "redirect:/";
 	}
 	
 	

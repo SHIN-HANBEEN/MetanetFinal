@@ -29,18 +29,6 @@ public class HomeController {
 		return "home2";
 	}
 	
-	@GetMapping(value="/login")
-	public String login() {
-		System.out.println("로그인 성공");
-		return "login";
-	}
-	
-	@GetMapping(value="/mypage")
-	public String mypage() {
-		//System.out.println("토큰 테스트 : "+ authToken);
-		return "mypage";
-	}
-	
 	/*
 	 * @GetMapping(value="/signin") public String signin() { return "signin"; }
 	 */
