@@ -227,7 +227,7 @@
 															</div>
 
 															<!-- 전화번호 인증 -->
-															<div class="row rounded-4" style="padding-top: 50px;"
+															<div class="row rounded-4 " style="padding-top: 50px;"
 																th:if="${#authorization.expression('isAnonymous()')}">
 																<div class="col-12">
 																	<div class="container rounded-4">
@@ -276,14 +276,14 @@
 																		</h4>
 																		<hr class="dark horizontal mt-0 mb-4">
 
-																		<div class="row">
+																		<div class="row member">
 																			<div class="col-4">
 
 																			</div>
 																			<div class="col-4">
 																				<!-- 마일리지 사용 처리 -->
 																				<div class="input-group input-group-outline my-3">
-																					<label class="form-label">사용할 마일리지를 입력해주세요</label>
+																					<label class="form-label"></label>
 																					<input type="text" class="form-control" id="mileageInput">
 																				</div>
 																			</div>
@@ -310,14 +310,14 @@
 																			<div class="col-6">
 																				<div class="row">
 																					<div class="col-6 p-0">
-																						<button id="iamportPayment" class="btn btn-warning fs-4 w-95">
+																						<button id="kakaoPay" class="btn btn-warning fs-4 w-95">
 																							카카오톡 결제하기
 																							<img class="fab w-22" src="/assets/img/logos/kakao/kakao.svg">
 																							</img>
 																						</button>
 																					</div>
 																					<div class="col-6 p-0">
-																						<button id="iamportPayment" class="btn btn-primary fs-4 w-95">
+																						<button id="cardPay" class="btn btn-primary fs-4 w-95">
 																							카드 결제하기
 																							<img class="fab w-22" src="/assets/img/logos/final/card2.png">
 																							</img>
@@ -628,8 +628,9 @@
 
 			localData = JSON.parse(sessionStorage.getItem("reservationData"));
 			console.log(localData);
-			document.querySelector('#startToEnd').textContent = localData.routeData.depPlaceNm + '---->' + localData.routeData.arrPlaceNm;
+			//document.querySelector('#startToEnd').textContent = localData.routeData.depPlaceNm + '---->' + localData.routeData.arrPlaceNm;
 			document.querySelector('#depPlandTime').textContent = localData.routeData.depPlandTime;
+			document.querySelector('#arrPlandTime').textContent = localData.routeData.arrPlandTime;
 			document.querySelector('#grade').textContent = localData.routeData.gradeNm;
 			document.querySelector('#ageType').textContent = '성인 ' + localData.adultNum + ' 중고생 ' + localData.middleChildNum + ' 아동 ' + localData.childNum;
 			document.querySelector('#selectedSeats').textContent = localData.selectedSeats;
@@ -650,17 +651,17 @@
 						memberId = data.memberId;
 						memberMileage = data.memberMileage;
 						phoneNum = data.memberPhoneNum;
-						document.querySelector('.notmember').remove();
+						//document.querySelector('.notmember').remove();
 						var milInput = document.querySelector('#mileageInput');
 						milInput.placeholder = memberMileage;
 						milInput.value = memberMileage;
 						finalPrice = localData.totalPrice - parseInt(memberMileage);
-
-						document.querySelector('#totalPrice').textContent = (localData.totalPrice - parseInt(memberMileage)).toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");;
+						
+						//document.querySelector('#totalPrice').value = (localData.totalPrice - parseInt(memberMileage)).toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
 
 					}
 					else {
-						document.querySelector('.member').remove();
+						//document.querySelector('.member').style.display ='none';
 					}
 				},
 				error: function (error) {
@@ -686,7 +687,7 @@
 		});
 
 		//전화번호 인증 클릭
-		document.getElementById("callNumberAuthButton").addEventListener("click", AuthBtnClick);
+		//document.getElementById("callNumberAuthButton").addEventListener("click", AuthBtnClick);
 		function AuthBtnClick() {
 			/*
 						console.log('click!!!');
@@ -749,7 +750,7 @@
 
 
 
-
+		var payBtn;
 		//결제 프로세스 ----------------------------------------------------
 		$("#iamportPayment").click(function () {
 			//진입시간과 결제 시간이 
@@ -764,7 +765,7 @@
 			}
 			IMP.init('imp33561285'); //아임포트 관리자 콘솔에서 확인한 '가맹점 식별코드' 입력
 			IMP.request_pay({ // param
-				pg: "inicis", //pg사명 or pg사명.CID (잔액 일시불 할부 등, 기본 PG사가 따로 있음)
+				pg: payBtn, //pg사명 or pg사명.CID (잔액 일시불 할부 등, 기본 PG사가 따로 있음)
 				pay_method: "card", //결제 방법
 				merchant_uid: payId, //가맹점 주문번호 (아임포트를 사용하는 가맹점에서 임의로 지정)
 				name: "메타버스 결제", //결제창에서 보여질 상품명
@@ -814,7 +815,7 @@
 						success: function (response) {
 							console.log(response);
 							alert("결제 정보가 성공적으로 전송되었습니다");
-							//window.location.href = "/reservation/refund";
+							window.location.href = 'complete?payId='+payId;
 						},
 						error: function (xhr, status, error) {
 							//console.error("결제 정보 전송 실패 : ", error);
@@ -844,6 +845,15 @@
 				}
 			});
 		}
+
+		document.querySelector('#kakaoPay').addEventListener('click', function () {
+			payBtn = 'kakaopay';
+			payment();
+		})
+		document.querySelector('#cardPay').addEventListener('click', function () {
+			payBtn = 'inicis';
+			payment();
+		})
 	</script>
 	<!--   Core JS Files   -->
 	<!-- <script src="/assets/js/core/popper.min.js" type="text/javascript"></script>
