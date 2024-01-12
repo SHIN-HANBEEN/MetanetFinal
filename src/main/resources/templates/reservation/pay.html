@@ -97,359 +97,415 @@
 											<div class="container bg-body-tertiary rounded-4 mt-n12 p-0">
 												<div class="row">
 													<!--<div class="container p-0">-->
-														<div class="col-12">
-															<!--<div style="margin-bottom: 0px;"
+													<div class="col-12">
+														<!--<div style="margin-bottom: 0px;"
 																class="w-100 h-100 justify-content-center align-item-center text-align-center">
 																<div class="btn bg-info py-3 d-flex fw-bold fs-3 text-white text-center
 																	align-item-center justify-content-center" style="margin-bottom: 0px; z-index: 2; cursor:auto;">
 																	결제 진행
 																</div>
 															</div>-->
-															<!--  rgba(251, 140, 0, 0.8) -->
-															<div class="rounded-bottom shadow py-2 px-2" style="
+														<!--  rgba(251, 140, 0, 0.8) -->
+														<div class="rounded-bottom shadow py-2 px-2" style="
 																	position: relative;
 																	top: -20px;
 																">
-																<div class="row rounded-4 pt-4">
-																	<hr class="dark horizontal mt-0 mb-2 ">
-																	<h4>
-																		선택 예매 정보
-																	</h4>
-																	<hr class="dark horizontal mt-0 mb-4 ">
-																	<div class="col-2">
-																		<div class="container rounded-4">
-																			<span class="badge rounded-pill bg-light fs-5 text-black w-100 mt-n2 mx-auto">
-																				노선 정보
-																			</span>
-																			<div class="text-center pb-3">
-																				<div class="align-items-center justify-content-center">
-																					<!-- 노선 정보 여기 넣어주세요. -->
-																					<div id="routeName" class="text-secondary-emphasis mt-3">
-																						<div id="dep">출발지</div>
-																						<div class="">
-																							<span class="material-symbols-outlined fa-2x">
-																								trending_flat
-																							</span>
-																						</div>
-																						<div id="arr">도착지</div>
+															<div class="row rounded-4 pt-4">
+																<hr class="dark horizontal mt-0 mb-2 ">
+																<h4>
+																	선택 예매 정보
+																</h4>
+																<hr class="dark horizontal mt-0 mb-4 ">
+																<div class="col-4">
+																	<div class="container rounded-4">
+																		<span class="badge rounded-pill bg-light fs-5 text-black w-100 mt-n2 mx-auto">
+																			노선 정보
+																		</span>
+																		<div class="text-center pb-3">
+																			<div class="align-items-center justify-content-center">
+																				<!-- 노선 정보 여기 넣어주세요. -->
+																				<div id="routeName" class="text-secondary-emphasis mt-3">
+																					<div id="dep">출발지</div>
+																					<div class="">
+																						<span class="material-symbols-outlined fa-2x">
+																							trending_flat
+																						</span>
 																					</div>
-																				</div>
-																			</div>
-																		</div>
-																	</div>
-																	<div class="col-2">
-																		<div class="container rounded-4">
-																			<span class="badge rounded-pill bg-light fs-5 text-black w-100 mt-n2 mx-auto">
-																				버스 등급
-																			</span>
-																			<div class="text-center pb-3 pt-3">
-																				<div class="align-items-center justify-content-center">
-																					<!-- 버스 등급 정보 여기 넣어주세요. -->
-																					<span id="grade" class="text-secondary-emphasis" style="width: 16%;">
-																						강원고속 [일반]
-																					</span>
-																				</div>
-																			</div>
-																		</div>
-																	</div>
-																	<div class="col-2">
-																		<div class="container rounded-4">
-																			<span class="badge rounded-pill bg-light fs-5 text-black w-100 mt-n2 mx-auto">
-																				출발 시간
-																			</span>
-																			<div class="text-center pb-3 pt-3">
-																				<div class="align-items-center justify-content-center">
-																					<!-- 출발 시간 정보 여기 넣어주세요. -->
-																					<span id="depPlandTime" class="text-secondary-emphasis" style="width: 16%;">
-																						06:45 출발
-																					</span>
-																				</div>
-																			</div>
-																		</div>
-																	</div>
-																	<div class="col-2">
-																		<div class="container rounded-4">
-																			<span class="badge rounded-pill bg-light fs-5 text-black w-100 mt-n2 mx-auto">
-																				도착 시간
-																			</span>
-																			<div class="text-center pb-3 pt-3">
-																				<div class="align-items-center justify-content-center">
-																					<!-- 도착 시간 정보 여기 넣어주세요. -->
-																					<span id="arrPlandTime" class="text-secondary-emphasis" style="width: 16%;">
-																						06:45 출발
-																					</span>
-
-																				</div>
-																			</div>
-																		</div>
-																	</div>
-																	<div class="col-2">
-																		<div class="container rounded-4">
-																			<span class="badge rounded-pill bg-light fs-5 text-black w-100 mt-n2 mx-auto">
-																				선택 좌석
-																			</span>
-																			<div class="text-center pb-3 pt-3">
-																				<div class="align-items-center justify-content-center">
-																					<!-- 선택 좌석 정보 여기 넣어주세요. -->
-																					<span class="text-secondary-emphasis" style="width: 16%;">
-																						좌석 <span id="selectedSeats"> </span> 번
-																					</span>
-
-																				</div>
-																			</div>
-																		</div>
-																	</div>
-																	<div class="col-2">
-																		<div class="container rounded-4">
-																			<span class="badge rounded-pill bg-light fs-5 text-black w-100 mt-n2 mx-auto">
-																				예매 인원
-																			</span>
-																			<div class="text-center pb-3 pt-3">
-																				<div class="align-items-center justify-content-center">
-																					<!-- 예매 인원 정보 여기 넣어주세요. -->
-																					<span id="ageType" class="text-secondary-emphasis" style="width: 16%;">
-
-																					</span>
+																					<div id="arr">도착지</div>
 																				</div>
 																			</div>
 																		</div>
 																	</div>
 																</div>
-
-
-																<div class="row rounded-4" style="padding-top: 50px;">
-																	<div class="col-2"></div>
-																	<div class="col-8">
-																		<div class="container rounded-4">
-																			<hr class="dark horizontal mt-0 mb-2">
-																			<h4>
-																				총 결제 금액
-																			</h4>
-																			<hr class="dark horizontal mt-0 mb-0">
-																			<div class="card-header text-center pt-4 pb-3">
-																				<h1 class="font-weight-bold mt-2">
-																					<small class="text-lg mb-auto">₩</small>
-																					<!-- 결제 금액 여기 넣어주세요. -->
-																					<span id="totalPrice"></span>
-																					<small class="text-lg">원</small>
-																				</h1>
+																<div class="col-4">
+																	<div class="container rounded-4">
+																		<span class="badge rounded-pill bg-light fs-5 text-black w-100 mt-n2 mx-auto">
+																			버스 등급
+																		</span>
+																		<div class="text-center pb-3 pt-3">
+																			<div class="align-items-center justify-content-center">
+																				<!-- 버스 등급 정보 여기 넣어주세요. -->
+																				<span id="grade" class="text-secondary-emphasis" style="width: 16%;">
+																					강원고속 [일반]
+																				</span>
 																			</div>
-																			<button id="iamportPayment" class="btn btn-warning w-50 h-50 btn-lg mb-5 mt-3">
-																				카카오톡 	결제하기
-																			</button>
 																		</div>
 																	</div>
-																	<div class="col-2"></div>
+																</div>
+																<div class="col-4">
+																	<div class="container rounded-4">
+																		<span class="badge rounded-pill bg-light fs-5 text-black w-100 mt-n2 mx-auto">
+																			출발 시간
+																		</span>
+																		<div class="text-center pb-3 pt-3">
+																			<div class="align-items-center justify-content-center">
+																				<!-- 출발 시간 정보 여기 넣어주세요. -->
+																				<span id="depPlandTime" class="text-secondary-emphasis" style="width: 16%;">
+																					06:45 출발
+																				</span>
+																			</div>
+																		</div>
+																	</div>
+																</div>
+																<div class="col-4 pt-3">
+																	<div class="container rounded-4">
+																		<span class="badge rounded-pill bg-light fs-5 text-black w-100 mt-n2 mx-auto">
+																			도착 시간
+																		</span>
+																		<div class="text-center pb-3 pt-3">
+																			<div class="align-items-center justify-content-center">
+																				<!-- 도착 시간 정보 여기 넣어주세요. -->
+																				<span id="arrPlandTime" class="text-secondary-emphasis" style="width: 16%;">
+																					06:45 출발
+																				</span>
+
+																			</div>
+																		</div>
+																	</div>
+																</div>
+																<div class="col-4 pt-3">
+																	<div class="container rounded-4">
+																		<span class="badge rounded-pill bg-light fs-5 text-black w-100 mt-n2 mx-auto">
+																			선택 좌석
+																		</span>
+																		<div class="text-center pb-3 pt-3">
+																			<div class="align-items-center justify-content-center">
+																				<!-- 선택 좌석 정보 여기 넣어주세요. -->
+																				<span class="text-secondary-emphasis" style="width: 16%;">
+																					좌석 <span id="selectedSeats"> </span> 번
+																				</span>
+
+																			</div>
+																		</div>
+																	</div>
+																</div>
+																<div class="col-4 pt-3">
+																	<div class="container rounded-4">
+																		<span class="badge rounded-pill bg-light fs-5 text-black w-100 mt-n2 mx-auto">
+																			예매 인원
+																		</span>
+																		<div class="text-center pb-3 pt-3">
+																			<div class="align-items-center justify-content-center">
+																				<!-- 예매 인원 정보 여기 넣어주세요. -->
+																				<span id="ageType" class="text-secondary-emphasis" style="width: 16%;">
+
+																				</span>
+																			</div>
+																		</div>
+																	</div>
+																</div>
+															</div>
+
+															<!-- 전화번호 인증 -->
+															<div class="row rounded-4" style="padding-top: 50px;"
+																th:if="${#authorization.expression('isAnonymous()')}">
+																<div class="col-12">
+																	<div class="container rounded-4">
+																		<hr class="dark horizontal mt-0 mb-2">
+																		<h4>
+																			비회원 전화번호 인증
+																		</h4>
+																		<hr class="dark horizontal mt-0 mb-0">
+																	</div>
+																</div>
+																<div class="col-5">
+																	
+																</div>
+																<div class="col-2">
+																	<div class="text-center pt-4 pb-3">
+																		<h1 class="font-weight-bold mt-2">
+																			<!-- 비회원 전화번호 인증 여기 넣어주세요. -->
+																			<div class="container rounded-4">
+																				<span class="badge rounded-pill bg-light fs-5 text-black w-100 mt-n2 mx-auto">
+																					전화번호 입력
+																				</span>
+																				<div class="text-center pb-3 pt-3">
+																					<div class="align-items-center justify-content-center">
+																						<!-- 예매 인원 정보 여기 넣어주세요. -->
+																						<span id="ageType" class="text-secondary-emphasis" style="width: 16%;">
+
+																						</span>
+																					</div>
+																				</div>
+
+
+																				<div class="col-auto">
+																					<label for="staticEmail2" class="visually-hidden">전화번호인증</label>
+																					<input type="text" readonly class="form-control-plaintext" id="staticEmail2"
+																						value="전화번호인증">
+																				</div>
+																				<div class="col-auto">
+																					<label for="inputPassword2" class="visually-hidden">전화번호</label>
+																					<input type="text" class="form-control" id="phoneNumber"
+																						placeholder="01012345678">
+																				</div>
+																				<div class="col-auto">
+																					<button id="callNumberAuthButton" class="btn btn-primary mb-3">인증번호발송</button>
+																				</div>
+
+
+																		</h1>
+																	</div>
+																</div>
+																<div class="col-5">
+																	
 																</div>
 															</div>
 														</div>
-														<div class="pb-3 pt-1 mb-3">
-															<p style="margin-bottom: 0px;">
-																<a class="btn btn-warning w-100 h-100 d-flex align-items-center justify-content-between"
-																	data-bs-toggle="collapse" href="#collapseExample1" role="button" aria-expanded="true"
-																	aria-controls="collapseExample" style="margin-bottom: 0px; z-index: 2;">
-																	<span class="fw-bold fs-6">카카오톡 결제</span>
-																	<img class="fab" src="/assets/img/logos/kakao/kakao.svg">
-																	</img>
-																</a>
-															</p>
-															<!--  rgba(251, 140, 0, 0.8) -->
-															<div class="collapse rounded-bottom shadow" id="collapseExample1" style="
+
+
+														<div class="row rounded-4" style="padding-top: 50px;">
+															<div class="col-12">
+																<div class="container rounded-4">
+																	<hr class="dark horizontal mt-0 mb-2">
+																	<h4>
+																		총 결제 예정 금액
+																	</h4>
+																	<hr class="dark horizontal mt-0 mb-0">
+																	<div class="card-header text-center pt-4 pb-3">
+																		<h1 class="font-weight-bold mt-2">
+																			<small class="text-lg mb-auto">₩</small>
+																			<!-- 결제 금액 여기 넣어주세요. -->
+																			<span id="totalPrice"></span>
+																			<small class="text-lg">원</small>
+																		</h1>
+																	</div>
+																	<button id="iamportPayment" class="btn btn-warning w-35 h-40 btn-lg mb-5 mt-3 fs-4">
+																		카카오톡 결제하기
+																		<img class="fab" src="/assets/img/logos/kakao/kakao.svg">
+																		</img>
+																	</button>
+																</div>
+															</div>
+														</div>
+													</div>
+												</div>
+												<!--<div class="pb-3 pt-1 mb-3">
+														<p style="margin-bottom: 0px;">
+															<a class="btn btn-warning w-100 h-100 d-flex align-items-center justify-content-between"
+																data-bs-toggle="collapse" href="#collapseExample1" role="button" aria-expanded="true"
+																aria-controls="collapseExample" style="margin-bottom: 0px; z-index: 2;">
+																<span class="fw-bold fs-6">카카오톡 결제</span>
+																<img class="fab" src="/assets/img/logos/kakao/kakao.svg">
+																</img>
+															</a>
+														</p>
+														  rgba(251, 140, 0, 0.8) 
+														<div class="collapse rounded-bottom shadow" id="collapseExample1" style="
 																	background-color: blanchedalmond;
 																	position: relative;
 																	top: -20px;
 																">
-																<div class="row" style="padding-top: 50px;">
-																	<div class="col-2"></div>
-																	<div class="col-8">
-																		<div class="container rounded-4">
-																			<span class="badge rounded-pill bg-light fs-5 text-black w-30 mt-n2 mx-auto">
-																				결제 금액
-																			</span>
-																			<div class="card-header text-center pt-4 pb-3">
-																				<h1 class="font-weight-bold mt-2">
-																					<small class="text-lg mb-auto">₩</small>
-																					<!-- 결제 금액 여기 넣어주세요. -->
-																					<span id="totalPrice"></span>
-																					<small class="text-lg">원</small>
-																				</h1>
-																			</div>
-																			<button id="iamportPayment" class="btn btn-warning w-50 h-50 btn-lg">카카오톡
-																				결제하기</button>
+															<div class="row" style="padding-top: 50px;">
+																<div class="col-2"></div>
+																<div class="col-8">
+																	<div class="container rounded-4">
+																		<span class="badge rounded-pill bg-light fs-5 text-black w-30 mt-n2 mx-auto">
+																			결제 금액
+																		</span>
+																		<div class="card-header text-center pt-4 pb-3">
+																			<h1 class="font-weight-bold mt-2">
+																				<small class="text-lg mb-auto">₩</small>
+																				 결제 금액 여기 넣어주세요. 
+																				<span id="totalPrice"></span>
+																				<small class="text-lg">원</small>
+																			</h1>
 																		</div>
+																		<button id="iamportPayment" class="btn btn-warning w-50 h-50 btn-lg">카카오톡
+																			결제하기</button>
 																	</div>
 																</div>
 															</div>
 														</div>
-														<div class="card-body border p-0">
-															<p>
-																<a class="btn btn-primary p-2 w-100 h-100 d-flex align-items-center justify-content-between"
-																	data-bs-toggle="collapse" href="#collapseExample" role="button" aria-expanded="true"
-																	aria-controls="collapseExample">
-																	<span class="fw-bold">Credit Card</span>
-																	<span class="">
-																		<span class="fab fa-cc-amex"></span>
-																		<span class="fab fa-cc-mastercard"></span>
-																		<span class="fab fa-cc-discover"></span>
-																	</span>
-																</a>
-															</p>
-															<div class="collapse show p-3 pt-0" id="collapseExample">
-																<div class="row">
-																	<div class="col-lg-5 mb-lg-0 mb-3">
-																		<p class="h4 mb-0">Summary</p>
-																		<p class="mb-0"><span class="fw-bold">Product:</span><span class="c-green">: Name of
-																				product</span>
-																		</p>
-																		<p class="mb-0">
-																			<span class="fw-bold">Price:</span>
-																			<span class="c-green">:$452.90</span>
-																		</p>
-																		<p class="mb-0">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Atque
-																			nihil neque
-																			quisquam aut
-																			repellendus, dicta vero? Animi dicta cupiditate, facilis provident quibusdam ab
-																			quis,
-																			iste harum ipsum hic, nemo qui!</p>
-																	</div>
-																	<div class="col-lg-7">
-																		<form action="" class="form">
-																			<div class="row">
-																				<div class="col-12">
-																					<div class="form__div">
-																						<input type="text" class="form-control" placeholder=" ">
-																						<label for="" class="form__label">Card Number</label>
-																					</div>
-																				</div>
-
-																				<div class="col-6">
-																					<div class="form__div">
-																						<input type="text" class="form-control" placeholder=" ">
-																						<label for="" class="form__label">MM / yy</label>
-																					</div>
-																				</div>
-
-																				<div class="col-6">
-																					<div class="form__div">
-																						<input type="password" class="form-control" placeholder=" ">
-																						<label for="" class="form__label">cvv code</label>
-																					</div>
-																				</div>
-																				<div class="col-12">
-																					<div class="form__div">
-																						<input type="text" class="form-control" placeholder=" ">
-																						<label for="" class="form__label">name on the card</label>
-																					</div>
-																				</div>
-																				<div class="col-12">
-																					<div class="btn btn-primary w-100">Sumbit</div>
+													</div>
+													<div class="card-body border p-0">
+														<p>
+															<a class="btn btn-primary p-2 w-100 h-100 d-flex align-items-center justify-content-between"
+																data-bs-toggle="collapse" href="#collapseExample" role="button" aria-expanded="true"
+																aria-controls="collapseExample">
+																<span class="fw-bold">Credit Card</span>
+																<span class="">
+																	<span class="fab fa-cc-amex"></span>
+																	<span class="fab fa-cc-mastercard"></span>
+																	<span class="fab fa-cc-discover"></span>
+																</span>
+															</a>
+														</p>
+														<div class="collapse show p-3 pt-0" id="collapseExample">
+															<div class="row">
+																<div class="col-lg-5 mb-lg-0 mb-3">
+																	<p class="h4 mb-0">Summary</p>
+																	<p class="mb-0"><span class="fw-bold">Product:</span><span class="c-green">: Name of
+																			product</span>
+																	</p>
+																	<p class="mb-0">
+																		<span class="fw-bold">Price:</span>
+																		<span class="c-green">:$452.90</span>
+																	</p>
+																	<p class="mb-0">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Atque
+																		nihil neque
+																		quisquam aut
+																		repellendus, dicta vero? Animi dicta cupiditate, facilis provident quibusdam ab
+																		quis,
+																		iste harum ipsum hic, nemo qui!</p>
+																</div>
+																<div class="col-lg-7">
+																	<form action="" class="form">
+																		<div class="row">
+																			<div class="col-12">
+																				<div class="form__div">
+																					<input type="text" class="form-control" placeholder=" ">
+																					<label for="" class="form__label">Card Number</label>
 																				</div>
 																			</div>
-																		</form>
-																	</div>
+
+																			<div class="col-6">
+																				<div class="form__div">
+																					<input type="text" class="form-control" placeholder=" ">
+																					<label for="" class="form__label">MM / yy</label>
+																				</div>
+																			</div>
+
+																			<div class="col-6">
+																				<div class="form__div">
+																					<input type="password" class="form-control" placeholder=" ">
+																					<label for="" class="form__label">cvv code</label>
+																				</div>
+																			</div>
+																			<div class="col-12">
+																				<div class="form__div">
+																					<input type="text" class="form-control" placeholder=" ">
+																					<label for="" class="form__label">name on the card</label>
+																				</div>
+																			</div>
+																			<div class="col-12">
+																				<div class="btn btn-primary w-100">Sumbit</div>
+																			</div>
+																		</div>
+																	</form>
 																</div>
 															</div>
 														</div>
-													<!--</div>-->
+													</div>-->
+												<!--</div>-->
+											</div>
+										</div>
+									</div>
+
+
+									<!-- 원래 결제 컨테이너 -->
+									<div class="col-12 col-md-10" style="margin-top: 300px;">
+										<div class="container bg-body-tertiary rounded-4 mt-n12">
+											<div class="row justify-content-md-center">
+												<div class="position-relative m-4 border rounded"
+													style="padding: 50px 30px 50px 30px; width: 700px; margin-top: 60px;">
+													<h2 style="text-align: center;">IAMPORT 결제 테스트</h2>
+													<table class="table" style="text-align: center; margin-top: 60px;">
+														<tbody>
+															<tr>
+																<td id="startToEnd" style="width: 50%;">출발지 --- 도착지</td>
+																<td id="depPlandTime">출발시간</td>
+															</tr>
+															<tr>
+																<td id="grade"></td>
+																<td id="ageType" style="width: 50%;"></td>
+															</tr>
+															<tr>
+																<td colspan="2">좌석 <span id="selectedSeats"> </span> 번</td>
+															</tr>
+														</tbody>
+													</table>
+
+													<form class="row g-3 notmember" style="margin-top: 160px;">
+														<div class="col-auto">
+															<label for="staticEmail2" class="visually-hidden">전화번호인증</label>
+															<input type="text" readonly class="form-control-plaintext" id="staticEmail2"
+																value="전화번호인증">
+														</div>
+														<div class="col-auto">
+															<label for="inputPassword2" class="visually-hidden">전화번호</label>
+															<input type="text" class="form-control" id="phoneNumber" placeholder="01012345678">
+														</div>
+														<div class="col-auto">
+															<button id="callNumberAuthButton" class="btn btn-primary mb-3">인증번호발송</button>
+														</div>
+													</form>
+
+													<form class="row g-3 member" style="margin-top: 160px;">
+														<div class="col-auto">
+															<label for="staticEmail2" class="visually-hidden"></label>
+															<input type="text" readonly class="form-control-plaintext" id="staticEmail2" value="마일리지">
+														</div>
+														<div class="col-auto">
+															<label for="inputPassword2" class="visually-hidden"></label>
+															<input type="text" class="form-control" id="mileageInput" placeholder="">
+														</div>
+														<div class="col-auto">
+															<button id="callNumberAuthButton" class="btn btn-primary mb-3">마일리지</button>
+														</div>
+													</form>
+
+													<table class="table table-bordered" style="text-align: center; margin-top: 60px;">
+														<tbody>
+															<tr>
+																<td style="width: 50%;">결제금액</td>
+																<td id="totalPrice">50만원</td>
+															</tr>
+														</tbody>
+													</table>
+													<li>
+														<button id="iamportPayment" type="button">결제테스트</button>
+													</li>
 												</div>
 											</div>
 										</div>
-
-
-										<!-- 원래 결제 컨테이너 -->
-										<div class="col-12 col-md-10" style="margin-top: 300px;">
-											<div class="container bg-body-tertiary rounded-4 mt-n12">
-												<div class="row justify-content-md-center">
-													<div class="position-relative m-4 border rounded"
-														style="padding: 50px 30px 50px 30px; width: 700px; margin-top: 60px;">
-														<h2 style="text-align: center;">IAMPORT 결제 테스트</h2>
-														<table class="table" style="text-align: center; margin-top: 60px;">
-															<tbody>
-																<tr>
-																	<td id="startToEnd" style="width: 50%;">출발지 --- 도착지</td>
-																	<td id="depPlandTime">출발시간</td>
-																</tr>
-																<tr>
-																	<td id="grade"></td>
-																	<td id="ageType" style="width: 50%;"></td>
-																</tr>
-																<tr>
-																	<td colspan="2">좌석 <span id="selectedSeats"> </span> 번</td>
-																</tr>
-															</tbody>
-														</table>
-
-														<form class="row g-3 notmember" style="margin-top: 160px;">
-															<div class="col-auto">
-																<label for="staticEmail2" class="visually-hidden">전화번호인증</label>
-																<input type="text" readonly class="form-control-plaintext" id="staticEmail2"
-																	value="전화번호인증">
-															</div>
-															<div class="col-auto">
-																<label for="inputPassword2" class="visually-hidden">전화번호</label>
-																<input type="text" class="form-control" id="phoneNumber" placeholder="01012345678">
-															</div>
-															<div class="col-auto">
-																<button id="callNumberAuthButton" class="btn btn-primary mb-3">인증번호발송</button>
-															</div>
-														</form>
-
-														<form class="row g-3 member" style="margin-top: 160px;">
-															<div class="col-auto">
-																<label for="staticEmail2" class="visually-hidden"></label>
-																<input type="text" readonly class="form-control-plaintext" id="staticEmail2"
-																	value="마일리지">
-															</div>
-															<div class="col-auto">
-																<label for="inputPassword2" class="visually-hidden"></label>
-																<input type="text" class="form-control" id="mileageInput" placeholder="">
-															</div>
-															<div class="col-auto">
-																<button id="callNumberAuthButton" class="btn btn-primary mb-3">마일리지</button>
-															</div>
-														</form>
-
-														<table class="table table-bordered" style="text-align: center; margin-top: 60px;">
-															<tbody>
-																<tr>
-																	<td style="width: 50%;">결제금액</td>
-																	<td id="totalPrice">50만원</td>
-																</tr>
-															</tbody>
-														</table>
-														<li>
-															<button id="iamportPayment" type="button">결제테스트</button>
-														</li>
-													</div>
-												</div>
-											</div>
-
-
-
-										</div>
-
-
-
-
-
-
 
 
 
 									</div>
 
 
+
+
+
+
+
+
+
 								</div>
+
+
 							</div>
-
-
-
-
 						</div>
+
+
+
+
 					</div>
 				</div>
 			</div>
 		</div>
+	</div>
 	</div>
 
 
