@@ -31,7 +31,8 @@
 	<!-- KoPub 폰트 -->
 	<link rel='stylesheet' href='//cdn.jsdelivr.net/npm/font-kopub@1.0/kopubdotum.min.css'>
 
-
+	<!-- ticket 추가 -->
+	<script src="http://html2canvas.hertzen.com/dist/html2canvas.js"></script>
 	
 	
 	<style>
@@ -61,272 +62,75 @@
 							<div class="container bg-body-tertiary rounded-4 mt-n12">
 
 								<div class="section text-center">
-									<h2 class="title pb-3 pt-3">시외버스 예매하기</h2>
 									<div class="container">
 										<div class="row justify-content-md-center">
-											<div class="position-relative m-4">
-												<div class="progress" style="height: 1px;">
-													<div class="progress-bar" role="progressbar" style="width: 35%;" aria-valuenow="50"
-														aria-valuemin="0" aria-valuemax="100"></div>
-												</div>
-												<button type="button"
-													class="position-absolute top-0 start-5 translate-middle btn btn-sm btn-primary rounded-pill"
-													style="width: 7rem; height:2rem; padding-right: 22px;">시간표조회</button>
-												<button type="button"
-													class="position-absolute top-0 start-35 translate-middle btn btn-sm btn-primary rounded-pill"
-													style="width: 7rem; height:2rem; padding-right: 22px;">좌석선택</button>
-												<button type="button"
-													class="position-absolute top-0 start-65 translate-middle btn btn-sm bg-gradient-secondary rounded-pill"
-													style="width: 7rem; height:2rem; padding-right: 22px;">결제진행</button>
-												<button type="button"
-													class="position-absolute top-0 start-95 translate-middle btn btn-sm bg-gradient-secondary rounded-pill"
-													style="width: 7rem; height:2rem; padding-right: 22px;">결제완료</button>
-											</div>
+											
 											
 											
 											<!-- <div class="col col-md-auto"> -->
 											<div class="col-12 col-md-10 mt-5">
-												<!--
-													주희누나 여기다가 넣어
+												<!-- ticket 추가 -->
+													<div id="screenshot" class="div1 mx-auto">
+												        <svg xmlns="http://www.w3.org/2000/svg" color="#e91e63" width="50" height="50" viewBox="0 0 24 24" fill="none"
+												            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-lg">
+												            <path d="M8 6v6"></path>
+												            <path d="M15 6v6"></path>
+												            <path d="M2 12h19.6"></path>
+												            <path
+												                d="M18 18h3s.5-1.7.8-2.8c.1-.4.2-.8.2-1.2 0-.4-.1-.8-.2-1.2l-1.4-5C20.1 6.8 19.1 6 18 6H4a2 2 0 0 0-2 2v10h3">
+												            </path>
+												            <circle cx="7" cy="18" r="2"></circle>
+												            <path d="M9 18h5"></path>
+												            <circle cx="16" cy="18" r="2"></circle>
+												        </svg>
+												        <div class="">
+												            <p class="text-sm">출발일시</p>
+												            <p class="text-lg font-semibold" style="color:#e91e63;" th:text="${info['DEPARTURE_TIME']}"></p>
+												        </div>
+												        <div>
+												            <!-- qr -->
+												            <div id="qrcode" style="width:100px; height:100px; margin:auto; margin-top:15px;"></div>
+												            <div class="text-center pb-4" th:text="${info['PAY_ID']}"></p>
+												        </div>
+												        
+												        <table class="table table-bordered">
+												            <tbody class="[&amp;_tr:last-child]:border-0">
+												                <tr class="border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted">
+												                    <td class="col-md-6 align-middle"><b style="color:#e91e63;" th:text="${info['DEPARTURE_NAME']}"></b><br> 출발 </td>
+												                    <td class="col-md-6 align-middle"><b style="color:#e91e63;" th:text="${info['ARRIVAL_NAME']}"></b> <br> 도착</td>
+												                </tr>
+												            </tbody>
+												        </table>
+												        <p class="text-xl text-center fw-bold"> 요금 <span style="color:#e91e63;" th:text="${info['TOTAL_PRICE']}" color="#e91e63"> </span>원 (부가가치세 포함)</p>
+												        <table class="table table-bordered">
+												            <tbody class="[&amp;_tr:last-child]:border-0">
+												                <tr class="border-b ">
+												                    <td class="col-md-6 align-middle ">출발시간 <br> Time <b style="float: right; color:#e91e63;" th:text="${info['depTime']}"></b></td>
+												                    <td class="col-md-6 align-middle ">좌석 <br> Seat <b style="" th:text="${info['SEAT_ID']}"></b></td>
+												                </tr>
+												                <tr class="border-b ">
+												                    <td class="col-md-6 align-middle">도착시간 <br> Time <b style="float: right; color: #e91e63;" th:text="${info['arrTime']}"></b></td>
+												                    <td class="col-md-6 align-middle ">인원 수 <br> 어른 <span th:text="${info['ADULT']}"></span>명  
+												                    	청소년 <span th:text="${info['MIDDLE_CHILD']}"></span>명  어린이 <span th:text="${info['CHILD']}"></span>명  
+												                    </td>
+												                </tr>
+												            </tbody>
+												        </table>
+												            
+												
+												    </div>
+												    
+												</div>    
+												    <input id="textqr" type="text" th:value="${info}" style="width:100%; display: none;"> <br>
+												    <button type="button" class="btn btn-primary" id="save">다운로드</button>
+												    <div id="img" style="display: none;"></div>
+												    <a id="downloadLink"></a>
 													
-												 -->
-												<div class="container bg-secondary-subtle text-secondary-emphasis rounded-4">
-													<div class="">
-														<h4 class=" pt-2">선택 노선 정보</h4>
-														<div class="table-responsive">
-															<table class="table align-items-center mt-3 mb-0">
-																<thead>
-																	<tr>
-																		<th class="text-secondary-emphasis">노선 정보</th>
-																		<th class="text-secondary-emphasis">버스 등급</th>
-																		<th class="text-secondary-emphasis">출발 시간</th>
-																		<th class="text-secondary-emphasis">도착 시간</th>
-																	</tr>
-																</thead>
-																<tbody>
-																	
-																	<tr>
-																		<td id="routeName" class="text-secondary-emphasis" style="width: 25%;">
-																			<span id="dep" style="line-height: 100px;">출발지</span> 
-																			<div class="" style="display: inline-block; max-height: 100%; line-height: 100%;">
-																				<span class="material-symbols-outlined fa-2x">
-																				trending_flat
-																				</span>
-																			</div>
-																			<span id="arr">도착지</span>
-																		</td>
-																		<td id="gradeNm" class="text-secondary-emphasis" style="width: 25%;">강원고속 [일반]</td>
-																		<td id="depPlandTime" class="text-secondary-emphasis" style="width: 25%;">06:45 출발</td>
-																		<td id="arrPlandTime" class="text-secondary-emphasis" style="width: 25%;">06:45 출발</td>
-																	</tr>
-																</tbody>
-															</table>
-														</div>
-													</div>
-												</div>
+												 <!-- ticket 추가 -->
+												
 
-											</div>
-											<div class="col-12 col-md-10 p-5 my-5 border rounded-3 seatContainer">
+											
 
-												<!-- <h1 style="text-align: center;">좌석 선택</h1> -->
-												<div class="row">
-
-													<div class="col-md" style="margin: 20px; float: left;">
-
-														<div class="row container">
-															<h5>> 매수선택</h5>
-															<div class="border rounded"
-																style="padding: 20px; padding-right: 100px; width: 400px; float: left;">
-																<div class="input-group input-group-static mb-4">
-																	<label for="exampleFormControlSelect1" class="ms-0">성인</label>
-																	<select class="form-control" id="select1" onchange="changeSelectValue()">
-																		<option value=0>0</option>
-																		<option value=1 selected>1</option>
-																		<option value=2>2</option>
-																		<option value=3>3</option>
-																		<option value=4>4</option>
-																		<option value=5>5</option>
-																	</select>
-																</div>
-																<div class="input-group input-group-static mb-4">
-																	<label for="exampleFormControlSelect1" class="ms-0">중고생</label>
-																	<select class="form-control" id="select2" onchange="changeSelectValue()">
-																		<option value=0>0</option>
-																		<option value=1>1</option>
-																		<option value=2>2</option>
-																		<option value=3>3</option>
-																		<option value=4>4</option>
-																		<option value=5>5</option>
-																	</select>
-																</div>
-																<div class="input-group input-group-static mb-4">
-																	<label for="exampleFormControlSelect1" class="ms-0">아동</label>
-																	<select class="form-control" id="select3" onchange="changeSelectValue()">
-																		<option value=0>0</option>
-																		<option value=1>1</option>
-																		<option value=2>2</option>
-																		<option value=3>3</option>
-																		<option value=4>4</option>
-																		<option value=5>5</option>
-																	</select>
-																</div>
-															</div>
-														</div>
-														<div class="row container" style="margin-top: 30px;">
-															<h5>> 선택매수 및 금액</h5>
-															<div class="border rounded" style="padding: 20px;">
-																<table class="table">
-																	<tbody>
-																		<tr>
-																			<th scope="row">성인</th>
-																			<td><span id="adult"></span></td>
-																		</tr>
-																		<tr>
-																			<th scope="row">중고생</th>
-																			<td><span id="middleChild">0</span></td>
-																		</tr>
-																		<tr>
-																			<th scope="row">아동</th>
-																			<td><span id="child">0</span></td>
-																		</tr>
-																		<tr class="table-active">
-																			<th scope="row">합계</th>
-																			<td><span id="costs" style="font-weight: bold; font-size: larger;"></span>원
-																			</td>
-																		</tr>
-																	</tbody>
-																</table>
-																<div style="margin-top: 50px;">
-																	<p>선택좌석<span id="selectedseat"></span></p>
-																</div>
-															</div>
-														</div>
-														<br>
-														<button type="button" id="btn" class="btn bg-gradient-warning"
-															style="margin-top: 40px; width:100px; margin:auto; display:block; font-size:large;">다음
-															></button>
-													</div>
-													<div class="col-6 order-2" style="float: left; margin-top: 20px;">
-
-														<div class="container" style="float: left;">
-
-															<div class="container" style="width: 400px; float: left;">
-																<h5>> 좌석선택</h5>
-																<div class="container border rounded">
-																	<div>
-																		<img src="/assets/img/drive-seat.JPG" alt="" style="width:100%;">
-																	</div>
-																	<div class="row" style="height: 60px; margin-top: 10px;">
-																		<div class="col">
-																			<div id="1" class="seat">1</div>
-																		</div>
-																		<div class="col">
-																			<div id="2" class="seat">2</div>
-																		</div>
-																		<div class="col"></div>
-																		<div class="col">
-																			<div id="3" class="seat">3</div>
-																		</div>
-																		<div class="col">
-																			<div id="4" class="seat">4</div>
-																		</div>
-																	</div>
-																	<div class="row" style="height: 60px; margin-top: 10px;">
-																		<div class="col">
-																			<div id="5" class="seat">5</div>
-																		</div>
-																		<div class="col">
-																			<div id="6" class="seat">6</div>
-																		</div>
-																		<div class="col"></div>
-																		<div class="col">
-																			<div id="7" class="seat">7</div>
-																		</div>
-																		<div class="col">
-																			<div id="8" class="seat">8</div>
-																		</div>
-																	</div>
-																	<div class="row" style="height: 60px; margin-top: 10px;">
-																		<div class="col">
-																			<div id="9" class="seat">9</div>
-																		</div>
-																		<div class="col">
-																			<div id="10" class="seat">10</div>
-																		</div>
-																		<div class="col"></div>
-																		<div class="col">
-																			<div id="11" class="seat">11</div>
-																		</div>
-																		<div class="col">
-																			<div id="12" class="seat">12</div>
-																		</div>
-																	</div>
-																	<div class="row" style="height: 60px; margin-top: 10px;">
-																		<div class="col">
-																			<div id="13" class="seat">13</div>
-																		</div>
-																		<div class="col">
-																			<div id="14" class="seat">14</div>
-																		</div>
-																		<div class="col"></div>
-																		<div class="col">
-																			<div id="15" class="seat">15</div>
-																		</div>
-																		<div class="col">
-																			<div id="16" class="seat">16</div>
-																		</div>
-																	</div>
-																	<div class="row" style="height: 60px; margin-top: 10px;">
-																		<div class="col">
-																			<div id="17" class="seat">17</div>
-																		</div>
-																		<div class="col">
-																			<div id="18" class="seat">18</div>
-																		</div>
-																		<div class="col"></div>
-																		<div class="col">
-																			<div id="19" class="seat">19</div>
-																		</div>
-																		<div class="col">
-																			<div id="20" class="seat">20</div>
-																		</div>
-																	</div>
-																	<div class="row" style="height: 60px; margin-top: 10px;">
-																		<div class="col">
-																			<div id="21" class="seat">21</div>
-																		</div>
-																		<div class="col">
-																			<div id="22" class="seat">22</div>
-																		</div>
-																		<div class="col"></div>
-																		<div class="col">
-																			<div id="23" class="seat">23</div>
-																		</div>
-																		<div class="col">
-																			<div id="24" class="seat">24</div>
-																		</div>
-																	</div>
-																	<div class="row" style="height: 60px; margin-top: 10px; margin-bottom: 25px;">
-																		<div class="col">
-																			<div id="25" class="seat">25</div>
-																		</div>
-																		<div class="col">
-																			<div id="26" class="seat">26</div>
-																		</div>
-																		<div class="col"></div>
-																		<div class="col">
-																			<div id="27" class="seat">27</div>
-																		</div>
-																		<div class="col">
-																			<div id="28" class="seat">28</div>
-																		</div>
-																	</div>
-																</div>
-															</div>
-														</div>
-													</div>
-												</div>
-											</div>
 										</div>
 									</div>
 
@@ -377,6 +181,7 @@
 	<!-- jQuery js -->
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 	<!-- ticket 추가 -->
+	<script type="text/javascript" src="/qrcodejs-master/qrcode.js"></script>
 	<script src="//code.jquery.com/jquery-3.4.1.min.js"></script>
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm"
@@ -384,195 +189,66 @@
 	<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
     integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
     crossorigin="anonymous"></script>
-	<script src="http://html2canvas.hertzen.com/dist/html2canvas.js"></script>
+	
 </body>
 
 
 <script th:inline="javascript">
 
-	var data = [[${mapData}]];
+	
+	
+	// ticket 추가
+	$(function () {
+            $("#save").click(function () {
+                html2canvas($('#screenshot').get(0)).then(function (canvas) {
+                    document.getElementById('img').appendChild(canvas);
 
-	var reservationNum = 1;
-	var adultPrice = 8000;
-	var middleChildPrice = 6000;
-	var childPrice = 4000;
-	var occupiedSeatsList = [];
-	var busId;
-	var totalPrice = 0;
-	var routeData;
+                    var dataURL = canvas.toDataURL('image/png');
 
-	document.addEventListener('DOMContentLoaded', () => {
+                    var downloadLink = document.getElementById('downloadLink');
+                    downloadLink.href = dataURL;
 
-		console.log(data);
-		//document.querySelector('#routeName').textContent = data.depPlaceNm + '---->' + data.arrPlaceNm;
-		document.querySelector('#dep').textContent = data.depPlaceNm;
-		document.querySelector('#arr').textContent = data.arrPlaceNm;
-		document.querySelector('#arrPlandTime').textContent = data.arrPlandTime;
-		document.querySelector('#depPlandTime').textContent = data.depPlandTime;
-		document.querySelector('#gradeNm').textContent = data.gradeNm;
-		routeData = data;
-		adultPrice = data.adultCharge;
-		totalPrice = adultPrice;
-		document.querySelector('#adult').textContent = adultPrice;
-		document.querySelector('#costs').textContent = adultPrice.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
-		middleChildPrice = data.middleChildCharge;
-		childPrice = data.childCharge;
-		busId = data.busId;
-		for (const value of data.occupiedSeats) {
-			document.getElementById(value).className = 'occupiedSeat';
-		}
+                    downloadLink.download = 'ticket.png';
 
+                    downloadLink.click(); 
+                    document.body.removeChild(downloadLink); // 링크 제거
 
-		var occupiedSeats = document.querySelectorAll('.occupiedSeat');
-		console.log(occupiedSeats);
-		for (var value of occupiedSeats) {
-			console.log(value);
-		}
+                    // 다운로드 버튼을 다시 보여줍니다
+                    $("#save").show();
 
-		for (const value of occupiedSeatsList) {
-			console.log('seatsValue', value);
-			document.getElementById(value).className = 'occupiedSeat';
-		}
-		const seatContainer = document.querySelector('.seatContainer');
-		console.log(seatContainer);
-		const movie = document.getElementById('movie'); // 선택할 영화
+                });
+            });
+        });
+    
+	//qr코드 생성 
+	var qrcode = new QRCode(document.getElementById("qrcode"), { 
+	//가로, 세로 높이 조절 
+	width : 100, 
+	height : 100 }); 
+	
+	//input:text에 들어있는 value를 qr코드로 바꿔주는 function 
+	function makeCode () { 
+		var elText = document.getElementById("textqr");
+		console.log(elText.value);
+	    if (!elText.value) { 
+	    	alert("Input a text"); 
+	        elText.focus(); return; 
+	    } 
+	    qrcode.makeCode(elText.value); 
+	} 
+	
+	//위에 만든 function 실행 
+	makeCode(); 
+	
+	//텍스트 이벤트 감지 
+	$("#text")
+		.on("blur", function () { 
+		makeCode(); })
+	    .on("keydown", function (e) { 
+	    	if (e.keyCode == 13) { 
+	        makeCode();} 
+	    });
 
-		let count = document.querySelector('#count'); // 인원수
-		let costs = document.querySelector('#costs'); // 가격
-		costs.textContent = adultPrice;
-		var seatsNames = document.querySelector('#selectedseat');
-		document.querySelector('#adult').textContent = adultPrice;
-
-		// 선택한 좌석수 텍스트 변경해주기
-
-		function countSeatPrice() {
-			const selectedSeatCount = document.querySelectorAll('.selectedSeat').length;
-			if (selectedSeatCount == reservationNum) {
-				var selectedSeats = document.querySelectorAll('.seat');
-				for (var value of selectedSeats) {
-					value.className = 'max-select-seat';
-				}
-			} else {
-				var selectedSeats = document.querySelectorAll('.max-select-seat');
-				for (var value of selectedSeats) {
-					value.className = 'seat';
-				}
-			}
-			//count.textContent = selectedSeatCount;
-			//costs.textContent = selectedSeatCount * 5000;
-
-		}
-
-
-		//좌석 클릭했을때
-
-		seatContainer.addEventListener('click', (e) => {
-			console.log('click!!00');
-			if (e.target.className === 'seat') {
-				e.target.className = 'selectedSeat';
-				showSelectedSeatsStr();
-			} else if (e.target.className === 'selectedSeat') {
-				e.target.className = 'seat';
-				showSelectedSeatsStr();
-			}
-
-			countSeatPrice();
-		})
-
-		function showSelectedSeatsStr() {
-			var selected = document.querySelectorAll('.selectedSeat');
-			var str = '>>';
-			for (var value of selected) {
-				str = str + " " + value.textContent;
-			}
-			seatsNames.textContent = str;
-		}
-	})
-
-	function changeSelectValue() {
-		var value_str1 = document.getElementById('select1');
-		var value_str2 = document.getElementById('select2');
-		var value_str3 = document.getElementById('select3');
-
-		var price1 = adultPrice * parseInt(value_str1.options[value_str1.selectedIndex].value);
-		var price2 = middleChildPrice * parseInt(value_str2.options[value_str2.selectedIndex].value);
-		var price3 = childPrice * parseInt(value_str3.options[value_str3.selectedIndex].value);
-
-		document.querySelector('#adult').textContent = price1;
-		document.querySelector('#middleChild').textContent = price2;
-		document.querySelector('#child').textContent = price3;
-
-		totalPrice = price1 + price2 + price3;
-		document.querySelector('#costs').textContent = totalPrice.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
-		reservationNum = parseInt(value_str1.options[value_str1.selectedIndex].value)
-			+ parseInt(value_str2.options[value_str2.selectedIndex].value)
-			+ parseInt(value_str3.options[value_str3.selectedIndex].value);
-	}
-
-	document.getElementById("btn").addEventListener("click", btnClick);
-	function btnClick() {
-		//console.log('click!!!');
-		const selectedSeatCount = document.querySelectorAll('.selectedSeat').length;
-		if (selectedSeatCount != reservationNum) {
-			alert('선택하신 승차권 매수와 선택한 좌석수를 다릅니다. 좌석을 다시 선택해 주십시오.');
-		} else {
-			var reservationSeatsList = [];
-			var selected = document.querySelectorAll('.selectedSeat');
-			for (var value of selected) {
-				reservationSeatsList.push(value.id);
-			}
-			var value_str1 = document.getElementById('select1');
-			var value_str2 = document.getElementById('select2');
-			var value_str3 = document.getElementById('select3');
-			var adultNum = parseInt(value_str1.options[value_str1.selectedIndex].value);
-			var middleChildNum = parseInt(value_str2.options[value_str2.selectedIndex].value);
-			var childNum = parseInt(value_str3.options[value_str3.selectedIndex].value);
-
-			var status;
-			fetch("/routeinfotest", {
-				method: "POST",
-				headers: {
-					"Content-Type": "application/json",
-				},
-				body: JSON.stringify({
-					routeData: routeData,
-					busId: busId,
-					selectedSeats: reservationSeatsList,
-					totalPrice: totalPrice,
-					adultNum: adultNum,
-					middleChildNum: middleChildNum,
-					childNum: childNum
-				}),
-			})
-				.then((response) => {
-					if (response.status == 400) {
-						alert('이미 예약된 좌석이 포함되어 있습니다.')
-						//새로고침
-						window.location.reload();
-						status = 400;
-						return;
-					} else {
-						response.json();
-					}
-				})
-				.then((data) => {
-					console.log('다음', data);
-
-					sessionStorage.setItem('reservationData', JSON.stringify({
-						routeData: routeData,
-						busId: busId,
-						selectedSeats: reservationSeatsList,
-						totalPrice: totalPrice,
-						adultNum: adultNum,
-						middleChildNum: middleChildNum,
-						childNum: childNum,
-						enterTime: new Date(),
-						seatUrl: window.location.href
-					}));
-					if (status != 400) location.href = "/reservation/payment";
-				}).catch(error => console.log('FetchError'));
-		}
-	}
 </script>
 
 </html>

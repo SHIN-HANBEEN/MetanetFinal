@@ -74,7 +74,7 @@ public class NoticeController {
 		model.addAttribute("startPage", startPage);
 		model.addAttribute("endPage", endPage);
 		
-		return "notice/tmp2";
+		return "notice/list2";
 	}
 	
 	@GetMapping(value= "notice/list")
@@ -138,7 +138,7 @@ public class NoticeController {
 		
 		// Member member = this.memberService.getUser(principal.getName());
 		
-		return "notice/view";
+		return "notice/view2";
 	}
 	
 	
