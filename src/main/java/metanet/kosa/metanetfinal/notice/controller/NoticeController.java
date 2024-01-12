@@ -41,6 +41,12 @@ public class NoticeController {
 	@Autowired
 	INoticeService noticeService;
 	
+	//공지사항 홈
+	@GetMapping(value = "/notice")
+	public String getNotice() {
+		return "/notice/notice";
+	}
+	
 	// 공지사항 리스트 조회
 	@GetMapping(value= "/notice/list/{page}")
 	public String getNoticeList(@PathVariable(required=false) Integer page, HttpSession session, Model model) {

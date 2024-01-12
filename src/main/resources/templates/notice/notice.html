@@ -1,0 +1,859 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head>
+	<title>MetaBus</title>
+	<!-- Required meta tags -->
+	<meta charset="utf-8">
+	<meta content="width=device-width, initial-scale=1.0" name="viewport" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+	<link rel="stylesheet"
+		href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+	<!--     Fonts and icons     -->
+	<link rel="stylesheet" type="text/css"
+		href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,900|Roboto+Slab:400,700" />
+	<!-- Nucleo Icons -->
+	<link href="/assets/css/nucleo-icons.css" rel="stylesheet" />
+	<link href="/assets/css/nucleo-svg.css" rel="stylesheet" />
+	<!-- Font Awesome Icons -->
+	<script src="https://kit.fontawesome.com/42d5adcbca.js" crossorigin="anonymous"></script>
+	<!-- Material Icons -->
+	<link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
+
+	<link href="/assets/css/material-kit.css?v=3.0.0" rel="stylesheet" />
+
+	<!-- 커스텀 CSS -->
+	<link href="/assets/css/final.css" rel="stylesheet" />
+	<link type="text/css" rel="stylesheet" href="/assets/css/seat2.css">
+
+	<!-- KoPub 폰트 -->
+	<link rel='stylesheet' href='//cdn.jsdelivr.net/npm/font-kopub@1.0/kopubdotum.min.css'>
+
+	<!-- payment form -->
+	<!--
+		<link rel='stylesheet' href="/assets/css/payment.css" />
+	-->
+	<style>
+		body {
+			font-family: 'KoPub Dotum';
+		}
+	</style>
+</head>
+
+<body>
+	<div th:replace="~{fragments/navbarFragment :: navbar}"></div>
+	<!-- Include navbar fragment -->
+
+	<!-- container fluid -->
+	<div class="container-fluid">
+		<div class="row justify-content-md-center">
+			<div class="col-lg-12 metanet-page-header pb-6"
+				style="height: 100%; background-image: url('../assets/img/bus.png');">
+				<span class="mask bg-gradient-dark opacity-6"></span>
+				
+				
+				<div class="container-fluid metanet-mt-24">
+					<div class="row " style="text-align: center;">
+						<!-- 좌석조회 카드 -->
+						<div class="col-lg-12 mb-5" style="z-index: 10;">
+							<div class="container bg-body-tertiary rounded-4 mt-n12">
+
+								<div class="section text-center">
+									<h2 class="title pb-3 pt-4">시외버스 예매하기</h2>
+									<div class="container">
+										<div class="row justify-content-md-center">
+											<div class="position-relative m-4">
+												<div class="progress" style="height: 1px;">
+													<div class="progress-bar" role="progressbar" style="width: 65%;" aria-valuenow="50"
+														aria-valuemin="0" aria-valuemax="100"></div>
+												</div>
+												<button type="button"
+													class="position-absolute top-0 start-5 translate-middle btn btn-sm btn-primary rounded-pill"
+													style="width: 7rem; height:2rem; padding-right: 22px;">시간표조회</button>
+												<button type="button"
+													class="position-absolute top-0 start-35 translate-middle btn btn-sm btn-primary rounded-pill"
+													style="width: 7rem; height:2rem; padding-right: 22px;">좌석선택</button>
+												<button type="button"
+													class="position-absolute top-0 start-65 translate-middle btn btn-sm btn-primary rounded-pill"
+													style="width: 7rem; height:2rem; padding-right: 22px;">결제진행</button>
+												<button type="button"
+													class="position-absolute top-0 start-95 translate-middle btn btn-sm bg-gradient-secondary rounded-pill"
+													style="width: 7rem; height:2rem; padding-right: 22px;">결제완료</button>
+											</div>
+										</div>
+
+										<!-- 
+											
+											여기에 넣고 싶은 것을 넣으세요.
+											
+										-->
+
+
+
+
+										<!-- 결제 수단 컨테이너 -->
+										<div class="row" style="margin-top: 300px;">
+											<div class="container bg-body-tertiary rounded-4 mt-n12 p-0">
+												<div class="row">
+													<!--<div class="container p-0">-->
+													<div class="col-12">
+														<!--<div style="margin-bottom: 0px;"
+																class="w-100 h-100 justify-content-center align-item-center text-align-center">
+																<div class="btn bg-info py-3 d-flex fw-bold fs-3 text-white text-center
+																	align-item-center justify-content-center" style="margin-bottom: 0px; z-index: 2; cursor:auto;">
+																	결제 진행
+																</div>
+															</div>-->
+														<!--  rgba(251, 140, 0, 0.8) -->
+														<div class="rounded-bottom py-2 px-2" style="
+																	position: relative;
+																	top: -20px;
+																">
+															<div class="row rounded-4 pt-4">
+																<hr class="dark horizontal mt-0 mb-2 ">
+																<h4>
+																	선택 예매 정보 확인
+																</h4>
+																<hr class="dark horizontal mt-0 mb-6 ">
+																<div class="col-3"></div>
+																<div class="col-2">
+																	<div class="container rounded-4">
+																		<span class="badge rounded-pill bg-light fs-5 text-black w-100 mt-n2 mx-auto">
+																			노선 정보
+																		</span>
+																		<div class="text-center pb-3">
+																			<div class="align-items-center justify-content-center">
+																				<!-- 노선 정보 여기 넣어주세요. -->
+																				<div id="routeName" class="text-secondary-emphasis mt-3">
+																					<div id="dep">출발지</div>
+																					<div class="">
+																						<span class="material-symbols-outlined fa-2x">
+																							trending_flat
+																						</span>
+																					</div>
+																					<div id="arr">도착지</div>
+																				</div>
+																			</div>
+																		</div>
+																	</div>
+																</div>
+																<div class="col-2">
+																	<div class="container rounded-4">
+																		<span class="badge rounded-pill bg-light fs-5 text-black w-100 mt-n2 mx-auto">
+																			버스 등급
+																		</span>
+																		<div class="text-center pb-3 pt-3">
+																			<div class="align-items-center justify-content-center">
+																				<!-- 버스 등급 정보 여기 넣어주세요. -->
+																				<span id="grade" class="text-secondary-emphasis" style="width: 16%;">
+																					강원고속 [일반]
+																				</span>
+																			</div>
+																		</div>
+																	</div>
+																</div>
+																<div class="col-2">
+																	<div class="container rounded-4">
+																		<span class="badge rounded-pill bg-light fs-5 text-black w-100 mt-n2 mx-auto">
+																			출발 시간
+																		</span>
+																		<div class="text-center pb-3 pt-3">
+																			<div class="align-items-center justify-content-center">
+																				<!-- 출발 시간 정보 여기 넣어주세요. -->
+																				<span id="depPlandTime" class="text-secondary-emphasis" style="width: 16%;">
+																					06:45 출발
+																				</span>
+																			</div>
+																		</div>
+																	</div>
+																</div>
+																<div class="col-3">
+
+																</div>
+																<div class="col-3">
+
+																</div>
+																<div class="col-2 pt-3">
+																	<div class="container rounded-4">
+																		<span class="badge rounded-pill bg-light fs-5 text-black w-100 mt-n2 mx-auto">
+																			도착 시간
+																		</span>
+																		<div class="text-center pb-3 pt-3">
+																			<div class="align-items-center justify-content-center">
+																				<!-- 도착 시간 정보 여기 넣어주세요. -->
+																				<span id="arrPlandTime" class="text-secondary-emphasis" style="width: 16%;">
+																					06:45 출발
+																				</span>
+
+																			</div>
+																		</div>
+																	</div>
+																</div>
+																<div class="col-2 pt-3">
+																	<div class="container rounded-4">
+																		<span class="badge rounded-pill bg-light fs-5 text-black w-100 mt-n2 mx-auto">
+																			선택 좌석
+																		</span>
+																		<div class="text-center pb-3 pt-3">
+																			<div class="align-items-center justify-content-center">
+																				<!-- 선택 좌석 정보 여기 넣어주세요. -->
+																				<span class="text-secondary-emphasis" style="width: 16%;">
+																					좌석 <span id="selectedSeats"> </span> 번
+																				</span>
+
+																			</div>
+																		</div>
+																	</div>
+																</div>
+																<div class="col-2 pt-3">
+																	<div class="container rounded-4">
+																		<span class="badge rounded-pill bg-light fs-5 text-black w-100 mt-n2 mx-auto">
+																			예매 인원
+																		</span>
+																		<div class="text-center pb-3 pt-3">
+																			<div class="align-items-center justify-content-center">
+																				<!-- 예매 인원 정보 여기 넣어주세요. -->
+																				<span id="ageType" class="text-secondary-emphasis" style="width: 16%;">
+
+																				</span>
+																			</div>
+																		</div>
+																	</div>
+																</div>
+																<div class="col-3">
+
+																</div>
+															</div>
+
+															<!-- 전화번호 인증 -->
+															<div class="row rounded-4" style="padding-top: 50px;"
+																th:if="${#authorization.expression('isAnonymous()')}">
+																<div class="col-12">
+																	<div class="container rounded-4">
+																		<hr class="dark horizontal mt-0 mb-2">
+																		<h4>
+																			비회원 전화번호 인증
+																		</h4>
+																		<hr class="dark horizontal mt-0 mb-0">
+																	</div>
+																</div>
+
+																<div class="col-4">
+
+																</div>
+
+																<div class="col-4 pt-5">
+																	<div class="text-center ">
+																		<div class="row">
+																			<div class="col-8 text-center pb-3 pt-3">
+																				<div class="input-group input-group-outline my-3" style="">
+																					<label class="form-label">비회원 전화번호 인증</label>
+																					<input type="text" class="form-control" id="phoneNumber">
+																				</div>
+																			</div>
+																			<div class="col-4 text-center pb-3 pt-3" style="margin-top: 3px;">
+																				<button id="callNumberAuthButton" class="btn btn-sm btn-info mt-3">
+																					인증번호발송
+																				</button>
+																			</div>
+																		</div>
+																	</div>
+																</div>
+
+																<div class="col-4">
+
+																</div>
+															</div>
+
+
+															<div class="row rounded-4" style="padding-top: 50px;">
+																<div class="col-12">
+																	<div class="container rounded-4">
+																		<hr class="dark horizontal mt-0 mb-2">
+																		<h4>
+																			총 결제 예정 금액
+																		</h4>
+																		<hr class="dark horizontal mt-0 mb-4">
+
+																		<div class="row">
+																			<div class="col-4">
+
+																			</div>
+																			<div class="col-4">
+																				<!-- 마일리지 사용 처리 -->
+																				<div class="input-group input-group-outline my-3">
+																					<label class="form-label">사용할 마일리지를 입력해주세요</label>
+																					<input type="text" class="form-control" id="mileageInput">
+																				</div>
+																			</div>
+																			<div class="col-4">
+
+																			</div>
+																		</div>
+
+
+
+																		<div class="card-header text-center pt-0 pb-3">
+																			<h1 class="font-weight-bold mt-0">
+																				<small class="text-lg mb-auto">₩</small>
+																				<!-- 결제 금액 여기 넣어주세요. -->
+																				<span id="totalPrice"></span>
+																				<small class="text-lg">원</small>
+																			</h1>
+																		</div>
+
+																		<div class="row pt-3">
+																			<div class="col-3">
+
+																			</div>
+																			<div class="col-6">
+																				<div class="row">
+																					<div class="col-6 p-0">
+																						<button id="iamportPayment" class="btn btn-warning fs-4 w-95">
+																							카카오톡 결제하기
+																							<img class="fab w-22" src="/assets/img/logos/kakao/kakao.svg">
+																							</img>
+																						</button>
+																					</div>
+																					<div class="col-6 p-0">
+																						<button id="iamportPayment" class="btn btn-primary fs-4 w-95">
+																							카드 결제하기
+																							<img class="fab w-22" src="/assets/img/logos/final/card2.png">
+																							</img>
+																						</button>
+																					</div>
+																				</div>
+																			</div>
+																			<div class="col-3">
+
+																			</div>
+																		</div>
+
+
+																	</div>
+																</div>
+															</div>
+														</div>
+													</div>
+													<!--<div class="pb-3 pt-1 mb-3">
+														<p style="margin-bottom: 0px;">
+															<a class="btn btn-warning w-100 h-100 d-flex align-items-center justify-content-between"
+																data-bs-toggle="collapse" href="#collapseExample1" role="button" aria-expanded="true"
+																aria-controls="collapseExample" style="margin-bottom: 0px; z-index: 2;">
+																<span class="fw-bold fs-6">카카오톡 결제</span>
+																<img class="fab" src="/assets/img/logos/kakao/kakao.svg">
+																</img>
+															</a>
+														</p>
+														  rgba(251, 140, 0, 0.8) 
+														<div class="collapse rounded-bottom shadow" id="collapseExample1" style="
+																	background-color: blanchedalmond;
+																	position: relative;
+																	top: -20px;
+																">
+															<div class="row" style="padding-top: 50px;">
+																<div class="col-2"></div>
+																<div class="col-8">
+																	<div class="container rounded-4">
+																		<span class="badge rounded-pill bg-light fs-5 text-black w-30 mt-n2 mx-auto">
+																			결제 금액
+																		</span>
+																		<div class="card-header text-center pt-4 pb-3">
+																			<h1 class="font-weight-bold mt-2">
+																				<small class="text-lg mb-auto">₩</small>
+																				 결제 금액 여기 넣어주세요. 
+																				<span id="totalPrice"></span>
+																				<small class="text-lg">원</small>
+																			</h1>
+																		</div>
+																		<button id="iamportPayment" class="btn btn-warning w-50 h-50 btn-lg">카카오톡
+																			결제하기</button>
+																	</div>
+																</div>
+															</div>
+														</div>
+													</div>
+													<div class="card-body border p-0">
+														<p>
+															<a class="btn btn-primary p-2 w-100 h-100 d-flex align-items-center justify-content-between"
+																data-bs-toggle="collapse" href="#collapseExample" role="button" aria-expanded="true"
+																aria-controls="collapseExample">
+																<span class="fw-bold">Credit Card</span>
+																<span class="">
+																	<span class="fab fa-cc-amex"></span>
+																	<span class="fab fa-cc-mastercard"></span>
+																	<span class="fab fa-cc-discover"></span>
+																</span>
+															</a>
+														</p>
+														<div class="collapse show p-3 pt-0" id="collapseExample">
+															<div class="row">
+																<div class="col-lg-5 mb-lg-0 mb-3">
+																	<p class="h4 mb-0">Summary</p>
+																	<p class="mb-0"><span class="fw-bold">Product:</span><span class="c-green">: Name of
+																			product</span>
+																	</p>
+																	<p class="mb-0">
+																		<span class="fw-bold">Price:</span>
+																		<span class="c-green">:$452.90</span>
+																	</p>
+																	<p class="mb-0">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Atque
+																		nihil neque
+																		quisquam aut
+																		repellendus, dicta vero? Animi dicta cupiditate, facilis provident quibusdam ab
+																		quis,
+																		iste harum ipsum hic, nemo qui!</p>
+																</div>
+																<div class="col-lg-7">
+																	<form action="" class="form">
+																		<div class="row">
+																			<div class="col-12">
+																				<div class="form__div">
+																					<input type="text" class="form-control" placeholder=" ">
+																					<label for="" class="form__label">Card Number</label>
+																				</div>
+																			</div>
+
+																			<div class="col-6">
+																				<div class="form__div">
+																					<input type="text" class="form-control" placeholder=" ">
+																					<label for="" class="form__label">MM / yy</label>
+																				</div>
+																			</div>
+
+																			<div class="col-6">
+																				<div class="form__div">
+																					<input type="password" class="form-control" placeholder=" ">
+																					<label for="" class="form__label">cvv code</label>
+																				</div>
+																			</div>
+																			<div class="col-12">
+																				<div class="form__div">
+																					<input type="text" class="form-control" placeholder=" ">
+																					<label for="" class="form__label">name on the card</label>
+																				</div>
+																			</div>
+																			<div class="col-12">
+																				<div class="btn btn-primary w-100">Sumbit</div>
+																			</div>
+																		</div>
+																	</form>
+																</div>
+															</div>
+														</div>
+													</div>-->
+													<!--</div>-->
+												</div>
+											</div>
+										</div>
+
+
+										<!-- 원래 결제 컨테이너 -->
+										<!--<div class="col-12 col-md-10" style="margin-top: 300px;">
+											<div class="container bg-body-tertiary rounded-4 mt-n12">
+												<div class="row justify-content-md-center">
+													<div class="position-relative m-4 border rounded"
+														style="padding: 50px 30px 50px 30px; width: 700px; margin-top: 60px;">
+														<h2 style="text-align: center;">IAMPORT 결제 테스트</h2>
+														<table class="table" style="text-align: center; margin-top: 60px;">
+															<tbody>
+																<tr>
+																	<td id="startToEnd" style="width: 50%;">출발지- 도착지</td>
+																	<td id="depPlandTime">출발시간</td>
+																</tr>
+																<tr>
+																	<td id="grade"></td>
+																	<td id="ageType" style="width: 50%;"></td>
+																</tr>
+																<tr>
+																	<td colspan="2">좌석 <span id="selectedSeats"> </span> 번</td>
+																</tr>
+															</tbody>
+														</table>
+
+														<form class="row g-3 notmember" style="margin-top: 160px;">
+															<div class="col-auto">
+																<label for="staticEmail2" class="visually-hidden">전화번호인증</label>
+																<input type="text" readonly class="form-control-plaintext" id="staticEmail2"
+																	value="전화번호인증">
+															</div>
+															<div class="col-auto">
+																<label for="inputPassword2" class="visually-hidden">전화번호</label>
+																<input type="text" class="form-control" id="phoneNumber" placeholder="01012345678">
+															</div>
+															<div class="col-auto">
+																<button id="callNumberAuthButton" class="btn btn-primary mb-3">인증번호발송</button>
+															</div>
+														</form>
+
+														<form class="row g-3 member" style="margin-top: 160px;">
+															<div class="col-auto">
+																<label for="staticEmail2" class="visually-hidden"></label>
+																<input type="text" readonly class="form-control-plaintext" id="staticEmail2"
+																	value="마일리지">
+															</div>
+															<div class="col-auto">
+																<label for="inputPassword2" class="visually-hidden"></label>
+																<input type="text" class="form-control" id="mileageInput" placeholder="">
+															</div>
+															<div class="col-auto">
+																<button id="callNumberAuthButton" class="btn btn-primary mb-3">마일리지</button>
+															</div>
+														</form>
+
+														<table class="table table-bordered" style="text-align: center; margin-top: 60px;">
+															<tbody>
+																<tr>
+																	<td style="width: 50%;">결제금액</td>
+																	<td id="totalPrice">50만원</td>
+																</tr>
+															</tbody>
+														</table>
+														<li>
+															<button id="iamportPayment" type="button">결제테스트</button>
+														</li>
+													</div>
+												</div>
+											</div>
+
+
+
+										</div>-->
+
+
+
+
+
+
+
+
+
+									</div>
+
+
+								</div>
+							</div>
+
+
+
+
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	<!-- footer -->
+	<!-- Include footer fragment -->
+	<div th:replace="~{fragments/footerFragment :: footer}"></div>
+
+	<!--   Core JS Files   -->
+	<script src="/assets/js/core/popper.min.js" type="text/javascript"></script>
+	<script src="/assets/js/core/bootstrap.min.js" type="text/javascript"></script>
+	<script src="/assets/js/plugins/perfect-scrollbar.min.js"></script>
+
+	<!--  Plugin for TypedJS, full documentation here: https://github.com/inorganik/CountUp.js -->
+	<script src="/assets/js/plugins/countup.min.js"></script>
+	<script src="/assets/js/plugins/choices.min.js"></script>
+	<script src="/assets/js/plugins/prism.min.js"></script>
+	<script src="/assets/js/plugins/highlight.min.js"></script>
+
+	<!--  Plugin for Parallax, full documentation here: https://github.com/dixonandmoe/rellax -->
+	<script src="/assets/js/plugins/rellax.min.js"></script>
+
+	<!--  Plugin for TiltJS, full documentation here: https://gijsroge.github.io/tilt.js/ -->
+	<script src="/assets/js/plugins/tilt.min.js"></script>
+
+	<!--  Plugin for Selectpicker - ChoicesJS, full documentation here: https://github.com/jshjohnson/Choices -->
+	<script src="/assets/js/plugins/choices.min.js"></script>
+	<script src="/assets/js/material-kit.min.js?v=3.0.4" type="text/javascript"></script>
+	<!-- 메타넷 final js -->
+	<!--<script src="/assets/js/final.js" type="text/javascript"></script>-->
+	<!-- jQuery js -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+	<!-- iamport.payment.js -->
+	<script src="https://cdn.iamport.kr/v1/iamport.js"></script>
+
+
+	<script>
+		var localData;
+		var payId;
+		var isMember = 'false';
+		var phoneNum;
+		var memberMileage = 0;
+		var memberId;
+		var finalPrice;
+		var inputMileage = 100;
+		var enterTime;
+		var preUrl;
+		//문서가 준비되면 제일 먼저 실행
+		$(document).ready(function () {
+
+			localData = JSON.parse(sessionStorage.getItem("reservationData"));
+			console.log(localData);
+			document.querySelector('#startToEnd').textContent = localData.routeData.depPlaceNm + '---->' + localData.routeData.arrPlaceNm;
+			document.querySelector('#depPlandTime').textContent = localData.routeData.depPlandTime;
+			document.querySelector('#grade').textContent = localData.routeData.gradeNm;
+			document.querySelector('#ageType').textContent = '성인 ' + localData.adultNum + ' 중고생 ' + localData.middleChildNum + ' 아동 ' + localData.childNum;
+			document.querySelector('#selectedSeats').textContent = localData.selectedSeats;
+			document.querySelector('#totalPrice').textContent = localData.totalPrice.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
+			finalPrice = localData.totalPrice;
+			enterTime = localData.enterTime;
+			preUrl = localData.seatUrl;
+			$.ajax({
+				url: 'http://localhost:8083/paymentid', // 요청을 보낼 URL
+				method: 'GET', // HTTP 메서드 (GET, POST, 등)
+				dataType: 'json', // 응답 데이터 타입 (json, xml, 등)
+				success: function (data) {
+					// 성공적으로 응답을 받았을 때 실행할 코드
+					console.log('성공:', data);
+					payId = data.paymentId;
+					isMember = data.isMember;
+					if (isMember == 'true') {
+						memberId = data.memberId;
+						memberMileage = data.memberMileage;
+						phoneNum = data.memberPhoneNum;
+						document.querySelector('.notmember').remove();
+						var milInput = document.querySelector('#mileageInput');
+						milInput.placeholder = memberMileage;
+						milInput.value = memberMileage;
+						finalPrice = localData.totalPrice - parseInt(memberMileage);
+
+						document.querySelector('#totalPrice').textContent = (localData.totalPrice - parseInt(memberMileage)).toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");;
+
+					}
+					else {
+						document.querySelector('.member').remove();
+					}
+				},
+				error: function (error) {
+					// 요청이 실패했을 때 실행할 코드
+					console.log('실패:', error);
+				}
+			});
+			//sessionStorage.removeItem("reservationData");
+		});
+
+		//마일리지 인풋이 변할때마다 총결제금액 변경
+		document.querySelector('#mileageInput').addEventListener("input", function (e) {
+			inputMileage = parseInt(e.target.value);
+			if (parseInt(e.target.value) > parseInt(memberMileage)) {
+				e.target.value = memberMileage;
+				inputMileage = e.target.value;
+			}
+
+			if (isNaN(inputMileage)) inputMileage = 0;
+			document.querySelector('#totalPrice').textContent = (localData.totalPrice - parseInt(inputMileage)).toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
+			finalPrice = (localData.totalPrice - parseInt(inputMileage)).toString();
+			console.log(finalPrice);
+		});
+
+		//전화번호 인증 클릭
+		document.getElementById("callNumberAuthButton").addEventListener("click", AuthBtnClick);
+		function AuthBtnClick() {
+			/*
+						console.log('click!!!');
+			fetch("/routeinfotest", {
+			method: "POST",
+			headers: {
+				"Content-Type": "application/json",
+			},
+			body: JSON.stringify({
+				routeData: routeData,
+				busId: busId,
+				selectedSeats: reservationSeatsList,
+				totalPrice: totalPrice,
+				adultNum: adultNum,
+				middleChildNum: middleChildNum,
+				childNum: childNum
+			}),
+			})
+			.then((response) => {
+				if(response.status == 400){
+					alert('이미 예약된 좌석이 포함되어 있습니다.')
+					//새로고침
+					window.location.reload();
+					status = 400;
+					return; 
+				}else{
+					response.json();
+				}
+			})
+			.then((data) => {
+					console.log('다음',data);
+					
+					localStorage.setItem('reservationData',JSON.stringify({
+						routeData: routeData,
+						busId: busId,
+						selectedSeats: reservationSeatsList,
+						totalPrice: totalPrice,
+						adultNum: adultNum,
+						middleChildNum: middleChildNum,
+						childNum: childNum
+					}));
+					if(status!=400) location.href="/reservation/payment";
+			}).catch(error => console.log('FetchError')); */
+		}
+
+		//1초마다 실행
+		var interval = setInterval(function () {
+			//console.log(enterTime);
+			const dateA = new Date();
+			const dateB = new Date(enterTime);
+			const diffMSec = dateA.getTime() - dateB.getTime();
+			const diffMin = diffMSec / (60 * 1000);
+			if (diffMin >= 10) {
+				alert('결제 시간초과');
+				clearInterval(interval);
+				location.href = preUrl;
+
+			};
+		}, 1000);
+
+
+
+
+		//결제 프로세스 ----------------------------------------------------
+		$("#iamportPayment").click(function () {
+			//진입시간과 결제 시간이 
+			payment(); //버튼 클릭하면 함수 호출
+		});
+		//버튼 클릭하면 실행
+		function payment(data) {
+			//var paymentId = createPaymentId();
+			if (isMember == 'false') {
+				phoneNum = document.querySelector('#phoneNumber').value;
+				memberId = 0;
+			}
+			IMP.init('imp33561285'); //아임포트 관리자 콘솔에서 확인한 '가맹점 식별코드' 입력
+			IMP.request_pay({ // param
+				pg: "inicis", //pg사명 or pg사명.CID (잔액 일시불 할부 등, 기본 PG사가 따로 있음)
+				pay_method: "card", //결제 방법
+				merchant_uid: payId, //가맹점 주문번호 (아임포트를 사용하는 가맹점에서 임의로 지정)
+				name: "메타버스 결제", //결제창에서 보여질 상품명
+				amount: finalPrice, //금액
+				buyer_email: "gildong0405@gmail.com",
+				buyer_name: "길동이",
+				buyer_postcode: "1",
+				buyer_tel: phoneNum
+			}, function (rsp) { // callback
+				console.log(rsp);
+				if (rsp.success) {
+					alert("결제 성공 -> imp_uid : " + rsp.imp_uid + " / merchant_uid(orderKey) : " + rsp.merchant_uid);
+
+					// 이후 reservation 객체 데이터 추가
+					let data = {};
+					console.log("rsp", rsp);
+					// data.imp_uid = rsp.imp_uid;
+					data.payId = rsp.merchant_uid;
+					data.totalPrice = rsp.paid_amount;
+					data.payMethod = rsp.pay_method;
+					data.phoneNum = rsp.buyer_tel;
+					data.routeId = localData.routeData.routeId;
+					data.busId = localData.busId;
+					data.selectedSeats = localData.selectedSeats;
+					data.isMember = isMember;
+					data.adultNum = localData.adultNum;
+					data.middleChildNum = localData.middleChildNum;
+					data.childNum = localData.childNum;
+					data.mileage = inputMileage;
+					data.memberId = memberId;
+
+					// resId (예매 아이디)
+					// memberId (회원 아이디)
+					// nmemberId (비회원 아이디)
+					// routeId (노선 아이디)
+					// busId (버스 아이디)
+					// seatId (좌석 번호)
+					// resDate (예매일자) data에 넣기
+
+					console.log(data);
+					// 성공하면 데이터 전송~ -> 테스트 전송 성공
+					$.ajax({
+						url: "/reservation/payOk",
+						method: "POST",
+						data: JSON.stringify(data),
+						contentType: "application/json",
+						success: function (response) {
+							console.log(response);
+							alert("결제 정보가 성공적으로 전송되었습니다");
+							//window.location.href = "/reservation/refund";
+						},
+						error: function (xhr, status, error) {
+							//console.error("결제 정보 전송 실패 : ", error);
+							//alert("결제 정보 전송에 실패");
+							/*$.ajax.ajax({
+									// 예: http://www.myservice.com/payments/cancel
+									"url": "{환불정보를 수신할 가맹점 서비스 URL}", 
+									"type": "POST",
+									"contentType": "application/json",
+									"data": JSON.stringify({
+										"merchant_uid": payId, // 예: ORD20180131-0000011
+										"cancel_request_amount": 2000, // 환불금액
+										"reason": "테스트 결제 환불", // 환불사유
+										// [가상계좌 환불시 필수입력] 환불 수령계좌 예금주
+										"refund_holder": "홍길동", 
+										// [가상계좌 환불시 필수입력] 환불 수령계좌 은행코드(예: KG이니시스의 경우 신한은행은 88번)
+										"refund_bank": "88", 
+										// [가상계좌 환불시 필수입력] 환불 수령계좌 번호
+										"refund_account": "56211105948400" 
+									}),
+									"dataType": "json"
+								});*/
+						}
+					});
+				} else {
+					alert("실패 : 코드(" + rsp.error_code + ") 메시지(" + rsp.error_msg + ")");
+				}
+			});
+		}
+	</script>
+	<!--   Core JS Files   -->
+	<!-- <script src="/assets/js/core/popper.min.js" type="text/javascript"></script>
+    <script src="/assets/js/core/bootstrap.min.js" type="text/javascript"></script>
+    <script src="/assets/js/plugins/perfect-scrollbar.min.js" type="text/javascript"></script>
+    <script src="/assets/js/plugins/moment.min.js"></script>
+
+    <script src="/assets/js/material-kit.min.js" type="text/javascript"></script> -->
+</body>
+
+</html>
