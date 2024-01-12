@@ -35,63 +35,221 @@ function updateTerminalTable1(searchTerm) {
 		});
 }
 
-// Add event listener for input changes
-document.getElementById('TerminalSearchInput1').addEventListener('input', function() {
-	const searchTerm = this.value.trim();
-	const dropdownTable = document.getElementById('terminalTable1');
+$(document).ready(function() {
+	// Add event listener for input changes
+	document.getElementById('TerminalSearchInput1').addEventListener('input', function() {
+		const searchTerm = this.value.trim();
+		const dropdownTable = document.getElementById('terminalTable1');
 
-	// Check if the search term is not empty
-	if (searchTerm !== '') {
-		// 창을 보이게 설정
-		dropdownTable.classList.add('show');
+		// Check if the search term is not empty
+		if (searchTerm !== '') {
+			// 창을 보이게 설정
+			dropdownTable.classList.add('show');
 
-		// Call the function to update table data
-		updateTerminalTable1(searchTerm);
-	} else {
-		// 창을 안 보이게 설정
-		dropdownTable.classList.remove('show');
+			// Call the function to update table data
+			updateTerminalTable1(searchTerm);
+		} else {
+			// 창을 안 보이게 설정
+			dropdownTable.classList.remove('show');
 
-		// If the search term is empty, clear the table rows
-		document.getElementById('terminalTable1').getElementsByTagName('tbody')[0].innerHTML = '';
-	}
-});
+			// If the search term is empty, clear the table rows
+			document.getElementById('terminalTable1').getElementsByTagName('tbody')[0].innerHTML = '';
+		}
+	});
 
-// Add event listener to close dropdown when clicking outside
-document.addEventListener('click', function(event) {
-	const dropdownMenu = document.getElementById('TerminalSearchInput1');
-	const terminalTable = document.getElementById('terminalTable1');
-	const dropdownTable = document.getElementById('terminalTable1');
+	// Add event listener to close dropdown when clicking outside
+	document.addEventListener('click', function(event) {
+		const dropdownMenu = document.getElementById('TerminalSearchInput1');
+		const terminalTable = document.getElementById('terminalTable1');
+		const dropdownTable = document.getElementById('terminalTable1');
 
-	// Check if the clicked element is not within the dropdown or the terminalTable
-	if (!dropdownMenu.contains(event.target) && !terminalTable.contains(event.target)) {
-		dropdownTable.classList.remove('show');
-		document.getElementById('terminalTable1').getElementsByTagName('tbody')[0].innerHTML = '';
-	}
-});
+		// Check if the clicked element is not within the dropdown or the terminalTable
+		if (!dropdownMenu.contains(event.target) && !terminalTable.contains(event.target)) {
+			dropdownTable.classList.remove('show');
+			document.getElementById('terminalTable1').getElementsByTagName('tbody')[0].innerHTML = '';
+		}
+	});
 
-// Add event listener for table row clicks
-document.getElementById('terminalTable1').addEventListener('click', function(event) {
-	const clickedRow = event.target.closest('td');
+	// Add event listener for table row clicks
+	document.getElementById('terminalTable1').addEventListener('click', function(event) {
+		const clickedRow = event.target.closest('td');
 
-	// Check if the clicked element is an anchor tag within the table
-	if (clickedRow) {
-		// Set input's value to the clicked row's value
-		document.getElementById('TerminalSearchInput1').value = clickedRow.textContent.trim();
+		// Check if the clicked element is an anchor tag within the table
+		if (clickedRow) {
+			// Set input's value to the clicked row's value
+			document.getElementById('TerminalSearchInput1').value = clickedRow.textContent.trim();
 
-		// 선택하면, 리스트 지우기
-		document.getElementById('terminalTable1').getElementsByTagName('tbody')[0].innerHTML = '';
+			// 선택하면, 리스트 지우기
+			document.getElementById('terminalTable1').getElementsByTagName('tbody')[0].innerHTML = '';
 
-		// Trigger 'Escape' key press
-		const escapeKeyEvent = new KeyboardEvent('keydown', {
-			key: 'Escape',
-			keyCode: 27,
+			// Trigger 'Escape' key press
+			const escapeKeyEvent = new KeyboardEvent('keydown', {
+				key: 'Escape',
+				keyCode: 27,
+			});
+			document.dispatchEvent(escapeKeyEvent);
+
+			// Hide the dropdown menu
+			document.getElementById('dropdownMenuButton1').classList.remove('show');
+		}
+	});
+
+
+	// Add event listener for input changes
+	document.getElementById('TerminalSearchInput2').addEventListener('input', function() {
+		const searchTerm = this.value.trim();
+		const dropdownTable = document.getElementById('terminalTable2');
+
+		// Check if the search term is not empty
+		if (searchTerm !== '') {
+			// 창을 보이게 설정
+			dropdownTable.classList.add('show');
+
+			// Call the function to update table data
+			updateTerminalTable2(searchTerm);
+		} else {
+			// 창을 안 보이게 설정
+			dropdownTable.classList.remove('show');
+
+			// If the search term is empty, clear the table rows
+			document.getElementById('terminalTable2').getElementsByTagName('tbody')[0].innerHTML = '';
+		}
+	});
+
+	// Add event listener to close dropdown when clicking outside
+	document.addEventListener('click', function(event) {
+		const dropdownMenu = document.getElementById('TerminalSearchInput2');
+		const terminalTable = document.getElementById('terminalTable2');
+		const dropdownTable = document.getElementById('terminalTable2');
+
+		// Check if the clicked element is not within the dropdown or the terminalTable
+		if (!dropdownMenu.contains(event.target) && !terminalTable.contains(event.target)) {
+			dropdownTable.classList.remove('show');
+			document.getElementById('terminalTable2').getElementsByTagName('tbody')[0].innerHTML = '';
+		}
+	});
+
+	// Add event listener for table row clicks
+	document.getElementById('terminalTable2').addEventListener('click', function(event) {
+		const clickedRow = event.target.closest('td');
+
+		// Check if the clicked element is an anchor tag within the table
+		if (clickedRow) {
+			// Set input's value to the clicked row's value
+			document.getElementById('TerminalSearchInput2').value = clickedRow.textContent.trim();
+
+			// 선택하면, 리스트 지우기
+			document.getElementById('terminalTable2').getElementsByTagName('tbody')[0].innerHTML = '';
+
+			// Trigger 'Escape' key press
+			const escapeKeyEvent = new KeyboardEvent('keydown', {
+				key: 'Escape',
+				keyCode: 27,
+			});
+			document.dispatchEvent(escapeKeyEvent);
+
+			// Hide the dropdown menu
+			document.getElementById('dropdownMenuButton2').classList.remove('show');
+		}
+	});
+
+	// 검색 버튼에 이벤트 리스너 설정 해주기
+	document.getElementById('submitButton1').addEventListener('click', async function() {
+		const dpTerminalName = document.getElementById('TerminalSearchInput1').value.trim();
+		//시간 데이터 형식 찍어보기
+		console.log(dpTerminalName);
+		const arrTerminalName = document.getElementById('TerminalSearchInput2').value.trim();
+		const dpDate = document.getElementById('dpDate').value.trim();
+
+		const scheduleDiv = document.getElementById('scheduleDiv');
+
+		// Check if the search term is not empty
+		if (dpTerminalName !== '' && arrTerminalName !== '' && dpDate !== '') {
+			// 창을 보이게 설정
+			scheduleDiv.classList.remove('metanet-hidden');
+
+			try {
+				// Call the function to update table data
+				const data = await getSchedule(dpTerminalName, arrTerminalName, dpDate);
+				console.log(data);
+			} catch (error) {
+				console.error('Error fetching schedule data:', error);
+			}
+		} else {
+			// 창을 안 보이게 설정
+			scheduleDiv.classList.add('metanet-hidden');
+
+			// If the search term is empty, clear the table rows
+			document.getElementById('scheduleTable1').getElementsByTagName('tbody')[0].innerHTML = '';
+		}
+	});
+
+
+	// Attach click event handlers to buttons
+	$(document).ready(function() {
+		$('.metanet-width-96px').click(function() {
+			// Get the text value of the clicked button
+			var cityName = $(this).text().trim();
+			onButtonClick(cityName);
 		});
-		document.dispatchEvent(escapeKeyEvent);
+	});
 
-		// Hide the dropdown menu
-		document.getElementById('dropdownMenuButton1').classList.remove('show');
+	// Function to handle row click and insert data into input
+	function onRowClick(cityName, inputId) {
+		// Get the input element by ID
+		var inputElement = $('#' + inputId);
+
+		// Insert the clicked data into the input
+		inputElement.val(cityName);
+
+		// <button type="button" class="btn bg-gradient-dark mb-0" data-bs-dismiss="modal">Close</button>
+		// add js code click the button tag
+		// Get the button element by its ID
+		var closeButton1 = document.getElementById('closeButton1');
+		var closeButton2 = document.getElementById('closeButton2');
+
+		closeButton1.click();
+		closeButton2.click();
 	}
-});
+
+	// Attach click event handlers to table rows
+	$(document).ready(function() {
+		// For Terminal Table 1
+		$('#exampleModal1').on('click', 'tr', function() {
+			// Get the text value of the clicked row
+			var cityName = $(this).text().trim();
+
+			// Call the function to insert data into the input field
+			onRowClick(cityName, 'TerminalSearchInput1');
+		});
+
+		// For Terminal Table 2
+		$('#exampleModal2').on('click', 'tr', function() {
+			// Get the text value of the clicked row
+			var cityName = $(this).text().trim();
+
+			// Call the function to insert data into the input field
+			onRowClick(cityName, 'TerminalSearchInput2');
+		});
+	});
+
+
+	//달력에서 날짜 7일 이후까지만 가능하도록 제한하기
+	$(document).ready(function() {
+		// Set the minimum date to today YYYY-MM-ddTHH:mm:ss
+		const today = new Date().toISOString().split('T')[0];
+		document.getElementById('dpDate').min = today;
+
+		// Set the maximum date to 7 days from today
+		const sevenDaysLater = new Date();
+		sevenDaysLater.setDate(sevenDaysLater.getDate() + 7);
+		const maxDate = sevenDaysLater.toISOString().split('T')[0];
+		document.getElementById('dpDate').max = maxDate;
+	});
+
+}) //ajax.ready 끝
+
+
 
 //======================= 도착지 검색 =========================
 // Function to send GET request and update table
@@ -124,94 +282,7 @@ function updateTerminalTable2(searchTerm) {
 		});
 }
 
-// Add event listener for input changes
-document.getElementById('TerminalSearchInput2').addEventListener('input', function() {
-	const searchTerm = this.value.trim();
-	const dropdownTable = document.getElementById('terminalTable2');
 
-	// Check if the search term is not empty
-	if (searchTerm !== '') {
-		// 창을 보이게 설정
-		dropdownTable.classList.add('show');
-
-		// Call the function to update table data
-		updateTerminalTable2(searchTerm);
-	} else {
-		// 창을 안 보이게 설정
-		dropdownTable.classList.remove('show');
-
-		// If the search term is empty, clear the table rows
-		document.getElementById('terminalTable2').getElementsByTagName('tbody')[0].innerHTML = '';
-	}
-});
-
-// Add event listener to close dropdown when clicking outside
-document.addEventListener('click', function(event) {
-	const dropdownMenu = document.getElementById('TerminalSearchInput2');
-	const terminalTable = document.getElementById('terminalTable2');
-	const dropdownTable = document.getElementById('terminalTable2');
-
-	// Check if the clicked element is not within the dropdown or the terminalTable
-	if (!dropdownMenu.contains(event.target) && !terminalTable.contains(event.target)) {
-		dropdownTable.classList.remove('show');
-		document.getElementById('terminalTable2').getElementsByTagName('tbody')[0].innerHTML = '';
-	}
-});
-
-// Add event listener for table row clicks
-document.getElementById('terminalTable2').addEventListener('click', function(event) {
-	const clickedRow = event.target.closest('td');
-
-	// Check if the clicked element is an anchor tag within the table
-	if (clickedRow) {
-		// Set input's value to the clicked row's value
-		document.getElementById('TerminalSearchInput2').value = clickedRow.textContent.trim();
-
-		// 선택하면, 리스트 지우기
-		document.getElementById('terminalTable2').getElementsByTagName('tbody')[0].innerHTML = '';
-
-		// Trigger 'Escape' key press
-		const escapeKeyEvent = new KeyboardEvent('keydown', {
-			key: 'Escape',
-			keyCode: 27,
-		});
-		document.dispatchEvent(escapeKeyEvent);
-
-		// Hide the dropdown menu
-		document.getElementById('dropdownMenuButton2').classList.remove('show');
-	}
-});
-
-// 검색 버튼에 이벤트 리스너 설정 해주기
-document.getElementById('submitButton1').addEventListener('click', async function() {
-	const dpTerminalName = document.getElementById('TerminalSearchInput1').value.trim();
-	//시간 데이터 형식 찍어보기
-	console.log(dpTerminalName);
-	const arrTerminalName = document.getElementById('TerminalSearchInput2').value.trim();
-	const dpDate = document.getElementById('dpDate').value.trim();
-
-	const scheduleDiv = document.getElementById('scheduleDiv');
-
-	// Check if the search term is not empty
-	if (dpTerminalName !== '' && arrTerminalName !== '' && dpDate !== '') {
-		// 창을 보이게 설정
-		scheduleDiv.classList.remove('metanet-hidden');
-
-		try {
-			// Call the function to update table data
-			const data = await getSchedule(dpTerminalName, arrTerminalName, dpDate);
-			console.log(data);
-		} catch (error) {
-			console.error('Error fetching schedule data:', error);
-		}
-	} else {
-		// 창을 안 보이게 설정
-		scheduleDiv.classList.add('metanet-hidden');
-
-		// If the search term is empty, clear the table rows
-		document.getElementById('scheduleTable1').getElementsByTagName('tbody')[0].innerHTML = '';
-	}
-});
 
 
 
@@ -321,7 +392,7 @@ async function getSchedule(dpTerminalName, arrTerminalName, dpDate) {
 				// Assuming getSevenDaysAfter returns a promise
 				const result = await getSevenDaysAfter(depPlandTime); // 'YYYY-MM-DD HH:mm' 형태로 저장된다.
 				depTimeCell.textContent = result;
-				depResultTime = result; 
+				depResultTime = result;
 			} catch (error) {
 				console.error("Error retrieving data:", error);
 			}
@@ -373,7 +444,7 @@ async function getSchedule(dpTerminalName, arrTerminalName, dpDate) {
 			try {
 				const remainingSeatsValue = await getRemainingSeats(depPlaceNm, arrPlaceNm,
 					depResultTime, arrResultTime, gradeNm, charge);
-					//잔여좌석이 저장된다.
+				//잔여좌석이 저장된다.
 
 				console.log("잔여좌석 뿌리기 전 최종 값 : " + remainingSeatsValue);
 
@@ -381,7 +452,7 @@ async function getSchedule(dpTerminalName, arrTerminalName, dpDate) {
 			} catch (error) {
 				console.error('Error fetching remaining seats:', error);
 			}
-			
+
 			// make button
 			const reservationCell = row.insertCell(7);
 			// Create the Info button with a link that includes parameters
@@ -475,67 +546,6 @@ function updateTableBody(data) {
 	}
 }
 
-// Attach click event handlers to buttons
-$(document).ready(function() {
-	$('.metanet-width-96px').click(function() {
-		// Get the text value of the clicked button
-		var cityName = $(this).text().trim();
-		onButtonClick(cityName);
-	});
-});
-
-// Function to handle row click and insert data into input
-function onRowClick(cityName, inputId) {
-	// Get the input element by ID
-	var inputElement = $('#' + inputId);
-
-	// Insert the clicked data into the input
-	inputElement.val(cityName);
-
-	// <button type="button" class="btn bg-gradient-dark mb-0" data-bs-dismiss="modal">Close</button>
-	// add js code click the button tag
-	// Get the button element by its ID
-	var closeButton1 = document.getElementById('closeButton1');
-	var closeButton2 = document.getElementById('closeButton2');
-
-	closeButton1.click();
-	closeButton2.click();
-}
-
-// Attach click event handlers to table rows
-$(document).ready(function() {
-	// For Terminal Table 1
-	$('#exampleModal1').on('click', 'tr', function() {
-		// Get the text value of the clicked row
-		var cityName = $(this).text().trim();
-
-		// Call the function to insert data into the input field
-		onRowClick(cityName, 'TerminalSearchInput1');
-	});
-
-	// For Terminal Table 2
-	$('#exampleModal2').on('click', 'tr', function() {
-		// Get the text value of the clicked row
-		var cityName = $(this).text().trim();
-
-		// Call the function to insert data into the input field
-		onRowClick(cityName, 'TerminalSearchInput2');
-	});
-});
-
-
-//달력에서 날짜 7일 이후까지만 가능하도록 제한하기
-$(document).ready(function() {
-	// Set the minimum date to today YYYY-MM-ddTHH:mm:ss
-	const today = new Date().toISOString().split('T')[0];
-	document.getElementById('dpDate').min = today;
-
-	// Set the maximum date to 7 days from today
-	const sevenDaysLater = new Date();
-	sevenDaysLater.setDate(sevenDaysLater.getDate() + 7);
-	const maxDate = sevenDaysLater.toISOString().split('T')[0];
-	document.getElementById('dpDate').max = maxDate;
-});
 
 
 
