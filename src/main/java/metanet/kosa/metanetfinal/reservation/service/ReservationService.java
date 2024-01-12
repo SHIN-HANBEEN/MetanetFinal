@@ -247,6 +247,35 @@ public class ReservationService implements IReservationService{
 	public List<DetailedReservation> getReservationHistoryNotUsed(String phoneNum) {
 		return reservationRepository.getReservationHistoryNotUsed(phoneNum);
 	}
+	
+	
+	/*
+	 * 예매 취소 :
+	 * 예매가 취소되면, 예매 데이터를 삭제하는 것이 아닌, 
+	 * 예매 취소 여부가 업데이트 된다. 
+	 * 따라서, 예매-배차 테이블에 예매한 정보를 
+	 * Cascade 로 삭제하는 것이 아닌 개발자가 직접 지워줘야 한다.
+	 */
+	@Transactional
+	@Override
+	public void cancleReservation(String payId) {
+		/*예매 테이블에서 payId로 버스Id와 좌석Id를 가져옴
+		 *한 예매에서 여러 좌석을 선택할 수 있기에 LIST
+		 *가져온 데이터로 좌석 테이블의 좌석 상태를 true에서 false 변경
+		 *
+		 *예매 테이블에서 예매 취소일을 현재 날짜로 변경
+		 */
+		List<Map<String, Object>> data = reservationRepository.getUsingSeats(payId);
+		for(Map<String, Object> reservationSeats : data) {
+			int busId= Integer.parseInt(String.valueOf(reservationSeats.get("BUSID")));
+			int seatId = Integer.parseInt(String.valueOf(reservationSeats.get("SEATID")));
+			busesRepository.setBusSeatFalse(busId, seatId);
+		}
+		reservationRepository.updateResTableIsCnc(payId);
+		
+		
+		
+	}
 //	@Autowired
 //	IReservationRepository reservationRepository;
 //	
@@ -314,18 +343,7 @@ public class ReservationService implements IReservationService{
 //		reservationRepository.updateReservation(resId, satNumList, resId);
 //	}
 //	
-//	/*
-//	 * 예매 취소 :
-//	 * 예매가 취소되면, 예매 데이터를 삭제하는 것이 아닌, 
-//	 * 예매 취소 여부가 업데이트 된다. 
-//	 * 따라서, 예매-배차 테이블에 예매한 정보를 
-//	 * Cascade 로 삭제하는 것이 아닌 개발자가 직접 지워줘야 한다.
-//	 */
-//	@Override
-//	public void cancleReservation(int resId) {
-//		reservationRepository.updateResTableIsCnc(resId);
-//		reservationRepository.deleteResSchTable(resId);
-//	}
+
 //	
 //	@Override
 //	public List<Reservation> getReservation(int nmbId) {
@@ -400,6 +418,8 @@ public class ReservationService implements IReservationService{
 //		reservationRepository.selectSeat(adult, child, special, seats);
 //		
 //	}
+
+
 
 	
 

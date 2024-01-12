@@ -32,7 +32,6 @@
 
 	<select id="getReservationHistoryNotUsed"
 		resultType="metanet.kosa.metanetfinal.reservation.model.DetailedReservation">
-    <![CDATA[
     SELECT
         LISTAGG(res.seat_id, ' , ') WITHIN GROUP (ORDER BY res.seat_id) AS seatIds,
         dt.terminal_name AS departureTerminalName,
@@ -59,7 +58,6 @@
         at.terminal_name, r.DEPARTURE_TIME, r.arrival_time, res.res_date, res.total_price
     ORDER BY
         res.res_date
-    ]]>
 </select>
 
 	<select id="getReservationHistoryForLastSixMonth"
@@ -100,4 +98,18 @@
 	<select id="testCount">
 		select count(*) from reservations
 	</select>
+	
+	<update id="updateResTableIsCnc" >
+	UPDATE reservations
+    SET CANCLED_DATE = sysdate
+    WHERE PAY_ID = #{payId}
+	</update>
+	
+	
+	<select id="getUsingSeats" resultType="java.util.Map">
+        SELECT bus_id as busId, seat_id as seatId
+        FROM RESERVATIONS
+        WHERE pay_id = #{payId}
+    </select>
+	
 </mapper>

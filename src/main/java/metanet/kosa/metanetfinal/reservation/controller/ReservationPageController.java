@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -68,7 +69,16 @@ public class ReservationPageController {
 		return "/reservation/pay";
 	}
 
+	/*
+	 * payId 와 총 금액을 통해 환불 처리 진행.
+	 * 개인 사업자 API와 비밀키로 토큰을 발행하고
+	 * payId, totalprice를 통해 환불 API로 요청을 보내서 환불을 진행.
+	 * 
+	 * 그 다음 예매한 좌석을 조회해서 취소 시키고
+	 * 예매 상태에서 취소 날짜를 현재 날짜로 변경
+	 */
 	 @PostMapping("/cancelReservation")
+	 @Transactional
 	 @ResponseBody
 	    public ResponseEntity<String> cancelReservation(@RequestBody Map<String, Object> request) {
 		 try {  
@@ -82,8 +92,11 @@ public class ReservationPageController {
 	        String merchant_uid = payId;
 	        String cancel_request_amount = totalPrice;
 	        String reason = "비싸요!!!";
+	        System.out.println(merchant_uid);
 	        
 	        paymentService.payMentCancel(token,merchant_uid,cancel_request_amount,reason);
+	        reservationService.cancleReservation(merchant_uid);
+	        System.out.println("ok");
 	        // 작업 결과에 따라 응답 반환
 	        return ResponseEntity.ok("Success");
 	        

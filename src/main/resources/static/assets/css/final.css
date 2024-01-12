@@ -92,6 +92,22 @@
 
 }
 
+metanet-image-container {
+	position: relative;
+  object-fit: cover;
+
+}
+
+.matanet-text-overlay{
+
+  position: absolute; 
+  top: 50%;
+  left: 50%; 
+  transform: translate(-50%, -50%); 
+  font-size: 20px; 
+  text-align: center;
+}
+
 .custom-btn {
 	width: 130px;
 	height: 40px;

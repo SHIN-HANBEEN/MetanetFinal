@@ -26,6 +26,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import metanet.kosa.metanetfinal.jwt.JwtTokenProvider;
 import metanet.kosa.metanetfinal.member.model.Members;
+import metanet.kosa.metanetfinal.member.repository.IMemberRepository;
 import metanet.kosa.metanetfinal.member.service.IMemberService;
 import metanet.kosa.metanetfinal.member.service.PhoneNumCertificationService;
 import metanet.kosa.metanetfinal.reservation.model.DetailedReservation;
@@ -110,14 +111,27 @@ public class MemberController {
 		System.out.println(phoneNum);
 		//전화번호를 기반으로 현재 날짜를 기준으로 6개월 간 예매 정보를 가져옴.
 		List<DetailedReservation> ReservationList = reservationService.getReservationHistoryForLastSixMonth(false,phoneNum); 
+		//전체 예매 내역 수 
+		int countResList = ReservationList.size();
+		System.out.println(countResList);
+		
 		//전화번호를 기반으로 출발일이 현재 날짜 이후 인 예매 정보 조회
 		List<DetailedReservation> ReservationNotUsedList = reservationService.getReservationHistoryNotUsed(phoneNum); 
+		//진행 중인 예매 내역 수
+		int countNotUserdList = ReservationNotUsedList.size();
+		System.out.println(countNotUserdList);
+
 		//최근 6개월의 예매 취소 내역 조회
 		List<DetailedReservation> cancelReservationList = reservationService.getReservationHistoryForLastSixMonth(true,phoneNum); 
+		
+		Members member = memberService.getMemberInfo(principal.getName());
+		model.addAttribute("countNotUserdList",countNotUserdList);
+		model.addAttribute("countResList",countResList);
 		
 		model.addAttribute("ReservationList",ReservationList);
 		model.addAttribute("ReservationNotUsedList",ReservationNotUsedList);
 		model.addAttribute("cancelReservationList",cancelReservationList);
+		model.addAttribute("member", member);
 		//System.out.println("토큰 테스트 : "+ authToken);
 		return "mypage";
 	}

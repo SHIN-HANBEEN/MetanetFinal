@@ -2,6 +2,7 @@ package metanet.kosa.metanetfinal.reservation.repository;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -43,16 +44,29 @@ public interface IReservationRepository {
 	 */
 	List<DetailedReservation> getReservationHistoryNotUsed(String phoneNum);
 	
+	/*
+	 * 사용되지 않은 예매 내역의 수 구하기
+	 */
+	
 //	/*
 //	 * 사용된 좌석 반환하기
 //	 */
 //	List<Integer> getReservedSeatIdListBySchedule(int schId);
-//	
-//	/*
-//	 * 예매 취소하기 : 예매 테이블 변경
-//	 */
-//	void updateResTableIsCnc(int resId);
-//	
+	
+	/*
+	 * 예매 취소하기 : 예매 테이블 변경
+	 * 예매 테이블의 canceldate의 값을 sysdate로 변경
+	 */
+	void updateResTableIsCnc(String payId);
+
+	/*
+	 * 예약한 버스 번호와 좌석 번호 조회
+	 * 예매 테이블에서 payId에 해당하는 버스 id와 좌석 id를 가져오기
+	 */
+	List<Map<String, Object>> getUsingSeats(String payId);
+	
+	
+	
 //	/*
 //	 * 예매 취소하기 : 예매-배차 테이블에 isCnc 가 TRUE
 //	 * 인 데이터가 남아있는데, 그것을 지워야 한다.
@@ -84,5 +98,7 @@ public interface IReservationRepository {
 	 * 홈 화면에서 출발지, 도착지, 출발시간 골랐을 때, 잔여좌석 보여주기
 	 */
 	int getRemainingSeatCount(String departureId, String arrivalId, String departureTime);
+
+	
 	
 }

@@ -66,7 +66,7 @@ public interface IReservationService {
 	 * 과거 6개월까지 예매내역과 취소내역을 조회한다. 
 	 */
 	List<DetailedReservation> getReservationHistoryForLastSixMonth(@Param("canceledDate") Boolean canceledDate, @Param("phoneNum") String phoneNum);
-
+	
 	
 	/*
 	 * 예매_회원 예매 정보 조회 : 
