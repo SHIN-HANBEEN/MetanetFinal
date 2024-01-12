@@ -4,14 +4,55 @@
 
 //============================ 출발지 검색 =========================
 // Function to send GET request and update table
+function updateTerminalTable1(searchTerm) {
+	// Send GET request to /search-terminal with the searchTerm
+	fetch(`/search-terminal?terminalName=${encodeURIComponent(searchTerm)}`, {
+		method: 'GET',
+		headers: {
+			'Content-Type': 'application/json',
+			// You can add additional headers if needed
+		},
+	})
+		.then(response => response.json())
+		.then(data => {
+			// Get the table body element
+			const tableBody = document.getElementById('terminalTable1').getElementsByTagName('tbody')[0];
 
+			// Clear existing table rows
+			tableBody.innerHTML = '';
 
-document.addEventListener('DOMContentLoaded', () => {
-	console.log(document.getElementById('TerminalSearchInput1'));
-	
-	
-	
- });
+			console.log(data);
+
+			// Add new rows based on the returned data
+			data.forEach(terminal => {
+				const row = tableBody.insertRow();
+				const cell = row.insertCell(0);
+				cell.textContent = terminal;
+			});
+		})
+		.catch(error => {
+			console.error('Error fetching terminal data:', error);
+		});
+}
+
+// Function to handle row click and insert data into input
+function onRowClick(cityName, inputId) {
+	// Get the input element by ID
+	var inputElement = $('#' + inputId);
+
+	// Insert the clicked data into the input
+	inputElement.val(cityName);
+
+	// <button type="button" class="btn bg-gradient-dark mb-0" data-bs-dismiss="modal">Close</button>
+	// add js code click the button tag
+	// Get the button element by its ID
+	var closeButton1 = document.getElementById('closeButton1');
+	var closeButton2 = document.getElementById('closeButton2');
+
+	closeButton1.click();
+	closeButton2.click();
+}
+
 
 $(document).ready(function() {
 	// Add event listener for input changes
@@ -163,70 +204,52 @@ $(document).ready(function() {
 	});
 
 
-	// Attach click event handlers to buttons
-	$(document).ready(function() {
-		$('.metanet-width-96px').click(function() {
-			// Get the text value of the clicked button
-			var cityName = $(this).text().trim();
-			onButtonClick(cityName);
-		});
+}); //ajax.ready 끝
+
+
+// Attach click event handlers to buttons
+$(document).ready(function() {
+	$('.metanet-width-96px').click(function() {
+		// Get the text value of the clicked button
+		var cityName = $(this).text().trim();
+		onButtonClick(cityName);
+	});
+});
+
+// Attach click event handlers to table rows
+$(document).ready(function() {
+	// For Terminal Table 1
+	$('#exampleModal1').on('click', 'tr', function() {
+		// Get the text value of the clicked row
+		var cityName = $(this).text().trim();
+
+		// Call the function to insert data into the input field
+		onRowClick(cityName, 'TerminalSearchInput1');
 	});
 
-	// Function to handle row click and insert data into input
-	function onRowClick(cityName, inputId) {
-		// Get the input element by ID
-		var inputElement = $('#' + inputId);
+	// For Terminal Table 2
+	$('#exampleModal2').on('click', 'tr', function() {
+		// Get the text value of the clicked row
+		var cityName = $(this).text().trim();
 
-		// Insert the clicked data into the input
-		inputElement.val(cityName);
-
-		// <button type="button" class="btn bg-gradient-dark mb-0" data-bs-dismiss="modal">Close</button>
-		// add js code click the button tag
-		// Get the button element by its ID
-		var closeButton1 = document.getElementById('closeButton1');
-		var closeButton2 = document.getElementById('closeButton2');
-
-		closeButton1.click();
-		closeButton2.click();
-	}
-
-	// Attach click event handlers to table rows
-	$(document).ready(function() {
-		// For Terminal Table 1
-		$('#exampleModal1').on('click', 'tr', function() {
-			// Get the text value of the clicked row
-			var cityName = $(this).text().trim();
-
-			// Call the function to insert data into the input field
-			onRowClick(cityName, 'TerminalSearchInput1');
-		});
-
-		// For Terminal Table 2
-		$('#exampleModal2').on('click', 'tr', function() {
-			// Get the text value of the clicked row
-			var cityName = $(this).text().trim();
-
-			// Call the function to insert data into the input field
-			onRowClick(cityName, 'TerminalSearchInput2');
-		});
+		// Call the function to insert data into the input field
+		onRowClick(cityName, 'TerminalSearchInput2');
 	});
+});
 
 
-	//달력에서 날짜 7일 이후까지만 가능하도록 제한하기
-	$(document).ready(function() {
-		// Set the minimum date to today YYYY-MM-ddTHH:mm:ss
-		const today = new Date().toISOString().split('T')[0];
-		document.getElementById('dpDate').min = today;
+//달력에서 날짜 7일 이후까지만 가능하도록 제한하기
+$(document).ready(function() {
+	// Set the minimum date to today YYYY-MM-ddTHH:mm:ss
+	const today = new Date().toISOString().split('T')[0];
+	document.getElementById('dpDate').min = today;
 
-		// Set the maximum date to 7 days from today
-		const sevenDaysLater = new Date();
-		sevenDaysLater.setDate(sevenDaysLater.getDate() + 7);
-		const maxDate = sevenDaysLater.toISOString().split('T')[0];
-		document.getElementById('dpDate').max = maxDate;
-	});
-
-}) //ajax.ready 끝
-
+	// Set the maximum date to 7 days from today
+	const sevenDaysLater = new Date();
+	sevenDaysLater.setDate(sevenDaysLater.getDate() + 7);
+	const maxDate = sevenDaysLater.toISOString().split('T')[0];
+	document.getElementById('dpDate').max = maxDate;
+});
 
 
 //======================= 도착지 검색 =========================
