@@ -40,14 +40,25 @@ public class QrCodeController {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
         DateTimeFormatter formatter2 = DateTimeFormatter.ofPattern("HH:mm");
         String formattedDepartureTime = departureTime.format(formatter);
+        String formattedArrivalTime = arrivalTime.format(formatter);
         String depTime = departureTime.format(formatter2);
         String arrTime = arrivalTime.format(formatter2);
         
         info.put("DEPARTURE_TIME", formattedDepartureTime);
-        info.put("ARRIVAL_TIME", arrivalTime);
+        info.put("ARRIVAL_TIME", formattedArrivalTime);
         info.put("RES_DATE", resDate);
         info.put("depTime", depTime);
         info.put("arrTime", arrTime);
+        
+        String adult = info.get("ADULT").toString();
+		String middleChild = info.get("ADULT").toString();
+		String child = info.get("ADULT").toString();
+		StringBuilder sb = new StringBuilder();
+		if(!adult.equals("0")) sb.append("성인 "+ adult +"명 ");
+		if(!middleChild.equals("0")) sb.append("중고생 "+ middleChild +"명 ");
+		if(!child.equals("0")) sb.append("아동 "+ child +"명");
+		
+		info.put("AGE", sb.toString());
         
         model.addAttribute("info", info);
 		

@@ -10,7 +10,8 @@
 
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-	<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+	<link rel="stylesheet"
+		href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
 	<!--     Fonts and icons     -->
 	<link rel="stylesheet" type="text/css"
 		href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,900|Roboto+Slab:400,700" />
@@ -27,16 +28,19 @@
 	<!-- 커스텀 CSS -->
 	<link href="/assets/css/final.css" rel="stylesheet" />
 	<link type="text/css" rel="stylesheet" href="/assets/css/seat2.css">
-	
+
 	<!-- KoPub 폰트 -->
 	<link rel='stylesheet' href='//cdn.jsdelivr.net/npm/font-kopub@1.0/kopubdotum.min.css'>
 
 	<!-- ticket 추가 -->
 	<script src="http://html2canvas.hertzen.com/dist/html2canvas.js"></script>
-	
-	
+
+
 	<style>
-		body { font-family: 'KoPub Dotum'; }
+		body {
+			font-family: 'KoPub Dotum';
+		}
+
 		.div1 {
 			width: 500px;
 			height: 750px;
@@ -53,203 +57,268 @@
 	<!-- container fluid -->
 	<div class="container-fluid">
 		<div class="row justify-content-md-center">
-			<div class="col-lg-12 metanet-page-header pb-6" style="height: 100%; background-image: url('../assets/img/bus.png');">
+			<div class="col-lg-12 metanet-page-header pb-6"
+				style="height: 100%; background-image: url('../assets/img/bus.png');">
 				<span class="mask bg-gradient-dark opacity-6"></span>
-				<div class="container-fluid metanet-mt-24">
+				<div class="container-fluid mt-8">
 					<div class="row " style="text-align: center;">
 						<!-- 좌석조회 카드 -->
 						<div class="col-lg-12 mb-5" style="z-index: 10;">
-							<div class="container bg-body-tertiary rounded-4 mt-n12">
+							<div class="container bg-body-secondary rounded-4" style="min-width: 550px;--bs-bg-opacity: .92; padding: 30px 30px 30px 30px;">
 
-								<div class="section text-center">
-									<div class="container">
-										<div class="row justify-content-md-center">
-											
-											
-											
+								<div class="position-relative m-4 mt-5">
+									<div>
+										<div class="row justify-content-md-center position-relative">
 											<!-- <div class="col col-md-auto"> -->
-											<div class="col-12 col-md-10 mt-5">
+											<div >
 												<!-- ticket 추가 -->
-													<div id="screenshot" class="div1 mx-auto">
-												        <svg xmlns="http://www.w3.org/2000/svg" color="#e91e63" width="50" height="50" viewBox="0 0 24 24" fill="none"
-												            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-lg">
-												            <path d="M8 6v6"></path>
-												            <path d="M15 6v6"></path>
-												            <path d="M2 12h19.6"></path>
-												            <path
-												                d="M18 18h3s.5-1.7.8-2.8c.1-.4.2-.8.2-1.2 0-.4-.1-.8-.2-1.2l-1.4-5C20.1 6.8 19.1 6 18 6H4a2 2 0 0 0-2 2v10h3">
-												            </path>
-												            <circle cx="7" cy="18" r="2"></circle>
-												            <path d="M9 18h5"></path>
-												            <circle cx="16" cy="18" r="2"></circle>
-												        </svg>
-												        <h1 class="text-xl font-bold">시외버스 승차권</h1> <hr>
-												        <div class="">
-												            <p class="text-sm">출발일시</p>
-												            <p class="text-lg font-semibold" style="color:#e91e63;" th:text="${info['DEPARTURE_TIME']}"></p>
-												        </div>
-												        <div>
-												            <!-- qr -->
-												            <div id="qrcode" style="width:100px; height:100px; margin:auto; margin-top:15px;"></div>
-												            <div class="text-center pb-4" th:text="${info['PAY_ID']}"></p>
-												        </div>
-												        
-												        <table class="table table-bordered">
-												            <tbody class="[&amp;_tr:last-child]:border-0">
-												                <tr class="border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted">
-												                    <td class="col-md-6 align-middle"><b style="color:#e91e63;" th:text="${info['DEPARTURE_NAME']}"></b><br> 출발 </td>
-												                    <td class="col-md-6 align-middle"><b style="color:#e91e63;" th:text="${info['ARRIVAL_NAME']}"></b> <br> 도착</td>
-												                </tr>
-												            </tbody>
-												        </table>
-												        <p class="text-xl text-center fw-bold"> 요금 <span style="color:#e91e63;" th:text="${info['TOTAL_PRICE']}" color="#e91e63"> </span>원 (부가가치세 포함)</p>
-												        <table class="table table-bordered">
-												            <tbody class="[&amp;_tr:last-child]:border-0">
-												                <tr class="border-b ">
-												                    <td class="col-md-6 align-middle ">출발시간 <br> Time <b style="float: right;" th:text="${info['depTime']}"></b></td>
-												                    <td class="col-md-6 align-middle ">좌석 <br> Seat <b style="" th:text="${info['SEAT_ID']}"></b></td>
-												                </tr>
-												                <tr class="border-b ">
-												                    <td class="col-md-6 align-middle">도착시간 <br> Time <b style="float: right;" th:text="${info['arrTime']}"></b></td>
-												                    <td class="col-md-6 align-middle ">인원 수 <br> 어른 <span th:text="${info['ADULT']}"></span>명  
-												                    	청소년 <span th:text="${info['MIDDLE_CHILD']}"></span>명  어린이 <span th:text="${info['CHILD']}"></span>명  
-												                    </td>
-												                </tr>
-												            </tbody>
-												        </table>
-												            
-												
-												    </div>
-												    
-												</div>    
-												    <input id="textqr" type="text" th:value="${info}" style="width:100%; display: none;"> <br>
-												    <button type="button" class="btn btn-primary" id="save">다운로드</button>
-												    <div id="img" style="display: none;"></div>
-												    <a id="downloadLink"></a>
-													
-												 <!-- ticket 추가 -->
-												
+												<div id="screenshot" class="container position-relative mt-3 border border-3 border-dark text-body-emphasis bg-body-tertiary" style="width: 500px;">
+													<svg xmlns="http://www.w3.org/2000/svg" color="#e91e63" width="50"
+														height="50" viewBox="0 0 24 24" fill="none"
+														stroke="currentColor" stroke-width="2" stroke-linecap="round"
+														stroke-linejoin="round" class="text-lg">
+														<path d="M8 6v6"></path>
+														<path d="M15 6v6"></path>
+														<path d="M2 12h19.6"></path>
+														<path
+															d="M18 18h3s.5-1.7.8-2.8c.1-.4.2-.8.2-1.2 0-.4-.1-.8-.2-1.2l-1.4-5C20.1 6.8 19.1 6 18 6H4a2 2 0 0 0-2 2v10h3">
+														</path>
+														<circle cx="7" cy="18" r="2"></circle>
+														<path d="M9 18h5"></path>
+														<circle cx="16" cy="18" r="2"></circle>
+													</svg>
+													<h1 class="text-xl font-bold">시외버스 승차권</h1>
+													<hr>
+													<div class="">
+														<p class="fs-5 mb-0 fw-bold">출발일시</p>
+														<span id="depTime" class="fs-4 fw-bold" style="color:#e91e63;"
+															th:text="${info['DEPARTURE_TIME']}"></span>
+														<p id="depHHMM" class="fs-2 fw-bold" style="color:#e91e63;"></p>
+													</div>
+													<div>
+														<!-- qr -->
+														<div id="qrcode"
+															style="width:160px; height:160px; margin:auto; margin-top:15px;">
+														</div>
+														<div class="text-center pb-4" th:text="${info['PAY_ID']}">
+															</p>
+														</div>
 
-											
+														<table class="table border-top border-bottom border-black border-2">
+															<tbody class="[&amp;_tr:last-child]:border-0 fs-5 ">
+																<tr
+																	class="border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted">
+																	<td class="col-md-6 align-middle text-body-emphasis">출발<br><b
+																			style="color:#e91e63;"
+																			th:text="${info['DEPARTURE_NAME']}"></b>
+																		 </td>
+																	<td class="col-md-6 align-middle text-body-emphasis">도착<br><b
+																			style="color:#e91e63;"
+																			th:text="${info['ARRIVAL_NAME']}"></b> 
+																		</td>
+																</tr>
+															</tbody>
+														</table>
+														
+														<table class="table border-bottom border-black border-2">
+															<tbody>
+																<tr class="fs-5">
+																	<td class="col-md-6 align-middle text-body-emphasis">출발시간 <br><b
+																			style="text-align: center;"
+																			th:text="${info['DEPARTURE_TIME']}"></b></td>
+																	<td class="col-md-6 align-middle text-body-emphasis">도착시간 <br><b
+																		style="text-align: center;"
+																		th:text="${info['ARRIVAL_TIME']}"></b></td>
+																	
+																</tr>
+																<tr class="fs-5">
+																	<td class="col-md-6 align-middle text-body-emphasis">좌석 <br> Seat <b class="fs-5"
+																		th:text="${info['SEAT_ID']}"></b>
+																	</td>
+																	<td class="col-md-6 align-middle text-body-emphasis">인원 수 <br>
+																		<span th:text="${info['AGE']}"></span>
+																		
+																	</td>
+																</tr>
+															</tbody>
+														</table>
+														<p class="text-xl text-center fw-bold fs-5"> 결제금액 <span id="totalPrice"
+															style="color:#e91e63;" th:text="${info['TOTAL_PRICE']}"
+															color="#e91e63"> </span>원 (부가가치세 포함)</p>
+													</div>
+												</div>
+												<input id="textqr" type="text" th:value="${info}"
+													style="width:100%; display: none;"> <br>
+												<button type="button" class="btn btn-primary" id="save">다운로드</button>
+												<div id="img" style="display: none;"></div>
+												<a id="downloadLink"></a>
 
+												<!-- ticket 추가 -->
+											</div>
 										</div>
 									</div>
-
-
 								</div>
 							</div>
-
-
-
-
 						</div>
 					</div>
 				</div>
 			</div>
 		</div>
-	</div>
 
 
 
 
 
-	<!-- footer -->
-	<!-- Include footer fragment -->
-	<div th:replace="~{fragments/footerFragment :: footer}"></div>
+		<!-- footer -->
+		<!-- Include footer fragment -->
+		<div th:replace="~{fragments/footerFragment :: footer}"></div>
 
-	<!--   Core JS Files   -->
-	<script src="/assets/js/core/popper.min.js" type="text/javascript"></script>
-	<script src="/assets/js/core/bootstrap.min.js" type="text/javascript"></script>
-	<script src="/assets/js/plugins/perfect-scrollbar.min.js"></script>
+		<!--   Core JS Files   -->
+		<script src="/assets/js/core/popper.min.js" type="text/javascript"></script>
+		<script src="/assets/js/core/bootstrap.min.js" type="text/javascript"></script>
+		<script src="/assets/js/plugins/perfect-scrollbar.min.js"></script>
 
-	<!--  Plugin for TypedJS, full documentation here: https://github.com/inorganik/CountUp.js -->
-	<script src="/assets/js/plugins/countup.min.js"></script>
-	<script src="/assets/js/plugins/choices.min.js"></script>
-	<script src="/assets/js/plugins/prism.min.js"></script>
-	<script src="/assets/js/plugins/highlight.min.js"></script>
+		<!--  Plugin for TypedJS, full documentation here: https://github.com/inorganik/CountUp.js -->
+		<script src="/assets/js/plugins/countup.min.js"></script>
+		<script src="/assets/js/plugins/choices.min.js"></script>
+		<script src="/assets/js/plugins/prism.min.js"></script>
+		<script src="/assets/js/plugins/highlight.min.js"></script>
 
-	<!--  Plugin for Parallax, full documentation here: https://github.com/dixonandmoe/rellax -->
-	<script src="/assets/js/plugins/rellax.min.js"></script>
+		<!--  Plugin for Parallax, full documentation here: https://github.com/dixonandmoe/rellax -->
+		<script src="/assets/js/plugins/rellax.min.js"></script>
 
-	<!--  Plugin for TiltJS, full documentation here: https://gijsroge.github.io/tilt.js/ -->
-	<script src="/assets/js/plugins/tilt.min.js"></script>
+		<!--  Plugin for TiltJS, full documentation here: https://gijsroge.github.io/tilt.js/ -->
+		<script src="/assets/js/plugins/tilt.min.js"></script>
 
-	<!--  Plugin for Selectpicker - ChoicesJS, full documentation here: https://github.com/jshjohnson/Choices -->
-	<script src="/assets/js/plugins/choices.min.js"></script>
-	<script src="/assets/js/material-kit.min.js?v=3.0.4" type="text/javascript"></script>
-	<!-- 메타넷 final js -->
-	<!--<script src="/assets/js/final.js" type="text/javascript"></script>-->
-	<!-- jQuery js -->
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-	<!-- ticket 추가 -->
-	<script type="text/javascript" src="/qrcodejs-master/qrcode.js"></script>
-	<script src="//code.jquery.com/jquery-3.4.1.min.js"></script>
-	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"
-    integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm"
-    crossorigin="anonymous"></script>
-	<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
-    integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
-    crossorigin="anonymous"></script>
-	
+		<!--  Plugin for Selectpicker - ChoicesJS, full documentation here: https://github.com/jshjohnson/Choices -->
+		<script src="/assets/js/plugins/choices.min.js"></script>
+		<script src="/assets/js/material-kit.min.js?v=3.0.4" type="text/javascript"></script>
+		<!-- 메타넷 final js -->
+		<!--<script src="/assets/js/final.js" type="text/javascript"></script>-->
+		<!-- jQuery js -->
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+		<!-- ticket 추가 -->
+		<script type="text/javascript" src="/qrcodejs-master/qrcode.js"></script>
+		<script src="//code.jquery.com/jquery-3.4.1.min.js"></script>
+		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"
+			integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm"
+			crossorigin="anonymous"></script>
+		<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
+			integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
+			crossorigin="anonymous"></script>
+
 </body>
 
 
 <script th:inline="javascript">
 
-	
-	
+	document.addEventListener('DOMContentLoaded', () => { 
+        var depTime = document.querySelector('#depTime').textContent;
+       
+        document.querySelector('#depTime').textContent = getDayOfWeek(depTime);
+		document.querySelector('#depHHMM').textContent = getTimeToDateData(depTime);
+		document.querySelector('#totalPrice').textContent = document.querySelector('#totalPrice').textContent.replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
+        
+
+    });
+
 	// ticket 추가
 	$(function () {
-            $("#save").click(function () {
-                html2canvas($('#screenshot').get(0)).then(function (canvas) {
-                    document.getElementById('img').appendChild(canvas);
+		$("#save").click(function () {
+			html2canvas($('#screenshot').get(0)).then(function (canvas) {
+				document.getElementById('img').appendChild(canvas);
 
-                    var dataURL = canvas.toDataURL('image/png');
+				var dataURL = canvas.toDataURL('image/png');
 
-                    var downloadLink = document.getElementById('downloadLink');
-                    downloadLink.href = dataURL;
+				var downloadLink = document.getElementById('downloadLink');
+				downloadLink.href = dataURL;
 
-                    downloadLink.download = 'ticket.png';
+				downloadLink.download = 'ticket.png';
 
-                    downloadLink.click(); 
-                    document.body.removeChild(downloadLink); // 링크 제거
+				downloadLink.click();
+				document.body.removeChild(downloadLink); // 링크 제거
 
-                    // 다운로드 버튼을 다시 보여줍니다
-                    $("#save").show();
+				// 다운로드 버튼을 다시 보여줍니다
+				$("#save").show();
 
-                });
-            });
-        });
-    
+			});
+		});
+	});
+
 	//qr코드 생성 
-	var qrcode = new QRCode(document.getElementById("qrcode"), { 
-	//가로, 세로 높이 조절 
-	width : 100, 
-	height : 100 }); 
-	
+	var qrcode = new QRCode(document.getElementById("qrcode"), {
+		//가로, 세로 높이 조절 
+		width: 160,
+		height: 160
+	});
+
 	//input:text에 들어있는 value를 qr코드로 바꿔주는 function 
-	function makeCode () { 
+	function makeCode() {
 		var elText = document.getElementById("textqr");
 		console.log(elText.value);
-	    if (!elText.value) { 
-	    	alert("Input a text"); 
-	        elText.focus(); return; 
-	    } 
-	    qrcode.makeCode(elText.value); 
-	} 
-	
+		if (!elText.value) {
+			alert("Input a text");
+			elText.focus(); return;
+		}
+		qrcode.makeCode(elText.value);
+	}
+
 	//위에 만든 function 실행 
-	makeCode(); 
-	
+	makeCode();
+
 	//텍스트 이벤트 감지 
 	$("#text")
-		.on("blur", function () { 
-		makeCode(); })
-	    .on("keydown", function (e) { 
-	    	if (e.keyCode == 13) { 
-	        makeCode();} 
-	    });
+		.on("blur", function () {
+			makeCode();
+		})
+		.on("keydown", function (e) {
+			if (e.keyCode == 13) {
+				makeCode();
+			}
+		});
+		function getTimeToDateData(hhmm) {
+			return hhmm.substring(10, hhmm.length);
+		}
 
+		function getDayOfWeek(date){
+        var day = date.substring(0,10);
+        const dayOfWeek = new Date(day).getDay(); 
+        var time = date.substring(10,date.length);
+        //0:일, 1:월, 2:화, 3:수, 4:목, 5:금, 6:토
+        switch (dayOfWeek) {
+            case 0:{
+                return day + ' (일)';
+                break;
+            }
+            case 1:{
+                return  day + ' (월)';
+                break;
+            }
+            case 2:{
+                return  day + ' (화)';
+                break;
+            }
+            case 3:{ 
+                return  day + ' (수)';
+                break;
+            }
+            case 4:{
+                return  day + ' (목)';
+                break;
+            }
+            case 5:{
+                return  day + ' (금)';
+                break;
+            }
+            case 6:{
+                return  day + ' (토)';
+                break;
+            }
+            default:
+                break;
+        }
+        return dayOfWeek;
+    }
 </script>
 
 </html>

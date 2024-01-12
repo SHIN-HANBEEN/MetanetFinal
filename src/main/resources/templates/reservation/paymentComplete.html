@@ -251,7 +251,7 @@
 		
 		const urlParams = new URL(location.href).searchParams;
 		const payId = urlParams.get('payId');
-        location.href = '/ticket?payId='+payId;
+        location.href = 'ticket?payId='+payId;
 	});
     
     function getDayOfWeek(date){
