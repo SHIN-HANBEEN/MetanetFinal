@@ -17,6 +17,9 @@
 	<link href="../assets/css/nucleo-svg.css" rel="stylesheet" />
 	<!-- Font Awesome Icons -->
 	<script src="https://kit.fontawesome.com/42d5adcbca.js" crossorigin="anonymous"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+	<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
 	<!-- Material Icons -->
 	<link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
 	<!-- CSS Files -->
@@ -44,52 +47,83 @@
 
 					</div>
 					<div class="row">
-						<div class="col-lg-4 text-center">
-							<!--결제 내역 조회-->
+						<div class="col-lg-5 text-center">
 							<div class="col-lg-12 card move-on-hover mt-4">
-								<a href="#re" id="scrollLink">
+								<a href="#res">
+									<div class="row">
 
-									<img class="w-100 border-radius-xl"
-										src="https://raw.githubusercontent.com/creativetimofficial/public-assets/master/material-design-system/presentation/account/reset-basic.jpg"
-										loading="lazy" alt="reset-basic">
-								</a>
-							</div>
+										<div class="col-lg-10 col-md-10 offset-lg-1 card-body ps-lg-0">
 
+											<div class="card-body ps-lg-0">
+												<h4 class="mb-0">예매 정보</h4><br />
+												<div class="row">
+													<div class="col-lg-10 col-md-10"
+														style="display: inline-block; text-align: left; font-size: 20px;">
+														<span class="text-info">현재 예매 중인 상품 수 :
+															<span class="text-info" th:text="${countNotUserdList}"></span>
+															<span>건</span>
+														</span><br />
+														<span class="text-info">전체 예매 상품 수 :
+															<span class="text-info" th:text="${countResList}"></span>
+															<span>건</span>
+														</span><br /><br />
+														<span>예매 정보 확인하러 가기 ></span>
 
-						</div>
-
-
-						<div class="col-lg-4 text-center">
-							<div class="col-lg-12 card move-on-hover mt-4">
-								<a href="#mi">
-									<img class="w-100 border-radius-xl"
-										src="https://raw.githubusercontent.com/creativetimofficial/public-assets/master/material-design-system/presentation/account/reset-basic.jpg"
-										loading="lazy" alt="reset-basic">
-								</a>
-							</div>
-						</div>
-						<div class="col-lg-4 text-center">
-							<div class="col-lg-12 card move-on-hover mt-4">
-								<a href="#mi">
-									<img class="w-100 border-radius-xl"
-										src="https://raw.githubusercontent.com/creativetimofficial/public-assets/master/material-design-system/presentation/account/reset-basic.jpg"
-										loading="lazy" alt="reset-basic">
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
 								</a>
 							</div>
 						</div>
 
+
+						<div class="col-lg-7 text-center">
+							<div class="col-lg-12 card move-on-hover mt-4">
+								<a href="#mil">
+
+
+
+									<div class="row">
+
+										<div class="col-lg-10 col-md-10 offset-lg-1 card-body ps-lg-0">
+
+											<div class="card-body ps-lg-0">
+												<h4 class="mb-0">회원 정보</h4><br />
+												<table class="table table-hover table-bordered" id="notuserdreservationtable">
+
+													<tr>
+														<th>이름</th>
+														<th>이메일</th>
+														<th>생년월일</th>
+														<th>마일리지</th>
+													</tr>
+													<tr class="clickable-row" data-toggle="modal" data-target="#reservationModal"
+														data-reservation-id="${res.id}" style="cursor: pointer;">
+														<td th:text="${member.name}">출발지</td>
+														<td th:text="${member.email}">도착지</td>
+														<td th:text="${member.birthDate}">출발시간</td>
+														<td th:text="${member.mileage}">도착시간</td>
+													</tr>
+												</table>
+												<span style="display: inline-block; text-align: left; font-size: 20px;">>예매 정보 확인하러 가기 ></span>
+
+								</a>
+							</div>
+						</div>
 					</div>
 				</div>
 			</div>
 		</div>
 	</header>
 	<!-- -------- END HEADER 7 w/ text and video ------- -->
-	<div id="re" class="card card-body py-1 shadow-xl mx-3 mx-md-4 mt-n6">
+	<div id="res" class="card card-body py-1 shadow-xl mx-3 mx-md-4 mt-n6">
 		<!-- Section with four info areas left & one card right with image and waves -->
-		<section class="py-5" style="min-height: 95vh;">
+		<section class="py-5" style="min-height: 100vh;">
 			<div class="container">
 				<div class="row">
-					<div class="col-md-8 text-start mb-5 mt-5" id="mi">
+					<div class="col-md-8 text-start mb-5 mt-5">
 						<h2 class="text-black z-index-1 position-relative"> 예매 정보 조회</h2>
 					</div>
 				</div>
@@ -112,9 +146,10 @@
 				<div class="tab-content" id="myTabContent">
 					<div class="tab-pane fade show active mb-4" id="userinfo" role="tabpanel" aria-labelledby="userinfo-tab">
 						<h3 class="mt-4">예매 중인 내역</h3>
+
 						<div th:if="${not #lists.isEmpty(ReservationNotUsedList)}">
 
-							<table class="table table-hover table-bordered" id="totalreservationtable">
+							<table class="table table-hover table-bordered" id="notuserdreservationtable">
 								<thead>
 									<tr>
 										<th>출발지</th>
@@ -128,7 +163,8 @@
 									</tr>
 								</thead>
 								<tbody>
-									<tr th:each="res : ${ReservationNotUsedList}">
+									<tr th:each="res : ${ReservationNotUsedList}" class="clickable-row" data-toggle="modal"
+										data-target="#reservationModal" data-reservation-id="${res.id}" style="cursor: pointer;">
 										<td th:text="${res.departureTerminalName}">출발지</td>
 										<td th:text="${res.arrivalTerminalName}">도착지</td>
 										<td th:text="${res.departureTime}">출발시간</td>
@@ -143,13 +179,13 @@
 
 						</div>
 						<div th:if="${#lists.isEmpty(ReservationNotUsedList)}">
-							<p>No items found</p>
+							<p>현재 예매 중인 상품이 없습니다.</p>
 						</div>
 					</div>
 
 					<!--예매 내역 조회-->
 					<div class="tab-pane fade" id="myreview" role="tabpanel" aria-labelledby="myreview-tab">
-						<h3 class="mt-4">예매 취소 내역</h3>
+						<h3 class="mt-4">전체 예매 내역</h3>
 						<div th:if="${not #lists.isEmpty(ReservationList)}">
 
 							<table class="table table-hover table-bordered" id="totalreservationtable">
@@ -180,13 +216,13 @@
 							</table>
 						</div>
 						<div th:if="${#lists.isEmpty(ReservationList)}">
-							<p>No items found</p>
+							<p>예매한 내역이 없습니다.</p>
 						</div>
 					</div>
 					<div class="tab-pane fade" id="wishlist" role="tabpanel" aria-labelledby="wishlist-tab">
 						<h3 class="mt-4">예매 취소 내역</h3>
 						<div th:if="${not #lists.isEmpty(cancelReservationList)}">
-							<table class="table table-hover table-bordered" id="totalreservationtable">
+							<table class="table table-hover table-bordered" id="cancelreservationtable">
 								<thead>
 									<tr>
 										<th>출발지</th>
@@ -200,21 +236,21 @@
 									</tr>
 								</thead>
 								<tbody>
-									<tr th:each="res : ${cancelReservationList}">
-										<td th:text="${res.departureTerminalName}">출발지</td>
-										<td th:text="${res.arrivalTerminalName}">도착지</td>
-										<td th:text="${res.departureTime}">출발시간</td>
-										<td th:text="${res.arrivalTime}">도착시간</td>
-										<td th:text="${res.resDate}">예약시간</td>
-										<td th:text="${res.seatIds}">좌석 번호</td>
-										<td th:text="${res.payId}">결제 번호</td>
-										<td th:text="${res.totalPrice}">총 금액</td>
+									<tr th:each="can : ${cancelReservationList}">
+										<td th:text="${can.departureTerminalName}">출발지</td>
+										<td th:text="${can.arrivalTerminalName}">도착지</td>
+										<td th:text="${can.departureTime}">출발시간</td>
+										<td th:text="${can.arrivalTime}">도착시간</td>
+										<td th:text="${can.resDate}">예약시간</td>
+										<td th:text="${can.seatIds}">좌석 번호</td>
+										<td th:text="${can.payId}">결제 번호</td>
+										<td th:text="${can.totalPrice}">총 금액</td>
 									</tr>
 								</tbody>
 							</table>
 						</div>
 						<div th:if="${#lists.isEmpty(cancelReservationList)}">
-							<p>No items found</p>
+							<p>취소한 내역이 없습니다.</p>
 						</div>
 					</div>
 				</div>
@@ -225,178 +261,58 @@
 		<!-- -------- START Features w/ pattern background & stats & rocket -------- -->
 		<section class="pb-5 position-relative bg-gradient-dark mx-n3">
 			<div class="container">
-				<div class="row">
+				<div id="mil" class="row">
 					<div class="col-md-8 text-start mb-5 mt-5" id="mi">
-						<h3 class="text-white z-index-1 position-relative">마일리지</h3>
-						<p class="text-white opacity-8 mb-0">There’s nothing I really wanted to do in life that I wasn’t able to get
-							good at. That’s my skill.</p>
+						<h3 class="text-white z-index-1 position-relative">개인정보 조회</h3>
 					</div>
 				</div>
 				<div class="row">
-					<div class="col-lg-6 col-12">
-						<div class="card card-profile mt-4">
-							<div class="row">
-								<div class="col-lg-4 col-md-6 col-12 mt-n5">
-									<a href="javascript:;">
-										<div class="p-3 pe-md-0">
-											<img class="w-100 border-radius-md shadow-lg" src="../assets/img/team-5.jpg" alt="image">
-										</div>
-									</a>
-								</div>
-								<div class="col-lg-8 col-md-6 col-12 my-auto">
-									<div class="card-body ps-lg-0">
-										<h5 class="mb-0">Emma Roberts</h5>
-										<h6 class="text-info">UI Designer</h6>
-										<p class="mb-0">Artist is a term applied to a person who engages in an activity deemed to be an art.
-										</p>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-					<div class="col-lg-6 col-12">
-						<div class="card card-profile mt-lg-4 mt-5">
-							<div class="row">
-								<div class="col-lg-4 col-md-6 col-12 mt-n5">
-									<a href="javascript:;">
-										<div class="p-3 pe-md-0">
-											<img class="w-100 border-radius-md shadow-lg" src="../assets/img/bruce-mars.jpg" alt="image">
-										</div>
-									</a>
-								</div>
-								<div class="col-lg-8 col-md-6 col-12 my-auto">
-									<div class="card-body ps-lg-0">
-										<h5 class="mb-0">William Pearce</h5>
-										<h6 class="text-info">Boss</h6>
-										<p class="mb-0">Artist is a term applied to a person who engages in an activity deemed to be an art.
-										</p>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="row mt-4">
-					<div class="col-lg-6 col-12">
-						<div class="card card-profile mt-4 z-index-2">
-							<div class="row">
-								<div class="col-lg-4 col-md-6 col-12 mt-n5">
-									<a href="javascript:;">
-										<div class="p-3 pe-md-0">
-											<img class="w-100 border-radius-md shadow-lg" src="../assets/img/ivana-squares.jpg" alt="image">
-										</div>
-									</a>
-								</div>
-								<div class="col-lg-8 col-md-6 col-12 my-auto">
-									<div class="card-body ps-lg-0">
-										<h5 class="mb-0">Ivana Flow</h5>
-										<h6 class="text-info">Athlete</h6>
-										<p class="mb-0">Artist is a term applied to a person who engages in an activity deemed to be an art.
-										</p>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-					<div class="col-lg-6 col-12">
-						<div class="card card-profile mt-lg-4 mt-5 z-index-2">
-							<div class="row">
-								<div class="col-lg-4 col-md-6 col-12 mt-n5">
-									<a href="javascript:;">
-										<div class="p-3 pe-md-0">
-											<img class="w-100 border-radius-md shadow-lg" src="../assets/img/ivana-square.jpg" alt="image">
-										</div>
-									</a>
-								</div>
-								<div class="col-lg-8 col-md-6 col-12 my-auto">
-									<div class="card-body ps-lg-0">
-										<h5 class="mb-0">Marquez Garcia</h5>
-										<h6 class="text-info">JS Developer</h6>
-										<p class="mb-0">Artist is a term applied to a person who engages in an activity deemed to be an art.
-										</p>
-									</div>
-								</div>
-							</div>
+					<div class="card card-profile ">
+						<div class="card-body ps-lg-0">
+							<h5 class="mb-0">Emma Roberts</h5>
+							<h6 class="text-info">UI Designer</h6>
+							<p class="mb-0">Artist is a term applied to a person who engages in an activity deemed to be an art.
+							</p>
 						</div>
 					</div>
 				</div>
 			</div>
 		</section>
 		<!-- -------- END Features w/ pattern background & stats & rocket -------- -->
-		<section class="pt-4 pb-6" id="count-stats">
-			<div class="container">
-				<div class="row mb-7">
-					<div class="col-lg-2 col-md-4 col-6 mb-4">
-						<img class="w-100 opacity-7" src="../assets/img/logos/gray-logos/logo-coinbase.svg" alt="logo">
-					</div>
-					<div class="col-lg-2 col-md-4 col-6 mb-4">
-						<img class="w-100 opacity-7" src="../assets/img/logos/gray-logos/logo-nasa.svg" alt="logo">
-					</div>
-					<div class="col-lg-2 col-md-4 col-6 mb-4">
-						<img class="w-100 opacity-7" src="../assets/img/logos/gray-logos/logo-netflix.svg" alt="logo">
-					</div>
-					<div class="col-lg-2 col-md-4 col-6 mb-4">
-						<img class="w-100 opacity-7" src="../assets/img/logos/gray-logos/logo-pinterest.svg" alt="logo">
-					</div>
-					<div class="col-lg-2 col-md-4 col-6 mb-4">
-						<img class="w-100 opacity-7" src="../assets/img/logos/gray-logos/logo-spotify.svg" alt="logo">
-					</div>
-					<div class="col-lg-2 col-md-4 col-6 mb-4">
-						<img class="w-100 opacity-7" src="../assets/img/logos/gray-logos/logo-vodafone.svg" alt="logo">
-					</div>
-				</div>
-				<div class="row justify-content-center text-center">
-					<div class="col-md-3">
-						<h1 class="text-gradient text-info" id="state1" countTo="5234">0</h1>
-						<h5>Projects</h5>
-						<p>Of “high-performing” level are led by a certified project manager</p>
-					</div>
-					<div class="col-md-3">
-						<h1 class="text-gradient text-info"><span id="state2" countTo="3400">0</span>+</h1>
-						<h5>Hours</h5>
-						<p>That meets quality standards required by our users</p>
-					</div>
-					<div class="col-md-3">
-						<h1 class="text-gradient text-info"><span id="state3" countTo="24">0</span>/7</h1>
-						<h5>Support</h5>
-						<p>Actively engage team members that finishes on time</p>
-					</div>
-				</div>
-			</div>
-		</section>
-		<!-- -------- START PRE-FOOTER 1 w/ SUBSCRIBE BUTTON AND IMAGE ------- -->
-		<section class="my-5 pt-5">
-			<div class="container">
-				<div class="row">
-					<div class="col-md-6 m-auto">
-						<h4>Be the first to see the news</h4>
-						<p class="mb-4">
-							Your company may not be in the software business,
-							but eventually, a software company will be in your business.
-						</p>
-						<div class="row">
-							<div class="col-8">
-								<div class="input-group input-group-outline">
-									<label class="form-label">Email Here...</label>
-									<input type="text" class="form-control mb-sm-0">
-								</div>
-							</div>
-							<div class="col-4 ps-0">
-								<button type="button"
-									class="btn bg-gradient-info mb-0 h-100 position-relative z-index-2">Subscribe</button>
-							</div>
-						</div>
-					</div>
-					<div class="col-md-5 ms-auto">
-						<div class="position-relative">
-							<img class="max-width-50 w-100 position-relative z-index-2" src="../assets/img/macbook.png" alt="image">
-						</div>
-					</div>
-				</div>
-			</div>
-		</section>
-		<!-- -------- END PRE-FOOTER 1 w/ SUBSCRIBE BUTTON AND IMAGE ------- -->
+
 	</div>
+
+
+	<div class="modal fade" id="reservationModal" tabindex="-1" role="dialog" aria-labelledby="reservationModalLabel"
+		aria-hidden="true">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="reservationModalLabel">예약 상세 정보</h5>
+					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+				</div>
+				<div class="modal-body">
+					<!-- 모달 내용을 표시할 위치 -->
+					<div>
+						<p>출발지: <span id="modalDepartureTerminal"></span></p>
+						<p>도착지: <span id="modalArrivalTerminal"></span></p>
+						<p>출발시간: <span id="modalDepartureTime"></span></p>
+						<p>도착시간: <span id="modalArrivalTime"></span></p>
+						<p>예약시간: <span id="modalResDate"></span></p>
+						<p>좌석 번호: <span id="modalSeatIds"></span></p>
+						<p>결제 번호: <span id="modalPayId"></span></p>
+						<p>총 금액: <span id="modalTotalPrice"></span></p>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn bg-gradient-secondary" data-bs-dismiss="modal">닫기</button>
+					<button type="button" class="btn bg-gradient-primary">저장</button>
+					<button type="button" class="btn btn-danger" id="deleteButton">삭제</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
 	<div th:replace="~{fragments/footerFragment :: footer}"></div>
 
 	<!--   Core JS Files   -->
@@ -409,22 +325,111 @@
 	<!--  Google Maps Plugin    -->
 	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDTTfWur0PDbZWPr7Pmq8K3jiDp0_xUziI"></script>
 	<script src="../assets/js/material-kit.min.js?v=3.0.4" type="text/javascript"></script>
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.10/dist/sweetalert2.min.css">
+	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.10/dist/sweetalert2.min.js"></script>
 
 	<script>
-		// JavaScript로 클릭 이벤트와 스크롤을 처리합니다.
-		document.getElementById('scrollLink').addEventListener('click', function (event) {
-			// 기본 동작인 href로의 이동을 막습니다.
-			//event.preventDefault();
+		var inputData;
 
-			// 클릭 시 해당 ID로 부드럽게 스크롤합니다.
-			document.getElementById('re').scrollIntoView({behavior: 'smooth', block: 'start'});
+		$('.clickable-row').click(function () {
+			var departureTerminal = $(this).find('td:eq(0)').text();
+			var arrivalTerminal = $(this).find('td:eq(1)').text();
+			var departureTime = $(this).find('td:eq(2)').text();
+			var arrivalTime = $(this).find('td:eq(3)').text();
+			var resDate = $(this).find('td:eq(4)').text();
+			var seatIds = $(this).find('td:eq(5)').text();
+			var payId = $(this).find('td:eq(6)').text();
+			var totalPrice = $(this).find('td:eq(7)').text();
 
-			// 스크롤 위치를 조정하여 원하는 위치로 이동합니다.
-			window.scrollBy(0, -10); // 예: 현재 위치에서 위로 50px 이동
+			inputData = {"payId": payId, "totalPrice": totalPrice};
+
+			// 모달에 데이터 넣기
+			$('#modalDepartureTerminal').text(departureTerminal);
+			$('#modalArrivalTerminal').text(arrivalTerminal);
+			$('#modalDepartureTime').text(departureTime);
+			$('#modalArrivalTime').text(arrivalTime);
+			$('#modalResDate').text(resDate);
+			$('#modalSeatIds').text(seatIds);
+			$('#modalPayId').text(payId);
+			$('#modalTotalPrice').text(totalPrice);
+
+			// 모달 열기
+			$('#reservationModal').modal('show');
 		});
+
+
+		$("#deleteButton").click(function () {
+			// SweetAlert2가 나타날 때 모달 숨기기
+			$("#reservationModal").modal('hide');
+
+			Swal.fire({
+				title: '예매를 취소하시겠습니까?',
+				text: "한번 취소한 예매는 다시 되돌릴 수 없습니다.",
+				icon: 'warning',
+				showCancelButton: true,
+				confirmButtonColor: '#3085d6',
+				cancelButtonColor: '#d33',
+				confirmButtonText: '승인',
+				cancelButtonText: '취소',
+				reverseButtons: true, // 버튼 순서 거꾸로
+			}).then((result) => {
+				if (result.isConfirmed) {
+
+					$.ajax({
+						url: '/cancelReservation',
+						type: 'POST',
+						contentType: 'application/json',
+						data: JSON.stringify(inputData),
+						success: function (response) {
+							// 서버 응답에 대한 처리
+							console.log(response);
+
+							// SweetAlert2를 다시 표시
+							Swal.fire({
+								title: '취소가 완료되었습니다.',
+								text: '화끈하시네요~!',
+								icon: 'success',
+								confirmButtonText: '확인',
+							}).then((result) => {
+								if (result.isConfirmed) {
+									location.href("/mypage");
+								}
+							});
+						},
+						error: function (error) {
+							// 오류 발생 시 처리
+							console.error(error);
+
+							// 오류가 발생했을 때도 SweetAlert2를 다시 표시
+							Swal.fire({
+								title: '취소에 실패하였습니다.',
+								text: '',
+								icon: 'success',
+								confirmButtonText: '확인',
+							}).then(() => {
+								location.href("/");
+							});
+						}
+					});
+				} else if (result.isDismissed && result.dismiss === Swal.DismissReason.cancel) {
+					// SweetAlert2에서 "취소" 버튼 클릭 시 모달 다시 표시
+					$("#reservationModal").modal('show');
+				}
+			});
+		});
+
 	</script>
 
-
+	<!--<script>
+    // 클릭한 행의 데이터를 모달에 표시하는 JavaScript 코드
+    $('.clickable-row').click(function() {
+        var modalContent = $(this).html();
+        $('#modalContent').html(modalContent);
+        $('#reservationModal').modal('show');
+    });
+</script>-->
+	<script>
+	</script>
 	<script>
 		// get the element to animate
 		var element = document.getElementById('count-stats');
@@ -513,32 +518,3 @@
 </body>
 
 </html>
-
-
-
-
-<!--
-		<div class="col-lg-10 ms-auto me-auto p-lg-2 mt-lg-0 mt-4">
-								<div class="rotating-card-container">
-									<div
-										class="card card-rotate card-background card-background-mask-primary shadow-primary mt-md-0 mt-5">
-										<div class="front front-background"
-											style="background-image: url(https://images.unsplash.com/photo-1569683795645-b62e50fbf103?ixlib=rb-1.2.1&amp;ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&amp;auto=format&amp;fit=crop&amp;w=987&amp;q=80); background-size: cover;">
-											<div class="card-body py-7 text-center">
-												<i class="material-icons text-white text-4xl my-3">touch_app</i>
-												<h3 class="text-white">회원 정보 <br> xxx님 </h3>
-											</div>
-										</div>
-										<div class="back back-background"
-											style="background-image: url(https://images.unsplash.com/photo-1498889444388-e67ea62c464b?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&amp;ixlib=rb-1.2.1&amp;auto=format&amp;fit=crop&amp;w=1365&amp;q=80); background-size: cover;">
-											<div class="card-body pt-7 text-center">
-												<h3 class="text-white">아이디 <br> 이름 <br> 이메일</h3>
-												<p class="text-white opacity-8"> 예매 내역 상세 보기</p>
-												<a href="#re" class="btn btn-white btn-sm w-50 mx-auto mt-3">예매 확인</a>
-											</div>
-										</div>
-									</div>
-								</div>
-							</div>
-	
--->
