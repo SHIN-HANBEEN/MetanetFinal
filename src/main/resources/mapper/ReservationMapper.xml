@@ -107,7 +107,7 @@
 		arrival_time, departure_name, arrival_name, adult, middle_child, child
 		from
 		(select * from
-		(select route_id, pay_id, res_date, LISTAGG(seat_id, ',') WITHIN GROUP(ORDER
+		(select route_id, pay_id, res_date, LISTAGG(seat_id, ', ') WITHIN GROUP(ORDER
 		BY seat_id) AS seat_id, total_price
 		from reservations group by route_id, pay_id, res_date, total_price having
 		pay_id = #{payId}) a

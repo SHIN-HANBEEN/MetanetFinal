@@ -71,6 +71,15 @@ public class ReservationPageController {
 	@GetMapping("/reservation/complete")
 	public String reservationComplete(@RequestParam String payId, Model model) {
 		Map<String, Object> info = reservationService.getReservationInfo(payId);
+		String adult = info.get("ADULT").toString();
+		String middleChild = info.get("ADULT").toString();
+		String child = info.get("ADULT").toString();
+		StringBuilder sb = new StringBuilder();
+		if(!adult.equals("0")) sb.append("성인 "+ adult +"명 ");
+		if(!middleChild.equals("0")) sb.append("중고생 "+ middleChild +"명 ");
+		if(!child.equals("0")) sb.append("아동 "+ child +"명");
+		
+		info.put("AGE", sb.toString());
 		model.addAttribute("info",info);
 		
 		return "reservation/paymentComplete";

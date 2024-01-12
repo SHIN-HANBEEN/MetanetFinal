@@ -49,14 +49,15 @@
 		<div class="row justify-content-md-center">
 			<div class="col-lg-12 metanet-page-header pb-6" style="height: 100%; background-image: url('../assets/img/bus.png');">
 				<span class="mask bg-gradient-dark opacity-6"></span>
-				<div class="container-fluid metanet-mt-24">
+				<div class="container-fluid mt-8">
 					<div class="row " style="text-align: center;">
 						<!-- 좌석조회 카드 -->
 						<div class="col-lg-12 mb-5" style="z-index: 10;">
-							<div class="container bg-body-tertiary rounded-4 mt-n12">
+							<div class="container bg-body-tertiary rounded-4 " style="padding: 30px 30px 30px 30px;">
 
-								<div class="section text-center">
+								<div class="section text-center m-4 my-5">
 									<h2 class="title pb-3 pt-4">시외버스 예매하기</h2>
+									
 									<div class="container">
 										<div class="row justify-content-md-center">
 											<div class="position-relative m-4">
@@ -77,8 +78,11 @@
 													class="position-absolute top-0 start-95 translate-middle btn btn-sm bg-gradient-secondary rounded-pill"
 													style="width: 7rem; height:2rem; padding-right: 22px;">결제완료</button>
 											</div>
+											
+											
 											<!-- <div class="col col-md-auto"> -->
 											<div class="col-12 col-md-10 mt-5">
+											
 												<div class="container bg-secondary-subtle text-secondary-emphasis rounded-4">
 													<div class="">
 														<h4 class=" pt-2">선택 노선 정보</h4>
@@ -86,23 +90,34 @@
 															<table class="table align-items-center mt-3 mb-0">
 																<thead>
 																	<tr>
-																		<th class="text-secondary-emphasis">노선 정보</th>
-																		<th class="text-secondary-emphasis">버스 등급</th>
-																		<th class="text-secondary-emphasis">출발 시간</th>
-																		<th class="text-secondary-emphasis">도착 시간</th>
+																		<th class="text-secondary-emphasis fs-5">노선 정보</th>
+																		<th class="text-secondary-emphasis fs-5">버스 등급</th>
+																		<th class="text-secondary-emphasis fs-5">출발 시간</th>
+																		<th class="text-secondary-emphasis fs-5">도착 시간</th>
 																	</tr>
 																</thead>
 																<tbody>
 																	
-																	<tr>
-																		<td id="routeName" class="text-secondary-emphasis" style="width: 25%;">
-																			<span id="dep" style="line-height: 100px;">출발지</span> 
-																			<div class="" style="display: inline-block; max-height: 100%; line-height: 100%;">
-																				<span class="material-symbols-outlined fa-2x">
-																				trending_flat
-																				</span>
-																			</div>
-																			<span id="arr">도착지</span>
+																	<tr style="font-size: large;">
+																		<td id="routeName" class="text-secondary-emphasis" style="width: 40%; ">
+																			  <!-- <div class="row justify-content-md-center" >
+																				<div class="col" style="text-align: right; ">
+																					<span id="dep" style="vertical-align: middle; text-align:right; vertical-align: middle;">출발지</span> 
+																				</div>
+																				<div class="col-md-auto">
+																					<span class="material-symbols-outlined fa-2x" style="top: 50%; padding: 0px;">
+																						trending_flat
+																					</span>
+																				</div>
+																				<div class="col" style="text-align: left; vertical-align: middle;">
+																					<span id="arr" style="vertical-align: middle; text-align: left;">도착지</span>
+																				</div>
+																			  </div> 																			 -->
+																			  <span id="dep" style="text-align:right; vertical-align: middle;">출발지</span>
+																			  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="16" fill="currentColor" class="bi bi-arrow-right" viewBox="0 0 16 16">
+																				<path fill-rule="evenodd" d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8"/>
+																			  </svg>
+																			<span id="arr" style="vertical-align: middle; text-align: left;">도착지</span>
 																		</td>
 																		<td id="gradeNm" class="text-secondary-emphasis" style="width: 25%;">강원고속 [일반]</td>
 																		<td id="depPlandTime" class="text-secondary-emphasis" style="width: 25%;">06:45 출발</td>
@@ -115,20 +130,20 @@
 												</div>
 											</div>
 											
-											<div class="col-12 col-md-10 p-5 my-5 border rounded-3 seatContainer">
+											<div class="col-12 col-md-10 p-5 my-5 border rounded-3 seatContainer border-dark text-start">
 
 												<!-- <h1 style="text-align: center;">좌석 선택</h1> -->
 												<div class="row">
 
 													<div class="col-md" style="margin: 20px; float: left;">
 
-														<div class="row container">
+														<div class="row container ">
 															<h5>> 매수선택</h5>
-															<div class="border rounded"
+															<div class="border rounded text-black border-dark"
 																style="padding: 20px; padding-right: 100px; width: 400px; float: left;">
-																<div class="input-group input-group-static mb-4">
-																	<label for="exampleFormControlSelect1" class="ms-0">성인</label>
-																	<select class="form-control" id="select1" onchange="changeSelectValue()">
+																<div class="input-group input-group-static mb-4 ">
+																	<label for="exampleFormControlSelect1" class="ms-0 fs-6 text-black">성인</label>
+																	<select class="form-control fs-5 text-black" id="select1" onchange="changeSelectValue()">
 																		<option value=0>0</option>
 																		<option value=1 selected>1</option>
 																		<option value=2>2</option>
@@ -138,8 +153,8 @@
 																	</select>
 																</div>
 																<div class="input-group input-group-static mb-4">
-																	<label for="exampleFormControlSelect1" class="ms-0">중고생</label>
-																	<select class="form-control" id="select2" onchange="changeSelectValue()">
+																	<label for="exampleFormControlSelect1" class="ms-0 fs-6 text-black">중고생</label>
+																	<select class="form-control fs-5 text-black" id="select2" onchange="changeSelectValue()">
 																		<option value=0>0</option>
 																		<option value=1>1</option>
 																		<option value=2>2</option>
@@ -149,8 +164,8 @@
 																	</select>
 																</div>
 																<div class="input-group input-group-static mb-4">
-																	<label for="exampleFormControlSelect1" class="ms-0">아동</label>
-																	<select class="form-control" id="select3" onchange="changeSelectValue()">
+																	<label for="exampleFormControlSelect1" class="ms-0 fs-6 text-black">아동</label>
+																	<select class="form-control fs-5 text-black" id="select3" onchange="changeSelectValue()">
 																		<option value=0>0</option>
 																		<option value=1>1</option>
 																		<option value=2>2</option>
@@ -163,7 +178,7 @@
 														</div>
 														<div class="row container" style="margin-top: 30px;">
 															<h5>> 선택매수 및 금액</h5>
-															<div class="border rounded" style="padding: 20px;">
+															<div class="border rounded border-dark" style="padding: 20px;">
 																<table class="table">
 																	<tbody>
 																		<tr>
@@ -201,7 +216,7 @@
 
 															<div class="container" style="width: 400px; float: left;">
 																<h5>> 좌석선택</h5>
-																<div class="container border rounded">
+																<div class="container border rounded border-dark">
 																	<div>
 																		<img src="/assets/img/drive-seat.JPG" alt="" style="width:100%;">
 																	</div>
@@ -553,6 +568,14 @@
 				}).catch(error => console.log('FetchError'));
 		}
 	}
+	window.onpageshow = function(event) {
+		if ( event.persisted || (window.performance && window.performance.navigation.type == 2)) {
+			// Back Forward Cache로 브라우저가 로딩될 경우 혹은 브라우저 뒤로가기 했을 경우
+			// 새로고침
+			location.reload(true);
+		}
+	}
+
 </script>
 
 </html>
