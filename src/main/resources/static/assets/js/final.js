@@ -4,36 +4,14 @@
 
 //============================ 출발지 검색 =========================
 // Function to send GET request and update table
-function updateTerminalTable1(searchTerm) {
-	// Send GET request to /search-terminal with the searchTerm
-	fetch(`/search-terminal?terminalName=${encodeURIComponent(searchTerm)}`, {
-		method: 'GET',
-		headers: {
-			'Content-Type': 'application/json',
-			// You can add additional headers if needed
-		},
-	})
-		.then(response => response.json())
-		.then(data => {
-			// Get the table body element
-			const tableBody = document.getElementById('terminalTable1').getElementsByTagName('tbody')[0];
 
-			// Clear existing table rows
-			tableBody.innerHTML = '';
 
-			console.log(data);
-
-			// Add new rows based on the returned data
-			data.forEach(terminal => {
-				const row = tableBody.insertRow();
-				const cell = row.insertCell(0);
-				cell.textContent = terminal;
-			});
-		})
-		.catch(error => {
-			console.error('Error fetching terminal data:', error);
-		});
-}
+document.addEventListener('DOMContentLoaded', () => {
+	console.log(document.getElementById('TerminalSearchInput1'));
+	
+	
+	
+ });
 
 // Add event listener for input changes
 document.getElementById('TerminalSearchInput1').addEventListener('input', function() {
