@@ -3,6 +3,7 @@ package metanet.kosa.metanetfinal.notice.service;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
+import java.util.Objects;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -91,7 +92,11 @@ public class NoticeService implements INoticeService{
 	    notice.setDirPath("/files/" + fileName);
 		
 	    // DB에 저장
-	    notice.setNoticeId(noticeRepository.getMaxNoticeId() + 1);
+	    if(noticeRepository.getTotalNoticeNum() == 0) {
+	    	notice.setNoticeId(1);
+	    } else {
+	    	notice.setNoticeId(noticeRepository.getMaxNoticeId() + 1);
+	    }
 	    noticeRepository.insertNotice(notice);
 	}
 
