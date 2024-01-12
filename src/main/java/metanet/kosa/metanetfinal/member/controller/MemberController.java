@@ -54,7 +54,7 @@ public class MemberController {
 
 	@GetMapping(value="/login")
 	public String login() {
-		return "login";
+		return "member/login";
 	}
 	
 	
@@ -133,7 +133,7 @@ public class MemberController {
 		model.addAttribute("cancelReservationList",cancelReservationList);
 		model.addAttribute("member", member);
 		//System.out.println("토큰 테스트 : "+ authToken);
-		return "mypage";
+		return "member/mypage";
 	}
 
 
@@ -146,7 +146,7 @@ public class MemberController {
 		session.setAttribute("csrfToken", csrfToken);
 		Members member = new Members();
 		model.addAttribute("member", member);
-		return "signin";
+		return "member/signin";
 	}
 
 	@PostMapping(value = "/signin")
