@@ -88,67 +88,162 @@
 											여기에 넣고 싶은 것을 넣으세요.
 											
 										-->
-										<!-- <div class="col col-md-auto"> style="margin-left: 100px;"-->
-										<div class="col-12 col-md-10 mt-5 justify-content-center align-items-center">
-											<div
-												class="container bg-secondary-subtle text-secondary-emphasis rounded-4 justify-content-center align-items-center"
-												style="margin-left: 100px;">
-												<div class="">
-													<h4 class=" pt-2">선택 예매 정보</h4>
-													<div class="table-responsive">
-														<table class="table align-items-center mt-3 mb-0">
-															<thead>
-																<tr>
-																	<th class="text-secondary-emphasis">노선 정보</th>
-																	<th class="text-secondary-emphasis">버스 등급</th>
-																	<th class="text-secondary-emphasis">출발 시간</th>
-																	<th class="text-secondary-emphasis">도착 시간</th>
-																	<th class="text-secondary-emphasis">선택 좌석</th>
-																	<th class="text-secondary-emphasis">예매 인원</th>
-																</tr>
-															</thead>
-															<tbody>
-																<tr>
-																	<td id="routeName" class="text-secondary-emphasis" style="width: 16%;">
-																		<span id="dep" style="line-height: 100px;">출발지</span>
-																		<div class="" style="display: inline-block; max-height: 100%; line-height: 100%;">
-																			<span class="material-symbols-outlined fa-2x">
-																				trending_flat
-																			</span>
-																		</div>
-																		<span id="arr">도착지</span>
-																	</td>
-																	<td id="grade" class="text-secondary-emphasis" style="width: 16%;">
-																		강원고속 [일반]
-																	</td>
-																	<td id="depPlandTime" class="text-secondary-emphasis" style="width: 16%;">
-																		06:45 출발
-																	</td>
-																	<td id="arrPlandTime" class="text-secondary-emphasis" style="width: 16%;">
-																		06:45 출발
-																	</td>
-																	<td class="text-secondary-emphasis" style="width: 16%;">
-																		좌석 <span id="selectedSeats"> </span> 번
-																	</td>
-																	<td id="ageType" class="text-secondary-emphasis" style="width: 16%;">
 
-																	</td>
-																</tr>
-															</tbody>
-														</table>
-													</div>
-												</div>
-											</div>
-										</div>
 
 
 
 										<!-- 결제 수단 컨테이너 -->
-										<div class="col-12 col-md-10" style="margin-top: 300px; margin-left: 100px;">
-											<div class="container bg-body-tertiary rounded-4 mt-n12">
-												<div class="col-12">
-													<div class="container ">
-														<div class="pb-1">
+										<div class="row" style="margin-top: 300px;">
+											<div class="container bg-body-tertiary rounded-4 mt-n12 p-0">
+												<div class="row">
+													<!--<div class="container p-0">-->
+														<div class="col-12">
+															<!--<div style="margin-bottom: 0px;"
+																class="w-100 h-100 justify-content-center align-item-center text-align-center">
+																<div class="btn bg-info py-3 d-flex fw-bold fs-3 text-white text-center
+																	align-item-center justify-content-center" style="margin-bottom: 0px; z-index: 2; cursor:auto;">
+																	결제 진행
+																</div>
+															</div>-->
+															<!--  rgba(251, 140, 0, 0.8) -->
+															<div class="rounded-bottom shadow py-2 px-2" style="
+																	position: relative;
+																	top: -20px;
+																">
+																<div class="row rounded-4 pt-4">
+																	<hr class="dark horizontal mt-0 mb-2 ">
+																	<h4>
+																		선택 예매 정보
+																	</h4>
+																	<hr class="dark horizontal mt-0 mb-4 ">
+																	<div class="col-2">
+																		<div class="container rounded-4">
+																			<span class="badge rounded-pill bg-light fs-5 text-black w-100 mt-n2 mx-auto">
+																				노선 정보
+																			</span>
+																			<div class="text-center pb-3">
+																				<div class="align-items-center justify-content-center">
+																					<!-- 노선 정보 여기 넣어주세요. -->
+																					<div id="routeName" class="text-secondary-emphasis mt-3">
+																						<div id="dep">출발지</div>
+																						<div class="">
+																							<span class="material-symbols-outlined fa-2x">
+																								trending_flat
+																							</span>
+																						</div>
+																						<div id="arr">도착지</div>
+																					</div>
+																				</div>
+																			</div>
+																		</div>
+																	</div>
+																	<div class="col-2">
+																		<div class="container rounded-4">
+																			<span class="badge rounded-pill bg-light fs-5 text-black w-100 mt-n2 mx-auto">
+																				버스 등급
+																			</span>
+																			<div class="text-center pb-3 pt-3">
+																				<div class="align-items-center justify-content-center">
+																					<!-- 버스 등급 정보 여기 넣어주세요. -->
+																					<span id="grade" class="text-secondary-emphasis" style="width: 16%;">
+																						강원고속 [일반]
+																					</span>
+																				</div>
+																			</div>
+																		</div>
+																	</div>
+																	<div class="col-2">
+																		<div class="container rounded-4">
+																			<span class="badge rounded-pill bg-light fs-5 text-black w-100 mt-n2 mx-auto">
+																				출발 시간
+																			</span>
+																			<div class="text-center pb-3 pt-3">
+																				<div class="align-items-center justify-content-center">
+																					<!-- 출발 시간 정보 여기 넣어주세요. -->
+																					<span id="depPlandTime" class="text-secondary-emphasis" style="width: 16%;">
+																						06:45 출발
+																					</span>
+																				</div>
+																			</div>
+																		</div>
+																	</div>
+																	<div class="col-2">
+																		<div class="container rounded-4">
+																			<span class="badge rounded-pill bg-light fs-5 text-black w-100 mt-n2 mx-auto">
+																				도착 시간
+																			</span>
+																			<div class="text-center pb-3 pt-3">
+																				<div class="align-items-center justify-content-center">
+																					<!-- 도착 시간 정보 여기 넣어주세요. -->
+																					<span id="arrPlandTime" class="text-secondary-emphasis" style="width: 16%;">
+																						06:45 출발
+																					</span>
+
+																				</div>
+																			</div>
+																		</div>
+																	</div>
+																	<div class="col-2">
+																		<div class="container rounded-4">
+																			<span class="badge rounded-pill bg-light fs-5 text-black w-100 mt-n2 mx-auto">
+																				선택 좌석
+																			</span>
+																			<div class="text-center pb-3 pt-3">
+																				<div class="align-items-center justify-content-center">
+																					<!-- 선택 좌석 정보 여기 넣어주세요. -->
+																					<span class="text-secondary-emphasis" style="width: 16%;">
+																						좌석 <span id="selectedSeats"> </span> 번
+																					</span>
+
+																				</div>
+																			</div>
+																		</div>
+																	</div>
+																	<div class="col-2">
+																		<div class="container rounded-4">
+																			<span class="badge rounded-pill bg-light fs-5 text-black w-100 mt-n2 mx-auto">
+																				예매 인원
+																			</span>
+																			<div class="text-center pb-3 pt-3">
+																				<div class="align-items-center justify-content-center">
+																					<!-- 예매 인원 정보 여기 넣어주세요. -->
+																					<span id="ageType" class="text-secondary-emphasis" style="width: 16%;">
+
+																					</span>
+																				</div>
+																			</div>
+																		</div>
+																	</div>
+																</div>
+
+
+																<div class="row rounded-4" style="padding-top: 50px;">
+																	<div class="col-2"></div>
+																	<div class="col-8">
+																		<div class="container rounded-4">
+																			<hr class="dark horizontal mt-0 mb-2">
+																			<h4>
+																				총 결제 금액
+																			</h4>
+																			<hr class="dark horizontal mt-0 mb-0">
+																			<div class="card-header text-center pt-4 pb-3">
+																				<h1 class="font-weight-bold mt-2">
+																					<small class="text-lg mb-auto">₩</small>
+																					<!-- 결제 금액 여기 넣어주세요. -->
+																					<span id="totalPrice"></span>
+																					<small class="text-lg">원</small>
+																				</h1>
+																			</div>
+																			<button id="iamportPayment" class="btn btn-warning w-50 h-50 btn-lg mb-5 mt-3">
+																				카카오톡 	결제하기
+																			</button>
+																		</div>
+																	</div>
+																	<div class="col-2"></div>
+																</div>
+															</div>
+														</div>
+														<div class="pb-3 pt-1 mb-3">
 															<p style="margin-bottom: 0px;">
 																<a class="btn btn-warning w-100 h-100 d-flex align-items-center justify-content-between"
 																	data-bs-toggle="collapse" href="#collapseExample1" role="button" aria-expanded="true"
@@ -158,12 +253,13 @@
 																	</img>
 																</a>
 															</p>
-															<div class="collapse rounded-bottom" id="collapseExample1" style="
-																	background-color: rgba(251, 140, 0, 0.8);
+															<!--  rgba(251, 140, 0, 0.8) -->
+															<div class="collapse rounded-bottom shadow" id="collapseExample1" style="
+																	background-color: blanchedalmond;
 																	position: relative;
 																	top: -20px;
 																">
-																<div class="row" style="padding-top: 40px;">
+																<div class="row" style="padding-top: 50px;">
 																	<div class="col-2"></div>
 																	<div class="col-8">
 																		<div class="container rounded-4">
@@ -178,7 +274,8 @@
 																					<small class="text-lg">원</small>
 																				</h1>
 																			</div>
-																			<button id="iamportPayment" class="btn btn-warning w-50 h-50 btn-lg">카카오톡 결제하기</button>
+																			<button id="iamportPayment" class="btn btn-warning w-50 h-50 btn-lg">카카오톡
+																				결제하기</button>
 																		</div>
 																	</div>
 																</div>
@@ -253,7 +350,7 @@
 																</div>
 															</div>
 														</div>
-													</div>
+													<!--</div>-->
 												</div>
 											</div>
 										</div>
