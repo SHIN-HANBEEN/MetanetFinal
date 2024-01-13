@@ -81,7 +81,7 @@
 
 						<div class="col-lg-7 text-center">
 							<div class="col-lg-12 card move-on-hover mt-4">
-								<a href="/member-modification">
+								<a href="/member-information">
 
 
 
@@ -158,8 +158,10 @@
 										<th>도착시간</th>
 										<th>예약시간</th>
 										<th>좌석 번호</th>
-										<th>결제 번호</th>
 										<th>총 금액</th>
+										<th style="display: none; width: 0%;">결제 번호</th>
+										<th style="display: none; width: 0%;">출발지 ID</th>
+										<th style="display: none; width: 0%;">도착지 ID</th>
 									</tr>
 								</thead>
 								<tbody>
@@ -167,12 +169,14 @@
 										data-target="#reservationModal" data-reservation-id="${res.id}" style="cursor: pointer;">
 										<td th:text="${res.departureTerminalName}">출발지</td>
 										<td th:text="${res.arrivalTerminalName}">도착지</td>
-										<td th:text="${res.departureTime}">출발시간</td>
-										<td th:text="${res.arrivalTime}">도착시간</td>
-										<td th:text="${res.resDate}">예약시간</td>
+										<td th:text="${#strings.substring(res.departureTime,0,16)}">출발시간</td>
+										<td th:text="${#strings.substring(res.arrivalTime,0,16)}">도착시간</td>
+										<td th:text="${#strings.substring(res.resDate,0,16)}">예약시간</td>
 										<td th:text="${res.seatIds}">좌석 번호</td>
-										<td th:text="${res.payId}">결제 번호</td>
 										<td th:text="${res.totalPrice}">총 금액</td>
+										<td style="display: none; width: 0%;" th:text="${res.payId}">결제 번호</td>
+										<td style="display: none; width: 0%;" th:text="${res.departureTerminalId}">출발지 ID</td>
+										<td style="display: none; width: 0%;" th:text="${res.arrivalTerminalId}">출발지 ID</td>
 									</tr>
 								</tbody>
 							</table>
@@ -300,14 +304,18 @@
 						<p>도착시간: <span id="modalArrivalTime"></span></p>
 						<p>예약시간: <span id="modalResDate"></span></p>
 						<p>좌석 번호: <span id="modalSeatIds"></span></p>
-						<p>결제 번호: <span id="modalPayId"></span></p>
 						<p>총 금액: <span id="modalTotalPrice"></span></p>
+						<p>결제 번호: <span id="modalPayId"></span></p>
+						<p>출발 ID: <span id="modaldepartureTerminalId"></span></p>
+						<p>도착 ID: <span id="modalarrivalTerminalId"></span></p>
 					</div>
 				</div>
 				<div class="modal-footer">
 					<button type="button" class="btn bg-gradient-secondary" data-bs-dismiss="modal">닫기</button>
 					<button type="button" class="btn bg-gradient-primary">저장</button>
 					<button type="button" class="btn btn-danger" id="deleteButton">삭제</button>
+					<button type="button" class="btn bg-gradient-primary" id='changeSeat'>좌석변경</button>
+
 				</div>
 			</div>
 		</div>
@@ -330,19 +338,29 @@
 
 	<script>
 		var inputData;
+		var depPlaceNm;
+		var arrPlaceNm;
+		var depTime;
+		var paymentId;
 
 		$('.clickable-row').click(function () {
 			var departureTerminal = $(this).find('td:eq(0)').text();
 			var arrivalTerminal = $(this).find('td:eq(1)').text();
-			var departureTime = $(this).find('td:eq(2)').text();
-			var arrivalTime = $(this).find('td:eq(3)').text();
+			var departureTime = $(this).find('td:eq(2)').text().substring(0,16);
+			var arrivalTime = $(this).find('td:eq(3)').text().substring(0,16);
 			var resDate = $(this).find('td:eq(4)').text();
 			var seatIds = $(this).find('td:eq(5)').text();
-			var payId = $(this).find('td:eq(6)').text();
-			var totalPrice = $(this).find('td:eq(7)').text();
-
+			var totalPrice = $(this).find('td:eq(6)').text();
+			var payId = $(this).find('td:eq(7)').text();
+			var departureTerminalId = $(this).find('td:eq(8)').text();
+			var arrivalTerminalId = $(this).find('td:eq(9)').text();
+			paymentId = payId;
+			depPlaceNm =  departureTerminal;
+			arrPlaceNm =  arrivalTerminal;
+			depTime =  encodeURIComponent(departureTime);
+			console.log(depTime);
 			inputData = {"payId": payId, "totalPrice": totalPrice};
-
+			console.log(depPlaceNm);
 			// 모달에 데이터 넣기
 			$('#modalDepartureTerminal').text(departureTerminal);
 			$('#modalArrivalTerminal').text(arrivalTerminal);
@@ -350,14 +368,24 @@
 			$('#modalArrivalTime').text(arrivalTime);
 			$('#modalResDate').text(resDate);
 			$('#modalSeatIds').text(seatIds);
-			$('#modalPayId').text(payId);
 			$('#modalTotalPrice').text(totalPrice);
+			$('#modalPayId').text(payId);
+			$('#modaldepartureTerminalId').text(departureTerminalId);
+			$('#modalarrivalTerminalId').text(arrivalTerminalId);
 
 			// 모달 열기
 			$('#reservationModal').modal('show');
 		});
+		//var seatURI = '/reservation/seat-selection?dpTerminalName='+ depPlaceNm + 'arrTerminalName=' +arrPlaceNm+ 'departureTime=' + depTime;
+		//var seatURI = "/reservation/seat-selection?dpTerminalName=";
+		$("#changeSeat").click(function () {
+			var seatURI = '/reservation/seats-selection/modification/?dpTerminalName='+ depPlaceNm + 
+			'&arrTerminalName=' +arrPlaceNm+ '&departureTime=' + depTime +'&payId=' +paymentId;
 
-
+			console.log(depPlaceNm);
+			window.location.href = seatURI;
+			//window.location.href = "/"
+		});
 		$("#deleteButton").click(function () {
 			// SweetAlert2가 나타날 때 모달 숨기기
 			$("#reservationModal").modal('hide');
