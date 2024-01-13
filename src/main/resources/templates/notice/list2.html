@@ -36,6 +36,12 @@
 	
 	<style>
 		body { font-family: 'KoPub Dotum'; }
+		#searchForm {
+        width: 100%; /* 버튼의 너비를 100%로 설정 */
+    	}
+    	.custom-container-padding {
+        padding: 20px; /* 상하좌우 20px의 패딩 */
+    	}
 	</style>
 </head>
 
@@ -61,8 +67,9 @@
 											
 											<!-- <div class="col col-md-auto"> -->
 											<div class="col-12 col-md-10 mt-5">
+												
 												<!-- 공지사항 리스트 -->
-													<div class="container">
+													<div class="container ">
 												        <span th:text="${message}">메시지</span>
 												        <div class="content">
 												           <div class="card">
@@ -98,25 +105,48 @@
 													            </form>
 													        </div>-->
 													        
-													        <div class="input-group input-group-dynamic mb-3">
+													        <!-- 검색 -->
+													        <!--<div class="input-group input-group-dynamic mb-3">
 															    <form th:action="@{/notice/search/1}" id="searchForm" method="get" class="d-flex">
 															        <input type="text" id="keyword" name="keyword" class="form-control" placeholder="검색어를 입력하세요" aria-label="Recipient's username" aria-describedby="keywordBtn">
 															        <input type="submit" class="btn btn-warning" value="검색" id="keywordBtn">
 															    </form>
-															</div>
+															</div>-->
+															
+															<div class="input-group input-group-dynamic mb-3 search-form-container">
+														        <!--<form th:action="@{/notice/search/1}" id="searchForm" method="get" class="d-flex">-->
+																<form th:action="@{/notice/search/1}" id="searchForm" method="get" class="d-flex">
+														            <div class="col-md-9">
+														            	<input type="text" id="keyword" name="keyword" class="form-control" placeholder="검색어를 입력하세요" aria-label="Recipient's username" aria-describedby="keywordBtn">
+														            </div>
+														            <div class="col-md-3">
+														            	<input type="submit" class="btn btn-warning" value="검색" id="keywordBtn">
+														        	</div>
+														        </form>
+														    </div>
+															
+
+															
 												            
-												            <table class="table">
+												            <!-- 새 글 작성 -->
+												            <!--<table class="table">
 												                <tr>
-												                    <!--<td align="left">
+												                    <td align="left">
 												                        <th:block th:replace="~{/include/paging :: paging(categoryId=${categoryId}, totalPageCount=${totalPageCount}, nowPage=${page})}"></th:block>
-												                    </td>-->
+												                    </td>
 												                    <td align="right">
 												                        <a th:href="@{/notice/write}">
 												                            <button type="button" class="btn btn-primary">새 글 작성</button>
 												                        </a>
 												                    </td>
-												                </tr>
-												            </table>
+												               </tr>
+												            </table>-->
+												            <div class="d-flex justify-content-end button-container">
+														        <a th:href="@{/notice/write}">
+														            <button type="button" class="btn btn-primary">새 글 작성</button>
+														        </a>
+														    </div>
+												            
 												        </div>
 												    </div>
 												    <!-- 페이징 -->

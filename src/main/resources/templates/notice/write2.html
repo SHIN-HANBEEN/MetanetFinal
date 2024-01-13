@@ -36,9 +36,6 @@
 	
 	<style>
 		body { font-family: 'KoPub Dotum'; }
-		.viewtable {
-			padding: 20px;
-		}
 	</style>
 </head>
 
@@ -57,64 +54,86 @@
 						<!-- 좌석조회 카드 -->
 						<div class="col-lg-12 mb-5" style="z-index: 10;">
 							<div class="container bg-body-tertiary rounded-4 mt-n12">
+
+								<!--<div class="section text-center">-->
+									
 											
 											
 											<!-- <div class="col col-md-auto"> -->
 											<div class="col-12 col-md-10 mt-5">
-												<!-- 공지사항 상세보기 추가 -->
-												<div class="card">
-													<div class="table-responsive viewtable">
-											            <table class="table align-items-center mb-0">
-											                <tr>
-											                    <td width="30%" class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">제목</td> 
-											                    <td class="title" th:text="${notice.title}">notice title</td>
-											                </tr>
-											                <tr style="height: 200px;">
-											                    <td width="30%" class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">내용</td> 
-											                    <td class="content" th:text="${notice.content}">notice Content</td>
-											                </tr>
-											                <th:block th:if="${notice.dirPath != null and notice.dirPath != ''}">
-											                    <tr>
-											                        <td class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">File</td> 
-											                        <td>
-											                            <th:block th:if="${#strings.endsWith(notice.dirPath, '.jpg') || #strings.endsWith(notice.dirPath, '.jpeg') || #strings.endsWith(notice.dirPath, '.png') || #strings.endsWith(notice.dirPath, '.gif')}">
-											                                <!--<img th:src="@{/file/{fileId}(fileId=${board.fileId})}" class="img-thumbnail" /><br/>-->
-											                            </th:block>
-											                            <!--<a th:href="@{${notice.dirPath}}">파일 보기</a>-->
-											                            <a th:href="@{'/download' + ${notice.dirPath}}">파일 다운로드</a>
-											                        </td>
-											                    </tr>
-											                </th:block>
-											                <tr>
-															    <td colspan="2" align="right">
-															        <a th:href="@{/notice/list/{page}(page=${page})}">
-															            <button type="button" class="btn btn-secondary">목록</button>
-															        </a>
-															        <a th:href="@{/notice/write}">
-															            <button type="button" class="btn btn-primary">새 글 작성</button>
-															        </a>
-															        <a th:href="@{/notice/update/{noticeId}(noticeId=${notice.noticeId})}">
-															            <button type="button" class="btn btn-success">수정</button>
-															        </a>
-															        <a th:href="@{/notice/delete/{noticeId}(noticeId=${notice.noticeId})}">
-															            <button type="button" class="btn btn-info">삭제</button>
-															        </a>
-															    </td>
-															</tr>
-											            </table>
+												<!-- 공지사항 글 작성 -->
+													
+													
+													<div class="container">
+											        <div class="pg-opt">
+											            <div class="row">
+											                <div class="col-md-6 pc">
+											                    <!--<h2>새 글 작성</h2>-->
+											                </div>
+											            </div>
 											        </div>
-												</div>
-												 <!-- 공지사항 상세보기 추가 -->
+											        
+											        
+											        <div class="card card-frame">
+														<div class="card-body">
+														
+													        
+													        <div class="content">
+																
+																
+															
+																
+													            <form th:action="@{/notice/write}" method="post" enctype="multipart/form-data" class="form-horizontal">
+													                <!--<input type="hidden" name="csrfToken" th:value="${sessionScope.csrfToken}">-->
+													                
+																	<!--<div class="form-group">
+																	    <label class="control-label col-sm-2" for="memberId" th:text="#{memberId}"></label>
+																	    <div class="col-sm-2">
+																	        <input type="text" name="memberId" id="memberId" class="form-control" 
+																	               th:value="${session.name}" 
+																	               th:readonly="${!#strings.isEmpty(session.name)}" 
+																	               autocomplete="off" required>
+																	    </div>
+																	</div>-->
+																	
+													                <div class="form-group">
+													                    <label class="control-label col-sm-2">제목</label>
+													                    <div class="col-sm-8">
+													                        <input type="text" name="title" id="title" class="form-control" required>
+													                    </div>
+													                </div>
+													                <div class="form-group mb-3">
+																	<!--<div class="mb-3">-->
+													                    <!--<label for="content" class="control-label col-sm-2">내용</label>-->
+													                    <label for="content" class="form-label">내용</label>
+													                    <!--<div class="col-sm-8">-->
+													                        <textarea name="content" id="content" rows="10" cols="100" class="form-control"></textarea>
+													                    <!--</div>-->
+													                </div>
+													                <div class="form-group">
+													                    <label class="control-label col-sm-2">첨부파일</label>
+													                    <div class="col-sm-8">
+													                        <input type="file" name="file" id="file" class="form-control">
+													                    </div>
+													                </div>
+													                <div class="form-group">
+													                    <div class="col-sm-offset-2 col-sm-8">
+													                        <input type="submit" class="btn btn-primary" value="저장">
+													                        <input type="reset" class="btn btn-secondary" value="취소">
+													                    </div>
+													                </div>
+													            </form>
+													        </div>
+													        
+													     </div>
+													 </div>
+											    </div>
+													
+												 <!-- 공지사항 글 작성 -->
 												
-
-
-
-								</div>
+											<!--</div>-->
+									</div>
 							</div>
-
-
-
-
 						</div>
 					</div>
 				</div>
@@ -159,8 +178,8 @@
 
 <script th:inline="javascript">
 
-
-
+	
+	
 </script>
 
 </html>
