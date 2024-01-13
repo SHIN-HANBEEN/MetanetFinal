@@ -191,10 +191,45 @@ public class MemberController {
 	public String modification_pw(Principal principal, Model model) {
 		return "member/pw-modification";
 	}
+
 	
 	@GetMapping(value="/member-modification")
-	public String modification_member(Principal principal, Model model) {
+	public String modification_member(Principal principal, Model model, HttpSession session) {
+		String csrfToken = UUID.randomUUID().toString();
+		session.setAttribute("csrfToken", csrfToken);
+		Members member = memberService.getMemberInfo(principal.getName());
+		model.addAttribute("member", member);
 		return "member/member-modification";
+	}
+	
+	@PostMapping(value="/member-modification")
+	public String modification_member(Principal principal, Members member, String csrfToken, Model model, HttpSession session) {
+		System.out.println(csrfToken);
+		System.out.println(member);
+		if (csrfToken == null || "".equals(csrfToken)) {
+			throw new RuntimeException("CSRF 토큰이 없습니다.");
+			
+		} else if (!csrfToken.equals(session.getAttribute("csrfToken"))) {
+			throw new RuntimeException("잘못된 접근이 감지되었습니다.");
+		}
+		
+		try {
+			if (!member.getPassword().equals(member.getPassword2())) {
+				model.addAttribute("member", member);
+				model.addAttribute("message", "MEMBER_PW_RE");
+				return "signin";
+			}
+			// member.setRole("ROLE_USER");
+			// member.setMileage(0);
+			System.out.println("id: " + member.getId()+", email: " + member.getEmail() + ", phoneNum: " + member.getPhoneNum());
+			memberService.updateMember(member.getId(), member.getEmail(), member.getPhoneNum());
+		} catch (DuplicateKeyException e) {
+			member.setId(null);
+			model.addAttribute("members", member);
+			model.addAttribute("message", "ID_ALREADY_EXIST");
+			return "signin";
+		}
+		return "";
 	}
 	
 
