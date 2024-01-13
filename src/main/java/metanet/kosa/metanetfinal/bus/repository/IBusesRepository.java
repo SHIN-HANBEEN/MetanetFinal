@@ -63,4 +63,9 @@ public interface IBusesRepository {
 	
 	int verifyCountFalseSeats(@Param("busId") int busId, @Param("seatIdList") List<Integer> seatIdList);
 	
+//	/*
+//	 * 버스의 좌석 예약 취소 처리 : 좌석 테이블 변경
+//	 * 버스 Id 와 좌석 Id로 좌석 상태를 true에서 false로 변경한다.
+//	 */
+//	void updateCancelSeats(int busId, String seatId);
 }

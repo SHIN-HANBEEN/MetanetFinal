@@ -39,9 +39,9 @@ public interface IReservationService {
 //	 */
 //	void updateSeat(List<Integer> satIdList, int resId);
 //	
-//	//예매 취소
-//	void cancleReservation(int resId);
-//	
+	//예매 취소
+	void cancleReservation(String payId);
+	
 //	// 비회원 예매 리스트 조회
 ////	List<Reservation> getReservation(int nmbId);
 //	// 비회원 예매 정보 조회
@@ -65,7 +65,7 @@ public interface IReservationService {
 	 * 과거 6개월까지 예매내역과 취소내역을 조회한다. 
 	 */
 	List<DetailedReservation> getReservationHistoryForLastSixMonth(@Param("canceledDate") Boolean canceledDate, @Param("phoneNum") String phoneNum);
-
+	
 	
 	/*
 	 * 예매_회원 예매 정보 조회 : 
