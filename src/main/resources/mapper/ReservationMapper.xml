@@ -40,7 +40,9 @@
         r.arrival_time AS arrivalTime,
         res.res_date AS resDate,
         res.pay_id as payId,
-        res.total_price as totalPrice
+        res.total_price as totalPrice,
+        dt.terminal_id as departureTerminalId,
+        at.terminal_id as arrivalTerminalId
     FROM
         reservations res
     JOIN
@@ -55,7 +57,8 @@
         AND res.cancled_date IS NULL
     GROUP BY
         res.pay_id, r.route_id, r.departure_id, dt.terminal_name, r.arrival_id,
-        at.terminal_name, r.DEPARTURE_TIME, r.arrival_time, res.res_date, res.total_price
+        at.terminal_name, r.DEPARTURE_TIME, r.arrival_time, res.res_date, res.total_price,
+        dt.terminal_id, at.terminal_id
     ORDER BY
         res.res_date
 	</select>

@@ -38,9 +38,9 @@
 	<!-- container fluid -->
 	<div class="container-fluid">
 		<div class="row">
-			<div class="col-lg-12 metanet-page-header" style="height: 90vh; background-image: url('./assets/img/bus.png');">
+			<div class="col-lg-12 metanet-page-header" style="height: 100vh; background-image: url('./assets/img/bus.png');">
 				<span class="mask bg-gradient-dark opacity-6"></span>
-				<div class="container-fluid metanet-pt-8">
+				<div class="container-fluid pt-10">
 
 					<div class="container my-auto">
 						<div class="row">
@@ -48,7 +48,7 @@
 								<div class="card z-index-0 fadeIn3 fadeInBottom">
 									<div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
 										<div class="bg-gradient-primary shadow-primary border-radius-lg py-3 pe-1">
-											<h4 class="text-white font-weight-bolder text-center mt-2 mb-0">회원가입</h4>
+											<h4 class="text-white font-weight-bolder text-center mt-2 mb-0">비밀번호 변경하기</h4>
 
 										</div>
 									</div>
@@ -56,10 +56,6 @@
 										<form action="/signin" id="signUpForm" method="post" th:object="${member}" role="form" class="text-start">
 											<input type="hidden" name="csrfToken" id="csrfToken" th:value="${session.csrfToken}"
 												autocomplete="off">
-											<div class="input-group input-group-outline my-3">
-												<label class="form-label" for="id">아이디 입력</label>
-												<input type="text" id="id" name="id" class="form-control">
-											</div>
 											<div class="input-group input-group-outline mb-3">
 												<label class="form-label" for="password">비밀번호 입력</label>
 												<input type="password" id="password" name="password" class=" form-control" autocomplete="off">
@@ -70,38 +66,10 @@
 											</div>
 
 											<div class="input-group input-group-outline my-3">
-												<label class="form-label" for="name">이름 입력</label>
-												<input type="text" id="name" name="name" class="form-control" autocomplete="off">
-											</div>
-
-											<div class="input-group input-group-outline my-3">
 												<label class="form-label" for="email">이메일 입력</label>
 												<input type="text" id="email" name="email" class="form-control" autocomplete="off">
 											</div>
-
-											<div class="input-group input-group-outline mb-3">
-												<input class="metanet-hide-date form-control datepicker" id="birthDate" name="birthDate"
-													aria-required="true" required data-placeholder="생년 월일 선택" type="date">
-											</div>
-
-											<div class="nav-wrapper position-relative end-0 mb-4">
-												<ul class="nav nav-pills nav-fill p-1" role="tablist">
-													<li class="nav-item" onclick="setGender('MALE', event)">
-														<a class="nav-link mb-0 px-0 py-1 active" data-bs-toggle="tab" href="#profile-tabs-simple"
-															role="tab" aria-controls="profile" aria-selected="false" data-gender="MALE">
-															남성
-														</a>
-													</li>
-													<li class="nav-item" onclick="setGender('FEMALE', event)">
-														<a class="nav-link mb-0 px-0 py-1" data-bs-toggle="tab" href="#dashboard-tabs-simple"
-															role="tab" aria-controls="dashboard" aria-selected="false" data-gender="FEMALE">
-															여성
-														</a>
-													</li>
-												</ul>
-											</div>
-											<input type="hidden" id="selectedGender" name="sex" value="MALE" autocomplete="off" />
-
+										
 											<div class="input-group input-group-outline mb-3">
 												<label class="form-label" for="phoneNum">휴대폰 번호 입력</label>
 												<input type="tel" class="form-control" name="phoneNum" id="phoneNum">

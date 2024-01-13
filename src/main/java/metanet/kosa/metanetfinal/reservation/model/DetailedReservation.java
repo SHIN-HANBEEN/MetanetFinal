@@ -11,9 +11,11 @@ public class DetailedReservation {
 	private String seatIds;
     private String departureTerminalName;
     private String arrivalTerminalName;
-    private Date departureTime;
-    private Date arrivalTime;
-    private Date resDate;
+    private String departureTime;
+    private String arrivalTime;
+    private String resDate;
     private String payId;
     private int totalPrice;
+    private String departureTerminalId;
+    private String arrivalTerminalId;
 }
