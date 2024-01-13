@@ -136,11 +136,11 @@ public class MemberController {
 		return "member/mypage";
 	}
 
-	@GetMapping(value = "/member-modification")
+	@GetMapping(value = "/member-information")
 	public String memberModification(Principal principal, Model model) {
 		Members member = memberService.getMemberInfo(principal.getName());
 		model.addAttribute("member", member);
-		return "member/member-modification";
+		return "member/member-information";
 	}
 
 	@GetMapping(value = "/signin")
@@ -186,6 +186,17 @@ public class MemberController {
 		session.invalidate();
 		return "redirect:/";
 	}
+	
+	@GetMapping(value="/pw-modification")
+	public String modification_pw(Principal principal, Model model) {
+		return "member/pw-modification";
+	}
+	
+	@GetMapping(value="/member-modification")
+	public String modification_member(Principal principal, Model model) {
+		return "member/member-modification";
+	}
+	
 
 	/*
 	 * @PostMapping(value="/signin") public String signin(Members member, String

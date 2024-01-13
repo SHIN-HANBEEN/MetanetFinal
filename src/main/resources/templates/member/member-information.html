@@ -28,7 +28,28 @@
 	<!-- 커스텀 CSS -->
 	<link href="../assets/css/final.css" rel="stylesheet" />
 	<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<style>
+        body {
+            background-color: #f4f4f4; /* 배경색 변경 */
+            font-family: 'Arial', sans-serif; /* 폰트 변경 */
+        }
+        .custom-table {
+            box-shadow: 0 5px 15px rgba(0,0,0,0.15); /* 그림자 조정 */
+            border-radius: 15px; /* 모서리 둥글게 조정 */
+            overflow: hidden; /* 모서리 둥글게 한 테이블에서 내용이 튀어나오지 않게 처리 */
+        }
+        .custom-table th {
+            background-color: #0062cc; /* 헤더 배경색 변경 */
+            color: #fff; /* 헤더 텍스트 색상 변경 */
+            font-size: 20px; /* 헤더 폰트 크기 변경 */
+        }
+        .custom-table td {
+            background-color: #ffffff; /* 데이터 셀 배경색 변경 */
+            color: #333; /* 데이터 셀 텍스트 색상 변경 */
+            font-size: 18px; /* 데이터 셀 폰트 크기 변경 */
+        }
+    </style>
 </head>
 
 <body>
@@ -44,87 +65,56 @@
 
 					<div class="container my-auto">
 						<div class="row">
-							<div class="col-lg-4 col-md-8 col-12 mx-auto">
+							<div class="col-lg-8 col-md-8 col-12 mx-auto">
 								<div class="card z-index-0 fadeIn3 fadeInBottom">
 									<div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
 										<div class="bg-gradient-primary shadow-primary border-radius-lg py-3 pe-1">
-											<h4 class="text-white font-weight-bolder text-center mt-2 mb-0">회원가입</h4>
-
+											<h4 class="text-white font-weight-bolder text-center mt-2 mb-0">회원 정보</h4>
 										</div>
 									</div>
 									<div class="card-body">
-										<form action="/signin" id="signUpForm" method="post" th:object="${member}" role="form" class="text-start">
-											<input type="hidden" name="csrfToken" id="csrfToken" th:value="${session.csrfToken}"
-												autocomplete="off">
-											<div class="input-group input-group-outline my-3">
-												<label class="form-label" for="id">아이디 입력</label>
-												<input type="text" id="id" name="id" class="form-control">
-											</div>
-											<div class="input-group input-group-outline mb-3">
-												<label class="form-label" for="password">비밀번호 입력</label>
-												<input type="password" id="password" name="password" class=" form-control" autocomplete="off">
-											</div>
-											<div class="input-group input-group-outline mb-3">
-												<label class="form-label" for="password2">비밀번호 확인</label>
-												<input type="password" id="password2" name="password2" class=" form-control" autocomplete="off">
-											</div>
+										
 
-											<div class="input-group input-group-outline my-3">
-												<label class="form-label" for="name">이름 입력</label>
-												<input type="text" id="name" name="name" class="form-control" autocomplete="off">
-											</div>
-
-											<div class="input-group input-group-outline my-3">
-												<label class="form-label" for="email">이메일 입력</label>
-												<input type="text" id="email" name="email" class="form-control" autocomplete="off">
-											</div>
-
-											<div class="input-group input-group-outline mb-3">
-												<input class="metanet-hide-date form-control datepicker" id="birthDate" name="birthDate"
-													aria-required="true" required data-placeholder="생년 월일 선택" type="date">
-											</div>
-
-											<div class="nav-wrapper position-relative end-0 mb-4">
-												<ul class="nav nav-pills nav-fill p-1" role="tablist">
-													<li class="nav-item" onclick="setGender('MALE', event)">
-														<a class="nav-link mb-0 px-0 py-1 active" data-bs-toggle="tab" href="#profile-tabs-simple"
-															role="tab" aria-controls="profile" aria-selected="false" data-gender="MALE">
-															남성
-														</a>
-													</li>
-													<li class="nav-item" onclick="setGender('FEMALE', event)">
-														<a class="nav-link mb-0 px-0 py-1" data-bs-toggle="tab" href="#dashboard-tabs-simple"
-															role="tab" aria-controls="dashboard" aria-selected="false" data-gender="FEMALE">
-															여성
-														</a>
-													</li>
-												</ul>
-											</div>
-											<input type="hidden" id="selectedGender" name="sex" value="MALE" autocomplete="off" />
-
-											<div class="input-group input-group-outline mb-3">
-												<label class="form-label" for="phoneNum">휴대폰 번호 입력</label>
-												<input type="tel" class="form-control" name="phoneNum" id="phoneNum">
-												<button type="button" class="btn btn-sm bg-gradient-primary mb-0 me-1 my-2 mt-md-0"
-													onclick="showInputCertificationNumber()">
-													인증번호받기
-												</button>
-											</div>
-											<div class="metanet-display-hidden input-group input-group-outline mb-3" id="certificationNumber">
-												<label class="form-label">인증 번호 입력</label>
-												<input type="text" class="form-control" id="inputNumber" name="inputNumber">
-												<button type="button" class="btn btn-sm bg-gradient-primary mb-0 me-1 my-2 mt-md-0"
-													onclick="submitAuthentication()">
-													본인인증하기
-												</button>
-											</div>
-											<p id="authenticationResult"></p>
-											<div class="text-center">
-												<input value="회원가입" class="btn bg-gradient-primary w-100 my-1 mb-2" onclick="validateAndSubmit()">
-
-
-											</div>
-										</form>
+									        <div class="container my-5">
+										        <table class="table custom-table">
+										            <tbody>
+										                <tr>
+										                    <th scope="row">ID</th>
+										                    <td th:text="${member.id}">user123</td>
+										                </tr>
+										                <tr>
+										                    <th scope="row">이름</th>
+										                    <td th:text="${member.name}">홍길동</td>
+										                </tr>
+										                <tr>
+										                    <th scope="row">이메일</th>
+										                    <td th:text="${member.email}">user123@example.com</td>
+										                </tr>
+										                <tr>
+										                    <th scope="row">생년월일</th>
+										                    <td th:text="${member.birthDate}">2024-01-01</td>
+										                </tr>
+										                <tr>
+										                    <th scope="row">전화번호</th>
+										                    <td th:text="${member.phoneNum}">010-1111-1111</td>
+										                </tr>
+										                <tr>
+										                    <th scope="row">성별</th>
+										                    <td th:if="${member.sex == 'MALE'}">남자</td>
+										                    <td th:if="${member.sex == 'FEMALE'}">여자</td>
+										                </tr>
+										                <tr>
+										                    <th scope="row">마일리지</th>
+										                    <td th:text="${member.mileage}">010-1111-1111</td>
+										                </tr>
+										            </tbody>
+										        </table>
+										        <button id="member-modification">회원정보 수정하기</button>
+										        <button id="pw-modification">비밀번호 변경하기</button>
+										    </div>
+											<hr>
+											<a href="/sign-out">비밀번호 변경하기</a>
+										
 									</div>
 								</div>
 							</div>
@@ -140,7 +130,15 @@
 	</div>
 	</div>
 
+	<script>
+        document.getElementById('member-modification').onclick = function() {
+            window.location.href = '/member-modification'; // 회원정보 수정 페이지 URL
+        };
 
+        document.getElementById('pw-modification').onclick = function() {
+            window.location.href = '/pw-modification'; // 비밀번호 변경 페이지 URL
+        };
+    </script>
 
 
 
@@ -157,15 +155,15 @@
 	<!--성별-->
 	<script>
 		document.addEventListener('DOMContentLoaded', () => {
-		console.log('slkjdnflksnlk');
-		var token = sessionStorage.getItem("X-AUTH-TOKEN");
-		console.log(token);
-		//document.getElementById('testbutton').addEventListener('click', showAlert);
-		//function showAlert()
-		//alert('test');
-		
+			console.log('slkjdnflksnlk');
+			var token = sessionStorage.getItem("X-AUTH-TOKEN");
+			console.log(token);
+			//document.getElementById('testbutton').addEventListener('click', showAlert);
+			//function showAlert()
+			//alert('test');
+
 		});
-		
+
 		function setGender(gender) {
 			// Set the selected gender value to the hidden input field
 			document.getElementById('selectedGender').value = gender;
@@ -231,7 +229,7 @@
 			var birthDateValue = document.getElementById('birthDate').value;
 			var phoneNumValue = document.getElementById('phoneNum').value;
 			var inputNumber = document.getElementById('inputNumber').value;
-			
+
 
 			// 미입력된 필드를 확인하고 알림창 띄우기
 			var errorMessage = '';
