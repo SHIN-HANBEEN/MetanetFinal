@@ -48,17 +48,41 @@
 								<div class="card z-index-0 fadeIn3 fadeInBottom">
 									<div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
 										<div class="bg-gradient-primary shadow-primary border-radius-lg py-3 pe-1">
-											<h4 class="text-white font-weight-bolder text-center mt-2 mb-0">회원가입</h4>
-
+											<h4 class="text-white font-weight-bolder text-center mt-2 mb-0">회원 정보 수정하기</h4>
 										</div>
 									</div>
 									<div class="card-body">
-										<form action="/signin" id="signUpForm" method="post" th:object="${member}" role="form" class="text-start">
+										<ol class="breadcrumb">
+											<li th:text="${member.name}">MEMBER</li>
+											<li class="active" th:text="#{member.name}">UPDATE USER INFO</li>
+										</ol>
+										
+										<form>
+  <div class="form-group row">
+    <label for="staticEmail" class="col-sm-2 col-form-label">Email</label>
+    <div class="col-sm-10">
+      <input type="text" readonly class="form-control-plaintext" id="staticEmail" value="email@example.com">
+    </div>
+  </div>
+  <div class="form-group row">
+    <label for="inputPassword" class="col-sm-2 col-form-label">Password</label>
+    <div class="col-sm-10">
+      <input type="password" class="form-control" id="inputPassword" placeholder="Password">
+    </div>
+  </div>
+</form>
+
+
+										<form th:action="@{/member/member-modification}" id="signUpForm" method="post" class="text-start">
+
+										</form>
+										<form action="/signin" id="signUpForm" method="post" th:object="${member}" role="form"
+											class="text-start">
 											<input type="hidden" name="csrfToken" id="csrfToken" th:value="${session.csrfToken}"
 												autocomplete="off">
 											<div class="input-group input-group-outline my-3">
 												<label class="form-label" for="id">아이디 입력</label>
-												<input type="text" id="id" name="id" class="form-control">
+												<input type="text" id="id" name="id"  th:value="${member.id}" class="form-control">
 											</div>
 											<div class="input-group input-group-outline mb-3">
 												<label class="form-label" for="password">비밀번호 입력</label>
@@ -120,7 +144,8 @@
 											</div>
 											<p id="authenticationResult"></p>
 											<div class="text-center">
-												<input value="회원가입" class="btn bg-gradient-primary w-100 my-1 mb-2" onclick="validateAndSubmit()">
+												<input value="회원가입" class="btn bg-gradient-primary w-100 my-1 mb-2"
+													onclick="validateAndSubmit()">
 
 
 											</div>
@@ -157,15 +182,15 @@
 	<!--성별-->
 	<script>
 		document.addEventListener('DOMContentLoaded', () => {
-		console.log('slkjdnflksnlk');
-		var token = sessionStorage.getItem("X-AUTH-TOKEN");
-		console.log(token);
-		//document.getElementById('testbutton').addEventListener('click', showAlert);
-		//function showAlert()
-		//alert('test');
-		
+			console.log('slkjdnflksnlk');
+			var token = sessionStorage.getItem("X-AUTH-TOKEN");
+			console.log(token);
+			//document.getElementById('testbutton').addEventListener('click', showAlert);
+			//function showAlert()
+			//alert('test');
+
 		});
-		
+
 		function setGender(gender) {
 			// Set the selected gender value to the hidden input field
 			document.getElementById('selectedGender').value = gender;
@@ -231,7 +256,7 @@
 			var birthDateValue = document.getElementById('birthDate').value;
 			var phoneNumValue = document.getElementById('phoneNum').value;
 			var inputNumber = document.getElementById('inputNumber').value;
-			
+
 
 			// 미입력된 필드를 확인하고 알림창 띄우기
 			var errorMessage = '';

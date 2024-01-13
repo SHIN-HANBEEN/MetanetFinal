@@ -136,6 +136,12 @@ public class MemberController {
 		return "member/mypage";
 	}
 
+	@GetMapping(value = "/member-modification")
+	public String memberModification(Principal principal, Model model) {
+		Members member = memberService.getMemberInfo(principal.getName());
+		model.addAttribute("member", member);
+		return "member/member-modification";
+	}
 
 	@GetMapping(value = "/signin")
 	public String signin(HttpSession session, Model model) {

@@ -58,7 +58,6 @@
         at.terminal_name, r.DEPARTURE_TIME, r.arrival_time, res.res_date, res.total_price
     ORDER BY
         res.res_date
-    ]]>
 	</select>
 
 	<select id="getReservationHistoryForLastSixMonth"
@@ -100,7 +99,6 @@
 	<select id="testCount">
 		select count(*) from reservations
 	</select>
-<<<<<<< HEAD
 
 	<select id="getReservationInfo" parameterType="string"
 		resultType="map">
@@ -127,7 +125,6 @@
 		on d.pay_id = e.pay_id
 	</select>
 
-=======
 	
 	<update id="updateResTableIsCnc" >
 	UPDATE reservations
@@ -142,5 +139,4 @@
         WHERE pay_id = #{payId}
     </select>
 	
->>>>>>> refs/heads/kang3
 </mapper>
