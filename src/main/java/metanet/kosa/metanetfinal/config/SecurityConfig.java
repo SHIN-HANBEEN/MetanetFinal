@@ -44,6 +44,9 @@ public class SecurityConfig {
 				.requestMatchers(
 						"/mypage"
 						).hasAnyRole("USER","ADMIN")
+				.requestMatchers(
+						"/notice/register"
+						).hasRole("ADMIN")
 		);
 				//requestMatchers("/login", "/signin").permitAll());
 
