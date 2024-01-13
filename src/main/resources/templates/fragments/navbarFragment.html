@@ -41,7 +41,7 @@
 								class="nav-item  mx-2 my-2"
 								th:if="${#authorization.expression('isAnonymous()')}"  >
 								<a 
-									href="nreservation" 
+									href="/nreservation" 
 									class="nav-link d-flex cursor-pointer align-items-center
 										ps-2 my-2 metanet-width-100p metanet-justify-center" 
 									aria-expanded="false">
@@ -52,7 +52,7 @@
 							<li class="nav-item mr-2 my-2"
 								th:if="${#authorization.expression('isAuthenticated()')}">
 								<a 
-									href="reservation" 
+									href="/reservation" 
 									class="nav-link d-flex cursor-pointer align-items-center
 										ps-2 my-2 metanet-width-100p metanet-justify-center" 
 									aria-expanded="false">
@@ -64,7 +64,7 @@
 								class="nav-item my-2 mx-2 metanet-width-100p" 
 								style="display: flex; justify-content: right;">
 								<a 
-									href="login" 
+									href="/login" 
 									class="btn btn-sm btn-success my-2 py-2">
 									Login
 								</a>
@@ -73,7 +73,7 @@
 								class="nav-item my-2 mx-2 metanet-width-100p"
 								style="display: flex; justify-content: right;">
 								<a 
-									href="logout2" 
+									href="/logout2" 
 									class="btn btn-sm btn-info my-2 py-2">
 									Logout
 								</a>
