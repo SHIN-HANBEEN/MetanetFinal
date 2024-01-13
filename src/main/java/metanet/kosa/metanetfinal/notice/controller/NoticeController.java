@@ -74,7 +74,7 @@ public class NoticeController {
 		model.addAttribute("startPage", startPage);
 		model.addAttribute("endPage", endPage);
 		
-		return "notice/list2";
+		return "notice/list3";
 	}
 	
 	@GetMapping(value= "notice/list")
@@ -165,7 +165,7 @@ public class NoticeController {
 		// CSRF 토큰 생성 후 세션에 저장
 //		String csrfToken = UUID.randomUUID().toString(); // CSRF 토큰 생성
 //		session.setAttribute("csrfToken", csrfToken); // 세션에 저장
-		return "notice/write";
+		return "notice/write2";
 	}
 	
 	// 공지사항 작성
