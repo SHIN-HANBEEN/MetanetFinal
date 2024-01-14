@@ -4,6 +4,31 @@
 
 <mapper namespace="metanet.kosa.metanetfinal.notice.repository.INoticeRepository">
 
+	<insert id="insertNoticeWithFile" parameterType="map">
+		<![CDATA[
+			INSERT INTO notices
+				(notice_id, member_id, title, 
+				content, file_name, file_data, 
+				is_emphasized)
+			VALUES
+				(notices_id.NEXTVAL, #{memberId}, #{notices.title}, 
+				#{notices.content}, #{notices.fileName},  #{notices.file}, 
+				#{notices.isEmphasized})
+		]]>
+	</insert>
+	
+	<insert id="insertNoticeWithoutFile" parameterType="map">
+		<![CDATA[
+			INSERT INTO notices
+				(notice_id, member_id, title, content, is_emphasized)
+			VALUES
+				(notices_id.NEXTVAL, #{memberId}, #{notices.title}, 
+				#{notices.content}, 
+				#{notices.isEmphasized})
+		]]>
+	</insert>
+	
+	<!-- 
 	<select id="getNoticeList" parameterType="hashmap" resultType="metanet.kosa.metanetfinal.notice.model.Notices">
 		<![CDATA[
 		SELECT 
@@ -80,14 +105,6 @@
 		]]>
 	</select>
 	
-	<insert id="insertNotice" parameterType="metanet.kosa.metanetfinal.notice.model.Notices">
-		<![CDATA[
-			INSERT INTO notices
-				(notice_id, member_id, title, content, dir_path)
-			VALUES
-				(#{noticeId}, 1, #{title}, #{content}, #{dirPath})
-		]]>
-	</insert>
 	
 	<delete id="deleteNotice" parameterType="int">
 		<![CDATA[
@@ -104,4 +121,6 @@
 			dir_Path = #{notice.dirPath}
 		WHERE notice_id = #{noticeId}
 	</update>
+	
+	-->
 </mapper>

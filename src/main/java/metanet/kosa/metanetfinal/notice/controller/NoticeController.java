@@ -1,14 +1,19 @@
 package metanet.kosa.metanetfinal.notice.controller;
 
 import java.io.IOException;
+import java.net.URLDecoder;
+import java.net.http.HttpRequest;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.security.Principal;
+import java.util.Base64;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.ibatis.annotations.Param;
 import org.jsoup.Jsoup;
 import org.jsoup.safety.Safelist;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +32,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+
+
+import jakarta.mail.Session;
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import metanet.kosa.metanetfinal.notice.model.Notices;
 import metanet.kosa.metanetfinal.notice.service.INoticeService;
@@ -47,12 +57,77 @@ public class NoticeController {
 		return "notice/notice";
 	}
 
-	// 공지사항 등록
+	// 공지사항 등록 화면 이동
 	@GetMapping(value = "/notice/register")
 	public String getNoticeRegister() {
 		return "notice/register";
 	}
+	
+	// 공지사항 등록하기
+	@PostMapping(value = "/notice/write")
+	public String writeNotice(
+			Notices notices,
+			BindingResult results,
+			HttpServletRequest request) {
+		
+		String memberId = "";
+		
+		
+		
+		//쿠키에 담긴 로그인 정보 가져오기
+		try {
+			Cookie[] cookies = request.getCookies();
+			for (Cookie cookie : cookies) {
+				if (cookie.getName().equals("access_token")) {
+					//String cookieValue = URLDecoder.decode(cookie.getValue(), "UTF-8");
+					System.out.println("쿠키에서 꺼낸 value : " + cookie.getValue());
+					String token = cookie.getValue();
+					
+					//가져온 JWT 토큰 decoding 하기
+					String[] chunks = token.split("//.");
+					
+					Base64.Decoder decoder = Base64.getUrlDecoder();
+					
+					String header = new String(decoder.decode(chunks[0]));
+					String payload = new String(decoder.decode(chunks[1]));
+					
+					
+					System.out.println("memberId 는 " + memberId);
+				}
+			}
+		} catch (Exception e) {
+			System.out.println("쿠키 처리 중 에러 발생");
+			return "";
+		}
 
+		//파일 처리하기
+		try {
+			MultipartFile mfile = notices.getMultipartFile();
+			
+			if(mfile!=null && !mfile.isEmpty()) {
+				notices.setFile(mfile.getBytes()); //프런트에서 넘어온 MultipartFile 을 DB에 저장하기 위해서는 Byte[] 로 바꾸어 주어야 한다.
+				notices.setFileName(mfile.getOriginalFilename()); //multipartfile 에서 파일 이름을 꺼내주어야 함.
+				notices.setMemberId(Integer.valueOf(memberId));
+				System.out.println("insertNoticeWithFile 시작! ");
+				System.out.println("notices 출력하기 " + notices);
+				noticeService.insertNoticeWithFile(notices, memberId);
+				
+			}else {
+				noticeService.insertNoticeWithoutFile(notices, memberId);
+			}
+			
+		} catch (Exception e) {
+			System.out.println("파일 처리 중 에러 발생");
+			return "";
+		}
+		
+		
+		
+		
+		return "notice/notice";
+	}
+	
+	/*
 	// 공지사항 리스트 조회
 	@GetMapping(value = "/notice/list/{page}")
 	public String getNoticeList(@PathVariable(required = false) Integer page, HttpSession session, Model model) {
@@ -247,4 +322,5 @@ public class NoticeController {
 		return "notice/tmp";
 	}
 
+	*/
 }
