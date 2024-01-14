@@ -1,0 +1,564 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head>
+	<title>MetaBus</title>
+	<!-- Required meta tags -->
+	<meta charset="utf-8">
+	<meta content="width=device-width, initial-scale=1.0" name="viewport" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+	<link rel="stylesheet"
+		href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+	<!--     Fonts and icons     -->
+	<link rel="stylesheet" type="text/css"
+		href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,900|Roboto+Slab:400,700" />
+	<!-- Nucleo Icons -->
+	<link href="/assets/css/nucleo-icons.css" rel="stylesheet" />
+	<link href="/assets/css/nucleo-svg.css" rel="stylesheet" />
+	<!-- Font Awesome Icons -->
+	<script src="https://kit.fontawesome.com/42d5adcbca.js" crossorigin="anonymous"></script>
+	<!-- Material Icons -->
+	<link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
+
+	<link href="/assets/css/material-kit.css?v=3.0.0" rel="stylesheet" />
+
+	<!-- 커스텀 CSS -->
+	<link href="/assets/css/final.css" rel="stylesheet" />
+	<link type="text/css" rel="stylesheet" href="/assets/css/seat2.css">
+
+	<!-- KoPub 폰트 -->
+	<link rel='stylesheet' href='//cdn.jsdelivr.net/npm/font-kopub@1.0/kopubdotum.min.css'>
+
+
+
+
+	<style>
+		body {
+			font-family: 'KoPub Dotum';
+		}
+	</style>
+</head>
+
+<body>
+
+	<div th:replace="~{fragments/navbarFragment :: navbar}"></div>
+	<!-- Include navbar fragment -->
+
+	<!-- container fluid -->
+	<div class="container-fluid">
+		<div class="row justify-content-md-center">
+			<div class="col-lg-12 metanet-page-header pb-6"
+				style="height: 100%; background-image: url('../assets/img/bus.png');">
+				<span class="mask bg-gradient-dark opacity-6"></span>
+				<div class="container-fluid mt-8">
+					<div class="row " style="text-align: center;">
+						<!-- 좌석조회 카드 -->
+						<div class="col-lg-12 mb-5" style="z-index: 10;">
+							<div class="container bg-body-tertiary rounded-4 "
+								style="padding: 30px 30px 30px 30px; min-width: 550px;">
+
+								<div class="section text-center m-4 my-5">
+									<h2 class="title pb-3 pt-4">좌석 변경</h2>
+
+									<div class="container">
+										<div class="row justify-content-md-center">
+											<!-- <div class="position-relative m-4">
+												<div class="progress" style="height: 1px;">
+													<div class="progress-bar" role="progressbar" style="width: 35%;" aria-valuenow="50"
+														aria-valuemin="0" aria-valuemax="100"></div>
+												</div>
+												<button type="button"
+													class="position-absolute top-0 start-5 translate-middle btn btn-sm btn-primary rounded-pill"
+													style="width: 7rem; height:2rem; padding-right: 22px;">시간표조회</button>
+												<button type="button"
+													class="position-absolute top-0 start-35 translate-middle btn btn-sm btn-primary rounded-pill"
+													style="width: 7rem; height:2rem; padding-right: 22px;">좌석선택</button>
+												<button type="button"
+													class="position-absolute top-0 start-65 translate-middle btn btn-sm bg-gradient-secondary rounded-pill"
+													style="width: 7rem; height:2rem; padding-right: 22px;">결제진행</button>
+												<button type="button"
+													class="position-absolute top-0 start-95 translate-middle btn btn-sm bg-gradient-secondary rounded-pill"
+													style="width: 7rem; height:2rem; padding-right: 22px;">결제완료</button>
+											</div> -->
+
+
+											<!-- <div class="col col-md-auto"> -->
+											<div class="col-12 col-md-10 mt-5">
+
+												<div
+													class="container bg-secondary-subtle text-secondary-emphasis rounded-4">
+													<div class="">
+														<h4 class=" pt-2">선택 노선 정보</h4>
+														<div class="table-responsive">
+															<table class="table align-items-center mt-3 mb-0">
+																<thead>
+																	<tr>
+																		<th class="text-secondary-emphasis fs-5">노선 정보
+																		</th>
+																		<th class="text-secondary-emphasis fs-5">버스 등급
+																		</th>
+																		<th class="text-secondary-emphasis fs-5">출발 시간
+																		</th>
+																		<th class="text-secondary-emphasis fs-5">도착 시간
+																		</th>
+																	</tr>
+																</thead>
+																<tbody>
+
+																	<tr style="font-size: large;">
+																		<td id="routeName"
+																			class="text-secondary-emphasis"
+																			style="width: 40%; ">
+																			<!-- <div class="row justify-content-md-center" >
+																				<div class="col" style="text-align: right; ">
+																					<span id="dep" style="vertical-align: middle; text-align:right; vertical-align: middle;">출발지</span> 
+																				</div>
+																				<div class="col-md-auto">
+																					<span class="material-symbols-outlined fa-2x" style="top: 50%; padding: 0px;">
+																						trending_flat
+																					</span>
+																				</div>
+																				<div class="col" style="text-align: left; vertical-align: middle;">
+																					<span id="arr" style="vertical-align: middle; text-align: left;">도착지</span>
+																				</div>
+																			  </div> 																			 -->
+																			<span id="dep"
+																				style="text-align:right; vertical-align: middle;">출발지</span>
+																			<svg xmlns="http://www.w3.org/2000/svg"
+																				width="24" height="16"
+																				fill="currentColor"
+																				class="bi bi-arrow-right"
+																				viewBox="0 0 16 16">
+																				<path fill-rule="evenodd"
+																					d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8" />
+																			</svg>
+																			<span id="arr"
+																				style="vertical-align: middle; text-align: left;">도착지</span>
+																		</td>
+																		<td id="gradeNm" class="text-secondary-emphasis"
+																			style="width: 25%;">강원고속 [일반]</td>
+																		<td id="depPlandTime"
+																			class="text-secondary-emphasis"
+																			style="width: 25%;">06:45 출발</td>
+																		<td id="arrPlandTime"
+																			class="text-secondary-emphasis"
+																			style="width: 25%;">06:45 출발</td>
+																	</tr>
+																</tbody>
+															</table>
+														</div>
+													</div>
+												</div>
+											</div>
+
+											<div
+												class="col-md-10 p-5 my-5 border rounded-3 seatContainer border-dark text-start position-relative">
+
+												<!-- <h1 style="text-align: center;">좌석 선택</h1> -->
+												<div>
+
+													<!-- <div class="col-md" style="margin: 20px; float: left;">
+
+														<div class="row container ">
+															<h5>> 예매매수</h5>
+															<div class="border rounded text-black border-dark"
+																style="padding: 20px; padding-right: 100px; width: 400px; float: left;">
+																<div class="input-group input-group-static mb-4 ">
+																	<label for="exampleFormControlSelect1" class="ms-0 fs-6 text-black">성인</label>
+																	<br><span class="fs-6" id="select1"></span>명
+																</div>
+																<div class="input-group input-group-static mb-4">
+																	<label for="exampleFormControlSelect1" class="ms-0 fs-6 text-black">중고생</label>
+																	<br><span class="fs-6" id="select2"></span>명
+																</div>
+																<div class="input-group input-group-static mb-4">
+																	<label for="exampleFormControlSelect1" class="ms-0 fs-6 text-black">아동</label>
+																	<br><span class="fs-6" id="select3"></span>명
+																</div>
+															</div>
+														</div>
+														
+														
+														
+													</div> -->
+													<div class="col-md-6 order-2 container" style="margin-top: 20px;">
+
+														<div class="col-md-auto mb-4" style="float: left;">
+
+															<div class="container" style="width: 400px; float: left;">
+																<h5>> 좌석변경</h5>
+																<div class="container border rounded border-dark">
+																	<div>
+																		<img src="/assets/img/drive-seat.JPG" alt=""
+																			style="width:100%;">
+																	</div>
+																	<div class="row"
+																		style="height: 60px; margin-top: 10px;">
+																		<div class="col">
+																			<div id="1" class="seat">1</div>
+																		</div>
+																		<div class="col">
+																			<div id="2" class="seat">2</div>
+																		</div>
+																		<div class="col"></div>
+																		<div class="col">
+																			<div id="3" class="seat">3</div>
+																		</div>
+																		<div class="col">
+																			<div id="4" class="seat">4</div>
+																		</div>
+																	</div>
+																	<div class="row"
+																		style="height: 60px; margin-top: 10px;">
+																		<div class="col">
+																			<div id="5" class="seat">5</div>
+																		</div>
+																		<div class="col">
+																			<div id="6" class="seat">6</div>
+																		</div>
+																		<div class="col"></div>
+																		<div class="col">
+																			<div id="7" class="seat">7</div>
+																		</div>
+																		<div class="col">
+																			<div id="8" class="seat">8</div>
+																		</div>
+																	</div>
+																	<div class="row"
+																		style="height: 60px; margin-top: 10px;">
+																		<div class="col">
+																			<div id="9" class="seat">9</div>
+																		</div>
+																		<div class="col">
+																			<div id="10" class="seat">10</div>
+																		</div>
+																		<div class="col"></div>
+																		<div class="col">
+																			<div id="11" class="seat">11</div>
+																		</div>
+																		<div class="col">
+																			<div id="12" class="seat">12</div>
+																		</div>
+																	</div>
+																	<div class="row"
+																		style="height: 60px; margin-top: 10px;">
+																		<div class="col">
+																			<div id="13" class="seat">13</div>
+																		</div>
+																		<div class="col">
+																			<div id="14" class="seat">14</div>
+																		</div>
+																		<div class="col"></div>
+																		<div class="col">
+																			<div id="15" class="seat">15</div>
+																		</div>
+																		<div class="col">
+																			<div id="16" class="seat">16</div>
+																		</div>
+																	</div>
+																	<div class="row"
+																		style="height: 60px; margin-top: 10px;">
+																		<div class="col">
+																			<div id="17" class="seat">17</div>
+																		</div>
+																		<div class="col">
+																			<div id="18" class="seat">18</div>
+																		</div>
+																		<div class="col"></div>
+																		<div class="col">
+																			<div id="19" class="seat">19</div>
+																		</div>
+																		<div class="col">
+																			<div id="20" class="seat">20</div>
+																		</div>
+																	</div>
+																	<div class="row"
+																		style="height: 60px; margin-top: 10px;">
+																		<div class="col">
+																			<div id="21" class="seat">21</div>
+																		</div>
+																		<div class="col">
+																			<div id="22" class="seat">22</div>
+																		</div>
+																		<div class="col"></div>
+																		<div class="col">
+																			<div id="23" class="seat">23</div>
+																		</div>
+																		<div class="col">
+																			<div id="24" class="seat">24</div>
+																		</div>
+																	</div>
+																	<div class="row"
+																		style="height: 60px; margin-top: 10px; margin-bottom: 25px;">
+																		<div class="col">
+																			<div id="25" class="seat">25</div>
+																		</div>
+																		<div class="col">
+																			<div id="26" class="seat">26</div>
+																		</div>
+																		<div class="col"></div>
+																		<div class="col">
+																			<div id="27" class="seat">27</div>
+																		</div>
+																		<div class="col">
+																			<div id="28" class="seat">28</div>
+																		</div>
+																	</div>
+																</div>
+																<div class=" container col-md-4 mt-4">
+																<button type="button" id="btn"
+																	class="btn bg-gradient-warning "
+																	style=" width:100px; display:block; font-size:large;">다음
+																	></button>
+																</div>
+															</div>
+
+														</div>
+
+
+													</div>
+
+												</div>
+											</div>
+										</div>
+									</div>
+
+
+								</div>
+							</div>
+
+
+
+
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+
+
+
+	<!-- footer -->
+	<!-- Include footer fragment -->
+	<div th:replace="~{fragments/footerFragment :: footer}"></div>
+
+	<!--   Core JS Files   -->
+	<script src="/assets/js/core/popper.min.js" type="text/javascript"></script>
+	<script src="/assets/js/core/bootstrap.min.js" type="text/javascript"></script>
+	<script src="/assets/js/plugins/perfect-scrollbar.min.js"></script>
+
+	<!--  Plugin for TypedJS, full documentation here: https://github.com/inorganik/CountUp.js -->
+	<script src="/assets/js/plugins/countup.min.js"></script>
+	<script src="/assets/js/plugins/choices.min.js"></script>
+	<script src="/assets/js/plugins/prism.min.js"></script>
+	<script src="/assets/js/plugins/highlight.min.js"></script>
+
+	<!--  Plugin for Parallax, full documentation here: https://github.com/dixonandmoe/rellax -->
+	<script src="/assets/js/plugins/rellax.min.js"></script>
+
+	<!--  Plugin for TiltJS, full documentation here: https://gijsroge.github.io/tilt.js/ -->
+	<script src="/assets/js/plugins/tilt.min.js"></script>
+
+	<!--  Plugin for Selectpicker - ChoicesJS, full documentation here: https://github.com/jshjohnson/Choices -->
+	<script src="/assets/js/plugins/choices.min.js"></script>
+	<script src="/assets/js/material-kit.min.js?v=3.0.4" type="text/javascript"></script>
+	<!-- 메타넷 final js -->
+	<!--<script src="/assets/js/final.js" type="text/javascript"></script>-->
+	<!-- jQuery js -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+</body>
+
+
+<script th:inline="javascript">
+
+	var data = [[${ mapData }]];
+
+	var reservationNum = 1;
+	var adultPrice = 8000;
+	var middleChildPrice = 6000;
+	var childPrice = 4000;
+	var occupiedSeatsList = [];
+	var busId;
+	var totalPrice = 0;
+	var routeData;
+	var firstSeatLists = [];
+	var payId;
+	document.addEventListener('DOMContentLoaded', () => {
+
+		console.log(data);
+		//document.querySelector('#routeName').textContent = data.depPlaceNm + '---->' + data.arrPlaceNm;
+		document.querySelector('#dep').textContent = data.depPlaceNm;
+		document.querySelector('#arr').textContent = data.arrPlaceNm;
+		document.querySelector('#arrPlandTime').textContent = data.arrPlandTime;
+		document.querySelector('#depPlandTime').textContent = data.depPlandTime;
+		document.querySelector('#gradeNm').textContent = data.gradeNm;
+		routeData = data;
+		adultPrice = data.adultCharge;
+		totalPrice = adultPrice;
+		middleChildPrice = data.middleChildCharge;
+		childPrice = data.childCharge;
+		busId = data.busId;
+		reservationNum = data.mySeatList.length;
+		firstSeatLists = data.mySeatList;
+		payId = data.payId;
+
+		for (const value of data.occupiedSeats) {
+			document.getElementById(value).className = 'occupiedSeat';
+		}
+
+
+
+		var occupiedSeats = document.querySelectorAll('.occupiedSeat');
+
+		for (var value of occupiedSeats) {
+			console.log(value);
+		}
+
+		for (const value of occupiedSeatsList) {
+			console.log('seatsValue', value);
+			document.getElementById(value).className = 'occupiedSeat';
+		}
+
+		const seatContainer = document.querySelector('.seatContainer');
+		beginSelectSeats(data.mySeatList);
+		countSeatPrice();
+		var seatsNames = document.querySelector('#selectedseat');
+
+
+		// 선택한 좌석수 텍스트 변경해주기
+
+		function countSeatPrice() {
+			const selectedSeatCount = document.querySelectorAll('.selectedSeat').length;
+			if (selectedSeatCount == reservationNum) {
+				var selectedSeats = document.querySelectorAll('.seat');
+				for (var value of selectedSeats) {
+					value.className = 'max-select-seat';
+				}
+			} else {
+				var selectedSeats = document.querySelectorAll('.max-select-seat');
+				for (var value of selectedSeats) {
+					value.className = 'seat';
+				}
+			}
+		}
+
+
+		//좌석 클릭했을때
+
+		seatContainer.addEventListener('click', (e) => {
+			console.log('click!!00');
+			if (e.target.className === 'seat') {
+				e.target.className = 'selectedSeat';
+				//showSelectedSeatsStr();
+			} else if (e.target.className === 'selectedSeat') {
+				e.target.className = 'seat';
+				//showSelectedSeatsStr();
+			}
+
+			countSeatPrice();
+		})
+
+		// function showSelectedSeatsStr() {
+		// 	var selected = document.querySelectorAll('.selectedSeat');
+		// 	var str = '>>';
+		// 	for (var value of selected) {
+		// 		str = str + " " + value.textContent;
+		// 	}
+		// 	seatsNames.textContent = str;
+		// }
+	})
+
+	function beginSelectSeats(seatsList) {
+		for (const seat of seatsList) {
+			document.getElementById(seat).className = 'selectedSeat'
+			//document.querySelector('#'+seat).className = 'selectedSeat';
+
+		}
+	}
+	function pickChangedSeatList(beginSelectSeatList, finalSelectSeatList) {
+		var removedseatList = [];
+		for (let i = 0; i < beginSelectSeatList.length; i++) {
+			for (let j = 0; j < finalSelectSeatList.length; j++) {
+				if (beginSelectSeatList[i] == finalSelectSeatList[j]) {
+					removedseatList.push(finalSelectSeatList[j]);
+					finalSelectSeatList.splice(j, 1);
+					break;
+				}
+			}
+		}
+		for (let i = 0; i < removedseatList.length; i++) {
+			for (let j = 0; j < beginSelectSeatList.length; j++) {
+				if (beginSelectSeatList[j] == removedseatList[i]) {
+					beginSelectSeatList.splice(j, 1);
+				}
+			}
+		}
+		console.log('최종선택', finalSelectSeatList);
+		console.log('제거된시트', beginSelectSeatList);
+		return [finalSelectSeatList, beginSelectSeatList];
+	}
+
+	document.getElementById("btn").addEventListener("click", btnClick);
+	function btnClick() {
+		//console.log('click!!!');
+		const selectedSeatCount = document.querySelectorAll('.selectedSeat').length;
+		if (selectedSeatCount != reservationNum) {
+			alert('선택하신 승차권 매수와 선택한 좌석수를 다릅니다. 좌석을 다시 선택해 주십시오.');
+		} else {
+			var reservationSeatsList = [];
+			var selected = document.querySelectorAll('.selectedSeat');
+			for (var value of selected) {
+				reservationSeatsList.push(value.id);
+			}
+			var [finalSelectSeatList, removedseatList] = pickChangedSeatList(firstSeatLists, reservationSeatsList);
+			var status;
+			fetch("/seat-modification", {
+				method: "POST",
+				headers: {
+					"Content-Type": "application/json",
+				},
+				body: JSON.stringify({
+					routeData: routeData,
+					busId: busId,
+					updateTrueSeatsList: finalSelectSeatList,
+					updateFalseSeatsList: removedseatList,
+					payId: payId
+				}),
+			})
+				.then((response) => {
+					if (response.status == 400) {
+						alert('이미 예약된 좌석이 포함되어 있습니다.')
+						//새로고침
+						window.location.reload();
+						status = 400;
+						return;
+					} else {
+						response.json();
+					}
+				})
+				.then((data) => {
+					alert('좌석이 변경되었습니다.');
+					window.history.back();
+
+
+					//if (status != 400) location.href = "/reservation/payment";
+				}).catch(error => console.log('FetchError'));
+		}
+	}
+	window.onpageshow = function (event) {
+		if (event.persisted || (window.performance && window.performance.navigation.type == 2)) {
+			// Back Forward Cache로 브라우저가 로딩될 경우 혹은 브라우저 뒤로가기 했을 경우
+			// 새로고침
+			location.reload(true);
+		}
+	}
+
+</script>
+
+</html>

@@ -66,6 +66,28 @@ public class ReservationRestController {
 		return new ResponseEntity<Map<String, Object>>(request, HttpStatusCode.valueOf(200));
 	}
 	
+	@PostMapping("/seat-modification")
+	public ResponseEntity<Map<String, Object>>  modifySelectedSeatsInBus(@RequestBody Map<String, Object> request) {
+		System.out.println(request.toString());
+		int busId = Integer.parseInt(request.get("busId").toString());
+		//Object to List<Integer>
+		List<Object> li = (ArrayList<Object>) request.get("updateTrueSeatsList");
+		List<Object> li2 = (ArrayList<Object>) request.get("updateFalseSeatsList");
+		List<Integer> updateTrueSeatsList =  new ArrayList<>();
+		List<Integer> updateFalseSeatsList =  new ArrayList<>();
+		li.stream().map(obj -> Integer.parseInt(obj.toString())).forEach(updateTrueSeatsList::add);
+		li2.stream().map(obj -> Integer.parseInt(obj.toString())).forEach(updateFalseSeatsList::add);
+		//좌석검증
+		if(!reservationService.verifySeatsCount(busId, updateTrueSeatsList)) 
+			return new ResponseEntity<Map<String, Object>>(request, HttpStatusCode.valueOf(400));
+		//좌석변경 --> 버스 좌석변경, 예약좌석 변경
+		String payId = request.get("payId").toString();
+		reservationService.modifySeat(updateTrueSeatsList, updateFalseSeatsList, busId, payId);
+		
+		
+		return new ResponseEntity<Map<String, Object>>(request, HttpStatusCode.valueOf(200));
+	}
+	
 	 // 결제 후 정보 받기	
 	@PostMapping("/reservation/payOk")
 	public ResponseEntity<Map<String, Object>> paytestOk(@RequestBody Map<String, Object> request) {

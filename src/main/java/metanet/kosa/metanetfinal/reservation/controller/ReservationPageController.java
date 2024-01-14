@@ -2,6 +2,8 @@ package metanet.kosa.metanetfinal.reservation.controller;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +20,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import metanet.kosa.metanetfinal.reservation.service.IReservationService;
 import metanet.kosa.metanetfinal.reservation.service.PaymentService;
+import metanet.kosa.metanetfinal.reservation.service.ReservationService;
 import metanet.kosa.metanetfinal.route.service.IRouteService;
 
 @Controller
@@ -27,7 +30,7 @@ public class ReservationPageController {
 	IRouteService routeService;
 
 	@Autowired
-	IReservationService reservationService;
+	ReservationService reservationService;
 	
 	@Autowired
 	PaymentService paymentService;
@@ -57,6 +60,31 @@ public class ReservationPageController {
 		model.addAttribute("mapData", dataForSeatsSelection);
 
 		return "/reservation/seat_reservation";
+	}
+	
+	@GetMapping("/reservation/seats-selection/modification/")
+	public String modifySeatsSelectPage(@RequestParam String dpTerminalName, @RequestParam String arrTerminalName,
+			@RequestParam String departureTime, @RequestParam String payId , Model model) {
+		String departureId = routeService.getTerminalIdByTerminalName(dpTerminalName);
+		String arrivalId = routeService.getTerminalIdByTerminalName(arrTerminalName);
+
+		// 'YYYY-MM-DD HH:mm' 형태로 저장된다.
+		System.out.println("departureTime : " + departureTime);
+
+		String parsedDepartureTime = departureTime.substring(0, 4) + departureTime.substring(5, 7)
+				+ departureTime.substring(8, 10) + departureTime.substring(11, 13) + departureTime.substring(14, 16);
+
+		// 202401082140 형태로 전환
+		System.out.println("parsedDepartureTime  : " + parsedDepartureTime);
+
+		Map<String, Object> dataForSeatsSelection = reservationService.getDataForSeatsSelection(departureId, arrivalId,
+				parsedDepartureTime);
+		List<Integer> mySeatList = reservationService.getMySeatList(payId);
+		dataForSeatsSelection.put("mySeatList", mySeatList);
+		dataForSeatsSelection.put("payId", payId);
+		model.addAttribute("mapData", dataForSeatsSelection);
+
+		return "/reservation/modify_seat_reservation";
 	}
 
 	@PostMapping("/reservation/payment")

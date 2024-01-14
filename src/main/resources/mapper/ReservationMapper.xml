@@ -141,5 +141,17 @@
         FROM RESERVATIONS
         WHERE pay_id = #{payId}
     </select>
+    
+    <select id="getMySeatListByPayId" parameterType="string" resultType="java.lang.Integer">
+        SELECT seat_id
+        FROM RESERVATIONS
+        WHERE pay_id = #{payId}
+    </select>
+    
+    
+    <update id="modifySeatByPayIdAndSeatId">
+    	UPDATE RESERVATIONS SET SEAT_ID=#{mdSeatId}
+    	WHERE PAY_ID=#{payId} AND SEAT_ID=#{preSeatId}
+    </update>
 	
 </mapper>

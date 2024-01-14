@@ -279,7 +279,23 @@ public class ReservationService implements IReservationService{
 		}
 		reservationRepository.updateResTableIsCnc(payId);
 	}
-		
+	/*
+	 * payId 로 좌석 리스트 가져오기
+	 */
+	@Transactional
+	public List<Integer> getMySeatList(String payId) {
+		return reservationRepository.getMySeatListByPayId(payId);
+	}
+	
+	@Transactional
+	public void modifySeat(List<Integer> updateToTrue, List<Integer> updateToFalse, int busId, String payId) {
+		log.info("좌석변경중");
+		for (int i = 0; i < updateToFalse.size(); i++) {
+			reservationRepository.modifySeatByPayIdAndSeatId(payId, updateToFalse.get(i), updateToTrue.get(i));
+			busesRepository.setBusSeatFalse(busId, updateToFalse.get(i));
+			busesRepository.setBusSeatTrue(busId, updateToTrue.get(i));
+		}
+	}
 		
 //	@Autowired
 //	IReservationRepository reservationRepository;

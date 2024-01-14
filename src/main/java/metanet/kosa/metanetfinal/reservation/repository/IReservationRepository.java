@@ -101,7 +101,10 @@ public interface IReservationRepository {
 	 * 노선번호로 출발터미널, 도착터미널 받기
 	 */
 	Map<String, Object> getReservationInfo(@Param("payId") String payId);
-
 	
+	List<Integer> getMySeatListByPayId(@Param("payId") String payId);
+	
+	void modifySeatByPayIdAndSeatId(@Param("payId") String payId, @Param("preSeatId") int preSeatId, @Param("mdSeatId") int mdSeatId);
+
 	
 }
