@@ -12,8 +12,11 @@ import metanet.kosa.metanetfinal.notice.model.Notices;
 @Repository
 public interface INoticeRepository {
 	// 공지사항 글 작성
-	void insertNoticeWithFile(@Param("notices") Notices notices, @Param("memberId") String memberId);
-	void insertNoticeWithoutFile(@Param("notices") Notices notices, @Param("memberId") String memberId);
+	void insertNoticeWithFile(@Param("notices") Notices notices, @Param("memberId") int memberId);
+	void insertNoticeWithoutFile(@Param("notices") Notices notices, @Param("memberId") int memberId);
+	
+	//10개 노티스 가져오기 
+	List<Notices> getTenNotices(@Param("pageNm") int pageNm);
 	
 //	// 공지사항 리스트 조회
 //	List<Notices> getNoticeList(@Param("start")int start, @Param("end") int end);

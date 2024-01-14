@@ -38,6 +38,7 @@ import jakarta.mail.Session;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
+import metanet.kosa.metanetfinal.jwt.JwtTokenProvider;
 import metanet.kosa.metanetfinal.notice.model.Notices;
 import metanet.kosa.metanetfinal.notice.service.INoticeService;
 
@@ -50,6 +51,9 @@ public class NoticeController {
 
 	@Autowired
 	INoticeService noticeService;
+	
+	@Autowired
+	JwtTokenProvider jwtTokenProvider;
 
 	// 공지사항 홈
 	@GetMapping(value = "/notice")
@@ -70,7 +74,7 @@ public class NoticeController {
 			BindingResult results,
 			HttpServletRequest request) {
 		
-		String memberId = "";
+		int memberId = 0;
 		
 		
 		
@@ -83,15 +87,11 @@ public class NoticeController {
 					System.out.println("쿠키에서 꺼낸 value : " + cookie.getValue());
 					String token = cookie.getValue();
 					
-					//가져온 JWT 토큰 decoding 하기
-					String[] chunks = token.split("//.");
+					//가져온 JWT 토큰에서 Payload 같은 거 꺼내오는건 JWTProvider 클래스에 작성
+					String sub = jwtTokenProvider.getSubjectFromToken(token);
+					memberId = jwtTokenProvider.getMemberIdFromToken(token);
 					
-					Base64.Decoder decoder = Base64.getUrlDecoder();
-					
-					String header = new String(decoder.decode(chunks[0]));
-					String payload = new String(decoder.decode(chunks[1]));
-					
-					
+					System.out.println("sub 는 " + sub);
 					System.out.println("memberId 는 " + memberId);
 				}
 			}
@@ -102,12 +102,22 @@ public class NoticeController {
 
 		//파일 처리하기
 		try {
+			System.out.println("File 처리 시작");
 			MultipartFile mfile = notices.getMultipartFile();
 			
 			if(mfile!=null && !mfile.isEmpty()) {
+				System.out.println("notices 처리 시작");
+				
 				notices.setFile(mfile.getBytes()); //프런트에서 넘어온 MultipartFile 을 DB에 저장하기 위해서는 Byte[] 로 바꾸어 주어야 한다.
+				System.out.println("mfile get bytes 처리 완료 : " + mfile.getBytes());
+				
 				notices.setFileName(mfile.getOriginalFilename()); //multipartfile 에서 파일 이름을 꺼내주어야 함.
+				System.out.println("mfile get filename 처리 완료 : " + mfile.getOriginalFilename());
+				
 				notices.setMemberId(Integer.valueOf(memberId));
+				System.out.println("mfile get memberId 처리 완료 : " + Integer.valueOf(memberId));
+				
+				
 				System.out.println("insertNoticeWithFile 시작! ");
 				System.out.println("notices 출력하기 " + notices);
 				noticeService.insertNoticeWithFile(notices, memberId);

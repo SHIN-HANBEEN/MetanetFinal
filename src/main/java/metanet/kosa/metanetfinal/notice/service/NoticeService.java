@@ -23,18 +23,26 @@ public class NoticeService implements INoticeService {
 	// 공지사항 작성
 	@Transactional
 	@Override
-	public void insertNoticeWithFile(Notices notices, String memberId) {
-
+	public void insertNoticeWithFile(Notices notices, int memberId) {
 		noticeRepository.insertNoticeWithFile(notices, memberId);
 	}
 
 	// 공지사항 작성
 	@Transactional
 	@Override
-	public void insertNoticeWithoutFile(Notices notices, String memberId) {
-
+	public void insertNoticeWithoutFile(Notices notices, int memberId) {
 		noticeRepository.insertNoticeWithoutFile(notices, memberId);
 	}
+
+	// 공지사항 10개 가져오기
+	@Override
+	public List<Notices> getTenNotices(int pageNm) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
+	
+	
 
 //	
 //	@Override

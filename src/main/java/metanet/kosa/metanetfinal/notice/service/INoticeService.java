@@ -8,9 +8,11 @@ import metanet.kosa.metanetfinal.notice.model.Notices;
 
 public interface INoticeService {
 	// 공지사항 글 작성
-	void insertNoticeWithFile(Notices notices, String memberId);
-	void insertNoticeWithoutFile(Notices notices, String memberId);
+	void insertNoticeWithFile(Notices notices, int memberId);
+	void insertNoticeWithoutFile(Notices notices, int memberId);
 	
+	//공지사항 10개 씩 가져오기 
+	List<Notices> getTenNotices(int pageNm);
 	
 //	// 공지사항 상세 조회
 //	Notices getNotice(int noticeId);
