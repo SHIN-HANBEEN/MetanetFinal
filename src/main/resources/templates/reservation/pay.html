@@ -482,6 +482,8 @@
 		var inputMileage = 100;
 		var enterTime;
 		var preUrl;
+		var lockingTime;
+		var discountRate;
 		//문서가 준비되면 제일 먼저 실행
 		$(document).ready(function () {
 
@@ -509,6 +511,8 @@
 					console.log('성공:', data);
 					payId = data.paymentId;
 					isMember = data.isMember;
+					discountRate = data.discountRate;
+					lockingTime = data.lockingTime;
 					if (isMember == 'true') {
 						memberId = data.memberId;
 						memberMileage = data.memberMileage;
@@ -538,7 +542,7 @@
 							console.log(finalPrice);
 							
 							document.querySelector('#mg').textContent = '- '+inputMileage;
-							document.querySelector('#addmg').textContent =  parseInt(finalPrice * 0.02);
+							document.querySelector('#addmg').textContent =  parseInt(finalPrice * 0.01 * parseInt(discountRate));
 								
 							
 						});
@@ -616,7 +620,7 @@
 			const dateB = new Date(enterTime);
 			const diffMSec = dateA.getTime() - dateB.getTime();
 			const diffMin = diffMSec / (60 * 1000);
-			if (diffMin >= 10) {
+			if (diffMin >= parseInt(lockingTime)) {
 				alert('결제 시간초과');
 				clearInterval(interval);
 				location.href = preUrl;

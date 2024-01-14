@@ -46,6 +46,8 @@ public class ReservationService implements IReservationService{
 	@Autowired
 	IMemberRepository memberRepository;
 	
+	public static final int discountRate = 2;
+	
 	@Transactional
 	@Override
 	public int getRemainingSeatCount(String departureId, String arrivalId, Date departureTime, 
@@ -166,7 +168,7 @@ public class ReservationService implements IReservationService{
 			memberId = Integer.parseInt(payData.get("memberId").toString());
 			int totalPrice = Integer.parseInt(payData.get("totalPrice").toString());
 			subtractMileage = Integer.parseInt(payData.get("mileage").toString());
-			memberRepository.updateMemberMileage(memberId, subtractMileage, 2, totalPrice);
+			memberRepository.updateMemberMileage(memberId, subtractMileage, discountRate, totalPrice);
 		}
 		for (int i = 0; i < adultNum; i++) q.add(1);
 		for (int i = 0; i < middleChildNum; i++) q.add(2);
