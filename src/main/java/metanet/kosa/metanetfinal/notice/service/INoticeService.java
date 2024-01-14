@@ -2,8 +2,10 @@ package metanet.kosa.metanetfinal.notice.service;
 
 import java.util.List;
 
+import org.apache.ibatis.session.RowBounds;
 import org.springframework.web.multipart.MultipartFile;
 
+import metanet.kosa.metanetfinal.notice.model.NoticeListHome;
 import metanet.kosa.metanetfinal.notice.model.Notices;
 
 public interface INoticeService {
@@ -12,7 +14,7 @@ public interface INoticeService {
 	void insertNoticeWithoutFile(Notices notices, int memberId);
 	
 	//공지사항 10개 씩 가져오기 
-	List<Notices> getTenNotices(int pageNm);
+	List<NoticeListHome> getNoticesWithPagination(RowBounds rowBounds);
 	
 //	// 공지사항 상세 조회
 //	Notices getNotice(int noticeId);

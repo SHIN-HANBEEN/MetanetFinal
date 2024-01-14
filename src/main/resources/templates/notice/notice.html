@@ -68,7 +68,7 @@
 
 										<div class="col-8">
 											<hr class="dark horizontal mt-0 mb-2">
-											<table class="table table-hover">
+											<table class="table table-hover" id="noticeTable">
 												<thead>
 													<tr>
 														<th class="col-2" scope="col">공지번호</th>
@@ -76,13 +76,14 @@
 														<th class="col-2" scope="col">작성자</th>
 													</tr>
 												</thead>
-												<tbody>
+												<tbody id="noticeTableBody">
+													<!-- tbody 는 비동기로 가져온다. -->
 													<!--<tr>
 														<th scope="row">1</th>
 														<td>Mark</td>
 														<td>Otto</td>
 													</tr>-->
-													
+
 												</tbody>
 											</table>
 										</div>
@@ -92,7 +93,7 @@
 										</div>
 
 
-										<!-- 공지 검색
+										<!-- 공지 검색 관련 친구들
 										 -->
 										<div class="col-2">
 
@@ -287,34 +288,34 @@
 		/*
 			페이지 로딩 된 다음에 실행해야 하는 것들
 		*/
-		$(document).ready(function () {
-			/* xhr 로 교체함
-			const noticeRegisterBtn = document.getElementById('noticeRegisterButton');
-			const noticeContent = document.getElementById('noticeContent');
+		//$(document).ready(function () {
+		/* xhr 로 교체함
+		const noticeRegisterBtn = document.getElementById('noticeRegisterButton');
+		const noticeContent = document.getElementById('noticeContent');
 
-			noticeRegisterBtn.addEventListener('click', function () {
-				console.log('noticeBtn이 클릭되었습니다');
-				$.ajax({
-					url: '/notice/register',
-					method: 'GET',
-					dataType: 'html', // Corrected dataType
-					success: function (response) {
-						console.log('response 에요 : ' + response);
-						
-						if (response) {
-							$(noticeContent).html(response);
-						} else {
-							console.error('공지 작성을 위한 htmlcontent 가 없어요');
-						}
-					},
-					error: function (error) {
-						console.error('공지 작성 가져오다 오류가 발생했어요', error);
+		noticeRegisterBtn.addEventListener('click', function () {
+			console.log('noticeBtn이 클릭되었습니다');
+			$.ajax({
+				url: '/notice/register',
+				method: 'GET',
+				dataType: 'html', // Corrected dataType
+				success: function (response) {
+					console.log('response 에요 : ' + response);
+					
+					if (response) {
+						$(noticeContent).html(response);
+					} else {
+						console.error('공지 작성을 위한 htmlcontent 가 없어요');
 					}
-				});
+				},
+				error: function (error) {
+					console.error('공지 작성 가져오다 오류가 발생했어요', error);
+				}
 			});
-			*/
-
 		});
+		*/
+
+		//});
 		/*
 			document.ready 끝나는 지점
 		*/
@@ -328,52 +329,84 @@
 
 			console.log('dom 읽기가 완료되었어요.');
 
-			noticeRegisterBtn.addEventListener('click', function () {
-				console.log('noticeBtn이 클릭되었습니다');
-				
-				
-				
-				const xhr = new XMLHttpRequest();
+			if (!noticeRegisterBtn === null) {
+				noticeRegisterBtn.addEventListener('click', function () {
+					console.log('noticeBtn이 클릭되었습니다');
 
-				xhr.open('GET', '/notice/register', true);
+					const xhr = new XMLHttpRequest();
 
-				xhr.onload = function () {
-					if (xhr.status === 200) {
-						console.log('response 에요 : ' + xhr.responseText);
-						noticeContent.innerHTML = xhr.responseText
-						if (xhr.responseText) {
+					xhr.open('GET', '/notice/register', true);
 
+					xhr.onload = function () {
+						if (xhr.status === 200) {
+							console.log('response 에요 : ' + xhr.responseText);
+							noticeContent.innerHTML = xhr.responseText
+							if (xhr.responseText) {
+
+							} else {
+								console.error('공지 작성을 위한 htmlcontent 가 없어요');
+							}
 						} else {
-							console.error('공지 작성을 위한 htmlcontent 가 없어요');
+							console.error('공지 작성 가져오다 오류가 발생했어요', xhr.status, xhr.statusText);
 						}
-					} else {
-						console.error('공지 작성 가져오다 오류가 발생했어요', xhr.status, xhr.statusText);
+					};
+
+					xhr.onerror = function () {
+						console.error('통신 중 에러가 발생했어요');
+					};
+
+					xhr.send();
+				});
+			}
+
+
+
+			//notice table 만드는 코드
+			function fetchNoticeList(offset) {
+				const xhr = new XMLHttpRequest();
+				xhr.onreadystatechange = function () {
+					if (xhr.readyState === 4 && xhr.status === 200) {
+						const noticeList = JSON.parse(xhr.responseText);
+						updateTableBody(noticeList);
 					}
 				};
-
-				xhr.onerror = function () {
-					console.error('통신 중 에러가 발생했어요');
-				};
-
+				xhr.open('GET', '/notice/list?offset=' + offset, true);
 				xhr.send();
-			});
+			}
+			function updateTableBody(noticeList) {
+				const tbody = document.getElementById('noticeTableBody');
+				tbody.innerHTML = '';
 
-			
+				for (var i = 0; i < noticeList.length; i++) {
+					var notice = noticeList[i];
+					//N.NOTICE_ID, N.TITLE, M.MEMBER_ID 
+					var row = document.createElement('tr');
+					row.innerHTML = '<a><th scope="row">' + notice.noticeId + '</th>' +
+						'<td>' + notice.title + '</td>' +
+						'<td>' + notice.name + '</td></a>';
+					tbody.appendChild(row);
+				}
+			}
+			//Notice 초기값은 offset(0) 으로 보냅니다. 
+			fetchNoticeList(0);
+
+
+			function updateIsEmphasizedValue() {
+				const isEmphasizedInput = document.getElementById('isEmphasized');
+				const isEmphasizedCheckBox = document.getElementById('isEmphasizedCheckBox');
+				console.log('중요 공지 여부 확인 실행됨');
+				alert('일시정지');
+				// Set the value of the isEmphasized input based on the state of the checkbox
+				isEmphasizedInput.value = isEmphasizedCheckBox.checked ? 'TRUE' : 'FALSE';
+
+				//게시글 등록 처리하는 부분
+
+			}
 		});
 
 
-		//여기부터는 function 들!
-		function updateIsEmphasizedValue() {
-			const isEmphasizedInput = document.getElementById('isEmphasized');
-			const isEmphasizedCheckBox = document.getElementById('isEmphasizedCheckBox');
-			console.log('중요 공지 여부 확인 실행됨');
-			alert('일시정지');
-			// Set the value of the isEmphasized input based on the state of the checkbox
-			isEmphasizedInput.value = isEmphasizedCheckBox.checked ? 'TRUE' : 'FALSE';
-			
-			//게시글 등록 처리하는 부분
-			
-		}
+
+
 	</script>
 
 	<!--   Core JS Files   -->

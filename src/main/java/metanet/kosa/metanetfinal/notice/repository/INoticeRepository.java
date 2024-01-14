@@ -4,8 +4,10 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.session.RowBounds;
 import org.springframework.stereotype.Repository;
 
+import metanet.kosa.metanetfinal.notice.model.NoticeListHome;
 import metanet.kosa.metanetfinal.notice.model.Notices;
 
 @Mapper
@@ -16,7 +18,7 @@ public interface INoticeRepository {
 	void insertNoticeWithoutFile(@Param("notices") Notices notices, @Param("memberId") int memberId);
 	
 	//10개 노티스 가져오기 
-	List<Notices> getTenNotices(@Param("pageNm") int pageNm);
+	List<NoticeListHome> getNoticesWithPagination(RowBounds rowBounds);
 	
 //	// 공지사항 리스트 조회
 //	List<Notices> getNoticeList(@Param("start")int start, @Param("end") int end);

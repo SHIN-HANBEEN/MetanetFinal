@@ -6,11 +6,13 @@ import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
 
+import org.apache.ibatis.session.RowBounds;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
+import metanet.kosa.metanetfinal.notice.model.NoticeListHome;
 import metanet.kosa.metanetfinal.notice.model.Notices;
 import metanet.kosa.metanetfinal.notice.repository.INoticeRepository;
 
@@ -34,12 +36,12 @@ public class NoticeService implements INoticeService {
 		noticeRepository.insertNoticeWithoutFile(notices, memberId);
 	}
 
-	// 공지사항 10개 가져오기
 	@Override
-	public List<Notices> getTenNotices(int pageNm) {
-		// TODO Auto-generated method stub
-		return null;
+	public List<NoticeListHome> getNoticesWithPagination(RowBounds rowBounds) {
+		return noticeRepository.getNoticesWithPagination(rowBounds);
 	}
+
+	
 	
 	
 	
