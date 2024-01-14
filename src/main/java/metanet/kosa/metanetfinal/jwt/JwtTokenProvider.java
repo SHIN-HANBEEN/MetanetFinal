@@ -102,7 +102,7 @@ public class JwtTokenProvider {
 	 * @return
 	 */
 	public String getUserMemberId(String token) {
-		log.info(token);
+		//log.info(token);
 		return Jwts.parser().verifyWith(key).build().parseSignedClaims(token).getPayload().getIssuer();
 	}
 	
@@ -117,7 +117,7 @@ public class JwtTokenProvider {
 	public Authentication getAuthentication(String token) {
 		UserDetails userDetails = 
 				userDetailsService.loadUserByUsername(this.getUserId(token));
-		log.info(userDetails.getUsername());
+		//log.info(userDetails.getUsername());
 		return new UsernamePasswordAuthenticationToken(
 				userDetails, 
 				"", 
