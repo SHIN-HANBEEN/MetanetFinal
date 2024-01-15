@@ -19,9 +19,11 @@ public class PhoneNumCertificationController {
 		phoneNumCertificationService.sendRandomNumber(phonenum);
 	}
 	
+	/*
 	@PostMapping("/certification-phonenumber")
 	public String AuthenticationNumber(@RequestParam String phonenum, @RequestParam String inputNumber) {
 		boolean result = phoneNumCertificationService.AuthNumber(phonenum, inputNumber);
 		return result ? "인증에 성공했습니다." : "인증에 실패했습니다.";
 	}
+	*/
 }

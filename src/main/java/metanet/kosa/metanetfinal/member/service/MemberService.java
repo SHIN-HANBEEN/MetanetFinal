@@ -121,6 +121,11 @@ public class MemberService implements IMemberService{
 		return memberRepository.getMemberByMemberId(memberId);
 	}
 
+	@Override
+	public String getPwById(String id) {
+		return memberRepository.getPwById(id);
+	}
+
 	
 
 }

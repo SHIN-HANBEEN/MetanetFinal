@@ -116,4 +116,9 @@
 	WHERE MEMBER_ID=#{memberId}
 	</update>
 	
+	<select id="getPwById" parameterType="string" resultType="string">
+		SELECT PASSWORD FROM members
+		WHERE id=#{id}
+	</select>
+	
 </mapper>

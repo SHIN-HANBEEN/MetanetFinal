@@ -56,6 +56,7 @@
 										<form action="/member-modification" id="updateForm" method="post" th:object="${member}" role="form" class="text-start">
 											<input type="hidden" name="csrfToken" id="csrfToken" th:value="${session.csrfToken}"
 												autocomplete="off">
+											<!--<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />-->
 											<div class="input-group input-group-outline my-3">
 												<label class="form-label" for="id"></label>
 												<input type="text" id="id" name="id" class="form-control" th:value="${member.id}" readonly>
@@ -75,21 +76,17 @@
 											</div>
 
 											<div class="input-group input-group-outline my-3">
-												<label class="form-label" for="email">이메일 수정</label>
+												<label class="form-label" for="email"></label>
 												<input type="text" id="email" name="email" class="form-control" th:value="${member.email}" autocomplete="off">
 											</div>
 
-											<!--<div class="input-group input-group-outline mb-3">
-												<input class="metanet-hide-date form-control datepicker" id="birthDate" name="birthDate"
-													aria-required="true" required data-placeholder="생년 월일 선택" type="date" th:value="${member.birthDate}" readonly>
-											</div>-->
 											<div class="input-group input-group-outline mb-3">
-											    <input class="metanet-hide-date form-control datepicker" id="birthDate" name="birthDate"
+											    <input class="form-control datepicker" id="birthDate" name="birthDate"
 											        aria-required="true" type="date" th:value="${member.birthDate}" readonly>
 											</div>
 
 											
-											<!-- -->
+											<!-- 
 											<div class="nav-wrapper position-relative end-0 mb-4">
 												<ul class="nav nav-pills nav-fill p-1" role="tablist">
 													<li class="nav-item">
@@ -98,7 +95,7 @@
 															남성
 														</a>
 													</li>
-													<!--<li class="nav-item" onclick="setGender('FEMALE', event)">-->
+													<li class="nav-item" onclick="setGender('FEMALE', event)">
 													<li class="nav-item">
 														<a class="nav-link mb-0 px-0 py-1" data-bs-toggle="tab" href="#dashboard-tabs-simple"
 															role="tab" aria-controls="dashboard" aria-selected="false" data-gender="FEMALE">
@@ -108,7 +105,24 @@
 												</ul>
 											</div>
 											<input type="hidden" id="selectedGender" name="sex" value="${member.sex}"/>
-											<!-- -->
+											-->
+											<div class="nav-wrapper position-relative end-0 mb-4">
+												<ul class="nav nav-pills nav-fill p-1" role="tablist">
+													<li class="nav-item">
+													    <a class="nav-link mb-0 px-0 py-1" th:classappend="${member.sex == 'MALE'} ? 'active' : ''" data-bs-toggle="tab" href="#profile-tabs-simple" role="tab" aria-controls="profile" aria-selected="false" data-gender="MALE">
+													        남성
+													    </a>
+													    
+													</li>
+													<li class="nav-item">
+													    <a class="nav-link mb-0 px-0 py-1" th:classappend="${member.sex == 'FEMALE'} ? 'active' : ''" data-bs-toggle="tab" href="#dashboard-tabs-simple" role="tab" aria-controls="dashboard" aria-selected="false" data-gender="FEMALE">
+													        여성
+													    </a>
+													</li>
+													
+												</ul>
+											</div>
+											<input type="hidden" id="selectedGender" name="sex" value="${member.sex}"/>
 										
 
 
@@ -174,38 +188,8 @@
 		//document.getElementById('testbutton').addEventListener('click', showAlert);
 		//function showAlert()
 		//alert('test');
-		var memberSex = document.getElementById("selectedGender");
-		setGenderOnLoad(memberSex);
 		
 		});
-		
-		
-		function setGender(gender) {
-			// Set the selected gender value to the hidden input field
-			document.getElementById('selectedGender').value = gender;
-		}
-		
-		/*
-		function setGenderOnLoad(gender) {
-	        if (gender === 'MALE') {
-	            setActiveGenderTab('MALE');
-	        } else if (gender === 'FEMALE') {
-	            setActiveGenderTab('FEMALE');
-	        }
-	    }
-
-	    function setActiveGenderTab(gender) {
-	        document.querySelectorAll('.nav-item').forEach(function(navItem) {
-	            navItem.querySelector('a').classList.remove('active');
-	        });
-	
-	        var selectedTab = document.querySelector(`a[data-gender="${gender}"]`);
-	        if (selectedTab) {
-	            selectedTab.classList.add('active');
-	            document.getElementById('selectedGender').value = gender;
-	        }
-	    }
-	    */
 		
 	</script>
 
@@ -259,8 +243,9 @@
 	<script>
 		function validateAndSubmit() {
 			// 각 필드의 값을 가져옴
-			/*
+		
 			var updateForm = document.getElementById('updateForm');
+			
 			var idValue = document.getElementById('id').value;
 			var passwordValue = document.getElementById('password').value;
 			var password2Value = document.getElementById('password2').value;
@@ -291,7 +276,7 @@
 				// 미입력된 필드가 없으면 폼 제출
 				updateForm.submit();
 			}
-			*/
+			
 			updateForm.submit();
 		}
 	</script>
