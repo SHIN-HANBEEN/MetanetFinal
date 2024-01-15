@@ -265,37 +265,56 @@
 																	</div>
 																</div>
 
-																<div class="col-4">
 
-																</div>
-
-																<div class="col-4 pt-5">
+																<div class="col-4 pt-5 offset-4">
 																	<div class="text-center ">
 																		<div class="row">
 																			<div class="col-8 text-center pb-3 pt-3">
-																				<div
-																					class="input-group input-group-outline my-3">
-																					<label class="form-label">비회원 전화번호
-																						인증</label>
-																					<input type="text"
-																						class="form-control"
-																						id="phoneNumber">
+
+																				<div class="input-group input-group-outline my-3">
+																					<label class="form-label">비회원 전화번호 인증</label>
+																					<input type="text" class="form-control" name="phoneNumber" id="phoneNumber">
 																				</div>
 																			</div>
-																			<div class="col-4 text-center pb-3 pt-3"
-																				style="margin-top: 3px;">
-																				<button id="callNumberAuthButton"
-																					class="btn btn-sm btn-info mt-3">
+																			<div class="col-4 text-center pb-3 pt-3" style="margin-top: 3px;">
+																				<button id="callNumberAuthButton" class="btn btn-sm btn-info mt-3"
+																					onclick="SendAuthNumClick()">
 																					인증번호발송
 																				</button>
+																			</div>
+																			<div id="3MinTimer" style="display: none;">
+																				<p>
+																					<label for="Timer">남은 시간:</label>
+																					<span id="Timer" type="text" value="" readonly />
+																				</p>
 																			</div>
 																		</div>
 																	</div>
 																</div>
 
-																<div class="col-4">
-
+																<div id="authPhoneNum" class="col-4 offset-4 metanet-display-hidden">
+																	<div class="text-center ">
+																		<div class="row">
+																			<div class="col-8 text-center pb-3 pt-3">
+																				<div class="input-group input-group-outline my-3">
+																					<label class="form-label">인증번호 입력</label>
+																					<input type="text" class="form-control" name="authNumber" id="authNumber">
+																				</div>
+																			</div>
+																			<div class="col-4 text-center pb-3 pt-3" style="margin-top: 3px;">
+																				<button id="callNumberAuthButton" class="btn btn-sm btn-info mt-3"
+																					onclick="AuthBtnClick()">
+																					인증번호입력
+																				</button>
+																			</div>
+																			<p id="authenticationResult"></p>
+																		</div>
+																	</div>
 																</div>
+
+
+
+
 															</div>
 
 															<!-- 전화번호 인증 -->
@@ -323,6 +342,7 @@
 																			<input type="text"
 																				class="form-control fs-5 border"
 																				id="mileageInput" placeholder="">
+
 																		</div>
 
 																	</div>
@@ -524,7 +544,7 @@
 						milInput.placeholder = memberMileage;
 						milInput.value = memberMileage;
 						finalPrice = localData.totalPrice - parseInt(memberMileage);
-						console.log('파프', finalPrice);
+
 						document.querySelector('#availableMileage').textContent = memberMileage;
 						document.querySelector('#tp').textContent = localData.totalPrice;
 						document.querySelector('#mg').textContent = '- '+data.memberMileage;
@@ -549,6 +569,7 @@
 							
 						});
 
+
 					}
 					else {
 						document.querySelector('.member').style.display ='none';
@@ -563,57 +584,120 @@
 		});
 
 		//마일리지 인풋이 변할때마다 총결제금액 변경
-		
-		
-		
-		
-
-		//전화번호 인증 클릭
-		//document.getElementById("callNumberAuthButton").addEventListener("click", AuthBtnClick);
-		function AuthBtnClick() {
-			/*
-						console.log('click!!!');
-			fetch("/routeinfotest", {
-			method: "POST",
-			headers: {
-				"Content-Type": "application/json",
-			},
-			body: JSON.stringify({
-				routeData: routeData,
-				busId: busId,
-				selectedSeats: reservationSeatsList,
-				totalPrice: totalPrice,
-				adultNum: adultNum,
-				middleChildNum: middleChildNum,
-				childNum: childNum
-			}),
-			})
-			.then((response) => {
-				if(response.status == 400){
-					alert('이미 예약된 좌석이 포함되어 있습니다.')
-					//새로고침
-					window.location.reload();
-					status = 400;
-					return; 
-				}else{
-					response.json();
+		if (isMember != 'false') {
+			document.querySelector('#mileageInput').addEventListener("input", function (e) {
+				inputMileage = parseInt(e.target.value);
+				if (parseInt(e.target.value) > parseInt(memberMileage)) {
+					e.target.value = memberMileage;
+					inputMileage = e.target.value;
 				}
-			})
-			.then((data) => {
-					console.log('다음',data);
-					
-					localStorage.setItem('reservationData',JSON.stringify({
-						routeData: routeData,
-						busId: busId,
-						selectedSeats: reservationSeatsList,
-						totalPrice: totalPrice,
-						adultNum: adultNum,
-						middleChildNum: middleChildNum,
-						childNum: childNum
-					}));
-					if(status!=400) location.href="/reservation/payment";
-			}).catch(error => console.log('FetchError')); */
+
+				if (isNaN(inputMileage)) inputMileage = 0;
+				document.querySelector('#totalPrice').textContent = (localData.totalPrice - parseInt(inputMileage)).toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
+				finalPrice = (localData.totalPrice - parseInt(inputMileage)).toString();
+				console.log(finalPrice);
+			});
 		}
+
+		//비회원 전화 인증 클릭 했을 때
+		var phoneNumber;
+		function SendAuthNumClick() {
+			var authPhoneNum = document.getElementById('authPhoneNum');
+			authPhoneNum.style.display = 'block';
+			var timerContainer = document.getElementById('3MinTimer');
+			timerContainer.style.display = 'flex';
+			//var phonestyle = document.getElementById('phoneNumber');
+			//phonestyle.readOnly=true;
+			//var inputPhoneNum = document.getElementById('phoneNumber');
+			var phoneNumber = $('#phoneNumber').val();
+
+			//ajax 사용해서 비동기로 서버에 인증번호 전송 요청
+			$.ajax({
+				type: 'GET',
+				url: '/certification-phonenumber',
+				data: {'phonenum': phoneNumber},
+				success: function (data) {
+					alert("인증번호를 전송했습니다.");
+				},
+				error: function (error) {
+					console.error('There was a problem with the AJAX request:', error);
+				}
+			});
+
+
+
+			const Timer = document.getElementById('Timer'); //스코어 기록창-분
+			let time = 180000;
+			let min = 3;
+			let sec = 60;
+
+
+			Timer.innerText = min + ":" + '00';
+
+			function TIMER() {
+				PlAYTIME = setInterval(function () {
+					time = time - 1000; //1초씩 줄어듦
+					min = time / (60 * 1000); //초를 분으로 나눠준다.
+
+					if (sec > 0) { //sec=60 에서 1씩 빼서 출력해준다.
+						sec = sec - 1;
+						Timer.innerText = Math.floor(min) + ':' + sec; //실수로 계산되기 때문에 소숫점 아래를 버리고 출력해준다.
+
+					}
+					if (sec === 0) {
+						// 0에서 -1을 하면 -59가 출력된다.
+						// 그래서 0이 되면 바로 sec을 60으로 돌려주고 value에는 0을 출력하도록 해준다.
+						sec = 60;
+						Timer.innerText = Math.floor(min) + ':' + '00'
+					}
+
+				}, 1000); //1초마다 
+			}
+
+
+
+			TIMER();
+			setTimeout(function () {
+				clearInterval(PlAYTIME);
+				authPhoneNum.style.display = 'none';
+				timerContainer.style.display = 'none';
+				alert('인증 가능한 시간이 지났습니다. 다시 인증을 진행해 주세요.');
+			}, time);//3분이 되면 타이머를 삭제한다.
+
+
+
+		}
+
+		var resultAuthentication = false;
+		function AuthBtnClick() {
+			var authNumber = $('#authNumber').val();
+			var phoneNumber = $('#phoneNumber').val();
+			// AJAX를 사용하여 서버에 비동기 POST 요청 보내기
+			$.ajax({
+				type: 'POST',
+				url: '/certification-phonenumber',
+				data: {
+					'phonenum': phoneNumber,
+					'inputNumber': authNumber
+				},
+				success: function (result) {
+					// 서버 응답 처리
+					$('#authenticationResult').text(result);
+					if (result == '인증에 성공했습니다.') {
+						resultAuthentication = true;
+						phoneNum = phoneNumber;
+					} else {
+						resultAuthentication = false;
+					}
+				},
+				error: function (error) {
+					console.error('There was a problem with the AJAX request:', error);
+				}
+			});
+		}
+
+
+
 
 		//1초마다 실행
 		var interval = setInterval(function () {
@@ -642,90 +726,97 @@
 		function payment(data) {
 			//var paymentId = createPaymentId();
 			if (isMember == 'false') {
-				phoneNum = document.querySelector('#phoneNumber').value;
+				//phoneNum = document.querySelector('#phoneNumber').value;
+				//phoneNum = phoneNumber;
 				memberId = 0;
 			}
-			IMP.init('imp33561285'); //아임포트 관리자 콘솔에서 확인한 '가맹점 식별코드' 입력
-			IMP.request_pay({ // param
-				pg: payBtn, //pg사명 or pg사명.CID (잔액 일시불 할부 등, 기본 PG사가 따로 있음)
-				pay_method: "card", //결제 방법
-				merchant_uid: payId, //가맹점 주문번호 (아임포트를 사용하는 가맹점에서 임의로 지정)
-				name: "메타버스 결제", //결제창에서 보여질 상품명
-				amount: finalPrice, //금액
-				buyer_email: "gildong0405@gmail.com",
-				buyer_name: "길동이",
-				buyer_postcode: "1",
-				buyer_tel: phoneNum
-			}, function (rsp) { // callback
-				console.log(rsp);
-				if (rsp.success) {
-					//alert("결제 성공 -> imp_uid : " + rsp.imp_uid + " / merchant_uid(orderKey) : " + rsp.merchant_uid);
 
-					// 이후 reservation 객체 데이터 추가
-					let data = {};
-					console.log("rsp", rsp);
-					// data.imp_uid = rsp.imp_uid;
-					data.payId = rsp.merchant_uid;
-					data.totalPrice = rsp.paid_amount;
-					data.payMethod = rsp.pay_method;
-					data.phoneNum = rsp.buyer_tel;
-					data.routeId = localData.routeData.routeId;
-					data.busId = localData.busId;
-					data.selectedSeats = localData.selectedSeats;
-					data.isMember = isMember;
-					data.adultNum = localData.adultNum;
-					data.middleChildNum = localData.middleChildNum;
-					data.childNum = localData.childNum;
-					data.mileage = inputMileage;
-					data.memberId = memberId;
+			if (resultAuthentication == true || isMember=='true') {
 
-					// resId (예매 아이디)
-					// memberId (회원 아이디)
-					// nmemberId (비회원 아이디)
-					// routeId (노선 아이디)
-					// busId (버스 아이디)
-					// seatId (좌석 번호)
-					// resDate (예매일자) data에 넣기
+				IMP.init('imp33561285'); //아임포트 관리자 콘솔에서 확인한 '가맹점 식별코드' 입력
+				IMP.request_pay({ // param
+					pg: payBtn, //pg사명 or pg사명.CID (잔액 일시불 할부 등, 기본 PG사가 따로 있음)
+					pay_method: "card", //결제 방법
+					merchant_uid: payId, //가맹점 주문번호 (아임포트를 사용하는 가맹점에서 임의로 지정)
+					name: "메타버스 결제", //결제창에서 보여질 상품명
+					amount: finalPrice, //금액
+					buyer_email: "gildong0405@gmail.com",
+					buyer_name: "길동이",
+					buyer_postcode: "1",
+					buyer_tel: phoneNum
+				}, function (rsp) { // callback
+					console.log(rsp);
+					if (rsp.success) {
+						alert("결제 성공 -> imp_uid : " + rsp.imp_uid + " / merchant_uid(orderKey) : " + rsp.merchant_uid);
 
-					console.log(data);
-					// 성공하면 데이터 전송~ -> 테스트 전송 성공
-					$.ajax({
-						url: "/reservation/payOk",
-						method: "POST",
-						data: JSON.stringify(data),
-						contentType: "application/json",
-						success: function (response) {
-							console.log(response);
-							//alert("결제 정보가 성공적으로 전송되었습니다");
-							window.location.href = 'complete?payId=' + payId;
-						},
-						error: function (xhr, status, error) {
-							//console.error("결제 정보 전송 실패 : ", error);
-							//alert("결제 정보 전송에 실패");
-							/*$.ajax.ajax({
-									// 예: http://www.myservice.com/payments/cancel
-									"url": "{환불정보를 수신할 가맹점 서비스 URL}", 
-									"type": "POST",
-									"contentType": "application/json",
-									"data": JSON.stringify({
-										"merchant_uid": payId, // 예: ORD20180131-0000011
-										"cancel_request_amount": 2000, // 환불금액
-										"reason": "테스트 결제 환불", // 환불사유
-										// [가상계좌 환불시 필수입력] 환불 수령계좌 예금주
-										"refund_holder": "홍길동", 
-										// [가상계좌 환불시 필수입력] 환불 수령계좌 은행코드(예: KG이니시스의 경우 신한은행은 88번)
-										"refund_bank": "88", 
-										// [가상계좌 환불시 필수입력] 환불 수령계좌 번호
-										"refund_account": "56211105948400" 
-									}),
-									"dataType": "json"
-								});*/
-						}
-					});
-				} else {
-					alert("실패 : 코드(" + rsp.error_code + ") 메시지(" + rsp.error_msg + ")");
-				}
-			});
+						// 이후 reservation 객체 데이터 추가
+						let data = {};
+						console.log("rsp", rsp);
+						// data.imp_uid = rsp.imp_uid;
+						data.payId = rsp.merchant_uid;
+						data.totalPrice = rsp.paid_amount;
+						data.payMethod = rsp.pay_method;
+						data.phoneNum = rsp.buyer_tel;
+						data.routeId = localData.routeData.routeId;
+						data.busId = localData.busId;
+						data.selectedSeats = localData.selectedSeats;
+						data.isMember = isMember;
+						data.adultNum = localData.adultNum;
+						data.middleChildNum = localData.middleChildNum;
+						data.childNum = localData.childNum;
+						data.mileage = inputMileage;
+						data.memberId = memberId;
+
+						// resId (예매 아이디)
+						// memberId (회원 아이디)
+						// nmemberId (비회원 아이디)
+						// routeId (노선 아이디)
+						// busId (버스 아이디)
+						// seatId (좌석 번호)
+						// resDate (예매일자) data에 넣기
+
+						console.log(data);
+						// 성공하면 데이터 전송~ -> 테스트 전송 성공
+						$.ajax({
+							url: "/reservation/payOk",
+							method: "POST",
+							data: JSON.stringify(data),
+							contentType: "application/json",
+							success: function (response) {
+								console.log(response);
+								alert("결제 정보가 성공적으로 전송되었습니다");
+								window.location.href = 'complete?payId=' + payId;
+							},
+							error: function (xhr, status, error) {
+								//console.error("결제 정보 전송 실패 : ", error);
+								//alert("결제 정보 전송에 실패");
+								/*$.ajax.ajax({
+										// 예: http://www.myservice.com/payments/cancel
+										"url": "{환불정보를 수신할 가맹점 서비스 URL}", 
+										"type": "POST",
+										"contentType": "application/json",
+										"data": JSON.stringify({
+											"merchant_uid": payId, // 예: ORD20180131-0000011
+											"cancel_request_amount": 2000, // 환불금액
+											"reason": "테스트 결제 환불", // 환불사유
+											// [가상계좌 환불시 필수입력] 환불 수령계좌 예금주
+											"refund_holder": "홍길동", 
+											// [가상계좌 환불시 필수입력] 환불 수령계좌 은행코드(예: KG이니시스의 경우 신한은행은 88번)
+											"refund_bank": "88", 
+											// [가상계좌 환불시 필수입력] 환불 수령계좌 번호
+											"refund_account": "56211105948400" 
+										}),
+										"dataType": "json"
+									});*/
+							}
+						});
+					} else {
+						alert("실패 : 코드(" + rsp.error_code + ") 메시지(" + rsp.error_msg + ")");
+					}
+				});
+			}else{
+				alert('본인 인증을 진행해주세요');
+			}
 		}
 
 		document.querySelector('#kakaoPay').addEventListener('click', function () {

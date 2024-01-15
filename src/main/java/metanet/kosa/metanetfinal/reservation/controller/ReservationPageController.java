@@ -147,12 +147,11 @@ public class ReservationPageController {
 	        String token = paymentService.getToken();
 	        String merchant_uid = payId;
 	        String cancel_request_amount = totalPrice;
-	        String reason = "비싸요!!!";
+	        String reason = "개인 사유로 인한 취소";
 	        System.out.println(merchant_uid);
 	        
 	        paymentService.payMentCancel(token,merchant_uid,cancel_request_amount,reason);
 	        reservationService.cancleReservation(merchant_uid);
-	        System.out.println("ok");
 	        // 작업 결과에 따라 응답 반환
 	        return ResponseEntity.ok("Success");
 	        

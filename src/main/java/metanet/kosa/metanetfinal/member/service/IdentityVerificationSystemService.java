@@ -1,4 +1,4 @@
-package metanet.kosa.metanetfinal.reservation.service;
+package metanet.kosa.metanetfinal.member.service;
 
 import java.time.Duration;
 import java.time.LocalTime;
@@ -21,20 +21,16 @@ import metanet.kosa.metanetfinal.bus.repository.IBusesRepository;
 import metanet.kosa.metanetfinal.reservation.model.LockedBus;
 @Slf4j
 @Service
-public class SeatsLockSystemService {
+public class IdentityVerificationSystemService {
 	@Autowired
 	IBusesRepository busesRepository;
 	
 	LinkedList<LockedBus> lockedBusQue = new LinkedList<>();
-
-	public static final int lockingTime = 10;
-
+	
 	@Scheduled(cron = "0 * * ? * *") //매 분 0초
 	public void checkExpiredSeatTime() {
-		//현재 시간 now
 		LocalTime now = LocalTime.now();
 		
-		//Que에 데이터가 있을 때
 		if(!lockedBusQue.isEmpty()) {
 			log.info("큐활성화");
 			// Queue.peek를 통해 현재시간과 비교
@@ -94,7 +90,7 @@ public class SeatsLockSystemService {
 		// 두 시간의 차이 계산
 		Duration duration = Duration.between(lockTime, now);
 		// 차이가 10분 이상인지 확인
-		boolean isDifferenceGreaterThan10Minutes = duration.toMinutes() >= lockingTime;
+		boolean isDifferenceGreaterThan10Minutes = duration.toMinutes() >= 10;
 		return isDifferenceGreaterThan10Minutes;
 	}
 	

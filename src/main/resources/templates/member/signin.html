@@ -40,7 +40,11 @@
 		<div class="row">
 			<div class="col-lg-12 metanet-page-header" style="height: 100vh; background-image: url('./assets/img/bus.png');">
 				<span class="mask bg-gradient-dark opacity-6"></span>
+<<<<<<< HEAD
 				<div class="container-fluid pt-10">
+=======
+				<div class="container-fluid mt-8 pt-4">
+>>>>>>> localkang
 
 					<div class="container my-auto">
 						<div class="row">
@@ -53,12 +57,17 @@
 										</div>
 									</div>
 									<div class="card-body">
-										<form action="/signin" id="signUpForm" method="post" th:object="${member}" role="form" class="text-start">
+										<form action="/signin" id="signUpForm" method="post" th:object="${member}" role="form"
+											class="text-start">
 											<input type="hidden" name="csrfToken" id="csrfToken" th:value="${session.csrfToken}"
 												autocomplete="off">
 											<div class="input-group input-group-outline my-3">
 												<label class="form-label" for="id">아이디 입력</label>
 												<input type="text" id="id" name="id" class="form-control">
+												<button type="button" class="btn btn-sm bg-gradient-primary mb-0 me-1 my-2 mt-md-0"
+													onclick="idCheck()">
+													아이디 중복검사
+												</button>
 											</div>
 											<div class="input-group input-group-outline mb-3">
 												<label class="form-label" for="password">비밀번호 입력</label>
@@ -110,6 +119,14 @@
 													인증번호받기
 												</button>
 											</div>
+
+											<div id="3MinTimer" style="display: none;">
+												<p>
+													<label for="Timer">남은 시간:</label>
+													<span id="Timer" type="text" value="" readonly />
+												</p>
+											</div>
+
 											<div class="metanet-display-hidden input-group input-group-outline mb-3" id="certificationNumber">
 												<label class="form-label">인증 번호 입력</label>
 												<input type="text" class="form-control" id="inputNumber" name="inputNumber">
@@ -120,7 +137,8 @@
 											</div>
 											<p id="authenticationResult"></p>
 											<div class="text-center">
-												<input value="회원가입" class="btn bg-gradient-primary w-100 my-1 mb-2" onclick="validateAndSubmit()">
+												<input value="회원가입" class="btn bg-gradient-primary w-100 my-1 mb-2"
+													onclick="validateAndSubmit()">
 
 
 											</div>
@@ -154,32 +172,69 @@
 	<script src="./assets/js/plugins/perfect-scrollbar.min.js"></script>
 
 
-	<!--성별-->
 	<script>
+		var enterTime;
+
+		//페이지 로딩 후 현재 시간
 		document.addEventListener('DOMContentLoaded', () => {
-		console.log('slkjdnflksnlk');
-		var token = sessionStorage.getItem("X-AUTH-TOKEN");
-		console.log(token);
-		//document.getElementById('testbutton').addEventListener('click', showAlert);
-		//function showAlert()
-		//alert('test');
-		
+			enterTime = new Date()
+			console.log(enterTime);
 		});
-		
+
+		//Interval enterTime 이후로 15분 지나면 회원가입 유효 기간 종료
+		var interval = setInterval(function () {
+			//dataA는 현재 시간
+			const dateA = new Date();
+			//console.log(dateA);
+			//dataB는 회원 가입 접속 시간(enterTime)
+			const dateB = new Date(enterTime);
+			//console.log('페이지 접속 시간'+dateB);
+			//dataA-DataB			
+			const diffMSec = dateA.getTime() - dateB.getTime();
+			//현재 시간 - 접속 시간 / 1분
+			const diffMin = diffMSec / (60 * 1000);
+			//15분 이상이 지나면 결제 시간 초과 출력 후  
+			//Interval 종료 후 페이지 이동
+			if (diffMin >= 20) {
+				alert('회원가입 시간초과');
+				clearInterval(interval);
+				location.href = '/login';
+
+			};
+		}, 1000);
+
+		//성별
 		function setGender(gender) {
 			// Set the selected gender value to the hidden input field
 			document.getElementById('selectedGender').value = gender;
 		}
-	</script>
 
-	<!--핸드폰 번호 인증 버튼 클릭 시 인증번호 입력 활성화-->
-	<script>
+		function idCheck() {
+			var resultIdCheck = false;
+			
+			var xhr = new XMLHttpRequest();
+			
+			xhr.onreadystatechange = function(){
+				if(xhr.readyState === 4){
+					if(xhr.status === 200) {
+						alert('사용가능한 아이디 입니다.');
+						resultIdCheck =true;
+					}else{
+						alert('현재 사용중인 아이디 입니다.');
+					}
+				}
+			};
+			xhr.open('POST', '/idcheck', true);
+			
+			xhr.send();
+		}
+		//핸드폰 번호 인증 버튼 클릭 시 인증번호 입력 활성화
 		function showInputCertificationNumber() {
 			var certificationNumber = document.getElementById('certificationNumber');
 			certificationNumber.style.display = 'flex';
-
+			var timerContainer = document.getElementById('3MinTimer');
+			timerContainer.style.display = 'flex';
 			var phoneNumber = $('#phoneNum').val();
-			alert(phoneNumber);
 			// AJAX를 사용하여 서버에 비동기 요청 보내기
 			$.ajax({
 				type: 'GET',
@@ -192,10 +247,49 @@
 					console.error('There was a problem with the AJAX request:', error);
 				}
 			});
-		}
-	</script>
 
-	<script>
+
+			const Timer = document.getElementById('Timer'); //스코어 기록창-분
+			let time = 180000;
+			let min = 3;
+			let sec = 60;
+
+
+			Timer.innerText = min + ":" + '00';
+
+			function TIMER() {
+				PlAYTIME = setInterval(function () {
+					time = time - 1000; //1초씩 줄어듦
+					min = time / (60 * 1000); //초를 분으로 나눠준다.
+
+					if (sec > 0) { //sec=60 에서 1씩 빼서 출력해준다.
+						sec = sec - 1;
+						Timer.innerText = Math.floor(min) + ':' + sec; //실수로 계산되기 때문에 소숫점 아래를 버리고 출력해준다.
+
+					}
+					if (sec === 0) {
+						// 0에서 -1을 하면 -59가 출력된다.
+						// 그래서 0이 되면 바로 sec을 60으로 돌려주고 value에는 0을 출력하도록 해준다.
+						sec = 60;
+						Timer.innerText = Math.floor(min) + ':' + '00'
+					}
+
+				}, 1000); //1초마다 
+			}
+
+
+			TIMER();
+			setTimeout(function () {
+				clearInterval(PlAYTIME);
+				certificationNumber.style.display = 'none';
+				timerContainer.style.display = 'none';
+
+				alert('인증 가능한 시간이 지났습니다. 다시 인증을 진행해 주세요.');
+			}, time);//3분이 되면 타이머를 삭제한다.
+		}
+		
+
+		var resultAuthentication = false;
 		function submitAuthentication() {
 			// 입력된 인증번호, 전화번호 가져오기
 			var inputNumber = $('#inputNumber').val();
@@ -211,15 +305,20 @@
 				success: function (result) {
 					// 서버 응답 처리
 					$('#authenticationResult').text(result);
+					if (result == '인증에 성공했습니다.') {
+						// 미입력된 필드가 있으면 알림창 띄우고 폼 제출 취소
+						resultAuthentication = true;
+					} else {
+						// 미입력된 필드가 없으면 폼 제출
+						resultAuthentication = false;
+					}
 				},
 				error: function (error) {
 					console.error('There was a problem with the AJAX request:', error);
 				}
 			});
 		}
-	</script>
 
-	<script>
 		function validateAndSubmit() {
 			// 각 필드의 값을 가져옴
 			var signUpForm = document.getElementById('signUpForm');
@@ -231,7 +330,7 @@
 			var birthDateValue = document.getElementById('birthDate').value;
 			var phoneNumValue = document.getElementById('phoneNum').value;
 			var inputNumber = document.getElementById('inputNumber').value;
-			
+
 
 			// 미입력된 필드를 확인하고 알림창 띄우기
 			var errorMessage = '';
@@ -247,7 +346,10 @@
 			if (errorMessage) {
 				// 미입력된 필드가 있으면 알림창 띄우고 폼 제출 취소
 				alert(errorMessage);
-			} else {
+			} else if(resultAuthentication == false){
+				alert('본인 인증을 진행해주세요!');
+			}
+			 else {
 				// 미입력된 필드가 없으면 폼 제출
 				signUpForm.submit();
 			}
