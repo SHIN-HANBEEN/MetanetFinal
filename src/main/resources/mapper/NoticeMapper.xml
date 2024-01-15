@@ -55,6 +55,17 @@
 	</select>
 	
 	
+	<!-- NoticeFile getNoticeFile(@Param("noticeId") int noticeId); -->
+	<select id="getNoticeFile" parameterType="int" resultType="metanet.kosa.metanetfinal.notice.model.NoticeFile">
+		<![CDATA[
+			SELECT 
+				FILE_NAME, FILE_DATA
+			FROM
+				NOTICES
+			WHERE 
+				NOTICE_ID = #{noticeId}
+		]]>
+	</select>
 	
 	
 	

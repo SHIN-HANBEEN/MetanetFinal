@@ -37,6 +37,7 @@ import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import metanet.kosa.metanetfinal.jwt.JwtTokenProvider;
+import metanet.kosa.metanetfinal.notice.model.NoticeFile;
 import metanet.kosa.metanetfinal.notice.model.NoticeRead;
 import metanet.kosa.metanetfinal.notice.model.Notices;
 import metanet.kosa.metanetfinal.notice.service.INoticeService;
@@ -144,7 +145,12 @@ public class NoticeController {
 	}
 	
 	//파일 다운로드
-	
+	@GetMapping("/file")
+	public ResponseEntity<byte[]> getFile(@RequestParam String noticeId) {
+		NoticeFile noticeFile = noticeService.getNoticeFile(Integer.valueOf(noticeId));
+		
+		return null;
+	}
 
 	/*
 	 * // 공지사항 리스트 조회

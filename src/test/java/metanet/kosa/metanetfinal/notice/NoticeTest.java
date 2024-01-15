@@ -19,6 +19,12 @@ public class NoticeTest {
 	public void getNoticeTest() {
 		int noticeId = 5;
 		System.out.println(noticeRepository.readNoticeByNoticeId(noticeId));
-				
+	}
+	
+	
+	@Test
+	public void getNoticeFile() {
+		int noticeId = 5;
+		System.out.println(noticeRepository.getNoticeFile(noticeId));
 	}
 }

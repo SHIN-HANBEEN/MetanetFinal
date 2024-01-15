@@ -5,6 +5,7 @@ import java.util.List;
 import org.apache.ibatis.session.RowBounds;
 import org.springframework.web.multipart.MultipartFile;
 
+import metanet.kosa.metanetfinal.notice.model.NoticeFile;
 import metanet.kosa.metanetfinal.notice.model.NoticeListHome;
 import metanet.kosa.metanetfinal.notice.model.NoticeRead;
 import metanet.kosa.metanetfinal.notice.model.Notices;
@@ -19,6 +20,9 @@ public interface INoticeService {
 	
 	//공지사항 읽어오기
 	NoticeRead noticeRead(int noticeId);
+	
+	//파일 다운로드
+	NoticeFile getNoticeFile(int noticeId);
 	
 //	// 공지사항 상세 조회
 //	Notices getNotice(int noticeId);

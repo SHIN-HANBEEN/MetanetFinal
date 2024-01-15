@@ -7,6 +7,7 @@ import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.session.RowBounds;
 import org.springframework.stereotype.Repository;
 
+import metanet.kosa.metanetfinal.notice.model.NoticeFile;
 import metanet.kosa.metanetfinal.notice.model.NoticeListHome;
 import metanet.kosa.metanetfinal.notice.model.NoticeRead;
 import metanet.kosa.metanetfinal.notice.model.Notices;
@@ -23,6 +24,9 @@ public interface INoticeRepository {
 	
 	//공지글 읽기
 	NoticeRead readNoticeByNoticeId(@Param("noticeId") int noticeId);
+	
+	//파일 다운로드
+	NoticeFile getNoticeFile(@Param("noticeId") int noticeId);
 	
 //	// 공지사항 리스트 조회
 //	List<Notices> getNoticeList(@Param("start")int start, @Param("end") int end);

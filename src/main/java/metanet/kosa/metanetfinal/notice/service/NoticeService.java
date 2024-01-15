@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
+import metanet.kosa.metanetfinal.notice.model.NoticeFile;
 import metanet.kosa.metanetfinal.notice.model.NoticeListHome;
 import metanet.kosa.metanetfinal.notice.model.NoticeRead;
 import metanet.kosa.metanetfinal.notice.model.Notices;
@@ -45,6 +46,11 @@ public class NoticeService implements INoticeService {
 	@Override
 	public NoticeRead noticeRead(int noticeId) {
 		return noticeRepository.readNoticeByNoticeId(noticeId);
+	}
+
+	@Override
+	public NoticeFile getNoticeFile(int noticeId) {
+		return null;
 	}
 
 	
