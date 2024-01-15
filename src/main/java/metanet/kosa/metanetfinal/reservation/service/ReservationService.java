@@ -233,8 +233,8 @@ public class ReservationService implements IReservationService{
 	 * 과거 6개월까지 예매내역과 취소내역을 조회한다. 
 	 */
 	@Override
-	public List<DetailedReservation> getReservationHistoryForLastSixMonth(@Param("canceledDate") Boolean canceledDate, @Param("phoneNum") String phoneNum) {
-		return reservationRepository.getReservationHistoryForLastSixMonth(canceledDate,phoneNum);
+	public List<DetailedReservation> getReservationHistoryForLastSixMonth(Boolean canceledDate, String phoneNum, boolean isMember) {
+		return reservationRepository.getReservationHistoryForLastSixMonth(canceledDate,phoneNum, isMember);
 	}
 
 	/*
@@ -242,8 +242,8 @@ public class ReservationService implements IReservationService{
 	 * 아직 출발 시간이 지나지 않은 예매 내역을 보여줍니다. 
 	 */
 	@Override
-	public List<DetailedReservation> getReservationHistoryNotUsed(String phoneNum) {
-		return reservationRepository.getReservationHistoryNotUsed(phoneNum);
+	public List<DetailedReservation> getReservationHistoryNotUsed(String phoneNum, boolean isMember) {
+		return reservationRepository.getReservationHistoryNotUsed(phoneNum, isMember);
 	}
 
 

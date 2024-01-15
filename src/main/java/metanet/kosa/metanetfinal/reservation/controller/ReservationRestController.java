@@ -25,10 +25,7 @@ public class ReservationRestController {
 	SeatsLockSystemService seatsLockSystemService;
 	
 	@GetMapping("/routeinfotest")
-	public Map<String, Object> getInfoForReservation(
-			@RequestParam String departureId, 
-			@RequestParam String arrivalId, 
-			@RequestParam String departureTime) {
+	public String getInfoForReservation() {
 		String info = 
 				"{\r\n"
 				+ "   \"arrPlaceNm\": \"강릉시외터미널\",\r\n"
@@ -44,9 +41,8 @@ public class ReservationRestController {
 				+ "   \"childCharge\": 9800,\r\n"
 				+ "   \"busId\": 100\r\n"
 				+ "}";
-		Map<String, Object> dataForSeatsSelection = reservationService.getDataForSeatsSelection(departureId, arrivalId, departureTime);
 		
-		return dataForSeatsSelection;
+		return "ok";
 	}
 	
 	@PostMapping("/seat-selection")

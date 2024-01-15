@@ -41,7 +41,8 @@
 								class="nav-item  mx-2 my-2"
 								th:if="${#authorization.expression('isAnonymous()')}"  >
 								<a 
-									href="/nreservation" 
+									
+									id = "nMemberResListBtn"
 									class="nav-link d-flex cursor-pointer align-items-center
 										ps-2 my-2 metanet-width-100p metanet-justify-center" 
 									aria-expanded="false">
@@ -52,7 +53,7 @@
 							<li class="nav-item mr-2 my-2"
 								th:if="${#authorization.expression('isAuthenticated()')}">
 								<a 
-									href="/reservation" 
+									href="/reservation/list" 
 									class="nav-link d-flex cursor-pointer align-items-center
 										ps-2 my-2 metanet-width-100p metanet-justify-center" 
 									aria-expanded="false">
@@ -86,3 +87,4 @@
 		</div>
 	</div>
 </div>
+

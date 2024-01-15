@@ -55,12 +55,18 @@
         res.phone_num = #{phoneNum} 
         and r.DEPARTURE_TIME >= sysdate
         AND res.cancled_date IS NULL
+   	<if test="isMember">
+		and res.member_id is not null
+	</if>
+	<if test="!isMember">
+		and res.member_id is null
+	</if>
     GROUP BY
         res.pay_id, r.route_id, r.departure_id, dt.terminal_name, r.arrival_id,
         at.terminal_name, r.DEPARTURE_TIME, r.arrival_time, res.res_date, res.total_price,
         dt.terminal_id, at.terminal_id
     ORDER BY
-        res.res_date
+        res.res_date desc
 	</select>
 
 	<select id="getReservationHistoryForLastSixMonth"
@@ -83,7 +89,13 @@
 		JOIN
 		terminals at ON r.arrival_id = at.terminal_id
 		WHERE
-		res.phone_num = #{phoneNum}
+		res.phone_num = #{phoneNum} 
+		<if test="isMember">
+			and res.member_id is not null
+		</if>
+		<if test="!isMember">
+			and res.member_id is null
+		</if>
 		<if test="canceledDate">
 			AND res.cancled_date IS NOT NULL
 		</if>
@@ -96,7 +108,7 @@
 		at.terminal_name, r.DEPARTURE_TIME, r.arrival_time, res.res_date,
 		res.total_price
 		ORDER BY
-		res.res_date
+		res.res_date desc
 	</select>
 
 	<select id="testCount">

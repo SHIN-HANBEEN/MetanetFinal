@@ -1,5 +1,6 @@
 package metanet.kosa.metanetfinal.reservation.controller;
 
+import java.security.Principal;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -18,6 +19,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import metanet.kosa.metanetfinal.member.model.Members;
+import metanet.kosa.metanetfinal.member.service.MemberService;
+import metanet.kosa.metanetfinal.reservation.model.DetailedReservation;
 import metanet.kosa.metanetfinal.reservation.service.IReservationService;
 import metanet.kosa.metanetfinal.reservation.service.PaymentService;
 import metanet.kosa.metanetfinal.reservation.service.ReservationService;
@@ -34,6 +38,9 @@ public class ReservationPageController {
 	
 	@Autowired
 	PaymentService paymentService;
+	
+	@Autowired
+	MemberService memberService;
 	
 	public static final String API_KEY = "7114317823237442";
     public static final String API_SECRET = "qiHm0droCiIRucwhp9k1yBeaOxAzi1FendeBExV5fmqFasplQcWgQXwcaCVlEZB5eKT2OmkxaDlUB8m8";
@@ -92,6 +99,8 @@ public class ReservationPageController {
 		System.out.println(request);
 		return request;
 	}
+	
+	
 
 	@GetMapping("/reservation/payment")
 	public String paymentPage1() {
@@ -152,5 +161,71 @@ public class ReservationPageController {
 	        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to process data");
 	    }
 	}
+	 
+	@GetMapping(value="/reservation/list")
+	public String mypage(Principal principal, Model model) {
+		
+		//전화번호, memberid, cancel
+		String phoneNum = memberService.getPhoneNumberById(principal.getName());
+		System.out.println(phoneNum);
+		
+		//전화번호를 기반으로 현재 날짜를 기준으로 6개월 간 예매 정보를 가져옴.
+		List<DetailedReservation> ReservationList = reservationService.getReservationHistoryForLastSixMonth(false,phoneNum, true); 
+		//전체 예매 내역 수 
+		int countResList = ReservationList.size();
+		System.out.println(countResList);
+		
+		//전화번호를 기반으로 출발일이 현재 날짜 이후 인 예매 정보 조회
+		List<DetailedReservation> ReservationNotUsedList = reservationService.getReservationHistoryNotUsed(phoneNum, true); 
+		System.out.println(ReservationNotUsedList);
+		//진행 중인 예매 내역 수
+		int countNotUserdList = ReservationNotUsedList.size();
+		System.out.println(countNotUserdList);
+
+		//최근 6개월의 예매 취소 내역 조회
+		List<DetailedReservation> cancelReservationList = reservationService.getReservationHistoryForLastSixMonth(true,phoneNum, true); 
+		
+		Members member = memberService.getMemberInfo(principal.getName());
+		model.addAttribute("countNotUserdList",countNotUserdList);
+		model.addAttribute("countResList",countResList);
+		
+		model.addAttribute("ReservationList",ReservationList);
+		model.addAttribute("ReservationNotUsedList",ReservationNotUsedList);
+		model.addAttribute("cancelReservationList",cancelReservationList);
+		model.addAttribute("member", member);
+		
+		
+		return "reservation/reservation_list";
+	}
+	
+	@GetMapping("/reservation/nmemberlist")
+	public String getNMemberReservationList(@RequestParam String phoneNum,Principal principal, Model model) {
+		
+		
+		//전화번호를 기반으로 현재 날짜를 기준으로 6개월 간 예매 정보를 가져옴.
+		List<DetailedReservation> ReservationList = reservationService.getReservationHistoryForLastSixMonth(false,phoneNum, false); 
+		//전체 예매 내역 수 
+		int countResList = ReservationList.size();
+		System.out.println(countResList);
+		
+		//전화번호를 기반으로 출발일이 현재 날짜 이후 인 예매 정보 조회
+		List<DetailedReservation> ReservationNotUsedList = reservationService.getReservationHistoryNotUsed(phoneNum, false); 
+		System.out.println(ReservationNotUsedList);
+		//진행 중인 예매 내역 수
+		int countNotUserdList = ReservationNotUsedList.size();
+		System.out.println(countNotUserdList);
+
+		//최근 6개월의 예매 취소 내역 조회
+		List<DetailedReservation> cancelReservationList = reservationService.getReservationHistoryForLastSixMonth(true,phoneNum, false); 
+		
+		model.addAttribute("countNotUserdList",countNotUserdList);
+		model.addAttribute("countResList",countResList);
+		
+		model.addAttribute("ReservationList",ReservationList);
+		model.addAttribute("ReservationNotUsedList",ReservationNotUsedList);
+		model.addAttribute("cancelReservationList",cancelReservationList);
+		return "reservation/reservation_list";
+	}
+
 	    
 }
