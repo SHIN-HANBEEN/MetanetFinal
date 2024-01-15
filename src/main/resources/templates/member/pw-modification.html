@@ -53,11 +53,17 @@
 										</div>
 									</div>
 									<div class="card-body">
-										<form action="/signin" id="signUpForm" method="post" th:object="${member}" role="form" class="text-start">
+										<form action="/signin" id="signUpForm" method="post" th:object="${member}" role="form"
+											class="text-start">
 											<input type="hidden" name="csrfToken" id="csrfToken" th:value="${session.csrfToken}"
 												autocomplete="off">
 											<div class="input-group input-group-outline mb-3">
-												<label class="form-label" for="password">비밀번호 입력</label>
+												<label class="form-label" for="password">현재 비밀번호 입력</label>
+												<input type="password" id="password" name="password" class=" form-control" autocomplete="off">
+											</div>
+											
+											<div class="input-group input-group-outline mb-3">
+												<label class="form-label" for="password">변경할 비밀번호 입력</label>
 												<input type="password" id="password" name="password" class=" form-control" autocomplete="off">
 											</div>
 											<div class="input-group input-group-outline mb-3">
@@ -65,11 +71,6 @@
 												<input type="password" id="password2" name="password2" class=" form-control" autocomplete="off">
 											</div>
 
-											<div class="input-group input-group-outline my-3">
-												<label class="form-label" for="email">이메일 입력</label>
-												<input type="text" id="email" name="email" class="form-control" autocomplete="off">
-											</div>
-										
 											<div class="input-group input-group-outline mb-3">
 												<label class="form-label" for="phoneNum">휴대폰 번호 입력</label>
 												<input type="tel" class="form-control" name="phoneNum" id="phoneNum">
@@ -88,7 +89,8 @@
 											</div>
 											<p id="authenticationResult"></p>
 											<div class="text-center">
-												<input value="회원가입" class="btn bg-gradient-primary w-100 my-1 mb-2" onclick="validateAndSubmit()">
+												<input value="회원가입" class="btn bg-gradient-primary w-100 my-1 mb-2"
+													onclick="validateAndSubmit()">
 
 
 											</div>
@@ -125,15 +127,15 @@
 	<!--성별-->
 	<script>
 		document.addEventListener('DOMContentLoaded', () => {
-		console.log('slkjdnflksnlk');
-		var token = sessionStorage.getItem("X-AUTH-TOKEN");
-		console.log(token);
-		//document.getElementById('testbutton').addEventListener('click', showAlert);
-		//function showAlert()
-		//alert('test');
-		
+			console.log('slkjdnflksnlk');
+			var token = sessionStorage.getItem("X-AUTH-TOKEN");
+			console.log(token);
+			//document.getElementById('testbutton').addEventListener('click', showAlert);
+			//function showAlert()
+			//alert('test');
+
 		});
-		
+
 		function setGender(gender) {
 			// Set the selected gender value to the hidden input field
 			document.getElementById('selectedGender').value = gender;
@@ -199,7 +201,7 @@
 			var birthDateValue = document.getElementById('birthDate').value;
 			var phoneNumValue = document.getElementById('phoneNum').value;
 			var inputNumber = document.getElementById('inputNumber').value;
-			
+
 
 			// 미입력된 필드를 확인하고 알림창 띄우기
 			var errorMessage = '';
