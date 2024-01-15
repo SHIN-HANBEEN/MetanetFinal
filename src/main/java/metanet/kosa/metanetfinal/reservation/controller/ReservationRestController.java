@@ -49,7 +49,7 @@ public class ReservationRestController {
 		return dataForSeatsSelection;
 	}
 	
-	@PostMapping("/routeinfotest")
+	@PostMapping("/seat-selection")
 	public ResponseEntity<Map<String, Object>>  selectedSeatsInBus(@RequestBody Map<String, Object> request) {
 		System.out.println(request.toString());
 		int busId = Integer.parseInt(request.get("busId").toString());
