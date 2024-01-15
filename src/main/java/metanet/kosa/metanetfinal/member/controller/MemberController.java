@@ -1,26 +1,20 @@
 package metanet.kosa.metanetfinal.member.controller;
 
-import java.awt.Dialog.ModalExclusionType;
 import java.security.Principal;
 import java.util.List;
-import java.util.Map;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-
-import com.fasterxml.jackson.annotation.JsonTypeInfo.Id;
 
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
@@ -28,11 +22,9 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import metanet.kosa.metanetfinal.jwt.JwtTokenProvider;
 import metanet.kosa.metanetfinal.member.model.Members;
-import metanet.kosa.metanetfinal.member.repository.IMemberRepository;
 import metanet.kosa.metanetfinal.member.service.IMemberService;
 import metanet.kosa.metanetfinal.member.service.PhoneNumCertificationService;
 import metanet.kosa.metanetfinal.reservation.model.DetailedReservation;
-import metanet.kosa.metanetfinal.reservation.model.Reservations;
 import metanet.kosa.metanetfinal.reservation.service.ReservationService;
 
 @Controller
@@ -198,8 +190,6 @@ public class MemberController {
 	
 	@GetMapping(value="/member-modification")
 	public String modification_member(Principal principal, Model model, HttpSession session) {
-		String csrfToken = UUID.randomUUID().toString();
-		session.setAttribute("csrfToken", csrfToken);
 		Members member = memberService.getMemberInfo(principal.getName());
 		model.addAttribute("member", member);
 		return "member/member-modification";
@@ -207,33 +197,33 @@ public class MemberController {
 	
 
 	@PostMapping(value="/member-modification")
-	public String modification_member(Principal principal, Members member, String csrfToken, Model model, HttpSession session) {
-		System.out.println(csrfToken);
+	public String modification_member(Principal principal, Members member, String csrfToken, Model model, HttpServletRequest request) {
+		//System.out.println("csrfToken: " + csrfToken);
 		System.out.println(member);
+		/*
 		if (csrfToken == null || "".equals(csrfToken)) {
 			throw new RuntimeException("CSRF 토큰이 없습니다.");
 			
 		} else if (!csrfToken.equals(session.getAttribute("csrfToken"))) {
 			throw new RuntimeException("잘못된 접근이 감지되었습니다.");
 		}
-		
-		try {
-			if (!member.getPassword().equals(member.getPassword2())) {
-				model.addAttribute("member", member);
-				model.addAttribute("message", "MEMBER_PW_RE");
-				return "signin";
-			}
-			// member.setRole("ROLE_USER");
-			// member.setMileage(0);
-			System.out.println("id: " + member.getId()+", email: " + member.getEmail() + ", phoneNum: " + member.getPhoneNum());
-			memberService.updateMember(member.getId(), member.getEmail(), member.getPhoneNum());
-		} catch (DuplicateKeyException e) {
-			member.setId(null);
-			model.addAttribute("members", member);
-			model.addAttribute("message", "ID_ALREADY_EXIST");
-			return "signin";
+		*/
+		PasswordEncoder pwEncoder = PasswordEncoderFactories.createDelegatingPasswordEncoder();
+		String rawPassword = member.getPassword(); // 사용자가 입력한 평문 비밀번호
+		String encodedPassword = memberService.getPwById(principal.getName()); // DB에 저장된 인코딩된 비밀번호
+
+		if (pwEncoder.matches(rawPassword, encodedPassword)) {
+		    // 비밀번호가 일치하는 경우
+		    memberService.updateMember(member.getId(), member.getEmail(), member.getPhoneNum());
+		} else {
+		    // 비밀번호가 일치하지 않는 경우
+		    System.out.println("패스워드 다름");
+		    model.addAttribute("member", member);
+			model.addAttribute("message", "MEMBER_PW_RE");
+			return "/";
 		}
-		return "";
+
+		return "redirect:/member-information";
 	}
 	
 

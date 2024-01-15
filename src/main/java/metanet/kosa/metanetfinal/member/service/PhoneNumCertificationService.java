@@ -36,6 +36,7 @@ public class PhoneNumCertificationService {
         numberAuthentication.setSixDigitRandomNumber(sixDigitRandomNumber);
         numberAuthentication.setNowDate(LocalDateTime.now());
         
+        System.out.println(sixDigitRandomNumber);
         //핸드폰 번호로 인증 번호 전송
         //smsService.sendOne(userPhoneNumber,"메타버스 인증번호[" + sixDigitRandomNumber +"]");
         

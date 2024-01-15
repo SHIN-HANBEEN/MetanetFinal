@@ -14,5 +14,5 @@ public interface IMemberService {
 	void updateMember(String userId, String email, String phoNum);
 	Members getMemberInfo(String id);
 	List<String> getRoles(String id);
-	
+	String getPwById(String id);
 }
