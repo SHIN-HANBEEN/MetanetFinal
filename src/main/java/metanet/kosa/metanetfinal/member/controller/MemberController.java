@@ -6,6 +6,7 @@ import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DuplicateKeyException;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.server.ResponseStatusException;
 
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
@@ -232,7 +234,15 @@ public class MemberController {
 		
 		return null;
 	}
-
+	
+	/*
+	 * 403 에러
+	@GetMapping("/some-protected-resource")
+    public String someProtectedResource() {
+        // 여기서 어떤 조건을 검사한 후 접근을 금지할 경우
+        throw new ResponseStatusException(HttpStatus.FORBIDDEN, "You do not have permission to access this resource.");
+    }
+	*/
 
 	/*
 	 * @PostMapping(value="/signin") public String signin(Members member, String
