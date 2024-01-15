@@ -24,4 +24,5 @@ public class NoticeRestController {
 		RowBounds rowBounds = new RowBounds(offset, 10);
 		return noticeService.getNoticesWithPagination(rowBounds);
 	}
+
 }

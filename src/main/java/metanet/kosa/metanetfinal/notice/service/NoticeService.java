@@ -13,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import metanet.kosa.metanetfinal.notice.model.NoticeListHome;
+import metanet.kosa.metanetfinal.notice.model.NoticeRead;
 import metanet.kosa.metanetfinal.notice.model.Notices;
 import metanet.kosa.metanetfinal.notice.repository.INoticeRepository;
 
@@ -39,6 +40,11 @@ public class NoticeService implements INoticeService {
 	@Override
 	public List<NoticeListHome> getNoticesWithPagination(RowBounds rowBounds) {
 		return noticeRepository.getNoticesWithPagination(rowBounds);
+	}
+
+	@Override
+	public NoticeRead noticeRead(int noticeId) {
+		return noticeRepository.readNoticeByNoticeId(noticeId);
 	}
 
 	
