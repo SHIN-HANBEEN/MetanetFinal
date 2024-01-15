@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
 
+import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.session.RowBounds;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,6 +17,7 @@ import metanet.kosa.metanetfinal.notice.model.NoticeFile;
 import metanet.kosa.metanetfinal.notice.model.NoticeListHome;
 import metanet.kosa.metanetfinal.notice.model.NoticeRead;
 import metanet.kosa.metanetfinal.notice.model.Notices;
+import metanet.kosa.metanetfinal.notice.model.NoticesForDbUpload;
 import metanet.kosa.metanetfinal.notice.repository.INoticeRepository;
 
 @Service
@@ -27,7 +29,11 @@ public class NoticeService implements INoticeService {
 	// 공지사항 작성
 	@Transactional
 	@Override
-	public void insertNoticeWithFile(Notices notices, int memberId) {
+	public void insertNoticeWithFile(
+			@Param("notices") Notices notices, 
+			@Param("memberId") int memberId) {
+		System.out.println("공지 파일과 함께 넣기 서비스 실행");
+		System.out.println("리포지토리 실행 전 notices 확인해보기 : " + notices);
 		noticeRepository.insertNoticeWithFile(notices, memberId);
 	}
 

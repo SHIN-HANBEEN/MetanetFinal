@@ -118,9 +118,19 @@ public class NoticeController {
 
 				notices.setMemberId(Integer.valueOf(memberId));
 				System.out.println("mfile get memberId 처리 완료 : " + Integer.valueOf(memberId));
-
+					
+				notices.setFileSize(mfile.getSize());
+				System.out.println("mfile get fileSize 처리 완료 : " + mfile.getSize());
+				
+				notices.setFileContentType(mfile.getContentType());
+				System.out.println("mfile get contentType 처리 완료 : " + mfile.getContentType());
+				
+				
+				
 				System.out.println("insertNoticeWithFile 시작! ");
-				System.out.println("notices 출력하기 " + notices);
+				
+				System.out.println("notices 출력하기 : " + notices);
+				
 				noticeService.insertNoticeWithFile(notices, memberId);
 
 			} else {

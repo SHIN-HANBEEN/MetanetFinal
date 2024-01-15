@@ -9,10 +9,12 @@
 			INSERT INTO notices
 				(notice_id, member_id, title, 
 				content, file_name, file_data, 
+				FILE_TYPE, FILE_SIZE,
 				is_emphasized)
 			VALUES
 				(notices_id.NEXTVAL, #{memberId}, #{notices.title}, 
 				#{notices.content}, #{notices.fileName},  #{notices.file}, 
+				#{notices.fileContentType}, #{notices.fileSize},
 				#{notices.isEmphasized})
 		]]>
 	</insert>

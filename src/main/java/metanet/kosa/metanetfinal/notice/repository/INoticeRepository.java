@@ -11,6 +11,7 @@ import metanet.kosa.metanetfinal.notice.model.NoticeFile;
 import metanet.kosa.metanetfinal.notice.model.NoticeListHome;
 import metanet.kosa.metanetfinal.notice.model.NoticeRead;
 import metanet.kosa.metanetfinal.notice.model.Notices;
+import metanet.kosa.metanetfinal.notice.model.NoticesForDbUpload;
 
 @Mapper
 @Repository

@@ -386,19 +386,19 @@
 			fetchNoticeList(offset);
 
 
-			function updateIsEmphasizedValue() {
-				const isEmphasizedInput = document.getElementById('isEmphasized');
-				const isEmphasizedCheckBox = document.getElementById('isEmphasizedCheckBox');
-				console.log('중요 공지 여부 확인 실행됨');
-				alert('일시정지');
-				// Set the value of the isEmphasized input based on the state of the checkbox
-				isEmphasizedInput.value = isEmphasizedCheckBox.checked ? 'TRUE' : 'FALSE';
-			}
+
 		});
 
 
 
-
+		function updateIsEmphasizedValue() {
+			const isEmphasizedInput = document.getElementById('isEmphasized');
+			const isEmphasizedCheckBox = document.getElementById('isEmphasizedCheckBox');
+			console.log('중요 공지 여부 확인 실행됨');
+			alert('일시정지');
+			// Set the value of the isEmphasized input based on the state of the checkbox
+			isEmphasizedInput.value = isEmphasizedCheckBox.checked ? 'TRUE' : 'FALSE';
+		}
 	</script>
 
 	<!--   Core JS Files   -->
