@@ -14,6 +14,16 @@
 	]]>
 	</select>
 	
+	<select id="getPassword" parameterType="string" resultType="string">
+	<![CDATA[
+		SELECT
+			password
+		FROM
+			members
+		WHERE id=#{id}
+	]]>
+	</select>
+	
 	<select id="getMemberById" parameterType="string" resultType="metanet.kosa.metanetfinal.member.model.Members">
 	<![CDATA[
 		SELECT 

@@ -20,9 +20,16 @@ import metanet.kosa.metanetfinal.member.model.NumberAuthentication;
 public class PhoneNumCertificationService {
 	@Autowired
 	CoolSmsService smsService;
-	//전화번호 인증을 위한 캐시<전화번호, 인증번호>
+	//전화번호 인증을 위한 캐시<전화번호, 인증번호, 날짜>
+	/*
+	 * Map <전화번호 , <인증번호, 날짜>> HashMap
+	 */
 	private Map<String, NumberAuthentication> certification = new HashMap<>();
 	
+	/*
+	 * 인증번호 생성
+	 * Random 
+	 */
 	public String sendRandomNumber(String userPhoneNumber) {
 		// Random 객체 생성
         Random random = new Random();
@@ -35,7 +42,7 @@ public class PhoneNumCertificationService {
         NumberAuthentication numberAuthentication = new NumberAuthentication();
         numberAuthentication.setSixDigitRandomNumber(sixDigitRandomNumber);
         numberAuthentication.setNowDate(LocalDateTime.now());
-        
+        //System.out.println(sixDigitRandomNumber);
         //핸드폰 번호로 인증 번호 전송
         //smsService.sendOne(userPhoneNumber,"메타버스 인증번호[" + sixDigitRandomNumber +"]");
         

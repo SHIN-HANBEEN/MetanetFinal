@@ -231,7 +231,6 @@
 			var timerContainer = document.getElementById('3MinTimer');
 			timerContainer.style.display = 'flex';
 			var phoneNumber = $('#phoneNum').val();
-			alert(phoneNumber);
 			// AJAX를 사용하여 서버에 비동기 요청 보내기
 			$.ajax({
 				type: 'GET',
@@ -284,6 +283,7 @@
 				alert('인증 가능한 시간이 지났습니다. 다시 인증을 진행해 주세요.');
 			}, time);//3분이 되면 타이머를 삭제한다.
 		}
+		
 
 		var resultAuthentication = false;
 		function submitAuthentication() {
