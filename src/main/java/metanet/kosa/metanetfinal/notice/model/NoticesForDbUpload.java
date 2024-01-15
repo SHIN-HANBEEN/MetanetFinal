@@ -11,14 +11,13 @@ import lombok.ToString;
 @Builder
 @Setter
 @ToString
-public class Notices {
+public class NoticesForDbUpload {
 	private int noticeId;
 	private int memberId;
 	private String title;
 	private String content;
 	private String fileName;
 	private byte[] file;
-	private MultipartFile multipartFile;
 	private String fileContentType;
 	private long fileSize;
 	private String isEmphasized;

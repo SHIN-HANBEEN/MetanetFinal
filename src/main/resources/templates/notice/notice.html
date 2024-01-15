@@ -51,11 +51,11 @@
 				<span class="mask bg-gradient-dark opacity-6"></span>
 
 
-				<div class="container-fluid metanet-mt-24">
+				<div class="container-fluid" style="margin-top: 23%;">
 					<div class="row" style="text-align: center;">
 						<!-- 좌석조회 카드 -->
 						<div class="col-lg-12 mb-5" style="z-index: 10;">
-							<div class="container bg-body-tertiary rounded-4 mt-n12" style="height: 80vh;">
+							<div class="container bg-body-tertiary rounded-4 mt-n12" style="min-height: 80vh; max-height: 160vh;">
 
 								<div class="section text-center" id="noticeContent">
 									<h2 class="title pb-3 pt-4">공지사항</h2>
@@ -68,7 +68,7 @@
 
 										<div class="col-8">
 											<hr class="dark horizontal mt-0 mb-2">
-											<table class="table table-hover">
+											<table class="table table-hover" id="noticeTable">
 												<thead>
 													<tr>
 														<th class="col-2" scope="col">공지번호</th>
@@ -76,26 +76,56 @@
 														<th class="col-2" scope="col">작성자</th>
 													</tr>
 												</thead>
-												<tbody>
-													<tr>
+												<tbody id="noticeTableBody">
+													<!-- tbody 는 비동기로 가져온다. -->
+													<!--<tr>
 														<th scope="row">1</th>
 														<td>Mark</td>
 														<td>Otto</td>
-													</tr>
-													<tr>
-														<th scope="row">2</th>
-														<td>Jacob</td>
-														<td>Thornton</td>
-													</tr>
-													<tr>
-														<th scope="row">3</th>
-														<td>Larry the Bird</td>
-														<td>@twitter</td>
-													</tr>
+													</tr>-->
+
 												</tbody>
 											</table>
 										</div>
 
+										<div class="col-2">
+
+										</div>
+
+
+										<!-- 공지 검색 관련 친구들
+										 -->
+										<div class="col-2">
+
+										</div>
+										<div class="col-8">
+											<div class="row">
+												<div class="col-8">
+													<!-- d-flex 로 만들어서 블록 요소들을 한 line 에 두도록 만든다. -->
+													<div class="d-flex align-items-center">
+														<div class="d-inline-block form-check form-switch my-4 mb-2 d-flex align-items-center">
+															<input class="form-check-input" type="checkbox" id="IsNoticeNumberSearch" checked="">
+															<label class="form-check-label ms-3 mb-0 text-dark" for="IsNoticeNumberSearch">
+																공지 번호
+														</div>
+														<div class="d-inline-block form-check form-switch my-4 mb-2 d-flex align-items-center">
+															<input class="form-check-input mx-1" type="checkbox" id="IsNoticeTitleSearch" checked="">
+															<label class="form-check-label ms-3 mb-0 text-dark" for="IsNoticeTitleSearch">
+																공지 제목
+														</div>
+														<div class="d-inline-block my-4 mb-2 ms-4" style="font-size: 70%;">
+															검색할 항목을 선택하세요. (중복 선택 가능)
+														</div>
+													</div>
+												</div>
+												<div class="col-4">
+												</div>
+											</div>
+											<div class="input-group input-group-dynamic mb-4">
+												<span class="input-group-text"><i class="fas fa-search" aria-hidden="true"></i></span>
+												<input class="form-control" placeholder="검색 내용 입력" type="text">
+											</div>
+										</div>
 										<div class="col-2">
 
 										</div>
@@ -111,7 +141,7 @@
 												<div class="col-3">
 
 												</div>
-												<div class="col-6">
+												<div class="col-6 mb-3">
 													<nav aria-label="Page navigation example">
 														<ul class="pagination justify-content-center">
 															<li class="page-item mx-2">
@@ -255,79 +285,160 @@
 
 
 	<script>
-		/*
-			페이지 로딩 된 다음에 실행해야 하는 것들
-		*/
-		$(document).ready(function () {
-			/* xhr 로 교체함
-			const noticeRegisterBtn = document.getElementById('noticeRegisterButton');
-			const noticeContent = document.getElementById('noticeContent');
-
-			noticeRegisterBtn.addEventListener('click', function () {
-				console.log('noticeBtn이 클릭되었습니다');
-				$.ajax({
-					url: '/notice/register',
-					method: 'GET',
-					dataType: 'html', // Corrected dataType
-					success: function (response) {
-						console.log('response 에요 : ' + response);
-						
-						if (response) {
-							$(noticeContent).html(response);
-						} else {
-							console.error('공지 작성을 위한 htmlcontent 가 없어요');
-						}
-					},
-					error: function (error) {
-						console.error('공지 작성 가져오다 오류가 발생했어요', error);
-					}
-				});
-			});
-			*/
-
-		});
-		/*
-			document.ready 끝나는 지점
-		*/
-
-
-
 		document.addEventListener('DOMContentLoaded', function () {
-			const noticeRegisterBtn = document.getElementById('noticeRegisterButton');
-			const noticeContent = document.getElementById('noticeContent');
+			const offset = 0; //페이징 처음에는 0으로 처리
 
-			console.log('dom 읽기가 완료되었어요.');
 
-			noticeRegisterBtn.addEventListener('click', function () {
-				console.log('noticeBtn이 클릭되었습니다');
+			//게시글 등록 불러오는 처리
+			function checkButtonExistence() {
+				const noticeRegisterBtn = document.getElementById('noticeRegisterButton');
+				const noticeContent = document.getElementById('noticeContent');
 
+				if (noticeRegisterBtn) {
+					console.log('noticeRegisterBtn이 읽혔어요.');
+					clearInterval(intervalId); // Stop checking
+
+					console.log('dom 읽기가 완료되었어요.');
+
+					noticeRegisterBtn.addEventListener('click', function () {
+						console.log('noticeBtn이 클릭되었습니다');
+
+						const xhr = new XMLHttpRequest();
+
+						xhr.open('GET', '/notice/register', true);
+
+						xhr.onload = function () {
+							if (xhr.status === 200) {
+								console.log('response 에요 : ' + xhr.responseText);
+								noticeContent.innerHTML = xhr.responseText
+								if (xhr.responseText) {
+
+								} else {
+									console.error('공지 작성을 위한 htmlcontent 가 없어요');
+								}
+							} else {
+								console.error('공지 작성 가져오다 오류가 발생했어요', xhr.status, xhr.statusText);
+							}
+						};
+
+						xhr.onerror = function () {
+							console.error('통신 중 에러가 발생했어요');
+						};
+
+						xhr.send();
+					});
+					// Your remaining code here
+				} else {
+					console.log('noticeRegisterBtn을 못 읽어왔네요.');
+				}
+			}
+			const intervalId = setInterval(checkButtonExistence, 1000); // Check every second
+
+
+			//notice table 만드는 코드
+			function fetchNoticeList(offset) {
 				const xhr = new XMLHttpRequest();
-
-				xhr.open('GET', '/notice/register', true);
-
-				xhr.onload = function () {
-					if (xhr.status === 200) {
-						console.log('response 에요 : ' + xhr.responseText);
-						noticeContent.innerHTML = xhr.responseText
-						//noticeContent.innerHTML = '<h2>dnslkndlkf</h2>'+xhr.responseText;	
-						if (xhr.responseText) {
-							
-						} else {
-							console.error('공지 작성을 위한 htmlcontent 가 없어요');
-						}
-					} else {
-						console.error('공지 작성 가져오다 오류가 발생했어요', xhr.status, xhr.statusText);
+				xhr.onreadystatechange = function () {
+					if (xhr.readyState === 4 && xhr.status === 200) {
+						const noticeList = JSON.parse(xhr.responseText);
+						updateTableBody(noticeList);
 					}
 				};
-
-				xhr.onerror = function () {
-					console.error('통신 중 에러가 발생했어요');
-				};
-
+				xhr.open('GET', '/notice/list?offset=' + offset, true);
 				xhr.send();
-			});
+			}
+			function updateTableBody(noticeList) {
+				const tbody = document.getElementById('noticeTableBody');
+				tbody.innerHTML = '';
+
+				for (var i = 0; i < noticeList.length; i++) {
+					var notice = noticeList[i];
+					//N.NOTICE_ID, N.TITLE, M.MEMBER_ID 
+					var row = document.createElement('tr');
+					row.innerHTML = '<th scope="row">' + notice.noticeId + '</th>' +
+						// '<td><a href=/notice/read?noticeId=' + notice.noticeId + '&offset=' + offset + '>' + notice.title + '</a></td>' +
+						'<td><a style=cursor:pointer class=noticeTitle id=notice' + notice.noticeId + '>' + notice.title + '</a></td>' +
+						'<td>' + notice.name + '</td>';
+					tbody.appendChild(row);
+
+					const titleA = document.getElementById('notice' + notice.noticeId);
+					if (titleA) {
+						titleA.addEventListener('click', function () {
+							const xhr = new XMLHttpRequest();
+							xhr.onreadystatechange = function () {
+								if (xhr.readyState === 4 && xhr.status === 200) {
+									console.log('공지 읽기 html : ' + xhr.responseText);
+									const noticeReadHtml = xhr.responseText;
+									updateNoticeContentForReadNotice(noticeReadHtml);
+								}
+							};
+							xhr.open('GET', '/notice/read?noticeId=' + notice.noticeId + '&offset=' + offset, true);
+							xhr.send();
+						});
+						function updateNoticeContentForReadNotice(content) {
+							const noticeContent = document.getElementById('noticeContent');
+							noticeContent.innerHTML = content;
+						}
+					}
+				}
+			}
+			//Notice 초기값은 offset(0) 으로 보냅니다. 
+			fetchNoticeList(offset);
+
+			//게시글 등록 불러오는 처리
+			function fileSizeContainerExist() {
+				const fileSizeContainer = document.getElementById('fileSizeContainer');
+
+				if (fileSizeContainer) {
+					console.log('fileSizeContainer가 읽혔어요.');
+					clearInterval(intervalId2); // Stop checking
+
+					// Get the file size element
+					var fileSizeElement = document.getElementById("fileSizeValue");
+
+					// Format the file size
+					if (fileSizeElement) {
+						var fileSize = parseFloat(fileSizeElement.innerText);
+
+						// Call the function to format the file size
+						fileSizeElement.innerText = formatFileSize(fileSize);
+					}
+
+				} else {
+					console.log('noticeRegisterBtn을 못 읽어왔네요.');
+				}
+			}
+			const intervalId2 = setInterval(fileSizeContainerExist, 1000); // Check every second
+
 		});
 
+
+
+		function updateIsEmphasizedValue() {
+			const isEmphasizedInput = document.getElementById('isEmphasized');
+			const isEmphasizedCheckBox = document.getElementById('isEmphasizedCheckBox');
+			console.log('중요 공지 여부 확인 실행됨');
+			alert('일시정지');
+			// Set the value of the isEmphasized input based on the state of the checkbox
+			isEmphasizedInput.value = isEmphasizedCheckBox.checked ? 'TRUE' : 'FALSE';
+		}
+
+		function redirectToNotice(offset) {
+			// Redirect to the /notice page with the provided offset value
+			window.location.href = "/noticeoffset/offset=" + offset;
+		}
+
+		function formatFileSize(fileSize) {
+			if (fileSize < 1024) {
+				return fileSize + " bit";
+			} else if (fileSize < 1048576) {
+				return (fileSize / 1024).toFixed(2) + " Kbit";
+			} else if (fileSize < 1073741824) {
+				return (fileSize / 1048576).toFixed(2) + " Mbit";
+			} else {
+				return (fileSize / 1073741824).toFixed(2) + " Gbit";
+			}
+		}
 	</script>
 
 	<!--   Core JS Files   -->

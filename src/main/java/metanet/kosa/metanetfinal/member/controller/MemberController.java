@@ -71,7 +71,7 @@ public class MemberController {
 		 * 비밀번호 검증이 완료 되면 쿠키에 JWT 토큰을 넣어서 생성
 		 */
 		Cookie cookie = new Cookie(
-				"access_token", tokenProvider.generateToken(member));
+				"access_token", tokenProvider.generateToken(member)); //member 객체에 담긴 정보를 토대로 jwt token 을 만든다.
 		cookie.setMaxAge(60*60*24*7); //어차피 token 에 유효기간을 설정을 해두었기 때문에 의미는 없다.
 		cookie.setHttpOnly(true);
 		cookie.setPath("/");

@@ -7,6 +7,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.stereotype.Component;
 
 import jakarta.servlet.http.Cookie;
 import io.jsonwebtoken.Claims;
@@ -20,6 +21,7 @@ import metanet.kosa.metanetfinal.member.model.Members;
  * JWT를 생성하고 검증하는 서비스를 제공
  */
 @Slf4j
+@Component
 public class JwtTokenProvider {
 
 	/**
@@ -50,6 +52,7 @@ public class JwtTokenProvider {
 				.subject(member.getId())
 				.issuer(member.getName())
 				.add("roles", member.getRole())
+				.add("memberId", member.getMemberId())
 				.build();
 		Date now = new Date();
 		return Jwts.builder().claims(claims) // sub, iss, roles
@@ -141,5 +144,26 @@ public class JwtTokenProvider {
 		} catch (Exception e) {
 			return false;
 		}
+	}
+	
+	public String getSubjectFromToken(String jwtToken) {
+		Claims claims = Jwts.parser().verifyWith(key)
+				.build().parseSignedClaims(jwtToken)
+				.getPayload();
+		return claims.getSubject();
+	}
+	
+	public String getRolesFromToken(String jwtToken) {
+		Claims claims = Jwts.parser().verifyWith(key)
+				.build().parseSignedClaims(jwtToken)
+				.getPayload();
+		return claims.get("roles", String.class);
+	}
+	
+	public int getMemberIdFromToken(String jwtToken) {
+		Claims claims = Jwts.parser().verifyWith(key)
+				.build().parseSignedClaims(jwtToken)
+				.getPayload();
+		return claims.get("memberId", Integer.class);
 	}
 }

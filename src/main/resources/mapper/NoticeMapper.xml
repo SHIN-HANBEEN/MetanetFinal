@@ -4,6 +4,84 @@
 
 <mapper namespace="metanet.kosa.metanetfinal.notice.repository.INoticeRepository">
 
+	<insert id="insertNoticeWithFile" parameterType="map">
+		<![CDATA[
+			INSERT INTO notices
+				(notice_id, member_id, title, 
+				content, file_name, file_data, 
+				FILE_TYPE, FILE_SIZE,
+				is_emphasized)
+			VALUES
+				(notices_id.NEXTVAL, #{memberId}, #{notices.title}, 
+				#{notices.content}, #{notices.fileName},  #{notices.file}, 
+				#{notices.fileContentType}, #{notices.fileSize},
+				#{notices.isEmphasized})
+		]]>
+	</insert>
+	
+	<insert id="insertNoticeWithoutFile" parameterType="map">
+		<![CDATA[
+			INSERT INTO notices
+				(notice_id, member_id, title, content, is_emphasized)
+			VALUES
+				(notices_id.NEXTVAL, #{memberId}, #{notices.title}, 
+				#{notices.content}, 
+				#{notices.isEmphasized})
+		]]>
+	</insert>
+	
+	<!-- List<NoticeListHome> getNoticesWithPagination(RowBounds rowBounds)  -->
+	<select id="getNoticesWithPagination" resultType="metanet.kosa.metanetfinal.notice.model.NoticeListHome">
+		<![CDATA[
+			SELECT 
+				N.NOTICE_ID, N.TITLE, M.NAME
+			FROM 
+				NOTICES N JOIN MEMBERS M
+			ON 
+				N.MEMBER_ID = M.MEMBER_ID
+		]]>
+	</select>
+	
+	<!-- NoticeRead readNoticeByNoticeId(@Param("noticeId") int noticeId); -->
+	<select id="readNoticeByNoticeId" parameterType="int" resultType="metanet.kosa.metanetfinal.notice.model.NoticeRead">
+		<![CDATA[
+			SELECT 
+				M.NAME, N.NOTICE_ID, 
+				N.TITLE, N.CONTENT, 
+				N.FILE_NAME, N.FILE_DATA, 
+				N.FILE_TYPE, N.FILE_SIZE,
+				IS_EMPHASIZED, 0 AS OFFSET
+			FROM
+				MEMBERS M JOIN NOTICES N
+			ON
+				M.MEMBER_ID = N.MEMBER_ID
+			WHERE 
+				N.NOTICE_ID = #{noticeId}
+		]]>
+	</select>
+	
+	
+	<!-- NoticeFile getNoticeFile(@Param("noticeId") int noticeId); -->
+	<select id="getNoticeFile" parameterType="int" resultType="metanet.kosa.metanetfinal.notice.model.NoticeFile">
+		<![CDATA[
+			SELECT 
+				FILE_NAME, FILE_DATA, FILE_TYPE, FILE_SIZE
+			FROM
+				NOTICES
+			WHERE 
+				NOTICE_ID = #{noticeId}
+		]]>
+	</select>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<!-- 
 	<select id="getNoticeList" parameterType="hashmap" resultType="metanet.kosa.metanetfinal.notice.model.Notices">
 		<![CDATA[
 		SELECT 
@@ -80,14 +158,6 @@
 		]]>
 	</select>
 	
-	<insert id="insertNotice" parameterType="metanet.kosa.metanetfinal.notice.model.Notices">
-		<![CDATA[
-			INSERT INTO notices
-				(notice_id, member_id, title, content, dir_path)
-			VALUES
-				(#{noticeId}, 1, #{title}, #{content}, #{dirPath})
-		]]>
-	</insert>
 	
 	<delete id="deleteNotice" parameterType="int">
 		<![CDATA[
@@ -104,4 +174,6 @@
 			dir_Path = #{notice.dirPath}
 		WHERE notice_id = #{noticeId}
 	</update>
+	
+	-->
 </mapper>
