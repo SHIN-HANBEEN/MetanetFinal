@@ -385,7 +385,30 @@
 			//Notice 초기값은 offset(0) 으로 보냅니다. 
 			fetchNoticeList(offset);
 
+			//게시글 등록 불러오는 처리
+			function fileSizeContainerExist() {
+				const fileSizeContainer = document.getElementById('fileSizeContainer');
 
+				if (fileSizeContainer) {
+					console.log('fileSizeContainer가 읽혔어요.');
+					clearInterval(intervalId2); // Stop checking
+
+					// Get the file size element
+					var fileSizeElement = document.getElementById("fileSizeValue");
+
+					// Format the file size
+					if (fileSizeElement) {
+						var fileSize = parseFloat(fileSizeElement.innerText);
+
+						// Call the function to format the file size
+						fileSizeElement.innerText = formatFileSize(fileSize);
+					}
+
+				} else {
+					console.log('noticeRegisterBtn을 못 읽어왔네요.');
+				}
+			}
+			const intervalId2 = setInterval(fileSizeContainerExist, 1000); // Check every second
 
 		});
 
@@ -398,6 +421,23 @@
 			alert('일시정지');
 			// Set the value of the isEmphasized input based on the state of the checkbox
 			isEmphasizedInput.value = isEmphasizedCheckBox.checked ? 'TRUE' : 'FALSE';
+		}
+
+		function redirectToNotice(offset) {
+			// Redirect to the /notice page with the provided offset value
+			window.location.href = "/noticeoffset/offset=" + offset;
+		}
+
+		function formatFileSize(fileSize) {
+			if (fileSize < 1024) {
+				return fileSize + " bit";
+			} else if (fileSize < 1048576) {
+				return (fileSize / 1024).toFixed(2) + " Kbit";
+			} else if (fileSize < 1073741824) {
+				return (fileSize / 1048576).toFixed(2) + " Mbit";
+			} else {
+				return (fileSize / 1073741824).toFixed(2) + " Gbit";
+			}
 		}
 	</script>
 

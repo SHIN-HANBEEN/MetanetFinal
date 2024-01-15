@@ -56,7 +56,7 @@ public class NoticeService implements INoticeService {
 
 	@Override
 	public NoticeFile getNoticeFile(int noticeId) {
-		return null;
+		return noticeRepository.getNoticeFile(noticeId);
 	}
 
 	

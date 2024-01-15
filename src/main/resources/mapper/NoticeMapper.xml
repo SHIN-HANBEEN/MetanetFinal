@@ -46,7 +46,11 @@
 	<select id="readNoticeByNoticeId" parameterType="int" resultType="metanet.kosa.metanetfinal.notice.model.NoticeRead">
 		<![CDATA[
 			SELECT 
-				M.NAME, N.NOTICE_ID, N.TITLE, N.CONTENT, N.FILE_NAME, N.FILE_DATA, IS_EMPHASIZED, 0 AS OFFSET
+				M.NAME, N.NOTICE_ID, 
+				N.TITLE, N.CONTENT, 
+				N.FILE_NAME, N.FILE_DATA, 
+				N.FILE_TYPE, N.FILE_SIZE,
+				IS_EMPHASIZED, 0 AS OFFSET
 			FROM
 				MEMBERS M JOIN NOTICES N
 			ON
@@ -61,7 +65,7 @@
 	<select id="getNoticeFile" parameterType="int" resultType="metanet.kosa.metanetfinal.notice.model.NoticeFile">
 		<![CDATA[
 			SELECT 
-				FILE_NAME, FILE_DATA
+				FILE_NAME, FILE_DATA, FILE_TYPE, FILE_SIZE
 			FROM
 				NOTICES
 			WHERE 

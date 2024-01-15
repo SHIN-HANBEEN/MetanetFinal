@@ -1,7 +1,9 @@
 package metanet.kosa.metanetfinal.notice.controller;
 
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
+import java.net.URLEncoder;
 import java.net.http.HttpRequest;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -19,6 +21,8 @@ import org.jsoup.safety.Safelist;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.core.io.Resource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -155,11 +159,20 @@ public class NoticeController {
 	}
 	
 	//파일 다운로드
-	@GetMapping("/file")
-	public ResponseEntity<byte[]> getFile(@RequestParam String noticeId) {
+	@GetMapping("/notice/file")
+	public ResponseEntity<byte[]> getFile( @RequestParam String noticeId ) {
 		NoticeFile noticeFile = noticeService.getNoticeFile(Integer.valueOf(noticeId));
-		
-		return null;
+		final HttpHeaders headers = new HttpHeaders();
+		String[] mytypes = noticeFile.getFileContentType().split("/");
+		headers.setContentType(new MediaType(mytypes[0], mytypes[1]));
+		headers.setContentLength(noticeFile.getFileSize());
+		try {
+			String encodedFileName = URLEncoder.encode(noticeFile.getFileName(), "UTF-8");
+			headers.setContentDispositionFormData("attachment", encodedFileName);
+		} catch (UnsupportedEncodingException e) {
+			throw new RuntimeException(e);
+		}
+		return new ResponseEntity<byte[]>(noticeFile.getFileData(), headers, HttpStatus.OK);
 	}
 
 	/*

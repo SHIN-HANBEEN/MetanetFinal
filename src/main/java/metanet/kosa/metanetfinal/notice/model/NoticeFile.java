@@ -10,4 +10,6 @@ import lombok.ToString;
 public class NoticeFile {
 	private String fileName;
 	private byte[] fileData;
+	private long fileSize;		// 파일 크기
+	private String fileContentType;	
 }

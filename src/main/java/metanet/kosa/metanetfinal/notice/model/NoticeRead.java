@@ -16,6 +16,8 @@ public class NoticeRead {
 	private String content;
 	private String fileName;
 	private byte[] fileData;
+	private String fileContentType;
+	private long fileSize;
 	private String isEmphasized;
 	private int offset; //현제 페이징 위치
 }
