@@ -20,6 +20,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.fasterxml.jackson.annotation.JsonTypeInfo.Id;
+
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -198,6 +200,11 @@ public class MemberController {
 		return "member/member-modification";
 	}
 	
+	@PostMapping(value="idcheck")
+	public String id_check(@RequestParam String id) {
+		
+		return null;
+	}
 
 	/*
 	 * @PostMapping(value="/signin") public String signin(Members member, String
