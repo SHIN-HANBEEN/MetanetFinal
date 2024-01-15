@@ -26,7 +26,7 @@ public class SeatsLockSystemService {
 	IBusesRepository busesRepository;
 	
 	LinkedList<LockedBus> lockedBusQue = new LinkedList<>();
-	
+	public static final int lockingTime = 10;
 	@Scheduled(cron = "0 * * ? * *") //매 분 0초
 	public void checkExpiredSeatTime() {
 		LocalTime now = LocalTime.now();
@@ -90,7 +90,7 @@ public class SeatsLockSystemService {
 		// 두 시간의 차이 계산
 		Duration duration = Duration.between(lockTime, now);
 		// 차이가 10분 이상인지 확인
-		boolean isDifferenceGreaterThan10Minutes = duration.toMinutes() >= 10;
+		boolean isDifferenceGreaterThan10Minutes = duration.toMinutes() >= lockingTime;
 		return isDifferenceGreaterThan10Minutes;
 	}
 	

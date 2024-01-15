@@ -15,6 +15,9 @@
 	<!-- Nucleo Icons -->
 	<link href="../assets/css/nucleo-icons.css" rel="stylesheet" />
 	<link href="../assets/css/nucleo-svg.css" rel="stylesheet" />
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.1/font/bootstrap-icons.css">
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
 	<!-- Font Awesome Icons -->
 	<script src="https://kit.fontawesome.com/42d5adcbca.js" crossorigin="anonymous"></script>
 	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
@@ -48,22 +51,20 @@
 					</div>
 					<div class="row">
 						<div class="col-lg-5 text-center">
-							<div class="col-lg-12 card move-on-hover mt-4">
-								<a href="#res">
+							<div class="col-lg-12 card move-on-hover mt-4 ">
+								<a href="/reservation/list">
 									<div class="row">
-
 										<div class="col-lg-10 col-md-10 offset-lg-1 card-body ps-lg-0;" style="min-height: 300px;">
-
 											<div class="card-body ps-lg-0">
 												<h4 class="mb-0">예매 정보</h4><br />
 												<div class="row">
 													<div class="col-lg-10 col-md-10"
 														style="display: inline-block; text-align: left; font-size: 20px;">
-														<span class="text-info">현재 예매 중인 상품 수 :
+														<span class="text-info">사용가능 예매 수 :
 															<span class="text-info" th:text="${countNotUserdList}"></span>
 															<span>건</span>
 														</span><br />
-														<span class="text-info">전체 예매 상품 수 :
+														<span class="text-info">전체 예매 수 :
 															<span class="text-info" th:text="${countResList}"></span>
 															<span>건</span>
 														</span><br /><br />
@@ -130,50 +131,51 @@
 				<ul class="nav nav-tabs" id="myTab" role="tablist">
 					<li class="col-lg-4 nav-item" role="presentation">
 						<button class="nav-link active" id="userinfo-tab" data-bs-toggle="tab" data-bs-target="#userinfo"
-							type="button" role="tab" aria-controls="userinfo" aria-selected="true">현재 예매 내역</button>
+							type="button" role="tab" aria-controls="userinfo" aria-selected="true">사용가능 예매</button>
 					</li>
 					<li class="col-lg-4 nav-item" role="presentation">
 						<button class="nav-link" id="myreview-tab" data-bs-toggle="tab" data-bs-target="#myreview" type="button"
-							role="tab" aria-controls="myreview" aria-selected="false">예매 내역 조회</button>
+							role="tab" aria-controls="myreview" aria-selected="false">지난 예매</button>
 					</li>
 					<li class="col-lg-4 nav-item" role="presentation">
 						<button class="nav-link" id="wishlist-tab" data-bs-toggle="tab" data-bs-target="#wishlist" type="button"
-							role="tab" aria-controls="wishlist" aria-selected="false">취소 내역 조회</button>
+							role="tab" aria-controls="wishlist" aria-selected="false">취소 내역</button>
 					</li>
 				</ul>
 
 				<!-- 현재 예매 내역 -->
 				<div class="tab-content" id="myTabContent">
 					<div class="tab-pane fade show active mb-4" id="userinfo" role="tabpanel" aria-labelledby="userinfo-tab">
-						<h3 class="mt-4">예매 중인 내역</h3>
+						<h3 class="mt-4">사용가능 예매 내역</h3>
 
 						<div th:if="${not #lists.isEmpty(ReservationNotUsedList)}">
 
-							<table class="table table-hover table-bordered" id="notuserdreservationtable">
+							<table class="table" id="notuserdreservationtable" >
 								<thead>
 									<tr>
 										<th>출발지</th>
 										<th>도착지</th>
 										<th>출발시간</th>
 										<th>도착시간</th>
-										<th>예약시간</th>
 										<th>좌석 번호</th>
 										<th>총 금액</th>
+										<th>예약시간</th>
 										<th style="display: none; width: 0%;">결제 번호</th>
 										<th style="display: none; width: 0%;">출발지 ID</th>
 										<th style="display: none; width: 0%;">도착지 ID</th>
 									</tr>
 								</thead>
-								<tbody>
-									<tr th:each="res : ${ReservationNotUsedList}" class="clickable-row" data-toggle="modal"
+								<tbody class="border-top border-success-subtle">
+									
+									<tr th:each="res : ${ReservationNotUsedList}" class="clickable-row " data-toggle="modal"
 										data-target="#reservationModal" data-reservation-id="${res.id}" style="cursor: pointer;">
-										<td th:text="${res.departureTerminalName}">출발지</td>
-										<td th:text="${res.arrivalTerminalName}">도착지</td>
-										<td th:text="${#strings.substring(res.departureTime,0,16)}">출발시간</td>
-										<td th:text="${#strings.substring(res.arrivalTime,0,16)}">도착시간</td>
-										<td th:text="${#strings.substring(res.resDate,0,16)}">예약시간</td>
-										<td th:text="${res.seatIds}">좌석 번호</td>
-										<td th:text="${res.totalPrice}">총 금액</td>
+										<td th:text="${res.departureTerminalName}" class="text-body-emphasis fw-semibold">출발지</td>
+										<td th:text="${res.arrivalTerminalName}" class="text-body-emphasis fw-semibold">도착지</td>
+										<td th:text="${#strings.substring(res.departureTime,0,16)}" class="text-body-emphasis fw-semibold">출발시간</td>
+										<td th:text="${#strings.substring(res.arrivalTime,0,16)}" class="text-body-emphasis fw-semibold">도착시간</td>
+										<td th:text="${res.seatIds}" class="text-body-emphasis fw-semibold">좌석 번호</td>
+										<td th:text="${res.totalPrice}" class="text-body-emphasis fw-semibold">총 금액</td>
+										<td th:text="${#strings.substring(res.resDate,0,16)}" class="text-body-emphasis fw-semibold">예약시간</td>	
 										<td style="display: none; width: 0%;" th:text="${res.payId}">결제 번호</td>
 										<td style="display: none; width: 0%;" th:text="${res.departureTerminalId}">출발지 ID</td>
 										<td style="display: none; width: 0%;" th:text="${res.arrivalTerminalId}">출발지 ID</td>
@@ -189,7 +191,7 @@
 
 					<!--예매 내역 조회-->
 					<div class="tab-pane fade" id="myreview" role="tabpanel" aria-labelledby="myreview-tab">
-						<h3 class="mt-4">전체 예매 내역</h3>
+						<h3 class="mt-4">지난 예매 내역</h3>
 						<div th:if="${not #lists.isEmpty(ReservationList)}">
 
 							<table class="table table-hover table-bordered" id="totalreservationtable">
@@ -199,10 +201,9 @@
 										<th>도착지</th>
 										<th>출발시간</th>
 										<th>도착시간</th>
-										<th>예약시간</th>
-										<th>좌석 번호</th>
-										<th>결제 번호</th>
+										<th>좌석 번호</th>									
 										<th>총 금액</th>
+										<th>예약시간</th>		
 									</tr>
 								</thead>
 								<tbody>
@@ -211,10 +212,9 @@
 										<td th:text="${res.arrivalTerminalName}">도착지</td>
 										<td th:text="${res.departureTime}">출발시간</td>
 										<td th:text="${res.arrivalTime}">도착시간</td>
-										<td th:text="${res.resDate}">예약시간</td>
 										<td th:text="${res.seatIds}">좌석 번호</td>
-										<td th:text="${res.payId}">결제 번호</td>
 										<td th:text="${res.totalPrice}">총 금액</td>
+										<td th:text="${res.resDate}">예약시간</td>										
 									</tr>
 								</tbody>
 							</table>
@@ -285,7 +285,7 @@
 		<!-- -------- END Features w/ pattern background & stats & rocket -------- -->
 
 	</div>
-
+	
 
 	<div class="modal fade" id="reservationModal" tabindex="-1" role="dialog" aria-labelledby="reservationModalLabel"
 		aria-hidden="true">
@@ -298,23 +298,36 @@
 				<div class="modal-body">
 					<!-- 모달 내용을 표시할 위치 -->
 					<div>
-						<p>출발지: <span id="modalDepartureTerminal"></span></p>
-						<p>도착지: <span id="modalArrivalTerminal"></span></p>
-						<p>출발시간: <span id="modalDepartureTime"></span></p>
-						<p>도착시간: <span id="modalArrivalTime"></span></p>
-						<p>예약시간: <span id="modalResDate"></span></p>
-						<p>좌석 번호: <span id="modalSeatIds"></span></p>
-						<p>총 금액: <span id="modalTotalPrice"></span></p>
-						<p>결제 번호: <span id="modalPayId"></span></p>
-						<p>출발 ID: <span id="modaldepartureTerminalId"></span></p>
-						<p>도착 ID: <span id="modalarrivalTerminalId"></span></p>
+						<div class="rounded-4 border border-4 border-success m-4 p-4">
+							<p class="fs-3 fw-bold text-body-emphasis">탑승일&nbsp;&nbsp;<span id="modalDepDate"></span></p>
+							<div class="fs-4 text-success fw-semibold">
+								<i class="bi bi-geo-alt"></i>&nbsp;승차
+								<p class="fs-5 fw-semibold"><span id="modalDepartureTerminal" class="text-body-emphasis"></span><br>
+									<span id="modalDepartureTime" class="text-body-emphasis"></span></p>
+								<i class="bi bi-geo-alt"></i>&nbsp;하차
+								<p class="fs-5 fw-semibold"><span id="modalArrivalTerminal" class="text-body-emphasis"></span><br>
+									<span id="modalArrivalTime" class="text-body-emphasis"></span></p>
+							</div>
+							<div class="border-top border-secondary fs-5 fw-bold text-body-emphasis">
+								<p class="fs-4 text-success fw-semibold">좌석<br>
+									<span id="modalSeatIds" class="fs-5 fw-semibold text-body-emphasis"></span></p>
+								<p class="fs-4 text-success fw-semibold">결제금액<br>
+									<span id="modalTotalPrice" class="fs-5 fw-semibold text-body-emphasis"></span><span class="text-body-emphasis">원</span></p>
+								<br>
+								<p class="fs-5 fw-semibold text-body-emphasis">예약일시 &nbsp; <span id="modalResDate"></span></p>
+							</div>
+							<!-- <p>결제 번호: <span id="modalPayId"></span></p>
+							<p>출발 ID: <span id="modaldepartureTerminalId"></span></p>
+							<p>도착 ID: <span id="modalarrivalTerminalId"></span></p> -->
+						</div>
 					</div>
 				</div>
-				<div class="modal-footer">
-					<button type="button" class="btn bg-gradient-secondary" data-bs-dismiss="modal">닫기</button>
-					<button type="button" class="btn bg-gradient-primary">저장</button>
-					<button type="button" class="btn btn-danger" id="deleteButton">삭제</button>
-					<button type="button" class="btn bg-gradient-primary" id='changeSeat'>좌석변경</button>
+				<div class="modal-footer fs-6">
+					
+					<button type="button" class="btn btn-outline-info fs-6" id="ticketPrint">티켓출력</button>
+					<button type="button" class="btn btn-outline-info fs-6" id='changeSeat'>좌석변경</button>
+					<button type="button" class="btn btn-outline-danger fs-6" id="deleteButton" style="float: left;">예매취소</button>
+					<button type="button" class="btn btn-outline-secondary fs-6" data-bs-dismiss="modal">닫기</button>
 
 				</div>
 			</div>
@@ -348,9 +361,9 @@
 			var arrivalTerminal = $(this).find('td:eq(1)').text();
 			var departureTime = $(this).find('td:eq(2)').text().substring(0,16);
 			var arrivalTime = $(this).find('td:eq(3)').text().substring(0,16);
-			var resDate = $(this).find('td:eq(4)').text();
-			var seatIds = $(this).find('td:eq(5)').text();
-			var totalPrice = $(this).find('td:eq(6)').text();
+			var resDate = $(this).find('td:eq(6)').text();
+			var seatIds = $(this).find('td:eq(4)').text();
+			var totalPrice = $(this).find('td:eq(5)').text();
 			var payId = $(this).find('td:eq(7)').text();
 			var departureTerminalId = $(this).find('td:eq(8)').text();
 			var arrivalTerminalId = $(this).find('td:eq(9)').text();
@@ -364,11 +377,12 @@
 			// 모달에 데이터 넣기
 			$('#modalDepartureTerminal').text(departureTerminal);
 			$('#modalArrivalTerminal').text(arrivalTerminal);
-			$('#modalDepartureTime').text(departureTime);
-			$('#modalArrivalTime').text(arrivalTime);
+			$('#modalDepDate').text(departureTime.substring(0,10));
+			$('#modalDepartureTime').text(departureTime.substring(11,16));
+			$('#modalArrivalTime').text(arrivalTime.substring(11,16));
 			$('#modalResDate').text(resDate);
 			$('#modalSeatIds').text(seatIds);
-			$('#modalTotalPrice').text(totalPrice);
+			$('#modalTotalPrice').text(totalPrice.replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ","));
 			$('#modalPayId').text(payId);
 			$('#modaldepartureTerminalId').text(departureTerminalId);
 			$('#modalarrivalTerminalId').text(arrivalTerminalId);
@@ -385,6 +399,10 @@
 			console.log(depPlaceNm);
 			window.location.href = seatURI;
 			//window.location.href = "/"
+		});
+		$("#ticketPrint").click(function () {
+			var ticketURI = '/reservation/ticket?payId=' + paymentId;
+			window.location.href = ticketURI;
 		});
 		$("#deleteButton").click(function () {
 			// SweetAlert2가 나타날 때 모달 숨기기
@@ -414,15 +432,17 @@
 
 							// SweetAlert2를 다시 표시
 							Swal.fire({
-								title: '취소가 완료되었습니다.',
-								text: '화끈하시네요~!',
+								title: '시외버스 예매취소가 완료되었습니다.',
+								text: '시외버스 예매취소가 완료되었습니다.',
 								icon: 'success',
 								confirmButtonText: '확인',
 							}).then((result) => {
 								if (result.isConfirmed) {
-									location.href("/mypage");
+									//location.href("/mypage");
+									location.reload(true);
 								}
 							});
+							
 						},
 						error: function (error) {
 							// 오류 발생 시 처리
@@ -542,6 +562,9 @@
 				bgParallax.style.transform = 'translate3d(0,' + oVal + 'px,0)';
 			}, 6);
 		}
+		const TableMargin = styled.tr<{ value: number }>`
+		  height: ${(props) => props.value}px;
+		`;
 	</script>
 </body>
 

@@ -24,10 +24,12 @@
 	<link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
 
 	<link href="/assets/css/material-kit.css?v=3.0.0" rel="stylesheet" />
-
+	
 	<!-- 커스텀 CSS -->
 	<link href="/assets/css/final.css" rel="stylesheet" />
 	<link type="text/css" rel="stylesheet" href="/assets/css/seat2.css">
+
+
 
 	<!-- KoPub 폰트 -->
 	<link rel='stylesheet' href='//cdn.jsdelivr.net/npm/font-kopub@1.0/kopubdotum.min.css'>
@@ -482,6 +484,8 @@
 		var inputMileage = 100;
 		var enterTime;
 		var preUrl;
+		var lockingTime;
+		var discountRate;
 		//문서가 준비되면 제일 먼저 실행
 		$(document).ready(function () {
 
@@ -509,6 +513,8 @@
 					console.log('성공:', data);
 					payId = data.paymentId;
 					isMember = data.isMember;
+					discountRate = data.discountRate;
+					lockingTime = data.lockingTime;
 					if (isMember == 'true') {
 						memberId = data.memberId;
 						memberMileage = data.memberMileage;
@@ -538,7 +544,7 @@
 							console.log(finalPrice);
 							
 							document.querySelector('#mg').textContent = '- '+inputMileage;
-							document.querySelector('#addmg').textContent =  parseInt(finalPrice * 0.02);
+							document.querySelector('#addmg').textContent =  parseInt(finalPrice * 0.01 * parseInt(discountRate));
 								
 							
 						});
@@ -553,7 +559,7 @@
 					console.log('실패:', error);
 				}
 			});
-			//sessionStorage.removeItem("reservationData");
+			sessionStorage.removeItem("reservationData");
 		});
 
 		//마일리지 인풋이 변할때마다 총결제금액 변경
@@ -616,7 +622,7 @@
 			const dateB = new Date(enterTime);
 			const diffMSec = dateA.getTime() - dateB.getTime();
 			const diffMin = diffMSec / (60 * 1000);
-			if (diffMin >= 10) {
+			if (diffMin >= parseInt(lockingTime)) {
 				alert('결제 시간초과');
 				clearInterval(interval);
 				location.href = preUrl;
@@ -653,7 +659,7 @@
 			}, function (rsp) { // callback
 				console.log(rsp);
 				if (rsp.success) {
-					alert("결제 성공 -> imp_uid : " + rsp.imp_uid + " / merchant_uid(orderKey) : " + rsp.merchant_uid);
+					//alert("결제 성공 -> imp_uid : " + rsp.imp_uid + " / merchant_uid(orderKey) : " + rsp.merchant_uid);
 
 					// 이후 reservation 객체 데이터 추가
 					let data = {};
@@ -690,7 +696,7 @@
 						contentType: "application/json",
 						success: function (response) {
 							console.log(response);
-							alert("결제 정보가 성공적으로 전송되었습니다");
+							//alert("결제 정보가 성공적으로 전송되었습니다");
 							window.location.href = 'complete?payId=' + payId;
 						},
 						error: function (xhr, status, error) {
@@ -738,6 +744,9 @@
     <script src="/assets/js/plugins/moment.min.js"></script>
 
     <script src="/assets/js/material-kit.min.js" type="text/javascript"></script> -->
+	<!-- 메타넷 final js -->
+	<script src="./assets/js/final.js" type="text/javascript"></script>
+	<script src="/assets/js/nav.js" type="text/javascript"></script>
 </body>
 
 </html>

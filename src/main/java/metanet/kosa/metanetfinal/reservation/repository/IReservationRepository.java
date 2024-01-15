@@ -35,13 +35,13 @@ public interface IReservationRepository {
 	 * 회원_마이페이지_예매내역, 취소내역 조회 : 지난 6개월 예매 내역 가져오기
 	 * ERD에 없는 객체를 반환하기 때문에, SQL이 굉장히 길어질 것 같아요.
 	 */
-	List<DetailedReservation> getReservationHistoryForLastSixMonth(@Param("canceledDate") Boolean canceledDate, @Param("phoneNum") String phoneNum); 
+	List<DetailedReservation> getReservationHistoryForLastSixMonth(@Param("canceledDate") Boolean canceledDate, @Param("phoneNum") String phoneNum, @Param("isMember") boolean isMember); 
 	
 	/*
 	 * 사용되지 않은 예매 내역 가져오기
 	 * ERD에 없는 객체를 반환하기 때문에, SQL이 굉장히 길어질 것 같아요.
 	 */
-	List<DetailedReservation> getReservationHistoryNotUsed(String phoneNum);
+	List<DetailedReservation> getReservationHistoryNotUsed(@Param("phoneNum") String phoneNum, @Param("isMember") boolean isMember);
 	
 	/*
 	 * 사용되지 않은 예매 내역의 수 구하기
@@ -101,7 +101,10 @@ public interface IReservationRepository {
 	 * 노선번호로 출발터미널, 도착터미널 받기
 	 */
 	Map<String, Object> getReservationInfo(@Param("payId") String payId);
-
 	
+	List<Integer> getMySeatListByPayId(@Param("payId") String payId);
+	
+	void modifySeatByPayIdAndSeatId(@Param("payId") String payId, @Param("preSeatId") int preSeatId, @Param("mdSeatId") int mdSeatId);
+
 	
 }
