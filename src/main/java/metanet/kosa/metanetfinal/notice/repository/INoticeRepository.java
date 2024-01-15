@@ -23,6 +23,9 @@ public interface INoticeRepository {
 	//10개 노티스 가져오기 
 	List<NoticeListHome> getNoticesWithPagination(RowBounds rowBounds);
 	
+	//getVipNotice : 중요 공지 가져오기
+	List<NoticeListHome> getVipNotice();
+	
 	//공지글 읽기
 	NoticeRead readNoticeByNoticeId(@Param("noticeId") int noticeId);
 	

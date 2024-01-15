@@ -42,6 +42,22 @@
 		]]>
 	</select>
 	
+	<!-- List<NoticeListHome> getVipNotice();  -->
+	<select id="getVipNotice" resultType="metanet.kosa.metanetfinal.notice.model.NoticeListHome">
+		<![CDATA[
+			SELECT 
+				N.NOTICE_ID, N.TITLE, M.NAME
+			FROM 
+				NOTICES N JOIN MEMBERS M
+			ON 
+				N.MEMBER_ID = M.MEMBER_ID
+			WHERE
+				N.IS_EMPHASIZED = 'FALSE'
+		]]>
+	</select>
+	
+	
+	
 	<!-- NoticeRead readNoticeByNoticeId(@Param("noticeId") int noticeId); -->
 	<select id="readNoticeByNoticeId" parameterType="int" resultType="metanet.kosa.metanetfinal.notice.model.NoticeRead">
 		<![CDATA[

@@ -18,6 +18,9 @@ public interface INoticeService {
 	//공지사항 10개 씩 가져오기 
 	List<NoticeListHome> getNoticesWithPagination(RowBounds rowBounds);
 	
+	//중요공지사항 들고오기
+	List<NoticeListHome> getVipNotice();
+	
 	//공지사항 읽어오기
 	NoticeRead noticeRead(int noticeId);
 	
