@@ -14,6 +14,7 @@ import lombok.extern.slf4j.Slf4j;
 public class WebErrorController implements ErrorController {
 	
 	// 에러 페이지 정의
+	private final String ERROR_403_PAGE_PATH = "error/403";
 	private final String ERROR_404_PAGE_PATH = "error/404";
 	private final String ERROR_500_PAGE_PATH = "error/500";
 	private final String ERROR_ETC_PAGE_PATH = "error/error";
@@ -31,6 +32,9 @@ public class WebErrorController implements ErrorController {
             else if(statusCode == HttpStatus.INTERNAL_SERVER_ERROR.value()) {
                 return ERROR_500_PAGE_PATH;
             }
+            else if (statusCode == HttpStatus.valueOf(403).value()) {
+            	return ERROR_403_PAGE_PATH;
+			}
         }
         return ERROR_ETC_PAGE_PATH;
     }
