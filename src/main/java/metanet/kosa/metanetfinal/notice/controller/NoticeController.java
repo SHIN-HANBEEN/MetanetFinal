@@ -43,6 +43,7 @@ import jakarta.servlet.http.HttpSession;
 import metanet.kosa.metanetfinal.jwt.JwtTokenProvider;
 import metanet.kosa.metanetfinal.notice.model.NoticeFile;
 import metanet.kosa.metanetfinal.notice.model.NoticeRead;
+import metanet.kosa.metanetfinal.notice.model.NoticeReadWithoutFile;
 import metanet.kosa.metanetfinal.notice.model.Notices;
 import metanet.kosa.metanetfinal.notice.service.INoticeService;
 
@@ -63,7 +64,7 @@ public class NoticeController {
 	@GetMapping(value = "/notice")
 	public String getNotice() {
 		return "notice/notice";
-	}
+	} 
 
 	// 공지사항 홈 with offset
 	@GetMapping(value = "/noticeoffset")
@@ -151,11 +152,30 @@ public class NoticeController {
 
 	//공지 읽기
 	@GetMapping("/notice/read")
-	public String noticeRead(@RequestParam int noticeId, @RequestParam String offset, Model model) {
-		NoticeRead noticeRead = noticeService.noticeRead(noticeId);
-		noticeRead.setOffset(Integer.valueOf(offset));
-		model.addAttribute("noticeRead", noticeRead); // noticeRead 로 Pagination 도 담아서 함께 보냄
-		return "notice/read";
+	public String noticeRead(
+			@RequestParam String noticeId, 
+			@RequestParam String offset, 
+			Model model) {
+		
+		NoticeReadWithoutFile noticeReadWithoutFile;
+		NoticeRead noticeRead;
+		int noticeIdInt = Integer.valueOf(noticeId);
+		
+		//파일이 있는 공지사항인지 확인하기
+		int param = noticeService.isWithFile(noticeIdInt);
+		if (param == 0) { //파일 첨부 안된 공지글
+			noticeReadWithoutFile = noticeService.readNoticeWithoutFileByNoticeId(noticeIdInt);
+			noticeReadWithoutFile.setOffset(Integer.valueOf(offset));
+			model.addAttribute("noticeRead", noticeReadWithoutFile);
+			return "notice/read2";
+		} else {
+			//파일이 있으면 noticeRead 를, 없으면 noticeReadWithouFile 을 사용하기
+			noticeRead = noticeService.noticeRead(Integer.valueOf(noticeId));
+			noticeRead.setOffset(Integer.valueOf(offset));
+			model.addAttribute("noticeRead", noticeRead); // noticeRead 로 Pagination 도 담아서 함께 보냄
+			return "notice/read";
+		}
+		
 	}
 	
 	//파일 다운로드

@@ -59,4 +59,12 @@ public class NoticeTest {
 						new RowBounds(0, 10))
 				);
 	}
+	
+	@Test
+	public void isWithFile() {
+		int noticeId = 10;
+		System.out.println(
+				noticeRepository.isWithFile(noticeId)
+				);
+	}
 }

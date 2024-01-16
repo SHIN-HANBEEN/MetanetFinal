@@ -16,6 +16,7 @@ import org.springframework.web.multipart.MultipartFile;
 import metanet.kosa.metanetfinal.notice.model.NoticeFile;
 import metanet.kosa.metanetfinal.notice.model.NoticeListHome;
 import metanet.kosa.metanetfinal.notice.model.NoticeRead;
+import metanet.kosa.metanetfinal.notice.model.NoticeReadWithoutFile;
 import metanet.kosa.metanetfinal.notice.model.Notices;
 import metanet.kosa.metanetfinal.notice.model.NoticesForDbUpload;
 import metanet.kosa.metanetfinal.notice.repository.INoticeRepository;
@@ -35,7 +36,7 @@ public class NoticeService implements INoticeService {
 		System.out.println("공지 파일과 함께 넣기 서비스 실행");
 		System.out.println("리포지토리 실행 전 notices 확인해보기 : " + notices);
 		noticeRepository.insertNoticeWithFile(notices, memberId);
-	}
+	} 
 
 	// 공지사항 작성
 	@Transactional
@@ -59,6 +60,16 @@ public class NoticeService implements INoticeService {
 		return noticeRepository.readNoticeByNoticeId(noticeId);
 	}
 
+	@Override
+	public NoticeReadWithoutFile readNoticeWithoutFileByNoticeId(int noticeId) {
+		return noticeRepository.readNoticeWithoutFileByNoticeId(noticeId);
+	}
+	
+	@Override
+	public int isWithFile(int noticeId) {
+		return noticeRepository.isWithFile(noticeId);
+	}
+	
 	@Override
 	public NoticeFile getNoticeFile(int noticeId) {
 		return noticeRepository.getNoticeFile(noticeId);
@@ -84,6 +95,8 @@ public class NoticeService implements INoticeService {
 	public int getAllNoticeCount() {
 		return noticeRepository.getAllNoticeCount();
 	}
+
+
 
 
 	

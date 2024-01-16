@@ -76,6 +76,37 @@
 		]]>
 	</select>
 	
+	<!-- //파일첨부 안한 공지글 읽기
+	NoticeReadWithoutFile readNoticeWithoutFileByNoticeId(@Param("noticeId") int noticeId);
+	 -->	
+	<select id="readNoticeWithoutFileByNoticeId" parameterType="int" resultType="metanet.kosa.metanetfinal.notice.model.NoticeReadWithoutFile">
+		<![CDATA[
+			SELECT 
+				M.NAME, N.NOTICE_ID, 
+				N.TITLE, N.CONTENT, 
+				IS_EMPHASIZED, 0 AS OFFSET
+			FROM
+				MEMBERS M JOIN NOTICES N
+			ON
+				M.MEMBER_ID = N.MEMBER_ID
+			WHERE 
+				N.NOTICE_ID = #{noticeId}
+		]]>
+	</select>
+	
+	<!-- Boolean isWithFile(@Param("noticeId") int noticeId); -->
+	<select id="isWithFile" parameterType="int" resultType="int">
+		<![CDATA[
+			SELECT 
+				CASE WHEN COUNT(FILE_NAME) > 0 THEN 1 ELSE 0 END
+			FROM
+				NOTICES
+			WHERE 
+				NOTICE_ID = #{noticeId}
+		]]>
+	</select>
+	
+	
 	
 	<!-- NoticeFile getNoticeFile(@Param("noticeId") int noticeId); -->
 	<select id="getNoticeFile" parameterType="int" resultType="metanet.kosa.metanetfinal.notice.model.NoticeFile">

@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 import metanet.kosa.metanetfinal.notice.model.NoticeFile;
 import metanet.kosa.metanetfinal.notice.model.NoticeListHome;
 import metanet.kosa.metanetfinal.notice.model.NoticeRead;
+import metanet.kosa.metanetfinal.notice.model.NoticeReadWithoutFile;
 import metanet.kosa.metanetfinal.notice.model.Notices;
 import metanet.kosa.metanetfinal.notice.model.NoticesForDbUpload;
 
@@ -29,6 +30,12 @@ public interface INoticeRepository {
 	//공지글 읽기
 	NoticeRead readNoticeByNoticeId(@Param("noticeId") int noticeId);
 	
+	//파일첨부 안한 공지글 읽기
+	NoticeReadWithoutFile readNoticeWithoutFileByNoticeId(@Param("noticeId") int noticeId);
+	
+	//파일첨부 한 공지글인지 확인하기
+	int isWithFile(@Param("noticeId") int noticeId);
+	
 	//파일 다운로드
 	NoticeFile getNoticeFile(@Param("noticeId") int noticeId);
 	
@@ -41,7 +48,7 @@ public interface INoticeRepository {
 	//공지 제목 검색 후 노티스 가져오기
 	List<NoticeListHome> getNoticeByNoticeTitleSearchWithPagination(
 				@Param("title") String title,
-				RowBounds rowBounds
+				RowBounds rowBounds 
 			);
 	
 	

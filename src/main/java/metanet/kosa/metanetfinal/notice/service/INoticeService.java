@@ -9,6 +9,7 @@ import org.springframework.web.multipart.MultipartFile;
 import metanet.kosa.metanetfinal.notice.model.NoticeFile;
 import metanet.kosa.metanetfinal.notice.model.NoticeListHome;
 import metanet.kosa.metanetfinal.notice.model.NoticeRead;
+import metanet.kosa.metanetfinal.notice.model.NoticeReadWithoutFile;
 import metanet.kosa.metanetfinal.notice.model.Notices;
 
 public interface INoticeService {
@@ -22,8 +23,15 @@ public interface INoticeService {
 	//중요공지사항 들고오기
 	List<NoticeListHome> getVipNotice();
 	
-	//공지사항 읽어오기
+	//파일 있는 공지사항 읽어오기
 	NoticeRead noticeRead(int noticeId);
+	
+	//파일 있는 공지사항인지 확인하기
+	int isWithFile(int noticeId);
+	
+	//readNoticeWithoutFileByNoticeId
+	//파일 없는 공지사항 읽어오기
+	NoticeReadWithoutFile readNoticeWithoutFileByNoticeId(int noticeId);
 	
 	//파일 다운로드
 	NoticeFile getNoticeFile(int noticeId);
