@@ -1,6 +1,5 @@
 package metanet.kosa.metanetfinal.member.controller;
 
-import java.awt.Dialog.ModalExclusionType;
 import java.security.Principal;
 import java.util.List;
 import java.util.Map;
@@ -10,32 +9,26 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.fasterxml.jackson.annotation.JsonTypeInfo.Id;
 
 import jakarta.servlet.http.Cookie;
-import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import metanet.kosa.metanetfinal.jwt.JwtTokenProvider;
 import metanet.kosa.metanetfinal.member.model.Members;
-import metanet.kosa.metanetfinal.member.repository.IMemberRepository;
 import metanet.kosa.metanetfinal.member.service.IMemberService;
 import metanet.kosa.metanetfinal.member.service.PhoneNumCertificationService;
 import metanet.kosa.metanetfinal.reservation.model.DetailedReservation;
-import metanet.kosa.metanetfinal.reservation.model.Reservations;
 import metanet.kosa.metanetfinal.reservation.service.ReservationService;
 
 @Controller
