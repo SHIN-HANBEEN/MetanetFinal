@@ -29,6 +29,8 @@
 	<link href="../assets/css/final.css" rel="stylesheet" />
 	<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+	
 <style>
         body {
             background-color: #f4f4f4; /* 배경색 변경 */
@@ -49,6 +51,43 @@
             color: #333; /* 데이터 셀 텍스트 색상 변경 */
             font-size: 18px; /* 데이터 셀 폰트 크기 변경 */
         }
+        .text-custom-size {
+			font-size: 16px;
+		}
+		/*
+		 #signout:link, #signout:visited {
+		     background-color: #808080;
+		     color: #FFFFFF;
+		     padding: 15px 25px;
+		     text-align: center;
+		     text-decoration: none;
+		     display: inline-block;
+		}
+		 #signout:hover, #signout:active {
+		     background-color: #808080;
+		}
+		*/
+		.styled-signout {
+	        display: inline-block;
+	        padding: 10px 20px;
+	        background-color: #A9A9A9; 
+	        color: white; /* 흰색 텍스트 */
+	        text-decoration: none; /* 밑줄 제거 */
+	        border-radius: 5px; /* 둥근 모서리 */
+	        transition: background-color 0.3s; /* 부드러운 색상 변화 */
+	    }
+	
+	    .styled-signout:hover {
+	        background-color: #696969;
+	        color : #FFFAFA;
+	    }
+	    .btn-primary {
+			background-color: #DC143C;
+		}
+		.btn-primary:hover {
+			background-color: #DB7093;
+		}
+
     </style>
 </head>
 
@@ -76,44 +115,44 @@
 										
 
 									        <div class="container my-5">
-										        <table class="table custom-table">
+										        <table class="table align-items-center mb-0">
 										            <tbody>
 										                <tr>
-										                    <th scope="row">ID</th>
-										                    <td th:text="${member.id}">user123</td>
+										                    <th scope="row" class="text-uppercase text-secondary text-s font-weight-bolder opacity-7 ps-2">ID</th>
+										                    <td th:text="${member.id}" class="mb-0 text-s">user123</td>
 										                </tr>
 										                <tr>
-										                    <th scope="row">이름</th>
-										                    <td th:text="${member.name}">홍길동</td>
+										                    <th scope="row" class="text-uppercase text-secondary text-s font-weight-bolder opacity-7 ps-2">이름</th>
+										                    <td th:text="${member.name}" class="mb-0 text-s">홍길동</td>
 										                </tr>
 										                <tr>
-										                    <th scope="row">이메일</th>
-										                    <td th:text="${member.email}">user123@example.com</td>
+										                    <th scope="row" class="text-uppercase text-secondary text-s font-weight-bolder opacity-7 ps-2">이메일</th>
+										                    <td th:text="${member.email}" class="mb-0 text-s">user123@example.com</td>
 										                </tr>
 										                <tr>
-										                    <th scope="row">생년월일</th>
-										                    <td th:text="${member.birthDate}">2024-01-01</td>
+										                    <th scope="row" class="text-uppercase text-secondary text-s font-weight-bolder opacity-7 ps-2">생년월일</th>
+										                    <td th:text="${member.birthDate}" class="mb-0 text-s">2024-01-01</td>
 										                </tr>
 										                <tr>
-										                    <th scope="row">전화번호</th>
-										                    <td th:text="${member.phoneNum}">010-1111-1111</td>
+										                    <th scope="row" class="text-uppercase text-secondary text-s font-weight-bolder opacity-7 ps-2">전화번호</th>
+										                    <td th:text="${member.phoneNum}" class="mb-0 text-s">010-1111-1111</td>
 										                </tr>
 										                <tr>
-										                    <th scope="row">성별</th>
-										                    <td th:if="${member.sex == 'MALE'}">남자</td>
-										                    <td th:if="${member.sex == 'FEMALE'}">여자</td>
+										                    <th scope="row" class="text-uppercase text-secondary text-s font-weight-bolder opacity-7 ps-2">성별</th>
+										                    <td th:if="${member.sex == 'MALE'}" class="mb-0 text-s">남자</td>
+										                    <td th:if="${member.sex == 'FEMALE'}" class="mb-0 text-s">여자</td>
 										                </tr>
 										                <tr>
-										                    <th scope="row">마일리지</th>
-										                    <td th:text="${member.mileage}">010-1111-1111</td>
+										                    <th scope="row" class="text-custom-size text-uppercase text-secondary text-s font-weight-bolder opacity-7 ps-2">마일리지</th>
+										                    <td th:text="${member.mileage}" class="text-custom-size mb-0 text-s">010-1111-1111</td>
 										                </tr>
 										            </tbody>
 										        </table>
-										        <button id="member-modification">회원정보 수정하기</button>
-										        <button id="pw-modification">비밀번호 변경하기</button>
+										        <button id="member-modification" class="btn btn-primary">회원정보 수정하기</button>
+										        <button id="pw-modification" class="btn btn-secondary">비밀번호 변경하기</button>
 										    </div>
 											<hr>
-											<a href="/sign-out">비밀번호 변경하기</a>
+											<a id="signout" href="/sign-out" class="styled-signout">회원탈퇴</a>
 										
 									</div>
 								</div>

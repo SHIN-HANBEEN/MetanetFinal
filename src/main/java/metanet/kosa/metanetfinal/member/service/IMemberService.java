@@ -16,5 +16,6 @@ public interface IMemberService {
 	List<String> getRoles(String id);
 	String getPassword(String id);
 	void updatePassword(String id, String newPw);
+	String getPwById(String id);
 	
 }
