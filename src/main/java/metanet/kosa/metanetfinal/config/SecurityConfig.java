@@ -10,11 +10,13 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
+import lombok.extern.slf4j.Slf4j;
 import metanet.kosa.metanetfinal.jwt.JwtAuthenticationFilter;
 import metanet.kosa.metanetfinal.jwt.JwtTokenProvider;
 
 @Configuration
 @EnableWebSecurity
+@Slf4j
 public class SecurityConfig {
 
 	@Bean
@@ -35,19 +37,18 @@ public class SecurityConfig {
 	@Bean
 	SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 		http.csrf((csrf) -> csrf.disable());
-
 		// 토큰을 사용하는 경우 인가를 적용한 URI 설정
 		http.authorizeHttpRequests((authorizeHttpRequests) -> authorizeHttpRequests
-				.requestMatchers(
-						"/**", "assets/css/**", "assets/js/**", "assets/img/**",
-						"/login"
-				).permitAll()	
 				.requestMatchers(
 						"/mypage"
 						).hasAnyRole("USER","ADMIN")
 				.requestMatchers(
 						"/notice/register"
 						).hasRole("ADMIN")
+				.requestMatchers(
+						"/**", "assets/css/**", "assets/js/**", "assets/img/**",
+						"/login"
+						).permitAll()	
 		);
 				//requestMatchers("/login", "/signin").permitAll());
 
