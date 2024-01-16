@@ -50,6 +50,11 @@ public class NoticeService implements INoticeService {
 	}
 
 	@Override
+	public List<NoticeListHome> getVipNotice() {
+		return noticeRepository.getVipNotice();
+	}
+	
+	@Override
 	public NoticeRead noticeRead(int noticeId) {
 		return noticeRepository.readNoticeByNoticeId(noticeId);
 	}
@@ -58,6 +63,7 @@ public class NoticeService implements INoticeService {
 	public NoticeFile getNoticeFile(int noticeId) {
 		return noticeRepository.getNoticeFile(noticeId);
 	}
+
 
 	
 	

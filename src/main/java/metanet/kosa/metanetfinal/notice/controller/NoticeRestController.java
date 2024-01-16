@@ -24,5 +24,10 @@ public class NoticeRestController {
 		RowBounds rowBounds = new RowBounds(offset, 10);
 		return noticeService.getNoticesWithPagination(rowBounds);
 	}
+	
+	@GetMapping("/notice/viplist")
+	public List<NoticeListHome> getVipNoticeList() {
+		return noticeService.getVipNotice();
+	}
 
 }

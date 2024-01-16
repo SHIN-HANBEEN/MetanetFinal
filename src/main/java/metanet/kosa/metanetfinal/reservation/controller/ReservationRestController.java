@@ -1,6 +1,7 @@
 package metanet.kosa.metanetfinal.reservation.controller;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import metanet.kosa.metanetfinal.reservation.service.KeyEncrypt;
 import metanet.kosa.metanetfinal.reservation.service.ReservationService;
 import metanet.kosa.metanetfinal.reservation.service.SeatsLockSystemService;
 
@@ -23,6 +25,8 @@ public class ReservationRestController {
 	ReservationService reservationService;
 	@Autowired
 	SeatsLockSystemService seatsLockSystemService;
+	@Autowired
+	KeyEncrypt keyEncrypt;
 	
 	@GetMapping("/routeinfotest")
 	public String getInfoForReservation() {
@@ -43,6 +47,16 @@ public class ReservationRestController {
 				+ "}";
 		
 		return "ok";
+	}
+	
+	@PostMapping("/phonenum-encrypt")
+	public Map<String, String> phoneNumEncrypt(@RequestBody Map<String, Object> request) {
+		String phoneNum = request.get("phoneNum").toString();
+		System.out.println(phoneNum);
+		String encrytedText = keyEncrypt.encrypt(phoneNum);
+		Map<String, String> response = new HashMap<>();
+		response.put("encrytedText", encrytedText);
+		return response;
 	}
 	
 	@PostMapping("/seat-selection")
