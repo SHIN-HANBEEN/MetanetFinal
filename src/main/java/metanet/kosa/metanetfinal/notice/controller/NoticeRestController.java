@@ -64,16 +64,18 @@ public class NoticeRestController {
 	//공지번호 + 공지제목 검색 후 노티스 가져오기
 	@GetMapping("/notice/search/noticetitleornoticeid")
 	public List<NoticeListHome> getNoticeByNoticeTitleOrNoticeIdSearchWithPagination(
-			@RequestParam String title, 
-			@RequestParam int noticeid,
-			@RequestParam int offset
-			) {
-		RowBounds rowBounds = new RowBounds(offset, 10);
-		System.out.println(
-				noticeService.getNoticeByNoticeTitleOrNoticeIdSearchWithPagination(noticeid, title, rowBounds)
-				);
-		return noticeService.getNoticeByNoticeTitleOrNoticeIdSearchWithPagination(noticeid, title, rowBounds);
+	        @RequestParam String title,
+	        @RequestParam(required = false) Integer noticeid,
+	        @RequestParam int offset
+	) {
+	    RowBounds rowBounds = new RowBounds(offset, 10);
+	    if (noticeid != null) {
+	        return noticeService.getNoticeByNoticeTitleOrNoticeIdSearchWithPagination(noticeid, title, rowBounds);
+	    } else { //noticeid 가 숫자가 아니라 문자로 들어오면 null 로 들어온다.
+	        return noticeService.getNoticeByNoticeTitleSearchWithPagination(title, rowBounds);
+	    }
 	}
+
 	
 	//int getAllNoticeCount()
 	@GetMapping("/notice/count")
