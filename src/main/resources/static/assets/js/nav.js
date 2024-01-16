@@ -16,15 +16,27 @@ document.querySelector('#nMemberResListBtn').addEventListener('click', function 
 	
 	        showLoaderOnConfirm: true, // 데이터 결과를 받을때까지, 버튼에다가 로딩바를 표현
 	        preConfirm: (login) => { // 확인 버튼 누르면 실행되는 콜백함수
-	            return fetch('/routeinfotest')
-	            .then(response => {
+	            return fetch('/phonenum-encrypt', {
+				  method: "POST",
+				  headers: {
+				    "Content-Type": "application/json",
+				  },
+				  body: JSON.stringify({
+				    phoneNum: login
+				  }),
+				})
+	            .then((response) => {
+					
 	                if (!response.ok) {
 	                throw new Error(response.statusText)
-	                }
-	                const encodedPhoneNum = encodeURIComponent(login);
-	                //window.location.href = `/reservation/nmemberlist?phoneNum=${encodedPhoneNum}`
-	                //성공하면 추가로직 여기아래에
-				    sessionStorage.setItem('phnm', encodedPhoneNum);
+	                }else{
+						console.log(response);
+	                	return response.json();
+					}
+	                      
+	            }).then((data) => {
+					console.log(data);
+					console.log(data.encrytedText);
 					return (async () => {
 					    const { value: getName } = await Swal.fire({
 					        title: '인증번호를 입력하세요.',
@@ -34,14 +46,14 @@ document.querySelector('#nMemberResListBtn').addEventListener('click', function 
 					    })
 					    // 이후 처리되는 내용.
 					    if (getName) {
-					        //Swal.fire(`: ${getName}`)
-					        
-					        window.location.href = `/reservation/nmemberlist?phoneNum=${encodedPhoneNum}`
+					        //Swal.fire(`: ${getName}`)					       
+					        var encrytedText = data.encrytedText;
+					        console.log(data.encrytedText);
+					         sessionStorage.setItem('phnm', encrytedText);
+					        window.location.href = `/reservation/nmemberlist?phoneNum=${encrytedText}`
 					    }
 					})()
-	
-	                //return response.json()
-	            })
+				})
 	            .catch(error => {
 	                Swal.showValidationMessage(
 	                `Request failed: ${error}`

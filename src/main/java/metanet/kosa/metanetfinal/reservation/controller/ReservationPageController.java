@@ -23,6 +23,7 @@ import metanet.kosa.metanetfinal.member.model.Members;
 import metanet.kosa.metanetfinal.member.service.MemberService;
 import metanet.kosa.metanetfinal.reservation.model.DetailedReservation;
 import metanet.kosa.metanetfinal.reservation.service.IReservationService;
+import metanet.kosa.metanetfinal.reservation.service.KeyEncrypt;
 import metanet.kosa.metanetfinal.reservation.service.PaymentService;
 import metanet.kosa.metanetfinal.reservation.service.ReservationService;
 import metanet.kosa.metanetfinal.route.service.IRouteService;
@@ -41,6 +42,9 @@ public class ReservationPageController {
 	
 	@Autowired
 	MemberService memberService;
+	
+	@Autowired
+	KeyEncrypt keyEncrypt;
 	
 	public static final String API_KEY = "7114317823237442";
     public static final String API_SECRET = "qiHm0droCiIRucwhp9k1yBeaOxAzi1FendeBExV5fmqFasplQcWgQXwcaCVlEZB5eKT2OmkxaDlUB8m8";
@@ -200,22 +204,22 @@ public class ReservationPageController {
 	@GetMapping("/reservation/nmemberlist")
 	public String getNMemberReservationList(@RequestParam String phoneNum,Principal principal, Model model) {
 		
-		
+		String decryptPhoneNum = keyEncrypt.decrypt(phoneNum);
 		//전화번호를 기반으로 현재 날짜를 기준으로 6개월 간 예매 정보를 가져옴.
-		List<DetailedReservation> ReservationList = reservationService.getReservationHistoryForLastSixMonth(false,phoneNum, false); 
+		List<DetailedReservation> ReservationList = reservationService.getReservationHistoryForLastSixMonth(false,decryptPhoneNum, false); 
 		//전체 예매 내역 수 
 		int countResList = ReservationList.size();
 		System.out.println(countResList);
 		
 		//전화번호를 기반으로 출발일이 현재 날짜 이후 인 예매 정보 조회
-		List<DetailedReservation> ReservationNotUsedList = reservationService.getReservationHistoryNotUsed(phoneNum, false); 
+		List<DetailedReservation> ReservationNotUsedList = reservationService.getReservationHistoryNotUsed(decryptPhoneNum, false); 
 		System.out.println(ReservationNotUsedList);
 		//진행 중인 예매 내역 수
 		int countNotUserdList = ReservationNotUsedList.size();
 		System.out.println(countNotUserdList);
 
 		//최근 6개월의 예매 취소 내역 조회
-		List<DetailedReservation> cancelReservationList = reservationService.getReservationHistoryForLastSixMonth(true,phoneNum, false); 
+		List<DetailedReservation> cancelReservationList = reservationService.getReservationHistoryForLastSixMonth(true,decryptPhoneNum, false); 
 		
 		model.addAttribute("countNotUserdList",countNotUserdList);
 		model.addAttribute("countResList",countResList);
