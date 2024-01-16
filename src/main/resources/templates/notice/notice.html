@@ -306,7 +306,6 @@
 					clearInterval(noticeInterval); // Stop checking
 
 					console.log('dom 읽기가 완료되었어요.');
-					alert('dom 읽기 끝');
 
 					noticeRegisterBtn.addEventListener('click', function () {
 						console.log('noticeBtn이 클릭되었습니다');
@@ -351,7 +350,7 @@
 					if (xhr.readyState === 4 && xhr.status === 200) {
 						const vipList = JSON.parse(xhr.responseText);
 						updateNoticeTableVip(vipList);
-						updateNoticeTableNormal(offset);
+						getNormalNotice(offset);
 					}
 				};
 				xhr.open('GET', '/notice/viplist', true);
@@ -450,6 +449,7 @@
 				xhr.onreadystatechange = function () {
 					if (xhr.readyState === 4 && xhr.status === 200) {
 						const noticeList = JSON.parse(xhr.responseText);
+						console.log('일반 공지들 불러왔습니다. : ' + noticeList);
 						updateNoticeTableNormal(noticeList);
 					}
 				};
@@ -535,7 +535,6 @@
 			const isEmphasizedInput = document.getElementById('isEmphasized');
 			const isEmphasizedCheckBox = document.getElementById('isEmphasizedCheckBox');
 			console.log('중요 공지 여부 확인 실행됨');
-			alert('일시정지');
 			// Set the value of the isEmphasized input based on the state of the checkbox
 			isEmphasizedInput.value = isEmphasizedCheckBox.checked ? 'TRUE' : 'FALSE';
 		}
