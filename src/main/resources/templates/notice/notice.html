@@ -144,40 +144,8 @@
 												</div>
 												<div class="col-6 mb-3">
 													<nav aria-label="Page navigation example">
-														<ul class="pagination justify-content-center">
-															<li class="page-item mx-2">
-																<a class="page-link" href="javascript:;" aria-label="Previous">
-																	<i class="fa fa-angle-left"></i>
-																	<span class="sr-only">Previous</span>
-																</a>
-															</li>
-															<li class="page-item mx-1">
-																<a class="page-link" href="javascript:;">
-																	1
-																</a>
-															</li>
-															<li class="page-item mx-1">
-																<a class="page-link" href="javascript:;">
-																	2</a>
-															</li>
-															<li class="page-item mx-1">
-																<a class="page-link" href="javascript:;">
-																	3</a>
-															</li>
-															<li class="page-item mx-1">
-																<a class="page-link" href="javascript:;">
-																	4</a>
-															</li>
-															<li class="page-item mx-1">
-																<a class="page-link" href="javascript:;">
-																	5</a>
-															</li>
-															<li class="page-item mx-2">
-																<a class="page-link" href="javascript:;" aria-label="Next">
-																	<i class="fa fa-angle-right"></i>
-																	<span class="sr-only">Next</span>
-																</a>
-															</li>
+														<ul id="paginationUl" class="pagination justify-content-center">
+															<!-- li 동적으로 추가됩니다. -->
 														</ul>
 													</nav>
 												</div>
@@ -291,15 +259,99 @@
 
 
 	<script>
+		let offset = 0; //페이징 처음에는 0으로 처리
 		document.addEventListener('DOMContentLoaded', function () {
-			const offset = 0; //페이징 처음에는 0으로 처리
-			
 			//페이징 버튼 처리 부분 시작
-			
-			
-			//페이징 버튼 처리 부분 끝
+			const paginationUl = document.getElementById('paginationUl');
+			function paginationUpdate() {
+				if (paginationUl !== null) {
+					const xhr = new XMLHttpRequest();
+					xhr.onreadystatechange = function () {
+						if (xhr.readyState === 4 && xhr.status === 200) {
+							const pageCount = JSON.parse(xhr.responseText);
+							console.log('전체 페이징 수 : ' + pageCount);
 
-			
+							//previous 버튼 먼저 생성
+							paginationUl.innerHTML =
+								'<li id="previousButton" class="page-item mx-2">' +
+								'<a class="page-link" style="cursor:pointer" aria-label="Previous">' +
+								'<i class="fa fa-angle-left"></i>' +
+								'<span class="sr-only">Previous</span>' +
+								'</a>' +
+								'</li>';
+							const previousButton = document.getElementById('previousButton');
+							previousButton.addEventListener('click', function () {
+								if (offset >= 10) { //현재 페이지 위치가 1이상이라면, 이전 버튼 클릭시
+									offset = offset - 10; //offset 이전 페이지로 이동
+									getVipNotice((offset)); //이전 페이지 공지사항을 가져와서 보여준다.
+								}
+							});
+
+							//페이징 버튼 생성 (bg-red)
+							for (let i = 0; i < pageCount; i++) {
+								if (offset === i) { //페이징 버튼이 offset 과 똑같다면 색을 칠해준다.
+									var li = document.createElement('li');
+									li.setAttribute('id', 'page' + i); //id 속성 추가하기. classList 와는 다른 게 재밌다.
+									li.classList.add('page-item', 'mx-2');//페이지 버튼 offset 에 따라서 색 칠해주는 처리
+									li.innerHTML =
+										'<a class="page-link" style="cursor:pointer">' +
+										(i + 1) +
+										'</a>';
+									paginationUl.appendChild(li); //생성한 li 를 appendChild 해준다.
+									//페이지 클릭했을 때 처리.
+									const pageLink = document.getElementById('page' + i);
+									if (pageLink !== null) {
+										pageLink.addEventListener('click', function () {
+											offset = i; //클릭한 페이지 불러오기 준비
+											getVipNotice(offset); //페이지 이동처리
+										})
+									}
+								} else if (offset !== i) {
+									var li = document.createElement('li');
+									li.setAttribute('id', 'page' + i); //id 속성 추가하기. classList 와는 다른 게 재밌다.
+									li.classList.add('page-item', 'mx-2');
+									li.innerHTML =
+										'<a class="page-link" style="cursor:pointer">' +
+										(i + 1) +
+										'</a>';
+									paginationUl.appendChild(li); //생성한 li 를 appendChild 해준다.
+									//페이지 클릭했을 때 처리.
+									const pageLink = document.getElementById('page' + i);
+									if (pageLink !== null) {
+										pageLink.addEventListener('click', function () {
+											offset = i * 10; //클릭한 페이지 불러오기 준비
+											getVipNotice(offset); //페이지 이동처리
+										})
+									}
+								}
+							}
+
+
+							//next 버튼 생성
+							var li = document.createElement('li'); //요소를 먼저 만들고, 안에 HTML 을 추가해주어야 한다.
+							li.setAttribute('id', 'nextButton');
+							li.classList.add('page-item', 'mx-2');
+							li.innerHTML = '<a class="page-link" style="cursor:pointer" aria-label="Next">' +
+								'<i class="fa fa-angle-right"></i>' +
+								'<span class="sr-only">Next</span>' +
+								'</a>';
+							paginationUl.appendChild(li); //만든 요소를 자식으로 추가해준다.
+							const nextButton = document.getElementById('nextButton');
+							previousButton.addEventListener('click', function () {
+								if (offset > 0) { //현재 페이지 위치가 1이상이라면, 이전 버튼 클릭시
+									offset = offset + 1; //offset 이전 페이지로 이동
+									getVipNotice((offset)); //이전 페이지 공지사항을 가져와서 보여준다.
+								}
+							});
+						}
+					};
+					xhr.open('GET', '/notice/count', true);
+					xhr.send();
+				}
+			}
+			//페이징 버튼 처리 부분 끝
+			paginationUpdate(); //페이지번호 만들기 처음 페이지 로딩 되면 1회 실행.
+
 			//검색창 처리 부분 시작
 			const searchInputTag = document.getElementById('searchInput'); //searchinput 태그 가져오기
 			const searchNoticeNumCheckbox = document.getElementById('IsNoticeNumberSearch');
@@ -365,33 +417,6 @@
 					}
 				});
 			}
-			function updateTableBySearchNoticeId(offset, contentOfsearchInputTag) {
-
-
-			}
-			function updateTableBySearchNoticeTitle(offset, contentOfsearchInputTag) {
-
-			}
-			function updateTableBySearchNoticeIdOrNoticeTitle(offset, contentOfsearchInputTag) {
-
-			}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 			//검색창 처리 부분 끝
 
 			//게시글 등록 불러오는 처리

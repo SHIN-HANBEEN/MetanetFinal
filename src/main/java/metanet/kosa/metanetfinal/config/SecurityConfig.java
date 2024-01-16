@@ -39,8 +39,9 @@ public class SecurityConfig {
 		// 토큰을 사용하는 경우 인가를 적용한 URI 설정
 		http.authorizeHttpRequests((authorizeHttpRequests) -> authorizeHttpRequests
 				.requestMatchers(
-						"/**" //프로젝트 모든 요청에 대해 permitAll 을 걸어주기
-						).permitAll()
+						"/**", "assets/css/**", "assets/js/**", "assets/img/**",
+						"/login"
+				).permitAll()	
 				.requestMatchers(
 						"/mypage"
 						).hasAnyRole("USER","ADMIN")
@@ -51,7 +52,8 @@ public class SecurityConfig {
 				//requestMatchers("/login", "/signin").permitAll());
 
 		// Session 기반의 인증기반을 사용하지 않고 추후 JWT를 이용하여서 인증 예정
-		http.sessionManagement((session) -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
+		http.sessionManagement((session) -> 
+		session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
 
 		// Spring Security JWT 필터 로드
 		http.addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider()),
