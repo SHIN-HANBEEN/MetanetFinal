@@ -2,6 +2,7 @@ package metanet.kosa.metanetfinal.notice.controller;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.session.RowBounds;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,7 +22,7 @@ public class NoticeRestController {
 	
 	@GetMapping("/notice/list")
 	public List<NoticeListHome> getNoticeList(@RequestParam int offset) {
-		RowBounds rowBounds = new RowBounds(offset, 10);
+		RowBounds rowBounds = new RowBounds(offset, 10); //offset 을 받아서 10개 단위로 가져온다.
 		return noticeService.getNoticesWithPagination(rowBounds);
 	}
 	
@@ -29,5 +30,42 @@ public class NoticeRestController {
 	public List<NoticeListHome> getVipNoticeList() {
 		return noticeService.getVipNotice();
 	}
+	
+	
+	
+	
+	//공지번호 검색 후 노티스 가져오기
+	@GetMapping("/notice/search/noticeid")
+	public List<NoticeListHome> getNoticeSearchByNoticeId(
+			@RequestParam int noticeId, 
+			@RequestParam int offset
+			) {
+		RowBounds rowBounds = new RowBounds(offset, 10);
+		return noticeService.getNoticeByNoticeIdSearchWithPagination(noticeId, rowBounds);
+	}
+	
+	
+	//공지 제목 검색 후 노티스 가져오기
+	@GetMapping("/notice/search/noticetitle")
+	public List<NoticeListHome> getNoticeByNoticeTitleSearchWithPagination(
+			@RequestParam String title, 
+			@RequestParam int offset
+			) {
+		RowBounds rowBounds = new RowBounds(offset, 10);
+		return noticeService.getNoticeByNoticeTitleSearchWithPagination(title, rowBounds);
+	}
+	
+	
+	//공지번호 + 공지제목 검색 후 노티스 가져오기
+	@GetMapping("/notice/search/noticetitleornoticeid")
+	public List<NoticeListHome> getNoticeByNoticeTitleOrNoticeIdSearchWithPagination(
+			@RequestParam String title, 
+			@RequestParam int noticeid,
+			@RequestParam int offset
+			) {
+		RowBounds rowBounds = new RowBounds(offset, 10);
+		return noticeService.getNoticeByNoticeTitleOrNoticeIdSearchWithPagination(noticeid, title, rowBounds);
+	}
+	
 
 }

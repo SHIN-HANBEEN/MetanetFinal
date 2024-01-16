@@ -82,7 +82,7 @@ public class NoticeController {
 	@PostMapping(value = "/notice/write")
 	public String writeNotice(Notices notices, BindingResult results, HttpServletRequest request) {
 
-		int memberId = 0;
+		int memberId = 0; 
 
 		// 쿠키에 담긴 로그인 정보 가져오기
 		try {

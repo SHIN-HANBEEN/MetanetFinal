@@ -52,7 +52,7 @@
 			ON 
 				N.MEMBER_ID = M.MEMBER_ID
 			WHERE
-				N.IS_EMPHASIZED = 'FALSE'
+				N.IS_EMPHASIZED = 'TRUE'
 		]]>
 	</select>
 	
@@ -89,6 +89,62 @@
 		]]>
 	</select>
 	
+	
+	<!-- List<NoticeListHome> getNoticeByNoticeIdSearchWithPagination(
+				@Param("noticeId") int noticeId,
+				RowBounds rowBounds
+			); -->
+	<select id="getNoticeByNoticeIdSearchWithPagination" resultType="metanet.kosa.metanetfinal.notice.model.NoticeListHome">
+		<![CDATA[
+			SELECT 
+				N.NOTICE_ID, N.TITLE, M.NAME
+			FROM 
+				NOTICES N JOIN MEMBERS M
+			ON 
+				N.MEMBER_ID = M.MEMBER_ID
+			WHERE
+				N.NOTICE_ID LIKE '%' || #{noticeId} || '%'
+		]]>
+	</select>
+	
+	
+	<!-- List<NoticeListHome> getNoticeByNoticeTitleSearchWithPagination(
+				@Param("title") String title,
+				RowBounds rowBounds
+			); -->
+	<select id="getNoticeByNoticeTitleSearchWithPagination" resultType="metanet.kosa.metanetfinal.notice.model.NoticeListHome">
+		<![CDATA[
+			SELECT 
+				N.NOTICE_ID, N.TITLE, M.NAME
+			FROM 
+				NOTICES N JOIN MEMBERS M
+			ON 
+				N.MEMBER_ID = M.MEMBER_ID
+			WHERE
+				N.TITLE LIKE '%' || #{title} || '%'
+		]]>
+	</select>
+	
+	
+	<!-- List<NoticeListHome> getNoticeByNoticeTitleOrNoticeIdSearchWithPagination(
+				@Param("noticeId") int noticeId,
+				@Param("title") String title,
+				RowBounds rowBounds
+			); -->
+	<select id="getNoticeByNoticeTitleOrNoticeIdSearchWithPagination" resultType="metanet.kosa.metanetfinal.notice.model.NoticeListHome">
+		<![CDATA[
+			SELECT 
+				N.NOTICE_ID, N.TITLE, M.NAME
+			FROM 
+				NOTICES N JOIN MEMBERS M
+			ON 
+				N.MEMBER_ID = M.MEMBER_ID
+			WHERE
+				N.TITLE LIKE '%' || #{title} || '%'
+			OR
+				N.NOTICE_ID LIKE '%' || #{noticeId} || '%'
+		]]>
+	</select>
 	
 	
 	

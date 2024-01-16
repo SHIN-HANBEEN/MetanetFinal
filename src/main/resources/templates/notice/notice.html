@@ -124,7 +124,7 @@
 											</div>
 											<div class="input-group input-group-dynamic mb-4">
 												<span class="input-group-text"><i class="fas fa-search" aria-hidden="true"></i></span>
-												<input class="form-control" placeholder="검색 내용 입력" type="text">
+												<input id="searchInput" class="form-control" placeholder="검색 내용 입력" type="text">
 											</div>
 										</div>
 										<div class="col-2">
@@ -294,6 +294,104 @@
 		document.addEventListener('DOMContentLoaded', function () {
 			const offset = 0; //페이징 처음에는 0으로 처리
 
+			//검색창 처리 부분 시작
+			const searchInputTag = document.getElementById('searchInput'); //searchinput 태그 가져오기
+			const searchNoticeNumCheckbox = document.getElementById('IsNoticeNumberSearch');
+			const searchNoticeTitleCheckbox = document.getElementById('IsNoticeTitleSearch');
+			let contentOfsearchInputTag;
+			if (searchInputTag !== null) {
+				contentOfsearchInputTag = searchInputTag.value; //input 태그에 입력한 내용 가져오기
+				searchInputTag.addEventListener('keydown', function (event) {
+					if (event.key === 'Enter') {
+						if (searchNoticeNumCheckbox.checked) {
+							getVipNoticeOnly(offset); //중요공지만 우선 가져오기
+							const xhr = new XMLHttpRequest();
+							xhr.onreadystatechange = function () {
+								if (xhr.readyState === 4 && xhr.status === 200) {
+									const vipList = JSON.parse(xhr.responseText);
+									updateNoticeTableVip(vipList);
+									getNormalNotice(offset);
+								}
+							};
+							xhr.open('GET', '/notice/viplist', true);
+							xhr.send();
+						} else if (searchNoticeTitleCheckbox.checked) {
+							getVipNoticeOnly(offset); //중요공지만 우선 가져오기
+
+						} else if (searchNoticeNumCheckbox.checked
+							|| searchNoticeTitleCheckbox.checked) {
+							getVipNoticeOnly(offset); //중요공지만 우선 가져오기
+
+						}
+
+					}
+				});
+			}
+			function updateTableBySearchNoticeId(offset, contentOfsearchInputTag) {
+
+
+			}
+			function updateTableBySearchNoticeTitle(offset, contentOfsearchInputTag) {
+
+			}
+			function updateTableBySearchNoticeIdOrNoticeTitle(offset, contentOfsearchInputTag) {
+
+			}
+
+			function updateNoticeTableNormal(noticeList) {
+				const tbody = document.getElementById('noticeTableBody');
+				//tbody.innerHTML = '';
+				//중요 공지사항 가져올 때, 안을 비우기 때문에, 이것은 나중에 실행을 시킨다.
+
+				for (var i = 0; i < noticeList.length; i++) {
+					var notice = noticeList[i];
+					//N.NOTICE_ID, N.TITLE, M.MEMBER_ID 
+					var row = document.createElement('tr');
+					row.innerHTML = '<th scope="row">' + notice.noticeId + '</th>' +
+						// '<td><a href=/notice/read?noticeId=' + notice.noticeId + '&offset=' + offset + '>' + notice.title + '</a></td>' +
+						'<td><a style=cursor:pointer class=noticeTitle id=notice' + notice.noticeId + '>' + notice.title + '</a></td>' +
+						'<td>' + notice.name + '</td>';
+					tbody.appendChild(row);
+
+					const titleA = document.getElementById('notice' + notice.noticeId);
+					if (titleA) {
+						titleA.addEventListener('click', function () {
+							const xhr = new XMLHttpRequest();
+							xhr.onreadystatechange = function () {
+								if (xhr.readyState === 4 && xhr.status === 200) {
+									console.log('공지 읽기 html : ' + xhr.responseText);
+									const noticeReadHtml = xhr.responseText;
+									updateNoticeContentForReadNotice(noticeReadHtml);
+								}
+							};
+							xhr.open('GET', '/notice/read?noticeId=' + notice.noticeId + '&offset=' + offset, true);
+							xhr.send();
+						});
+						function updateNoticeContentForReadNotice(content) {
+							const noticeContent = document.getElementById('noticeContent');
+							noticeContent.innerHTML = content;
+						}
+					}
+				}
+			}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+			//검색창 처리 부분 끝
+
 			//게시글 등록 불러오는 처리
 			function checkButtonExistence() {
 				const noticeRegisterBtn = document.getElementById('noticeRegisterButton');
@@ -356,50 +454,12 @@
 				xhr.open('GET', '/notice/viplist', true);
 				xhr.send();
 			}
-			function updateNoticeTableVip(noticeVipList) {
-				const tbody = document.getElementById('noticeTableBody');
-				tbody.innerHTML = '';
-
-				for (var i = 0; i < noticeVipList.length; i++) {
-					var notice = noticeVipList[i];
-					//N.NOTICE_ID, N.TITLE, M.MEMBER_ID 
-					var row = document.createElement('tr');
-					row.className = 'bg-red'; //중요 공지는 배경색 빨강 지정
-					row.innerHTML = '<th scope="row">' + notice.noticeId + '</th>' +
-						// '<td><a href=/notice/read?noticeId=' + notice.noticeId + '&offset=' + offset + '>' + notice.title + '</a></td>' +
-						'<td><a style=cursor:pointer class=noticeTitle id=notice' + notice.noticeId + '>' + notice.title + '</a></td>' +
-						'<td>' + notice.name + '</td>';
-					tbody.appendChild(row);
-
-					const titleA = document.getElementById('notice' + notice.noticeId);
-					if (titleA) {
-						titleA.addEventListener('click', function () {
-							const xhr = new XMLHttpRequest();
-							xhr.onreadystatechange = function () {
-								if (xhr.readyState === 4 && xhr.status === 200) {
-									console.log('공지 읽기 html : ' + xhr.responseText);
-									const noticeReadHtml = xhr.responseText;
-									updateNoticeContentForReadNotice(noticeReadHtml);
-								}
-							};
-							xhr.open('GET', '/notice/read?noticeId=' + notice.noticeId + '&offset=' + offset, true);
-							xhr.send();
-						});
-						function updateNoticeContentForReadNotice(content) {
-							const noticeContent = document.getElementById('noticeContent');
-							noticeContent.innerHTML = content;
-						}
-					}
-				}
-			}
-
-			function getVipNotice(offset) {
+			function getVipNoticeOnly(offset) { //중요 공지만 가져오기
 				const xhr = new XMLHttpRequest();
 				xhr.onreadystatechange = function () {
 					if (xhr.readyState === 4 && xhr.status === 200) {
 						const vipList = JSON.parse(xhr.responseText);
 						updateNoticeTableVip(vipList);
-						updateNoticeTableNormal(offset);
 					}
 				};
 				xhr.open('GET', '/notice/viplist', true);
@@ -441,7 +501,6 @@
 					}
 				}
 			}
-
 
 			//notice Normal table 만드는 코드
 			function getNormalNotice(offset) {
