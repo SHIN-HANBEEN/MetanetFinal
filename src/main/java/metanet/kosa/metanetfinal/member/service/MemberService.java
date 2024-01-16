@@ -116,8 +116,8 @@ public class MemberService implements IMemberService{
 	 * 회원정보수정 이메일, 전화번호를 수정할 수 있습니다. 
 	 */
 	@Override
-	public void updateMember(String userId, String email, String phoneNum) {
-		memberRepository.updateMemberByID(userId, email, phoneNum);
+	public void updateMember(String memberId, String email, String phoneNum) {
+		memberRepository.updateMemberByID(memberId, email, phoneNum);
 	}
 
 	@Override
@@ -127,6 +127,11 @@ public class MemberService implements IMemberService{
 	
 	public Members getMemberByMemberId(int memberId) {
 		return memberRepository.getMemberByMemberId(memberId);
+	}
+	
+	@Override
+	public String getPwById(String id) {
+		return memberRepository.getPwById(id);
 	}
 
 	

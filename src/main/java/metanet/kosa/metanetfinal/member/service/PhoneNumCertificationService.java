@@ -38,7 +38,7 @@ public class PhoneNumCertificationService {
         // 생성된 랜덤 정수를 6자리 문자열로 변환
         String sixDigitRandomNumber = String.format("%06d", randomNumber);
         
-        // NumberAuthentication 객체 생성 및 생성한 6자리 문자열과 현재 날짜를 입력
+     // NumberAuthentication 객체 생성 및 생성한 6자리 문자열과 현재 날짜를 입력
         NumberAuthentication numberAuthentication = new NumberAuthentication();
         numberAuthentication.setSixDigitRandomNumber(sixDigitRandomNumber);
         numberAuthentication.setNowDate(LocalDateTime.now());

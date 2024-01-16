@@ -25,8 +25,11 @@ public class WebErrorController implements ErrorController {
 
         if (status != null) {
             Integer statusCode = Integer.valueOf(status.toString());
-
-            if(statusCode == HttpStatus.NOT_FOUND.value()) {
+            
+            if(statusCode == HttpStatus.FORBIDDEN.value()) {
+            	return ERROR_403_PAGE_PATH;
+            }
+            else if(statusCode == HttpStatus.NOT_FOUND.value()) {
                 return ERROR_404_PAGE_PATH;
             }
             else if(statusCode == HttpStatus.INTERNAL_SERVER_ERROR.value()) {
@@ -34,9 +37,13 @@ public class WebErrorController implements ErrorController {
             }else if (statusCode == HttpStatus.FORBIDDEN.value()) {
                 return ERROR_403_PAGE_PATH;
             }
+<<<<<<< HEAD
+
+=======
             else if (statusCode == HttpStatus.valueOf(403).value()) {
             	return ERROR_403_PAGE_PATH;
 			}
+>>>>>>> 94127e10193d823be32ac8cc065d03ccc80696c3
         }
         return ERROR_ETC_PAGE_PATH;
     }

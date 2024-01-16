@@ -19,9 +19,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-
+import org.springframework.web.server.ResponseStatusException;
 
 import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import metanet.kosa.metanetfinal.jwt.JwtTokenProvider;
@@ -191,7 +192,46 @@ public class MemberController {
 	public String sign_out()	{
 		return "/member/member-delete";
 	}
+
+	@GetMapping(value="/member-modification")
+	public String modification_member(Principal principal, Model model, HttpSession session) {
+		Members member = memberService.getMemberInfo(principal.getName());
+		model.addAttribute("member", member);
+		return "member/member-modification";
+	}
 	
+
+	@PostMapping(value="/member-modification")
+	public String modification_member(Principal principal, Members member, String csrfToken, Model model, HttpServletRequest request) {
+		//System.out.println("csrfToken: " + csrfToken);
+		System.out.println(member);
+		/*
+		if (csrfToken == null || "".equals(csrfToken)) {
+			throw new RuntimeException("CSRF 토큰이 없습니다.");
+			
+		} else if (!csrfToken.equals(session.getAttribute("csrfToken"))) {
+			throw new RuntimeException("잘못된 접근이 감지되었습니다.");
+		}
+		*/
+		PasswordEncoder pwEncoder = PasswordEncoderFactories.createDelegatingPasswordEncoder();
+		String rawPassword = member.getPassword(); // 사용자가 입력한 평문 비밀번호
+		String encodedPassword = memberService.getPwById(principal.getName()); // DB에 저장된 인코딩된 비밀번호
+
+		if (pwEncoder.matches(rawPassword, encodedPassword)) {
+		    // 비밀번호가 일치하는 경우
+		    memberService.updateMember(member.getId(), member.getEmail(), member.getPhoneNum());
+		} else {
+		    // 비밀번호가 일치하지 않는 경우
+		    System.out.println("패스워드 다름");
+		    model.addAttribute("member", member);
+			model.addAttribute("message", "MEMBER_PW_RE");
+			return "/";
+		}
+
+		return "redirect:/member-information";
+	}
+	
+
 	@PostMapping(value = "/sign-out")
 	@ResponseBody
 	@Transactional
@@ -227,8 +267,9 @@ public class MemberController {
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Failure");
 		}
 	}
-	@GetMapping(value = "/pw-modification")
-	public String modification_pw() {
+	
+	@GetMapping(value="/pw-modification")
+	public String modification_pw(Principal principal, Model model) {
 		return "member/pw-modification";
 	}
 
@@ -265,16 +306,22 @@ public class MemberController {
 		}
 	}
 
-	@GetMapping(value = "/member-modification")
-	public String modification_member(Principal principal, Model model) {
-		return "member/member-modification";
-	}
 
 	@PostMapping(value = "idcheck")
 	public String id_check(@RequestParam String id) {
 
 		return null;
 	}
+	
+	
+	 //403 에러
+	@GetMapping("/some-protected-resource")
+    public String someProtectedResource() {
+        // 여기서 어떤 조건을 검사한 후 접근을 금지할 경우
+        throw new ResponseStatusException(HttpStatus.FORBIDDEN, "You do not have permission to access this resource.");
+    }
+    
+	
 
 	/*
 	 * @PostMapping(value="/signin") public String signin(Members member, String
