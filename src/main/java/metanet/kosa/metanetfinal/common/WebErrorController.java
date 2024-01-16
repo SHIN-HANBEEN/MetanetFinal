@@ -12,7 +12,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @Controller
 public class WebErrorController implements ErrorController {
-	/*
+	
 	// 에러 페이지 정의
 	private final String ERROR_404_PAGE_PATH = "error/404";
 	private final String ERROR_500_PAGE_PATH = "error/500";
@@ -35,5 +35,5 @@ public class WebErrorController implements ErrorController {
         return ERROR_ETC_PAGE_PATH;
     }
 
-*/
+
 }
