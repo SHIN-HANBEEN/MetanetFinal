@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper
+	namespace="metanet.kosa.metanetfinal.admin.repository.IAdminRepository">
+
+	<select id="getTodayPrice" resultType="string">
+		select sum(total_price)
+		from reservations WHERE TRUNC(res_date) = TRUNC(SYSDATE)
+	</select>
+
+	<select id="getMonthPrice" resultType="string">
+		SELECT SUM(total_price)
+		FROM reservations
+		WHERE TRUNC(res_date, 'MM') = TRUNC(SYSDATE, 'MM')
+	</select>
+
+	<select id="getTodayRes" resultType="int">
+		SELECT COUNT(*)
+		FROM
+		reservations
+		WHERE TRUNC(res_date) = TRUNC(SYSDATE)
+	</select>
+
+	<select id="getMonthRes" resultType="int">
+		SELECT COUNT(*)
+		FROM
+		reservations
+		WHERE TRUNC(res_date, 'MM') = TRUNC(SYSDATE, 'MM')
+	</select>
+
+	<select id="todayRoutes"
+		resultType="metanet.kosa.metanetfinal.admin.model.TodayRoutes">
+		SELECT
+		dt.TERMINAL_NAME AS departureTerminalName,
+		r.DEPARTURE_TIME as departureTime,
+		at.TERMINAL_NAME AS arrivalTerminalName,
+		r.ARRIVAL_TIME as arrivalTime
+		FROM
+		routes r
+		JOIN
+		terminals dt ON r.DEPARTURE_ID = dt.TERMINAL_ID
+		JOIN
+		terminals at ON r.ARRIVAL_ID = at.TERMINAL_ID
+		WHERE TRUNC(r.departure_time) = TRUNC(sysdate) - 7
+		ORDER BY departure_time
+	</select>
+	
+	 <select id="weekPrice" resultType="java.util.Map">
+        SELECT TO_CHAR(RES_DATE, 'YYYY-MM-DD') AS TRANSACTION_DATE,
+               SUM(TOTAL_PRICE) AS DAILY_SALES
+        FROM reservations
+        WHERE RES_DATE >= SYSDATE - 7
+        GROUP BY TO_CHAR(RES_DATE, 'YYYY-MM-DD')
+        ORDER BY TRANSACTION_DATE
+    </select>
+</mapper>

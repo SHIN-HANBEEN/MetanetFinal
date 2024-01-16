@@ -39,14 +39,14 @@ public class SecurityConfig {
 		// 토큰을 사용하는 경우 인가를 적용한 URI 설정
 		http.authorizeHttpRequests((authorizeHttpRequests) -> authorizeHttpRequests
 				.requestMatchers(
-						"/**" //프로젝트 모든 요청에 대해 permitAll 을 걸어주기
-						).permitAll()
-				.requestMatchers(
-						"/mypage"
+						"/mypage/**"
 						).hasAnyRole("USER","ADMIN")
 				.requestMatchers(
 						"/notice/register"
 						).hasRole("ADMIN")
+				.requestMatchers(
+						"/**" //프로젝트 모든 요청에 대해 permitAll 을 걸어주기
+						).permitAll()
 		);
 				//requestMatchers("/login", "/signin").permitAll());
 
