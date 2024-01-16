@@ -1,0 +1,52 @@
+<!-- 공지사항 컨테이너 -->
+<div class="row">
+	<div class="col-2">
+
+	</div>
+
+	<div class="col-8">
+		<section>
+			<div class="container py-4">
+				<div class="row">
+					<div class="col-lg-12 mx-auto d-flex justify-content-center flex-column">
+						<h2 class="text-center">공지사항</h2>
+						<hr class="dark horizontal mt-0 mb-5">
+						<form role="form" id="contact-form" autocomplete="off" enctype="multipart/form-data">
+							<div class="card-body" style="text-align: left;">
+								<div class="mb-4">
+									<div class="input-group input-group-static">
+										<label class="">공지 글 제목</label>
+										<div th:text="${noticeRead.title}" class="form-control" placeholder="공지 제목 입니다." id="noticeTitle">
+										</div>
+										<!--<input type="text" name="title" class="form-control" placeholder="공지 제목을 입력하세요">-->
+									</div>
+								</div>
+								<div class="input-group mb-4 input-group-static">
+									<label>공지 글 내용</label>
+									<div th:text="${noticeRead.content}" class="form-control" id="noticeContent"
+										style="min-height: 40vh;"></div>
+									<!--<textarea name="content" class="form-control" id="message" rows="14"
+										placeholder="공지 내용을 입력하세요"></textarea>-->
+								</div>
+								<div class="row">
+									<div class="col-md-12">
+										<!-- 파일 처리 들어 있던 곳 -->
+									</div>
+									<div class="col-md-3">
+										<button class="btn bg-gradient-dark w-100"
+											onclick="redirectToNotice(${noticeRead.offset})">돌아가기</button>
+									</div>
+								</div>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</section>
+	</div>
+
+	<div class="col-2">
+
+	</div>
+
+</div>

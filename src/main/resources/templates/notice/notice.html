@@ -124,7 +124,7 @@
 											</div>
 											<div class="input-group input-group-dynamic mb-4">
 												<span class="input-group-text"><i class="fas fa-search" aria-hidden="true"></i></span>
-												<input class="form-control" placeholder="검색 내용 입력" type="text">
+												<input id="searchInput" class="form-control" placeholder="검색 내용 입력" type="text">
 											</div>
 										</div>
 										<div class="col-2">
@@ -144,40 +144,8 @@
 												</div>
 												<div class="col-6 mb-3">
 													<nav aria-label="Page navigation example">
-														<ul class="pagination justify-content-center">
-															<li class="page-item mx-2">
-																<a class="page-link" href="javascript:;" aria-label="Previous">
-																	<i class="fa fa-angle-left"></i>
-																	<span class="sr-only">Previous</span>
-																</a>
-															</li>
-															<li class="page-item mx-1">
-																<a class="page-link" href="javascript:;">
-																	1
-																</a>
-															</li>
-															<li class="page-item mx-1">
-																<a class="page-link" href="javascript:;">
-																	2</a>
-															</li>
-															<li class="page-item mx-1">
-																<a class="page-link" href="javascript:;">
-																	3</a>
-															</li>
-															<li class="page-item mx-1">
-																<a class="page-link" href="javascript:;">
-																	4</a>
-															</li>
-															<li class="page-item mx-1">
-																<a class="page-link" href="javascript:;">
-																	5</a>
-															</li>
-															<li class="page-item mx-2">
-																<a class="page-link" href="javascript:;" aria-label="Next">
-																	<i class="fa fa-angle-right"></i>
-																	<span class="sr-only">Next</span>
-																</a>
-															</li>
+														<ul id="paginationUl" class="pagination justify-content-center">
+															<!-- li 동적으로 추가됩니다. -->
 														</ul>
 													</nav>
 												</div>
@@ -291,8 +259,196 @@
 
 
 	<script>
+		let offset = 0; //페이징 처음에는 0으로 처리
 		document.addEventListener('DOMContentLoaded', function () {
-			const offset = 0; //페이징 처음에는 0으로 처리
+			//페이징 버튼 처리 부분 시작
+			const paginationUl = document.getElementById('paginationUl');
+			function paginationUpdate() {
+				if (paginationUl !== null) {
+					paginationUl.innerHTML = '';
+					const xhr = new XMLHttpRequest();
+					xhr.onreadystatechange = function () {
+						if (xhr.readyState === 4 && xhr.status === 200) {
+							const pageCount = JSON.parse(xhr.responseText);
+							console.log('전체 페이징 수 : ' + pageCount);
+
+							//previous 버튼 먼저 생성
+							if (offset >= 10) { //현재 페이지 위치가 1이상이라면, 이전 버튼 클릭시
+								paginationUl.innerHTML =
+									'<li id="previousButton" class="page-item mx-2">' +
+									'<a class="page-link" style="cursor:pointer" aria-label="Previous">' +
+									'<i class="fa fa-angle-left"></i>' +
+									'<span class="sr-only">Previous</span>' +
+									'</a>' +
+									'</li>';
+								const previousButton = document.getElementById('previousButton');
+								previousButton.addEventListener('click', function () {
+
+									offset = offset - 10; //offset 이전 페이지로 이동
+									getVipNotice((offset)); //이전 페이지 공지사항을 가져와서 보여준다.
+									paginationUpdate(); //페이지 버튼 업데이트
+								});
+							}
+
+							//페이징 버튼 생성 (bg-red)
+							for (let i = 0; i < pageCount; i++) {
+								if (offset === i) { //페이징 버튼이 offset 과 똑같다면 색을 칠해준다.
+									var li = document.createElement('li');
+									li.setAttribute('id', 'page' + i); //id 속성 추가하기. classList 와는 다른 게 재밌다.
+									li.classList.add('page-item', 'mx-2', 'pageNumbers');//페이지 버튼 offset 에 따라서 색 칠해주는 처리
+									li.innerHTML =
+										'<a class="page-link" style="cursor:pointer">' +
+										(i + 1) +
+										'</a>';
+									paginationUl.appendChild(li); //생성한 li 를 appendChild 해준다.
+									//페이지 클릭했을 때 처리.
+									const pageLink = document.getElementById('page' + i);
+									if (pageLink !== null) {
+										pageLink.addEventListener('click', function () {
+											offset = i * 10; //클릭한 페이지 불러오기 준비
+											getVipNotice(offset); //페이지 이동처리
+											paginationUpdate(); //페이지 버튼 업데이트
+										})
+									}
+								} else if (offset !== i) {
+									var li = document.createElement('li');
+									li.setAttribute('id', 'page' + i); //id 속성 추가하기. classList 와는 다른 게 재밌다.
+									li.classList.add('page-item', 'mx-2', 'pageNumbers');
+									li.innerHTML =
+										'<a class="page-link" style="cursor:pointer">' +
+										(i + 1) +
+										'</a>';
+									paginationUl.appendChild(li); //생성한 li 를 appendChild 해준다.
+									//페이지 클릭했을 때 처리.
+									const pageLink = document.getElementById('page' + i);
+									if (pageLink !== null) {
+										pageLink.addEventListener('click', function () {
+											offset = i * 10; //클릭한 페이지 불러오기 준비
+											getVipNotice(offset); //페이지 이동처리
+											paginationUpdate(); //페이지 버튼 업데이트
+										})
+									}
+								}
+							}
+
+
+							//페이지 최대 수랑 비교해서 올바르면 next 버튼 생성
+							if ((offset) < ((pageCount - 1) * 10)) {
+								var li = document.createElement('li'); //요소를 먼저 만들고, 안에 HTML 을 추가해주어야 한다.
+								li.setAttribute('id', 'nextButton');
+								li.classList.add('page-item', 'mx-2');
+								li.innerHTML = '<a class="page-link" style="cursor:pointer" aria-label="Next">' +
+									'<i class="fa fa-angle-right"></i>' +
+									'<span class="sr-only">Next</span>' +
+									'</a>';
+								paginationUl.appendChild(li); //만든 요소를 자식으로 추가해준다.
+								const nextButton = document.getElementById('nextButton');
+								nextButton.addEventListener('click', function () {
+
+									offset = offset + 10; //offset 다음 페이지로 이동
+									getVipNotice(offset); //다음 페이지 공지사항을 가져와서 보여준다.
+									paginationUpdate(); //페이지 버튼 업데이트
+								});
+							}
+
+							//현재 페이지에 대해서 색 칠해주기
+							//paginationUl 안에서, 칠해야 하는 li 태그 가져와서 색 칠하기.
+							console.log('오프셋 : ', offset);
+							let presentPage = (offset) / 10; 
+							console.log('presentPage 는 : ', presentPage);
+							const liElement = paginationUl.querySelector('li#page' + presentPage);
+							
+							if (liElement !== null) {
+								const aTag = liElement.querySelector('a');
+
+								if (aTag !== null) {
+									aTag.classList.add('bg-red');
+									console.log('a tag : ' + liElement.innerHTML);
+								} else {
+									console.log('<a> tag not found within the <li> element.');
+								}
+							} else {
+								console.log('Element not found for presentPage: ' + presentPage);
+							}
+						}
+					};
+					xhr.open('GET', '/notice/count', true);
+					xhr.send();
+				}
+			}
+			//page function 페이징 버튼 처리 부분 끝
+			paginationUpdate(); //페이지번호 만들기 처음 페이지 로딩 되면 1회 실행.
+
+			//검색창 처리 부분 시작
+			const searchInputTag = document.getElementById('searchInput'); //searchinput 태그 가져오기
+			const searchNoticeNumCheckbox = document.getElementById('IsNoticeNumberSearch');
+			const searchNoticeTitleCheckbox = document.getElementById('IsNoticeTitleSearch');
+			let valueOfsearchInputTag;
+			if (searchInputTag !== null) {
+				searchInputTag.addEventListener('keydown', function (event) {
+					valueOfsearchInputTag = searchInputTag.value; //input 태그에 입력한 내용 가져오기
+					console.log('검색창에 입력한 값입니다. : ' + valueOfsearchInputTag);
+					if (event.key === 'Enter') {
+						if (searchNoticeNumCheckbox.checked && !searchNoticeTitleCheckbox.checked) { //공지 번호 검색
+							getVipNoticeOnly(offset); //중요공지만 우선 가져오기
+							const xhr = new XMLHttpRequest();
+							xhr.onreadystatechange = function () {
+								if (xhr.readyState === 4 && xhr.status === 200) {
+									const noticeList = JSON.parse(xhr.responseText);
+									console.log('공지번호 검색 결과 : ' + noticeList);
+									updateNoticeTableNormal(noticeList); //검색 결과를 비동기로 뿌려주기
+								}
+							};
+							xhr.open('GET',
+								'/notice/search/noticeid?' +
+								'noticeid=' + valueOfsearchInputTag +
+								'&offset=' + offset
+								, true);
+							xhr.send();
+						} else if (searchNoticeTitleCheckbox.checked && !searchNoticeNumCheckbox.checked) { //공지 제목 검색
+							getVipNoticeOnly(offset); //중요공지만 우선 가져오기 /notice/search/noticetitle
+							const xhr = new XMLHttpRequest();
+							xhr.onreadystatechange = function () {
+								if (xhr.readyState === 4 && xhr.status === 200) {
+									const noticeList = JSON.parse(xhr.responseText);
+									console.log('공지제목 검색 결과 : ' + noticeList);
+									updateNoticeTableNormal(noticeList); //검색 결과를 비동기로 뿌려주기
+								}
+							};
+							xhr.open('GET',
+								'/notice/search/noticetitle?' +
+								'title=' + valueOfsearchInputTag +
+								'&offset=' + offset
+								, true);
+							xhr.send();
+						} else if (searchNoticeNumCheckbox.checked //공지 번호 or 공지 제목 검색
+							|| searchNoticeTitleCheckbox.checked) {
+							getVipNoticeOnly(offset); //중요공지만 우선 가져오기 /notice/search/noticetitleornoticeid
+							const xhr = new XMLHttpRequest();
+							xhr.onreadystatechange = function () {
+								if (xhr.readyState === 4 && xhr.status === 200) {
+									const noticeList = JSON.parse(xhr.responseText);
+									if (noticeList !== null) {
+										console.log('공지번호 or 공제제목 검색 결과 : ' + noticeList);
+										updateNoticeTableNormal(noticeList); //검색 결과를 비동기로 뿌려주기
+									} else {
+										alert('공지번호 검색은 숫자만 입력 가능합니다.');
+									}
+								}
+							};
+							xhr.open('GET',
+								'/notice/search/noticetitleornoticeid?' +
+								'title=' + valueOfsearchInputTag +
+								'&noticeid=' + valueOfsearchInputTag +
+								'&offset=' + offset
+								, true);
+							xhr.send();
+						}
+
+					}
+				});
+			}
+			//검색창 처리 부분 끝
 
 			//게시글 등록 불러오는 처리
 			function checkButtonExistence() {
@@ -356,50 +512,12 @@
 				xhr.open('GET', '/notice/viplist', true);
 				xhr.send();
 			}
-			function updateNoticeTableVip(noticeVipList) {
-				const tbody = document.getElementById('noticeTableBody');
-				tbody.innerHTML = '';
-
-				for (var i = 0; i < noticeVipList.length; i++) {
-					var notice = noticeVipList[i];
-					//N.NOTICE_ID, N.TITLE, M.MEMBER_ID 
-					var row = document.createElement('tr');
-					row.className = 'bg-red'; //중요 공지는 배경색 빨강 지정
-					row.innerHTML = '<th scope="row">' + notice.noticeId + '</th>' +
-						// '<td><a href=/notice/read?noticeId=' + notice.noticeId + '&offset=' + offset + '>' + notice.title + '</a></td>' +
-						'<td><a style=cursor:pointer class=noticeTitle id=notice' + notice.noticeId + '>' + notice.title + '</a></td>' +
-						'<td>' + notice.name + '</td>';
-					tbody.appendChild(row);
-
-					const titleA = document.getElementById('notice' + notice.noticeId);
-					if (titleA) {
-						titleA.addEventListener('click', function () {
-							const xhr = new XMLHttpRequest();
-							xhr.onreadystatechange = function () {
-								if (xhr.readyState === 4 && xhr.status === 200) {
-									console.log('공지 읽기 html : ' + xhr.responseText);
-									const noticeReadHtml = xhr.responseText;
-									updateNoticeContentForReadNotice(noticeReadHtml);
-								}
-							};
-							xhr.open('GET', '/notice/read?noticeId=' + notice.noticeId + '&offset=' + offset, true);
-							xhr.send();
-						});
-						function updateNoticeContentForReadNotice(content) {
-							const noticeContent = document.getElementById('noticeContent');
-							noticeContent.innerHTML = content;
-						}
-					}
-				}
-			}
-
-			function getVipNotice(offset) {
+			function getVipNoticeOnly(offset) { //중요 공지만 가져오기
 				const xhr = new XMLHttpRequest();
 				xhr.onreadystatechange = function () {
 					if (xhr.readyState === 4 && xhr.status === 200) {
 						const vipList = JSON.parse(xhr.responseText);
 						updateNoticeTableVip(vipList);
-						updateNoticeTableNormal(offset);
 					}
 				};
 				xhr.open('GET', '/notice/viplist', true);
@@ -441,7 +559,6 @@
 					}
 				}
 			}
-
 
 			//notice Normal table 만드는 코드
 			function getNormalNotice(offset) {

@@ -34,6 +34,9 @@ public class WebErrorController implements ErrorController {
             }else if (statusCode == HttpStatus.FORBIDDEN.value()) {
                 return ERROR_403_PAGE_PATH;
             }
+            else if (statusCode == HttpStatus.valueOf(403).value()) {
+            	return ERROR_403_PAGE_PATH;
+			}
         }
         return ERROR_ETC_PAGE_PATH;
     }

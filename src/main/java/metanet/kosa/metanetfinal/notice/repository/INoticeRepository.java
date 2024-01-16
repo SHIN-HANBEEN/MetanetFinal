@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 import metanet.kosa.metanetfinal.notice.model.NoticeFile;
 import metanet.kosa.metanetfinal.notice.model.NoticeListHome;
 import metanet.kosa.metanetfinal.notice.model.NoticeRead;
+import metanet.kosa.metanetfinal.notice.model.NoticeReadWithoutFile;
 import metanet.kosa.metanetfinal.notice.model.Notices;
 import metanet.kosa.metanetfinal.notice.model.NoticesForDbUpload;
 
@@ -29,8 +30,45 @@ public interface INoticeRepository {
 	//공지글 읽기
 	NoticeRead readNoticeByNoticeId(@Param("noticeId") int noticeId);
 	
+	//파일첨부 안한 공지글 읽기
+	NoticeReadWithoutFile readNoticeWithoutFileByNoticeId(@Param("noticeId") int noticeId);
+	
+	//파일첨부 한 공지글인지 확인하기
+	int isWithFile(@Param("noticeId") int noticeId);
+	
 	//파일 다운로드
 	NoticeFile getNoticeFile(@Param("noticeId") int noticeId);
+	
+	//공지번호 검색 후 노티스 가져오기
+	List<NoticeListHome> getNoticeByNoticeIdSearchWithPagination(
+				@Param("noticeId") int noticeId,
+				RowBounds rowBounds
+			);
+	
+	//공지 제목 검색 후 노티스 가져오기
+	List<NoticeListHome> getNoticeByNoticeTitleSearchWithPagination(
+				@Param("title") String title,
+				RowBounds rowBounds 
+			);
+	
+	
+	//공지번호 + 공지제목 검색 후 노티스 가져오기
+	List<NoticeListHome> getNoticeByNoticeTitleOrNoticeIdSearchWithPagination(
+				@Param("noticeId") int noticeId,
+				@Param("title") String title,
+				RowBounds rowBounds
+			);
+	
+	//공지 홈 들어갔을 때, 전체 개수 반환
+	int getAllNoticeCount();
+	
+	
+	
+	
+	
+	
+	
+	
 	
 //	// 공지사항 리스트 조회
 //	List<Notices> getNoticeList(@Param("start")int start, @Param("end") int end);
