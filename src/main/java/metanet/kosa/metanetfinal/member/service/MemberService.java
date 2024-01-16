@@ -92,8 +92,16 @@ public class MemberService implements IMemberService{
 	 * 임시비밀번호로 로그인하면
 	 * 비밀번호를 재설정한다.
 	 */
+	@Override
 	public void updatePassword(String id, String newPw) {
 		memberRepository.resetPwById(id, newPw);
+	}
+	
+	//사용자 검증, 아이디와 비밀번호로 해당 계정이 맞는지 검증
+	@Override
+	public String getPassword(String id) {
+		String password = memberRepository.getPassword(id);
+		return password;
 	}
 	/*
 	 * 회원탈퇴 : 

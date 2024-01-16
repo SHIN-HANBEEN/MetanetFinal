@@ -46,6 +46,8 @@ public class ReservationService implements IReservationService{
 	@Autowired
 	IMemberRepository memberRepository;
 	
+	public static final int discountRate = 2;
+	
 	@Transactional
 	@Override
 	public int getRemainingSeatCount(String departureId, String arrivalId, Date departureTime, 
@@ -166,7 +168,7 @@ public class ReservationService implements IReservationService{
 			memberId = Integer.parseInt(payData.get("memberId").toString());
 			int totalPrice = Integer.parseInt(payData.get("totalPrice").toString());
 			subtractMileage = Integer.parseInt(payData.get("mileage").toString());
-			memberRepository.updateMemberMileage(memberId, subtractMileage, 2, totalPrice);
+			memberRepository.updateMemberMileage(memberId, subtractMileage, discountRate, totalPrice);
 		}
 		for (int i = 0; i < adultNum; i++) q.add(1);
 		for (int i = 0; i < middleChildNum; i++) q.add(2);
@@ -231,8 +233,8 @@ public class ReservationService implements IReservationService{
 	 * 과거 6개월까지 예매내역과 취소내역을 조회한다. 
 	 */
 	@Override
-	public List<DetailedReservation> getReservationHistoryForLastSixMonth(@Param("canceledDate") Boolean canceledDate, @Param("phoneNum") String phoneNum) {
-		return reservationRepository.getReservationHistoryForLastSixMonth(canceledDate,phoneNum);
+	public List<DetailedReservation> getReservationHistoryForLastSixMonth(Boolean canceledDate, String phoneNum, boolean isMember) {
+		return reservationRepository.getReservationHistoryForLastSixMonth(canceledDate,phoneNum, isMember);
 	}
 
 	/*
@@ -240,8 +242,8 @@ public class ReservationService implements IReservationService{
 	 * 아직 출발 시간이 지나지 않은 예매 내역을 보여줍니다. 
 	 */
 	@Override
-	public List<DetailedReservation> getReservationHistoryNotUsed(String phoneNum) {
-		return reservationRepository.getReservationHistoryNotUsed(phoneNum);
+	public List<DetailedReservation> getReservationHistoryNotUsed(String phoneNum, boolean isMember) {
+		return reservationRepository.getReservationHistoryNotUsed(phoneNum, isMember);
 	}
 
 
@@ -277,7 +279,23 @@ public class ReservationService implements IReservationService{
 		}
 		reservationRepository.updateResTableIsCnc(payId);
 	}
-		
+	/*
+	 * payId 로 좌석 리스트 가져오기
+	 */
+	@Transactional
+	public List<Integer> getMySeatList(String payId) {
+		return reservationRepository.getMySeatListByPayId(payId);
+	}
+	
+	@Transactional
+	public void modifySeat(List<Integer> updateToTrue, List<Integer> updateToFalse, int busId, String payId) {
+		log.info("좌석변경중");
+		for (int i = 0; i < updateToFalse.size(); i++) {
+			reservationRepository.modifySeatByPayIdAndSeatId(payId, updateToFalse.get(i), updateToTrue.get(i));
+			busesRepository.setBusSeatFalse(busId, updateToFalse.get(i));
+			busesRepository.setBusSeatTrue(busId, updateToTrue.get(i));
+		}
+	}
 		
 //	@Autowired
 //	IReservationRepository reservationRepository;

@@ -43,7 +43,6 @@
 
 				<div class="container-fluid mt-8 pt-4">
 
-
 					<div class="container my-auto">
 						<div class="row">
 							<div class="col-lg-4 col-md-8 col-12 mx-auto">
@@ -233,7 +232,6 @@
 			var timerContainer = document.getElementById('3MinTimer');
 			timerContainer.style.display = 'flex';
 			var phoneNumber = $('#phoneNum').val();
-			alert(phoneNumber);
 			// AJAX를 사용하여 서버에 비동기 요청 보내기
 			$.ajax({
 				type: 'GET',
@@ -286,6 +284,7 @@
 				alert('인증 가능한 시간이 지났습니다. 다시 인증을 진행해 주세요.');
 			}, time);//3분이 되면 타이머를 삭제한다.
 		}
+		
 
 		var resultAuthentication = false;
 		function submitAuthentication() {
@@ -367,6 +366,13 @@
 	<script src="./assets/js/plugins/choices.min.js"></script>
 	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDTTfWur0PDbZWPr7Pmq8K3jiDp0_xUziI"></script>
 	<script src="./assets/js/material-kit.min.js?v=3.0.4" type="text/javascript"></script>
+
 </body>
 
 </html>
+	<!-- 메타넷 final js -->
+	<script src="/assets/js/final.js" type="text/javascript"></script>
+	<script src="/assets/js/nav.js" type="text/javascript"></script>
+	<!-- SweetAlert -->
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.10/dist/sweetalert2.min.css">
+	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.10/dist/sweetalert2.min.js"></script>

@@ -25,10 +25,7 @@ public class ReservationRestController {
 	SeatsLockSystemService seatsLockSystemService;
 	
 	@GetMapping("/routeinfotest")
-	public Map<String, Object> getInfoForReservation(
-			@RequestParam String departureId, 
-			@RequestParam String arrivalId, 
-			@RequestParam String departureTime) {
+	public String getInfoForReservation() {
 		String info = 
 				"{\r\n"
 				+ "   \"arrPlaceNm\": \"강릉시외터미널\",\r\n"
@@ -44,12 +41,11 @@ public class ReservationRestController {
 				+ "   \"childCharge\": 9800,\r\n"
 				+ "   \"busId\": 100\r\n"
 				+ "}";
-		Map<String, Object> dataForSeatsSelection = reservationService.getDataForSeatsSelection(departureId, arrivalId, departureTime);
 		
-		return dataForSeatsSelection;
+		return "ok";
 	}
 	
-	@PostMapping("/routeinfotest")
+	@PostMapping("/seat-selection")
 	public ResponseEntity<Map<String, Object>>  selectedSeatsInBus(@RequestBody Map<String, Object> request) {
 		System.out.println(request.toString());
 		int busId = Integer.parseInt(request.get("busId").toString());
@@ -63,6 +59,28 @@ public class ReservationRestController {
 		//검증되면 좌석 락
 		seatsLockSystemService.seatsLocking10m(busId, selectedSeatsList);
 		System.out.println("총가격"+request.get("totalPrice"));
+		return new ResponseEntity<Map<String, Object>>(request, HttpStatusCode.valueOf(200));
+	}
+	
+	@PostMapping("/seat-modification")
+	public ResponseEntity<Map<String, Object>>  modifySelectedSeatsInBus(@RequestBody Map<String, Object> request) {
+		System.out.println(request.toString());
+		int busId = Integer.parseInt(request.get("busId").toString());
+		//Object to List<Integer>
+		List<Object> li = (ArrayList<Object>) request.get("updateTrueSeatsList");
+		List<Object> li2 = (ArrayList<Object>) request.get("updateFalseSeatsList");
+		List<Integer> updateTrueSeatsList =  new ArrayList<>();
+		List<Integer> updateFalseSeatsList =  new ArrayList<>();
+		li.stream().map(obj -> Integer.parseInt(obj.toString())).forEach(updateTrueSeatsList::add);
+		li2.stream().map(obj -> Integer.parseInt(obj.toString())).forEach(updateFalseSeatsList::add);
+		//좌석검증
+		if(!reservationService.verifySeatsCount(busId, updateTrueSeatsList)) 
+			return new ResponseEntity<Map<String, Object>>(request, HttpStatusCode.valueOf(400));
+		//좌석변경 --> 버스 좌석변경, 예약좌석 변경
+		String payId = request.get("payId").toString();
+		reservationService.modifySeat(updateTrueSeatsList, updateFalseSeatsList, busId, payId);
+		
+		
 		return new ResponseEntity<Map<String, Object>>(request, HttpStatusCode.valueOf(200));
 	}
 	

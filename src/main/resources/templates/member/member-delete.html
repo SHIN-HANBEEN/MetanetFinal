@@ -29,6 +29,10 @@
 	<link href="../assets/css/final.css" rel="stylesheet" />
 	<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 
+	<!--sweetalert2-->
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.10/dist/sweetalert2.min.css">
+	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.10/dist/sweetalert2.min.js"></script>
+
 </head>
 
 <body>
@@ -53,29 +57,19 @@
 										</div>
 									</div>
 									<div class="card-body">
-										<form action="/signin" id="changePwdForm" method="post" th:object="${member}" role="form"
+										<form action="/signin" id="deleteMemForm" method="post" th:object="${member}" role="form"
 											class="text-start">
 											<input type="hidden" name="csrfToken" id="csrfToken" th:value="${session.csrfToken}"
 												autocomplete="off">
 											<div class="input-group input-group-outline mb-3">
-												<label class="form-label" for="password">현재 비밀번호 입력</label>
+												<label class="form-label" for="password">비밀번호를 입력해주세요</label>
 												<input type="password" id="password" name="password" class=" form-control" autocomplete="off">
 											</div>
 
-											<div class="input-group input-group-outline mb-3">
-												<label class="form-label" for="password">변경할 비밀번호 입력</label>
-												<input type="password" id="new_password" name="new_password" class=" form-control"
-													autocomplete="off">
-											</div>
-											<div class="input-group input-group-outline mb-3">
-												<label class="form-label" for="password2">비밀번호 확인</label>
-												<input type="password" id="new_password2" name="new_password2" class=" form-control"
-													autocomplete="off">
-											</div>
 
 											<p id="authenticationResult"></p>
 											<div class="text-center">
-												<input value="비밀번호 변경하기" class="btn bg-gradient-primary w-100 my-1 mb-2"
+												<input value="회원 탈퇴" class="btn bg-gradient-primary w-100 my-1 mb-2"
 													onclick="validateAndSubmit()">
 
 
@@ -117,43 +111,52 @@
 	<script>
 		function validateAndSubmit() {
 			// 각 필드의 값을 가져옴
-			var changePwdForm = document.getElementById('changePwdForm');
+			var changePwdForm = document.getElementById('deleteMemForm');
 			var passwordValue = document.getElementById('password').value;
-			var newPasswordValue = document.getElementById('new_password').value;
-			var newPassword2Value = document.getElementById('new_password2').value;
 
 			// 미입력된 필드를 확인하고 알림창 띄우기
 			var errorMessage = '';
 			if (!passwordValue) errorMessage += '비밀번호를 입력하세요.\n';
-			if (!newPasswordValue) errorMessage += '비밀번호 확인을 입력하세요.\n';
-			if (newPassword2Value != newPasswordValue) errorMessage += '변경할 비밀번호가 일치하지 않습니다.\n';
 
 			if (errorMessage) {
 				// 미입력된 필드가 있으면 알림창 띄우고 폼 제출 취소
 				alert(errorMessage);
 			} else {
-				// 미입력된 필드가 없으면 폼 제출
-				$.ajax({
-					type: 'POST',
-					url: '/pw-modification',
-					contentType: 'application/json',
-					data: JSON.stringify({
-						password: passwordValue,
-						new_password: newPasswordValue,
-						new_password2: newPassword2Value
-					}),
-					success: function (result) {
-						if (result == 'Success') {
-							alert('비밀번호 변경이 완료 되었습니다.');
-							location.href = '/mypage';
-						} else {
-							alert('잘못된 비밀번호가 입력되었습니다.');
-						}
+
+				Swal.fire({
+					title: '정말 탈퇴하시겠습니까?',
+					text: "한번 삭제한 회원은 다시 되돌릴 수 없습니다.",
+					icon: 'warning',
+					showCancelButton: true,
+					confirmButtonColor: '#3085d6',
+					cancelButtonColor: '#d33',
+					confirmButtonText: '승인',
+					cancelButtonText: '취소',
+					reverseButtons: true, // 버튼 순서 거꾸로
+				}).then((result) => {
+					if (result.isConfirmed) {
+
+						$.ajax({
+							url: '/sign-out',
+							type: 'POST',
+							contentType: 'application/json',
+							data: JSON.stringify({
+								password: passwordValue
+							}),
+							success: function (result) {
+								if (result == 'Success') {
+									alert('회원탈퇴가 완료되었습니다.');
+									location.href = '/';
+								} else {
+									alert('잘못된 비밀번호가 입력되었습니다.');
+								}
+							}
+						});
 					}
 				});
-				//signUpForm.submit();
 			}
 		}
+
 	</script>
 
 	<!--  Plugin for TypedJS, full documentation here: https://github.com/inorganik/CountUp.js -->

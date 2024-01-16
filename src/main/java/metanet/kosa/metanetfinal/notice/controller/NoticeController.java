@@ -161,9 +161,14 @@ public class NoticeController {
 	//파일 다운로드
 	@GetMapping("/notice/file")
 	public ResponseEntity<byte[]> getFile( @RequestParam String noticeId ) {
+		System.out.println("noticeId 는 : " + noticeId);
+		
 		NoticeFile noticeFile = noticeService.getNoticeFile(Integer.valueOf(noticeId));
+		
+		System.out.println("noticeFile 은 : " + noticeFile);
+		
 		final HttpHeaders headers = new HttpHeaders();
-		String[] mytypes = noticeFile.getFileContentType().split("/");
+		String[] mytypes = noticeFile.getFileType().split("/");
 		headers.setContentType(new MediaType(mytypes[0], mytypes[1]));
 		headers.setContentLength(noticeFile.getFileSize());
 		try {

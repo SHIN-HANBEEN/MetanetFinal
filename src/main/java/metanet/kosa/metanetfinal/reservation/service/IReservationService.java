@@ -64,14 +64,14 @@ public interface IReservationService {
 	 * 마이페이지 예매내역 및 취소내역 조회 :
 	 * 과거 6개월까지 예매내역과 취소내역을 조회한다. 
 	 */
-	List<DetailedReservation> getReservationHistoryForLastSixMonth(@Param("canceledDate") Boolean canceledDate, @Param("phoneNum") String phoneNum);
+	List<DetailedReservation> getReservationHistoryForLastSixMonth(Boolean canceledDate, String phoneNum, boolean isMember);
 	
 	
 	/*
 	 * 예매_회원 예매 정보 조회 : 
 	 * 아직 출발 시간이 지나지 않은 예매 내역을 보여줍니다. 
 	 */
-	List<DetailedReservation> getReservationHistoryNotUsed(String phoneNum);
+	List<DetailedReservation> getReservationHistoryNotUsed(String phoneNum, boolean isMember);
 	
 	
 	/*

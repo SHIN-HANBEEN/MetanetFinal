@@ -28,6 +28,8 @@ import com.siot.IamportRestClient.response.Payment;
 import metanet.kosa.metanetfinal.member.model.Members;
 import metanet.kosa.metanetfinal.member.service.MemberService;
 import metanet.kosa.metanetfinal.reservation.service.PaymentService;
+import metanet.kosa.metanetfinal.reservation.service.ReservationService;
+import metanet.kosa.metanetfinal.reservation.service.SeatsLockSystemService;
 
 @RestController
 public class PaymentController {
@@ -108,6 +110,8 @@ public class PaymentController {
 		String uuid = UUID.randomUUID().toString();
 		String uid = date.toString().substring(11,date.toString().length()-9) + uuid.substring(3,11);
 		merchantUid.put("paymentId", uid);
+		merchantUid.put("lockingTime", String.valueOf(SeatsLockSystemService.lockingTime));
+		merchantUid.put("discountRate", String.valueOf(ReservationService.discountRate));
 		try {
 			String memberId = principal.getName();
 			

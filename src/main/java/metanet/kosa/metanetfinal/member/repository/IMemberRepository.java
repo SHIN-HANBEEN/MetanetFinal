@@ -24,6 +24,10 @@ public interface IMemberRepository {
 	void register(Members member); 
 	
 	/*
+	 *  비밀번호 가져오기
+	 */
+	String getPassword(String id);
+	/*
 	 * 권한 조회
 	 */
 	List<String> getRoles(String memberid);
