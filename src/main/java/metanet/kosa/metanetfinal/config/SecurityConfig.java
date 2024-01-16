@@ -38,23 +38,13 @@ public class SecurityConfig {
 	SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 		http.csrf((csrf) -> csrf.disable());
 		// 토큰을 사용하는 경우 인가를 적용한 URI 설정
-		http.authorizeHttpRequests((authorizeHttpRequests) -> authorizeHttpRequests
-				.requestMatchers(
-						"/mypage"
-						).hasAnyRole("USER","ADMIN")
-				.requestMatchers(
-						"/notice/register"
-						).hasRole("ADMIN")
-				.requestMatchers(
-						"/**", "assets/css/**", "assets/js/**", "assets/img/**",
-						"/login"
-						).permitAll()	
-		);
-				//requestMatchers("/login", "/signin").permitAll());
+		http.authorizeHttpRequests((authorizeHttpRequests) -> authorizeHttpRequests.requestMatchers("/mypage")
+				.hasAnyRole("USER", "ADMIN").requestMatchers("/notice/register").hasRole("ADMIN")
+				.requestMatchers("/**", "assets/css/**", "assets/js/**", "assets/img/**", "/login").permitAll());
+		// requestMatchers("/login", "/signin").permitAll());
 
 		// Session 기반의 인증기반을 사용하지 않고 추후 JWT를 이용하여서 인증 예정
-		http.sessionManagement((session) -> 
-		session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
+		http.sessionManagement((session) -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
 
 		// Spring Security JWT 필터 로드
 		http.addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider()),

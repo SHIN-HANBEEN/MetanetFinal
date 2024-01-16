@@ -40,7 +40,7 @@ public class NoticeRestController {
 			@RequestParam int noticeid, 
 			@RequestParam int offset
 			) {
-		RowBounds rowBounds = new RowBounds(offset, 10);
+		RowBounds rowBounds = new RowBounds(offset, 100);
 		System.out.println("공지번호로 검색 완료 : " + 
 		noticeService.getNoticeByNoticeIdSearchWithPagination(noticeid, rowBounds));
 		return noticeService.getNoticeByNoticeIdSearchWithPagination(noticeid, rowBounds);
@@ -53,7 +53,7 @@ public class NoticeRestController {
 			@RequestParam String title, 
 			@RequestParam int offset
 			) {
-		RowBounds rowBounds = new RowBounds(offset, 10);
+		RowBounds rowBounds = new RowBounds(offset, 100);
 		System.out.println(
 				noticeService.getNoticeByNoticeTitleSearchWithPagination(title, rowBounds)
 				);
@@ -68,7 +68,7 @@ public class NoticeRestController {
 	        @RequestParam(required = false) Integer noticeid,
 	        @RequestParam int offset
 	) {
-	    RowBounds rowBounds = new RowBounds(offset, 10);
+	    RowBounds rowBounds = new RowBounds(offset, 100);
 	    if (noticeid != null) {
 	        return noticeService.getNoticeByNoticeTitleOrNoticeIdSearchWithPagination(noticeid, title, rowBounds);
 	    } else { //noticeid 가 숫자가 아니라 문자로 들어오면 null 로 들어온다.

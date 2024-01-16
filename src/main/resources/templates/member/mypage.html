@@ -41,12 +41,12 @@
 	<!-- End Navbar -->
 	<!--  START HEADER 7 w/ text and video -->
 	<header class="bg-gradient-dark">
-		<div class="page-header min-vh-75" style="background-image: url('../assets/img/bg9.jpg');">
+		<div class="page-header min-vh-100" style="background-image: url('../assets/img/bg9.jpg'); max-height: 100%;">
 			<span class="mask bg-gradient-dark opacity-6"></span>
 			<div class="container">
 				<div class="row justify-content-center">
 					<div class="col-lg-8 text-center mx-auto my-auto">
-						<h1 class="text-white">마이페이지</h1>
+						<h1 class="text-white mb-8">마이페이지</h1>
 
 					</div>
 					<div class="row">
@@ -119,172 +119,7 @@
 		</div>
 	</header>
 	<!-- -------- END HEADER 7 w/ text and video ------- -->
-	<div id="res" class="card card-body py-1 shadow-xl mx-3 mx-md-4 mt-n6">
-		<!-- Section with four info areas left & one card right with image and waves -->
-		<section class="py-5" style="min-height: 100vh;">
-			<div class="container">
-				<div class="row">
-					<div class="col-md-8 text-start mb-5 mt-5">
-						<h2 class="text-black z-index-1 position-relative"> 예매 정보 조회</h2>
-					</div>
-				</div>
-				<ul class="nav nav-tabs" id="myTab" role="tablist">
-					<li class="col-lg-4 nav-item" role="presentation">
-						<button class="nav-link active" id="userinfo-tab" data-bs-toggle="tab" data-bs-target="#userinfo"
-							type="button" role="tab" aria-controls="userinfo" aria-selected="true">사용가능 예매</button>
-					</li>
-					<li class="col-lg-4 nav-item" role="presentation">
-						<button class="nav-link" id="myreview-tab" data-bs-toggle="tab" data-bs-target="#myreview" type="button"
-							role="tab" aria-controls="myreview" aria-selected="false">지난 예매</button>
-					</li>
-					<li class="col-lg-4 nav-item" role="presentation">
-						<button class="nav-link" id="wishlist-tab" data-bs-toggle="tab" data-bs-target="#wishlist" type="button"
-							role="tab" aria-controls="wishlist" aria-selected="false">취소 내역</button>
-					</li>
-				</ul>
-
-				<!-- 현재 예매 내역 -->
-				<div class="tab-content" id="myTabContent">
-					<div class="tab-pane fade show active mb-4" id="userinfo" role="tabpanel" aria-labelledby="userinfo-tab">
-						<h3 class="mt-4">사용가능 예매 내역</h3>
-
-						<div th:if="${not #lists.isEmpty(ReservationNotUsedList)}">
-
-							<table class="table" id="notuserdreservationtable" >
-								<thead>
-									<tr>
-										<th>출발지</th>
-										<th>도착지</th>
-										<th>출발시간</th>
-										<th>도착시간</th>
-										<th>좌석 번호</th>
-										<th>총 금액</th>
-										<th>예약시간</th>
-										<th style="display: none; width: 0%;">결제 번호</th>
-										<th style="display: none; width: 0%;">출발지 ID</th>
-										<th style="display: none; width: 0%;">도착지 ID</th>
-									</tr>
-								</thead>
-								<tbody class="border-top border-success-subtle">
-									
-									<tr th:each="res : ${ReservationNotUsedList}" class="clickable-row " data-toggle="modal"
-										data-target="#reservationModal" data-reservation-id="${res.id}" style="cursor: pointer;">
-										<td th:text="${res.departureTerminalName}" class="text-body-emphasis fw-semibold">출발지</td>
-										<td th:text="${res.arrivalTerminalName}" class="text-body-emphasis fw-semibold">도착지</td>
-										<td th:text="${#strings.substring(res.departureTime,0,16)}" class="text-body-emphasis fw-semibold">출발시간</td>
-										<td th:text="${#strings.substring(res.arrivalTime,0,16)}" class="text-body-emphasis fw-semibold">도착시간</td>
-										<td th:text="${res.seatIds}" class="text-body-emphasis fw-semibold">좌석 번호</td>
-										<td th:text="${res.totalPrice}" class="text-body-emphasis fw-semibold">총 금액</td>
-										<td th:text="${#strings.substring(res.resDate,0,16)}" class="text-body-emphasis fw-semibold">예약시간</td>	
-										<td style="display: none; width: 0%;" th:text="${res.payId}">결제 번호</td>
-										<td style="display: none; width: 0%;" th:text="${res.departureTerminalId}">출발지 ID</td>
-										<td style="display: none; width: 0%;" th:text="${res.arrivalTerminalId}">출발지 ID</td>
-									</tr>
-								</tbody>
-							</table>
-
-						</div>
-						<div th:if="${#lists.isEmpty(ReservationNotUsedList)}">
-							<p>현재 예매 중인 상품이 없습니다.</p>
-						</div>
-					</div>
-
-					<!--예매 내역 조회-->
-					<div class="tab-pane fade" id="myreview" role="tabpanel" aria-labelledby="myreview-tab">
-						<h3 class="mt-4">지난 예매 내역</h3>
-						<div th:if="${not #lists.isEmpty(ReservationList)}">
-
-							<table class="table table-hover table-bordered" id="totalreservationtable">
-								<thead>
-									<tr>
-										<th>출발지</th>
-										<th>도착지</th>
-										<th>출발시간</th>
-										<th>도착시간</th>
-										<th>좌석 번호</th>									
-										<th>총 금액</th>
-										<th>예약시간</th>		
-									</tr>
-								</thead>
-								<tbody>
-									<tr th:each="res : ${ReservationList}">
-										<td th:text="${res.departureTerminalName}">출발지</td>
-										<td th:text="${res.arrivalTerminalName}">도착지</td>
-										<td th:text="${res.departureTime}">출발시간</td>
-										<td th:text="${res.arrivalTime}">도착시간</td>
-										<td th:text="${res.seatIds}">좌석 번호</td>
-										<td th:text="${res.totalPrice}">총 금액</td>
-										<td th:text="${res.resDate}">예약시간</td>										
-									</tr>
-								</tbody>
-							</table>
-						</div>
-						<div th:if="${#lists.isEmpty(ReservationList)}">
-							<p>예매한 내역이 없습니다.</p>
-						</div>
-					</div>
-					<div class="tab-pane fade" id="wishlist" role="tabpanel" aria-labelledby="wishlist-tab">
-						<h3 class="mt-4">예매 취소 내역</h3>
-						<div th:if="${not #lists.isEmpty(cancelReservationList)}">
-							<table class="table table-hover table-bordered" id="cancelreservationtable">
-								<thead>
-									<tr>
-										<th>출발지</th>
-										<th>도착지</th>
-										<th>출발시간</th>
-										<th>도착시간</th>
-										<th>예약시간</th>
-										<th>좌석 번호</th>
-										<th>결제 번호</th>
-										<th>총 금액</th>
-									</tr>
-								</thead>
-								<tbody>
-									<tr th:each="can : ${cancelReservationList}">
-										<td th:text="${can.departureTerminalName}">출발지</td>
-										<td th:text="${can.arrivalTerminalName}">도착지</td>
-										<td th:text="${can.departureTime}">출발시간</td>
-										<td th:text="${can.arrivalTime}">도착시간</td>
-										<td th:text="${can.resDate}">예약시간</td>
-										<td th:text="${can.seatIds}">좌석 번호</td>
-										<td th:text="${can.payId}">결제 번호</td>
-										<td th:text="${can.totalPrice}">총 금액</td>
-									</tr>
-								</tbody>
-							</table>
-						</div>
-						<div th:if="${#lists.isEmpty(cancelReservationList)}">
-							<p>취소한 내역이 없습니다.</p>
-						</div>
-					</div>
-				</div>
-
-			</div>
-		</section>
-		<!-- END Section with four info areas left & one card right with image and waves -->
-		<!-- -------- START Features w/ pattern background & stats & rocket -------- -->
-		<section class="pb-5 position-relative bg-gradient-dark mx-n3">
-			<div class="container">
-				<div id="mil" class="row">
-					<div class="col-md-8 text-start mb-5 mt-5" id="mi">
-						<h3 class="text-white z-index-1 position-relative">개인정보 조회</h3>
-					</div>
-				</div>
-				<div class="row">
-					<div class="card card-profile ">
-						<div class="card-body ps-lg-0">
-							<h5 class="mb-0">Emma Roberts</h5>
-							<h6 class="text-info">UI Designer</h6>
-							<p class="mb-0">Artist is a term applied to a person who engages in an activity deemed to be an art.
-							</p>
-						</div>
-					</div>
-				</div>
-			</div>
-		</section>
-		<!-- -------- END Features w/ pattern background & stats & rocket -------- -->
-
-	</div>
+	
 	
 
 	<div class="modal fade" id="reservationModal" tabindex="-1" role="dialog" aria-labelledby="reservationModalLabel"
@@ -482,93 +317,13 @@
 	<script>
 	</script>
 	<script>
-		// get the element to animate
-		var element = document.getElementById('count-stats');
-		var elementHeight = element.clientHeight;
+	
+		
 
-		// listen for scroll event and call animate function
+		
 
-		document.addEventListener('scroll', animate);
-
-		// check if element is in view
-		function inView() {
-			// get window height
-			var windowHeight = window.innerHeight;
-			// get number of pixels that the document is scrolled
-			var scrollY = window.scrollY || window.pageYOffset;
-			// get current scroll position (distance from the top of the page to the bottom of the current viewport)
-			var scrollPosition = scrollY + windowHeight;
-			// get element position (distance from the top of the page to the bottom of the element)
-			var elementPosition = element.getBoundingClientRect().top + scrollY + elementHeight;
-
-			// is scroll position greater than element position? (is element in view?)
-			if (scrollPosition > elementPosition) {
-				return true;
-			}
-
-			return false;
-		}
-
-		var animateComplete = true;
-		// animate element when it is in view
-		function animate() {
-
-			// is element in view?
-			if (inView()) {
-				if (animateComplete) {
-					if (document.getElementById('state1')) {
-						const countUp = new CountUp('state1', document.getElementById("state1").getAttribute("countTo"));
-						if (!countUp.error) {
-							countUp.start();
-						} else {
-							console.error(countUp.error);
-						}
-					}
-					if (document.getElementById('state2')) {
-						const countUp1 = new CountUp('state2', document.getElementById("state2").getAttribute("countTo"));
-						if (!countUp1.error) {
-							countUp1.start();
-						} else {
-							console.error(countUp1.error);
-						}
-					}
-					if (document.getElementById('state3')) {
-						const countUp2 = new CountUp('state3', document.getElementById("state3").getAttribute("countTo"));
-						if (!countUp2.error) {
-							countUp2.start();
-						} else {
-							console.error(countUp2.error);
-						};
-					}
-					animateComplete = false;
-				}
-			}
-		}
-
-		if (document.getElementById('typed')) {
-			var typed = new Typed("#typed", {
-				stringsElement: '#typed-strings',
-				typeSpeed: 90,
-				backSpeed: 90,
-				backDelay: 200,
-				startDelay: 500,
-				loop: true
-			});
-		}
-	</script>
-	<script>
-		if (document.getElementsByClassName('page-header')) {
-			window.onscroll = debounce(function () {
-				var scrollPosition = window.pageYOffset;
-				var bgParallax = document.querySelector('.page-header');
-				var oVal = (window.scrollY / 3);
-				bgParallax.style.transform = 'translate3d(0,' + oVal + 'px,0)';
-			}, 6);
-		}
-		const TableMargin = styled.tr<{ value: number }>`
-		  height: ${(props) => props.value}px;
-		`;
-	</script>
+		</script>
+	
 </body>
 
 </html>

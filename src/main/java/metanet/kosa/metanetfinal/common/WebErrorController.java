@@ -31,6 +31,8 @@ public class WebErrorController implements ErrorController {
             }
             else if(statusCode == HttpStatus.INTERNAL_SERVER_ERROR.value()) {
                 return ERROR_500_PAGE_PATH;
+            }else if (statusCode == HttpStatus.FORBIDDEN.value()) {
+                return ERROR_403_PAGE_PATH;
             }
             else if (statusCode == HttpStatus.valueOf(403).value()) {
             	return ERROR_403_PAGE_PATH;
