@@ -684,6 +684,7 @@
 					// 서버 응답 처리
 					$('#authenticationResult').text(result);
 					if (result == '인증에 성공했습니다.') {
+						clearInterval(PlAYTIME);
 						resultAuthentication = true;
 						phoneNum = phoneNumber;
 					} else {
