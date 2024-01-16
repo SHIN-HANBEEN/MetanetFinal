@@ -24,8 +24,11 @@ public class KeyEncrypt {
     public String encrypt(String text) {
         try {
             //String shaKey = getShaKey(text);
-            return getAesKey(text);
+        	String aesKey = getAesKey(text);
+        	String base64AesKey = Base64.getEncoder().encodeToString(aesKey.getBytes());
+            return base64AesKey;
         } catch (Exception e) {
+        	e.printStackTrace();
             throw new RuntimeException("암호화 처리중에 에러가 발생했습니다. ");
         }
     }
@@ -59,12 +62,16 @@ public class KeyEncrypt {
     
     public String decrypt(String clientKey) {
         try {
+        	//base64Decoding
+        	byte[] decodedBytes = Base64.getDecoder().decode(clientKey);
+            String base64decodedStr = new String(decodedBytes);
+        	/////
             Cipher cipher = Cipher.getInstance(aesAlg);
             SecretKeySpec keySpec = new SecretKeySpec(key.getBytes(), "AES");
             IvParameterSpec ivParameterSpec = new IvParameterSpec(iv.getBytes());
             cipher.init(Cipher.DECRYPT_MODE, keySpec, ivParameterSpec);
 
-            byte[] decoedBytes = Base64.getDecoder().decode(clientKey.getBytes());
+            byte[] decoedBytes = Base64.getDecoder().decode(base64decodedStr.getBytes());
             byte[] decrypted = cipher.doFinal(decoedBytes);
             return new String(decrypted).trim();
         } catch (Exception e) {

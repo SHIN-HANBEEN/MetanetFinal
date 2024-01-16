@@ -2,6 +2,7 @@ package metanet.kosa.metanetfinal.notice.service;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.session.RowBounds;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -26,6 +27,36 @@ public interface INoticeService {
 	
 	//파일 다운로드
 	NoticeFile getNoticeFile(int noticeId);
+	
+	//공지번호 검색 후 노티스 가져오기
+	List<NoticeListHome> getNoticeByNoticeIdSearchWithPagination(
+				int noticeId,
+				RowBounds rowBounds
+			);
+	
+	//공지 제목 검색 후 노티스 가져오기
+	List<NoticeListHome> getNoticeByNoticeTitleSearchWithPagination(
+				String title,
+				RowBounds rowBounds
+			);
+	
+	
+	//공지번호 + 공지제목 검색 후 노티스 가져오기
+	List<NoticeListHome> getNoticeByNoticeTitleOrNoticeIdSearchWithPagination(
+				int noticeId,
+				String title,
+				RowBounds rowBounds
+			);
+	
+	//전체공지 개수 반환
+	int getAllNoticeCount();
+
+	
+	
+	
+	
+	
+	
 	
 //	// 공지사항 상세 조회
 //	Notices getNotice(int noticeId);

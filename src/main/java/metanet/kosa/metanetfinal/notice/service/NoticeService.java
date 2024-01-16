@@ -64,6 +64,27 @@ public class NoticeService implements INoticeService {
 		return noticeRepository.getNoticeFile(noticeId);
 	}
 
+	@Override
+	public List<NoticeListHome> getNoticeByNoticeIdSearchWithPagination(int noticeId, RowBounds rowBounds) {
+		return noticeRepository.getNoticeByNoticeIdSearchWithPagination(noticeId, rowBounds);
+	}
+
+	@Override
+	public List<NoticeListHome> getNoticeByNoticeTitleSearchWithPagination(String title, RowBounds rowBounds) {
+		return noticeRepository.getNoticeByNoticeTitleSearchWithPagination(title, rowBounds);
+	}
+
+	@Override
+	public List<NoticeListHome> getNoticeByNoticeTitleOrNoticeIdSearchWithPagination(int noticeId, String title,
+			RowBounds rowBounds) {
+		return noticeRepository.getNoticeByNoticeTitleOrNoticeIdSearchWithPagination(noticeId, title, rowBounds);
+	}
+
+	@Override
+	public int getAllNoticeCount() {
+		return noticeRepository.getAllNoticeCount();
+	}
+
 
 	
 	
