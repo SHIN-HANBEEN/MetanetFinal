@@ -298,30 +298,62 @@
 			const searchInputTag = document.getElementById('searchInput'); //searchinput 태그 가져오기
 			const searchNoticeNumCheckbox = document.getElementById('IsNoticeNumberSearch');
 			const searchNoticeTitleCheckbox = document.getElementById('IsNoticeTitleSearch');
-			let contentOfsearchInputTag;
+			let valueOfsearchInputTag;
 			if (searchInputTag !== null) {
-				contentOfsearchInputTag = searchInputTag.value; //input 태그에 입력한 내용 가져오기
 				searchInputTag.addEventListener('keydown', function (event) {
+					valueOfsearchInputTag = searchInputTag.value; //input 태그에 입력한 내용 가져오기
+					console.log('검색창에 입력한 값입니다. : ' + valueOfsearchInputTag);
 					if (event.key === 'Enter') {
-						if (searchNoticeNumCheckbox.checked) {
+						if (searchNoticeNumCheckbox.checked) { //공지 번호 검색
 							getVipNoticeOnly(offset); //중요공지만 우선 가져오기
 							const xhr = new XMLHttpRequest();
 							xhr.onreadystatechange = function () {
 								if (xhr.readyState === 4 && xhr.status === 200) {
-									const vipList = JSON.parse(xhr.responseText);
-									updateNoticeTableVip(vipList);
-									getNormalNotice(offset);
+									const noticeList = JSON.parse(xhr.responseText);
+									console.log('공지번호 검색 결과 : ' + noticeList);
+									updateNoticeTableNormal(noticeList); //검색 결과를 비동기로 뿌려주기
 								}
 							};
-							xhr.open('GET', '/notice/viplist', true);
+							xhr.open('GET',
+								'/notice/search/noticeid?' +
+								'noticeid=' + valueOfsearchInputTag +
+								'&offset=' + offset
+								, true);
 							xhr.send();
-						} else if (searchNoticeTitleCheckbox.checked) {
-							getVipNoticeOnly(offset); //중요공지만 우선 가져오기
-
-						} else if (searchNoticeNumCheckbox.checked
+						} else if (searchNoticeTitleCheckbox.checked) { //공지 제목 검색
+							getVipNoticeOnly(offset); //중요공지만 우선 가져오기 /notice/search/noticetitle
+							const xhr = new XMLHttpRequest();
+							xhr.onreadystatechange = function () {
+								if (xhr.readyState === 4 && xhr.status === 200) {
+									const noticeList = JSON.parse(xhr.responseText);
+									console.log('공지제목 검색 결과 : ' + noticeList);
+									updateNoticeTableNormal(noticeList); //검색 결과를 비동기로 뿌려주기
+								}
+							};
+							xhr.open('GET',
+								'/notice/search/noticetitle?' +
+								'title=' + valueOfsearchInputTag +
+								'&offset=' + offset
+								, true);
+							xhr.send();
+						} else if (searchNoticeNumCheckbox.checked //공지 번호 or 공지 제목 검색
 							|| searchNoticeTitleCheckbox.checked) {
-							getVipNoticeOnly(offset); //중요공지만 우선 가져오기
-
+							getVipNoticeOnly(offset); //중요공지만 우선 가져오기 /notice/search/noticetitleornoticeid
+							const xhr = new XMLHttpRequest();
+							xhr.onreadystatechange = function () {
+								if (xhr.readyState === 4 && xhr.status === 200) {
+									const noticeList = JSON.parse(xhr.responseText);
+									console.log('공지번호 or 공제제목 검색 결과 : ' + noticeList);
+									updateNoticeTableNormal(noticeList); //검색 결과를 비동기로 뿌려주기
+								}
+							};
+							xhr.open('GET',
+								'/notice/search/noticetitleornoticeid?' +
+								'title=' + valueOfsearchInputTag +
+								'&noticeid=' + valueOfsearchInputTag +
+								'&offset=' + offset
+								, true);
+							xhr.send();
 						}
 
 					}
@@ -338,42 +370,6 @@
 
 			}
 
-			function updateNoticeTableNormal(noticeList) {
-				const tbody = document.getElementById('noticeTableBody');
-				//tbody.innerHTML = '';
-				//중요 공지사항 가져올 때, 안을 비우기 때문에, 이것은 나중에 실행을 시킨다.
-
-				for (var i = 0; i < noticeList.length; i++) {
-					var notice = noticeList[i];
-					//N.NOTICE_ID, N.TITLE, M.MEMBER_ID 
-					var row = document.createElement('tr');
-					row.innerHTML = '<th scope="row">' + notice.noticeId + '</th>' +
-						// '<td><a href=/notice/read?noticeId=' + notice.noticeId + '&offset=' + offset + '>' + notice.title + '</a></td>' +
-						'<td><a style=cursor:pointer class=noticeTitle id=notice' + notice.noticeId + '>' + notice.title + '</a></td>' +
-						'<td>' + notice.name + '</td>';
-					tbody.appendChild(row);
-
-					const titleA = document.getElementById('notice' + notice.noticeId);
-					if (titleA) {
-						titleA.addEventListener('click', function () {
-							const xhr = new XMLHttpRequest();
-							xhr.onreadystatechange = function () {
-								if (xhr.readyState === 4 && xhr.status === 200) {
-									console.log('공지 읽기 html : ' + xhr.responseText);
-									const noticeReadHtml = xhr.responseText;
-									updateNoticeContentForReadNotice(noticeReadHtml);
-								}
-							};
-							xhr.open('GET', '/notice/read?noticeId=' + notice.noticeId + '&offset=' + offset, true);
-							xhr.send();
-						});
-						function updateNoticeContentForReadNotice(content) {
-							const noticeContent = document.getElementById('noticeContent');
-							noticeContent.innerHTML = content;
-						}
-					}
-				}
-			}
 
 
 

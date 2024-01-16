@@ -37,11 +37,13 @@ public class NoticeRestController {
 	//공지번호 검색 후 노티스 가져오기
 	@GetMapping("/notice/search/noticeid")
 	public List<NoticeListHome> getNoticeSearchByNoticeId(
-			@RequestParam int noticeId, 
+			@RequestParam int noticeid, 
 			@RequestParam int offset
 			) {
 		RowBounds rowBounds = new RowBounds(offset, 10);
-		return noticeService.getNoticeByNoticeIdSearchWithPagination(noticeId, rowBounds);
+		System.out.println("공지번호로 검색 완료 : " + 
+		noticeService.getNoticeByNoticeIdSearchWithPagination(noticeid, rowBounds));
+		return noticeService.getNoticeByNoticeIdSearchWithPagination(noticeid, rowBounds);
 	}
 	
 	
@@ -52,6 +54,9 @@ public class NoticeRestController {
 			@RequestParam int offset
 			) {
 		RowBounds rowBounds = new RowBounds(offset, 10);
+		System.out.println(
+				noticeService.getNoticeByNoticeTitleSearchWithPagination(title, rowBounds)
+				);
 		return noticeService.getNoticeByNoticeTitleSearchWithPagination(title, rowBounds);
 	}
 	
@@ -64,6 +69,9 @@ public class NoticeRestController {
 			@RequestParam int offset
 			) {
 		RowBounds rowBounds = new RowBounds(offset, 10);
+		System.out.println(
+				noticeService.getNoticeByNoticeTitleOrNoticeIdSearchWithPagination(noticeid, title, rowBounds);
+				);
 		return noticeService.getNoticeByNoticeTitleOrNoticeIdSearchWithPagination(noticeid, title, rowBounds);
 	}
 	
