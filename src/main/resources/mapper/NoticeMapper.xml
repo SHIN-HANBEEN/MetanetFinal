@@ -146,6 +146,16 @@
 		]]>
 	</select>
 	
+	<!-- int getAllNoticeCount(); --> 
+	<select id="getAllNoticeCount" resultType="int">
+		<![CDATA[
+			SELECT 
+				count(*)
+			FROM
+				NOTICES
+		]]>
+	</select>
+	
 	
 	
 	

@@ -47,6 +47,9 @@ public interface INoticeService {
 				String title,
 				RowBounds rowBounds
 			);
+	
+	//전체공지 개수 반환
+	int getAllNoticeCount();
 
 	
 	

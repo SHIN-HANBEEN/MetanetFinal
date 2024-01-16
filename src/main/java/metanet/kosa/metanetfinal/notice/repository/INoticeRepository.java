@@ -52,6 +52,8 @@ public interface INoticeRepository {
 				RowBounds rowBounds
 			);
 	
+	//공지 홈 들어갔을 때, 전체 개수 반환
+	int getAllNoticeCount();
 	
 	
 	

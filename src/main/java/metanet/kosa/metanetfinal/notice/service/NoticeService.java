@@ -80,6 +80,11 @@ public class NoticeService implements INoticeService {
 		return noticeRepository.getNoticeByNoticeTitleOrNoticeIdSearchWithPagination(noticeId, title, rowBounds);
 	}
 
+	@Override
+	public int getAllNoticeCount() {
+		return noticeRepository.getAllNoticeCount();
+	}
+
 
 	
 	

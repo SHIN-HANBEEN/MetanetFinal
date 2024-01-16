@@ -70,10 +70,19 @@ public class NoticeRestController {
 			) {
 		RowBounds rowBounds = new RowBounds(offset, 10);
 		System.out.println(
-				noticeService.getNoticeByNoticeTitleOrNoticeIdSearchWithPagination(noticeid, title, rowBounds);
+				noticeService.getNoticeByNoticeTitleOrNoticeIdSearchWithPagination(noticeid, title, rowBounds)
 				);
 		return noticeService.getNoticeByNoticeTitleOrNoticeIdSearchWithPagination(noticeid, title, rowBounds);
 	}
 	
+	//int getAllNoticeCount()
+	@GetMapping("/notice/count")
+	public int getAllNoticeCount() {
+		int result = (int)Math.round(noticeService.getAllNoticeCount()/10) + 1;
+		System.out.println(
+				"전체 공지 개수/10 : " + result 
+				);
+		return result;
+	}
 
 }
