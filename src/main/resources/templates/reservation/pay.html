@@ -601,6 +601,7 @@
 
 		//비회원 전화 인증 클릭 했을 때
 		var phoneNumber;
+		var PlAYTIME;
 		function SendAuthNumClick() {
 			var authPhoneNum = document.getElementById('authPhoneNum');
 			authPhoneNum.style.display = 'block';
@@ -672,6 +673,7 @@
 		function AuthBtnClick() {
 			var authNumber = $('#authNumber').val();
 			var phoneNumber = $('#phoneNumber').val();
+			var timerContainer = document.getElementById('3MinTimer');
 			// AJAX를 사용하여 서버에 비동기 POST 요청 보내기
 			$.ajax({
 				type: 'POST',
@@ -687,6 +689,7 @@
 						clearInterval(PlAYTIME);
 						resultAuthentication = true;
 						phoneNum = phoneNumber;
+						timerContainer.style.display = 'none';
 					} else {
 						resultAuthentication = false;
 					}
