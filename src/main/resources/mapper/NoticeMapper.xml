@@ -39,6 +39,8 @@
 				NOTICES N JOIN MEMBERS M
 			ON 
 				N.MEMBER_ID = M.MEMBER_ID
+			ORDER BY 
+				N.NOTICE_ID DESC
 		]]>
 	</select>
 	
@@ -53,6 +55,8 @@
 				N.MEMBER_ID = M.MEMBER_ID
 			WHERE
 				N.IS_EMPHASIZED = 'TRUE'
+			ORDER BY
+				N.NOTICE_ID DESC
 		]]>
 	</select>
 	
