@@ -182,13 +182,12 @@ $(document).ready(function() {
 
 		const scheduleDiv = document.getElementById('scheduleDiv');
 
-		// Check if the search term is not empty
 		if (dpTerminalName !== '' && arrTerminalName !== '' && dpDate !== '') {
 			// 창을 보이게 설정
 			scheduleDiv.classList.remove('metanet-hidden');
 
 			try {
-				// Call the function to update table data
+				// 여기에 시간 데이터를 다시 넣어줘야 함
 				const data = await getSchedule(dpTerminalName, arrTerminalName, dpDate);
 				console.log(data);
 			} catch (error) {
@@ -503,6 +502,7 @@ async function getSchedule(dpTerminalName, arrTerminalName, dpDate) {
 				const remainingSeatsValue = await getRemainingSeats(depPlaceNm, arrPlaceNm,
 					depDateResult, arrDateResult, gradeNm, charge);
 				//잔여좌석이 저장된다.
+				depResultTime = depDateResult; //버튼에 적용하기 위해서 depDateResult 를 저장
 
 				console.log("잔여좌석 뿌리기 전 최종 값 : " + remainingSeatsValue);
 
