@@ -316,6 +316,7 @@ function getSevenDaysAfter(date) {
 
 	// Create a Date object with the extracted values
 	const inputDate = new Date(`${year}-${month}-${day}T${hour}:${minute}:00`);
+	console.log('dateString 날짜 형태로 만든 이후 : ' + inputDate);
 
 	// Check if the input date is valid
 	if (isNaN(inputDate.getTime())) {
@@ -325,9 +326,18 @@ function getSevenDaysAfter(date) {
 	// Calculate the date 7 days after
 	const sevenDaysAfter = new Date(inputDate);
 	sevenDaysAfter.setDate(sevenDaysAfter.getDate() + 7);
+	console.log('7일 후로 설정한 이후 : ' + sevenDaysAfter);
 
 	// Format the result as 'YYYY-MM-DD HH:mm' 초는 빼고 내보내기.
-	const formattedResult = sevenDaysAfter.toISOString().slice(0, 16).replace("T", " ");
+	const formattedResult = sevenDaysAfter.toLocaleString('en-Us', {
+		year: 'numeric',
+		month: '2-digit',
+		day: '2-digit',
+		hour: '2-digit',
+		minute: '2-digit',
+		timeZone: 'Asia/Seoul' // Set the time zone to South Korea
+	});
+	console.log('날짜형식 포매팅 이후 : ' + formattedResult);
 
 	return formattedResult;
 }
@@ -353,7 +363,7 @@ async function getSchedule(dpTerminalName, arrTerminalName, dpDate) {
 			}
 		);
 
-		console.log(response);
+		console.log('스케줄 검색 api 로 가져온 response : ', response);
 
 		if (!response.ok) {
 			alert('출발지, 도착지, 출발일자 중 잘못 입력된 값이 있습니다.');
@@ -377,7 +387,6 @@ async function getSchedule(dpTerminalName, arrTerminalName, dpDate) {
 
 
 
-		// Add new rows based on the returned data
 		data.response.body.items.item.forEach(async schedule => {
 			const row = tableBody.insertRow();
 
@@ -443,8 +452,56 @@ async function getSchedule(dpTerminalName, arrTerminalName, dpDate) {
 
 			// 'YYYY-MM-DD HH:mm' 형태로 들어오는 출발, 도착 시간 데이터를 /get-remaining-seats 로 보낸다.
 			try {
+				const depTimeDate = new Date(depResultTime);
+				const depResultDepDate = depTimeDate.toLocaleString('en-US', {
+					year: 'numeric',
+					month: '2-digit',
+					day: '2-digit',
+					hour: '2-digit',
+					minute: '2-digit',
+					hour12: true
+				});
+				console.log('잔여좌석 검색 전 날짜 데이터 : ', depResultDepDate);
+				let depYear = depResultDepDate.substring(6,10);
+				let depMonth = depResultDepDate.substring(0,2);
+				let depDay = depResultDepDate.substring(3,5);
+				let depHour = depResultDepDate.substring(12,14);
+				let depMin = depResultDepDate.substring(15,17);
+				let depDateResult = 
+									depYear + '-' +
+									depMonth + '-' +
+									depDay + ' ' +
+									depHour + ':' +
+									depMin;
+				console.log('잔여좌석 검색 전 최종 출발 날짜 : ' + depDateResult);
+				
+				const arrTimeDate = new Date(arrResultTime);
+				const arrResultarrDate = arrTimeDate.toLocaleString('en-US', {
+					year: 'numeric',
+					month: '2-digit',
+					day: '2-digit',
+					hour: '2-digit',
+					minute: '2-digit',
+					hour12: true
+				});
+				console.log('잔여좌석 검색 전 날짜 데이터 : ', arrResultarrDate);
+				let arrYear = arrResultarrDate.substring(6,10);
+				let arrMonth = arrResultarrDate.substring(0,2);
+				let arrDay = arrResultarrDate.substring(3,5);
+				let arrHour = arrResultarrDate.substring(12,14);
+				let arrMin = arrResultarrDate.substring(15,17);
+				let arrDateResult = 
+									arrYear + '-' +
+									arrMonth + '-' +
+									arrDay + ' ' +
+									arrHour + ':' +
+									arrMin;
+				console.log('잔여좌석 검색 전 최종 도착 날짜 : ' + arrDateResult);
+									
+				
+
 				const remainingSeatsValue = await getRemainingSeats(depPlaceNm, arrPlaceNm,
-					depResultTime, arrResultTime, gradeNm, charge);
+					depDateResult, arrDateResult, gradeNm, charge);
 				//잔여좌석이 저장된다.
 
 				console.log("잔여좌석 뿌리기 전 최종 값 : " + remainingSeatsValue);

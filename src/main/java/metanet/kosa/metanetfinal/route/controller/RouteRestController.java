@@ -53,7 +53,7 @@ public class RouteRestController {
 		return result;
 	}
 
-	@GetMapping("/search-schedule")
+	@GetMapping("/search-schedule") //스케줄 확인하기
 	public String searchSchedule(@RequestParam String dpTerminalName, @RequestParam String arrTerminalName,
 			@RequestParam String dpDate) {
 		System.out.println(dpTerminalName);
@@ -63,7 +63,7 @@ public class RouteRestController {
 		String serviceKey = "EDX0wACMZAUSqHv3FZoxJ//0f5uYSjlN24rlk9/zLatbt21dRKjj81MlsAUFqkDAC68x1aKh6bkdwJUvIuHUyQ==";
 		String dpTerminalId = routeService.getTerminalIdByTerminalName(dpTerminalName.trim());
 		String arrTerminalId = routeService.getTerminalIdByTerminalName(arrTerminalName.trim());
-		String numOfRows = "10";
+		String numOfRows = "1000";
 		String pageNo = "1";
 		String type = "json";
 		String parsedDpDate = dpDate.replace("-", "");
