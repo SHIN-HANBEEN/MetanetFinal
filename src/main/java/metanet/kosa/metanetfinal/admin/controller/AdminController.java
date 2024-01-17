@@ -53,6 +53,10 @@ public class AdminController {
         StringBuilder result = new StringBuilder();
         int count = 0;
         
+        if(input == null) {
+        	return "0";
+        }else {
+        
         for (int i = input.length() - 1; i >= 0; i--) {
             result.insert(0, input.charAt(i));
             count++;
@@ -64,5 +68,6 @@ public class AdminController {
         }
 
         return result.toString();
+        }
     }
 }

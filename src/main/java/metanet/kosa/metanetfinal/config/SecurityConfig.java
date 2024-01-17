@@ -38,8 +38,9 @@ public class SecurityConfig {
 	SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 		http.csrf((csrf) -> csrf.disable());
 		// 토큰을 사용하는 경우 인가를 적용한 URI 설정
-		http.authorizeHttpRequests((authorizeHttpRequests) -> authorizeHttpRequests.requestMatchers("/mypage")
-				.hasAnyRole("USER", "ADMIN").requestMatchers("/notice/register").hasRole("ADMIN")
+		http.authorizeHttpRequests((authorizeHttpRequests) -> authorizeHttpRequests
+				.requestMatchers("/mypage").hasAnyRole("USER", "ADMIN")
+				.requestMatchers("/notice/register").hasRole("ADMIN")
 				.requestMatchers("/**", "assets/css/**", "assets/js/**", "assets/img/**", "/login").permitAll());
 		// requestMatchers("/login", "/signin").permitAll());
 
