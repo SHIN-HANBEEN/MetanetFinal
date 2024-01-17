@@ -86,7 +86,7 @@ public class MemberController {
 		return ResponseEntity.ok("Login successful");
 	}
 
-	@GetMapping("/logout2")
+	@GetMapping("/logoutact")
 	public String logout(HttpServletResponse response) {
 		Cookie cookie = new Cookie("access_token", null);
 		cookie.setMaxAge(0); // 어차피 token 에 유효기간을 설정을 해두었기 때문에 의미는 없다.
@@ -190,7 +190,7 @@ public class MemberController {
 
 	@GetMapping(value = "/sign-out")
 	public String sign_out()	{
-		return "/member/member-delete";
+		return "/member/member-delete"; 
 	}
 
 	@GetMapping(value="/member-modification")

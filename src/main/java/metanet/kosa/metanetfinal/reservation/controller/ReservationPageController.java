@@ -116,8 +116,8 @@ public class ReservationPageController {
 	public String reservationComplete(@RequestParam String payId, Model model) {
 		Map<String, Object> info = reservationService.getReservationInfo(payId);
 		String adult = info.get("ADULT").toString();
-		String middleChild = info.get("ADULT").toString();
-		String child = info.get("ADULT").toString();
+		String middleChild = info.get("MIDDLE_CHILD").toString();
+		String child = info.get("CHILD").toString();
 		StringBuilder sb = new StringBuilder();
 		if(!adult.equals("0")) sb.append("성인 "+ adult +"명 ");
 		if(!middleChild.equals("0")) sb.append("중고생 "+ middleChild +"명 ");
