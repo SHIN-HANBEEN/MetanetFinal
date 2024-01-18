@@ -47,7 +47,7 @@ public class SecurityConfig {
 		// Session 기반의 인증기반을 사용하지 않고 추후 JWT를 이용하여서 인증 예정
 		http.sessionManagement((session) -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
 
-		// Spring Security JWT 필터 로드
+		// Spring Security JWT 필터 로드 -> 인가 할 때 사용 됩니다. 
 		http.addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider()),
 				UsernamePasswordAuthenticationFilter.class);
 

@@ -375,7 +375,12 @@ async function getSchedule(dpTerminalName, arrTerminalName, dpDate) {
 		// 없는 경로 검색한 경우 알려주기
 		let items = data.response.body.items;
 		if (items == "") {
-			alert('검색하신 경로는 없는 경로입니다.');
+			//alert('검색하신 경로는 없는 경로입니다.');
+			Swal.fire({
+				title: '없는 노선입니다',
+				text: '다른 노선을 검색해주세요.',
+				icon: 'warning',
+			})
 		}
 
 		// Get the table body element
