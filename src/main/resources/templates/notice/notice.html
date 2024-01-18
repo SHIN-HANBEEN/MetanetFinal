@@ -622,7 +622,7 @@
 
 						xhr.onload = function () {
 							if (xhr.status === 200) {
-								console.log('response 에요 : ' + xhr.responseText);
+								console.log('공지 등록 html을 불러왔습니다.');
 								noticeContent.innerHTML = xhr.responseText
 								if (xhr.responseText) {
 
@@ -730,32 +730,37 @@
 
 				for (var i = 0; i < noticeList.length; i++) {
 					var notice = noticeList[i];
+					console.log('noticeList 에서 꺼낸 notice : ', notice);
 					//N.NOTICE_ID, N.TITLE, M.MEMBER_ID 
 					var row = document.createElement('tr');
 					row.innerHTML = '<th scope="row">' + notice.noticeId + '</th>' +
-						// '<td><a href=/notice/read?noticeId=' + notice.noticeId + '&offset=' + offset + '>' + notice.title + '</a></td>' +
-						'<td><a style=cursor:pointer class=noticeTitle id=notice' + notice.noticeId + '>' + notice.title + '</a></td>' +
+						'<td><a style=cursor:pointer class=noticeTitle id=noticeNormal' + notice.noticeId + '>' + notice.title + '</a></td>' +
 						'<td>' + notice.name + '</td>';
 					tbody.appendChild(row);
 
-					const titleA = document.getElementById('notice' + notice.noticeId);
-					if (titleA) {
-						titleA.addEventListener('click', function () {
-							const xhr = new XMLHttpRequest();
-							xhr.onreadystatechange = function () {
-								if (xhr.readyState === 4 && xhr.status === 200) {
-									console.log('공지 읽기 html : ' + xhr.responseText);
-									const noticeReadHtml = xhr.responseText;
-									updateNoticeContentForReadNotice(noticeReadHtml);
-								}
-							};
-							xhr.open('GET', '/notice/read?noticeId=' + notice.noticeId + '&offset=' + offset, true);
-							xhr.send();
-						});
-						function updateNoticeContentForReadNotice(content) {
-							const noticeContent = document.getElementById('noticeContent');
-							noticeContent.innerHTML = content;
-						}
+					console.log('addListener 하기 전에 notice.noticeId : ', notice.noticeId);
+					let titleA = document.getElementById('noticeNormal' + notice.noticeId);
+					
+					//Question : how can i pick th tag's value that next to td tag that have noticeNormal + notic.noticeId as id
+					const thValue = row.querySelector('th').innerText;
+					
+					
+					
+					document.getElementById('noticeNormal' + notice.noticeId).addEventListener('click', function () {//여기서 실행되는 notice.noticeId 와 
+						console.log('notice.noticeId 실행 결과(공지제목 클릭) : ', thValue); //여기서 실행되는 notice.noticeId 는 다르다.
+						const xhr = new XMLHttpRequest();
+						xhr.onreadystatechange = function () {
+							if (xhr.readyState === 4 && xhr.status === 200) {
+								const noticeReadHtml = xhr.responseText;
+								updateNoticeContentForReadNotice(noticeReadHtml);
+							}
+						};
+						xhr.open('GET', '/notice/read?noticeId=' + thValue + '&offset=' + offset, true);
+						xhr.send();
+					});
+					function updateNoticeContentForReadNotice(content) {
+						const noticeContent = document.getElementById('noticeContent');
+						noticeContent.innerHTML = content;
 					}
 				}
 			}
@@ -808,7 +813,7 @@
 
 		function redirectToNotice(offset) {
 			// Redirect to the /notice page with the provided offset value
-			window.location.href = "/noticeoffset/offset=" + offset;
+			window.location.href = "/notice";
 		}
 
 		function formatFileSize(fileSize) {
@@ -826,15 +831,15 @@
 
 	<!--   Core JS Files   -->
 	<script src="/assets/js/core/popper.min.js" type="text/javascript"></script>
-    <script src="/assets/js/core/bootstrap.min.js" type="text/javascript"></script>
-    <script src="/assets/js/plugins/perfect-scrollbar.min.js" type="text/javascript"></script>
-    <script src="/assets/js/plugins/moment.min.js"></script>
+	<script src="/assets/js/core/bootstrap.min.js" type="text/javascript"></script>
+	<script src="/assets/js/plugins/perfect-scrollbar.min.js" type="text/javascript"></script>
+	<script src="/assets/js/plugins/moment.min.js"></script>
 
-    <script src="/assets/js/material-kit.min.js" type="text/javascript"></script>
+	<script src="/assets/js/material-kit.min.js" type="text/javascript"></script>
 
-	
-	<script src="./assets/js/final.js" type="text/javascript"></script>
-	<script src="/assets/js/nav.js" type="text/javascript"></script>
+
+	<!--<script src="./assets/js/final.js" type="text/javascript"></script>-->
+	<!--<script src="/assets/js/nav.js" type="text/javascript"></script>-->
 </body>
 
 </html>

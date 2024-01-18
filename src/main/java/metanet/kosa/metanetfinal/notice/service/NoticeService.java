@@ -35,6 +35,7 @@ public class NoticeService implements INoticeService {
 			@Param("memberId") int memberId) {
 		System.out.println("공지 파일과 함께 넣기 서비스 실행");
 		System.out.println("리포지토리 실행 전 notices 확인해보기 : " + notices);
+		//지금 여기까지는 정상적으로 타고 들어왔다. 
 		noticeRepository.insertNoticeWithFile(notices, memberId);
 	} 
 

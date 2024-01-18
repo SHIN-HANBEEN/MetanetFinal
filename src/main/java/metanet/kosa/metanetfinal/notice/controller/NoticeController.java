@@ -14,6 +14,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Scanner;
 
 import org.apache.ibatis.annotations.Param;
 import org.jsoup.Jsoup;
@@ -135,6 +136,11 @@ public class NoticeController {
 				System.out.println("insertNoticeWithFile 시작! ");
 				
 				System.out.println("notices 출력하기 : " + notices);
+				
+				Scanner sc = new Scanner(System.in);
+				String temp = sc.nextLine();
+				
+				System.out.println();
 				
 				noticeService.insertNoticeWithFile(notices, memberId);
 
