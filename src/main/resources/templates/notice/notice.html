@@ -687,8 +687,10 @@
 						'<td><a style=cursor:pointer class=noticeTitle id=notice' + notice.noticeId + '>' + notice.title + '</a></td>' +
 						'<td>' + notice.name + '</td>';
 					tbody.appendChild(row);
+					
+					const thValue = row.querySelector('th').innerText;
 
-					const titleA = document.getElementById('notice' + notice.noticeId);
+					const titleA = document.getElementById('notice' + thValue);
 					if (titleA) {
 						titleA.addEventListener('click', function () {
 							const xhr = new XMLHttpRequest();
@@ -699,7 +701,7 @@
 									updateNoticeContentForReadNotice(noticeReadHtml);
 								}
 							};
-							xhr.open('GET', '/notice/read?noticeId=' + notice.noticeId + '&offset=' + offset, true);
+							xhr.open('GET', '/notice/read?noticeId=' + thValue + '&offset=' + offset, true);
 							xhr.send();
 						});
 						function updateNoticeContentForReadNotice(content) {
