@@ -159,7 +159,7 @@ public class NoticeController {
 			return "";
 		}
 
-		return "notice/notice";
+		return "redirect:/notice";
 	}
 
 	// 공지 읽기
