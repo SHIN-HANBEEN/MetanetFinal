@@ -46,6 +46,7 @@ import metanet.kosa.metanetfinal.notice.model.NoticeFile;
 import metanet.kosa.metanetfinal.notice.model.NoticeRead;
 import metanet.kosa.metanetfinal.notice.model.NoticeReadWithoutFile;
 import metanet.kosa.metanetfinal.notice.model.Notices;
+import metanet.kosa.metanetfinal.notice.model.NoticesForDbUpload;
 import metanet.kosa.metanetfinal.notice.service.INoticeService;
 
 @Controller
@@ -65,7 +66,7 @@ public class NoticeController {
 	@GetMapping(value = "/notice")
 	public String getNotice() {
 		return "notice/notice";
-	} 
+	}
 
 	// 공지사항 홈 with offset
 	@GetMapping(value = "/noticeoffset")
@@ -84,7 +85,7 @@ public class NoticeController {
 	@PostMapping(value = "/notice/write")
 	public String writeNotice(Notices notices, BindingResult results, HttpServletRequest request) {
 
-		int memberId = 0; 
+		int memberId = 0;
 
 		// 쿠키에 담긴 로그인 정보 가져오기
 		try {
@@ -124,25 +125,30 @@ public class NoticeController {
 
 				notices.setMemberId(Integer.valueOf(memberId));
 				System.out.println("mfile get memberId 처리 완료 : " + Integer.valueOf(memberId));
-					
+
 				notices.setFileSize(mfile.getSize());
 				System.out.println("mfile get fileSize 처리 완료 : " + mfile.getSize());
-				
+
 				notices.setFileContentType(mfile.getContentType());
 				System.out.println("mfile get contentType 처리 완료 : " + mfile.getContentType());
-				
-				
-				
+
 				System.out.println("insertNoticeWithFile 시작! ");
-				
+
 				System.out.println("notices 출력하기 : " + notices);
-				
-				Scanner sc = new Scanner(System.in);
-				String temp = sc.nextLine();
-				
-				System.out.println();
-				
-				noticeService.insertNoticeWithFile(notices, memberId);
+
+				NoticesForDbUpload noticesForDbUpload = NoticesForDbUpload.builder()
+						.noticeId(0)
+						.memberId(Integer.valueOf(memberId))
+						.title(notices.getTitle())
+						.content(notices.getContent())
+						.fileName(mfile.getOriginalFilename())
+						.file(mfile.getBytes())
+						.fileContentType(mfile.getContentType())
+						.fileSize(mfile.getSize())
+						.isEmphasized(notices.getIsEmphasized())
+						.build();
+
+				noticeService.insertNoticeWithFile(noticesForDbUpload, memberId);
 
 			} else {
 				noticeService.insertNoticeWithoutFile(notices, memberId);
@@ -156,43 +162,40 @@ public class NoticeController {
 		return "notice/notice";
 	}
 
-	//공지 읽기
+	// 공지 읽기
 	@GetMapping("/notice/read")
-	public String noticeRead(
-			@RequestParam String noticeId, 
-			@RequestParam String offset, 
-			Model model) {
-		
+	public String noticeRead(@RequestParam String noticeId, @RequestParam String offset, Model model) {
+
 		NoticeReadWithoutFile noticeReadWithoutFile;
 		NoticeRead noticeRead;
 		int noticeIdInt = Integer.valueOf(noticeId);
-		
-		//파일이 있는 공지사항인지 확인하기
+
+		// 파일이 있는 공지사항인지 확인하기
 		int param = noticeService.isWithFile(noticeIdInt);
-		if (param == 0) { //파일 첨부 안된 공지글
+		if (param == 0) { // 파일 첨부 안된 공지글
 			noticeReadWithoutFile = noticeService.readNoticeWithoutFileByNoticeId(noticeIdInt);
 			noticeReadWithoutFile.setOffset(Integer.valueOf(offset));
 			model.addAttribute("noticeRead", noticeReadWithoutFile);
 			return "notice/read2";
 		} else {
-			//파일이 있으면 noticeRead 를, 없으면 noticeReadWithouFile 을 사용하기
+			// 파일이 있으면 noticeRead 를, 없으면 noticeReadWithouFile 을 사용하기
 			noticeRead = noticeService.noticeRead(Integer.valueOf(noticeId));
 			noticeRead.setOffset(Integer.valueOf(offset));
 			model.addAttribute("noticeRead", noticeRead); // noticeRead 로 Pagination 도 담아서 함께 보냄
 			return "notice/read";
 		}
-		
+
 	}
-	
-	//파일 다운로드
+
+	// 파일 다운로드
 	@GetMapping("/notice/file")
-	public ResponseEntity<byte[]> getFile( @RequestParam String noticeId ) {
+	public ResponseEntity<byte[]> getFile(@RequestParam String noticeId) {
 		System.out.println("noticeId 는 : " + noticeId);
-		
+
 		NoticeFile noticeFile = noticeService.getNoticeFile(Integer.valueOf(noticeId));
-		
+
 		System.out.println("noticeFile 은 : " + noticeFile);
-		
+
 		final HttpHeaders headers = new HttpHeaders();
 		String[] mytypes = noticeFile.getFileType().split("/");
 		headers.setContentType(new MediaType(mytypes[0], mytypes[1]));

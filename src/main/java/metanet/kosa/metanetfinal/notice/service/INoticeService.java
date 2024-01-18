@@ -11,10 +11,11 @@ import metanet.kosa.metanetfinal.notice.model.NoticeListHome;
 import metanet.kosa.metanetfinal.notice.model.NoticeRead;
 import metanet.kosa.metanetfinal.notice.model.NoticeReadWithoutFile;
 import metanet.kosa.metanetfinal.notice.model.Notices;
+import metanet.kosa.metanetfinal.notice.model.NoticesForDbUpload;
 
 public interface INoticeService {
 	// 공지사항 글 작성
-	void insertNoticeWithFile(Notices notices, int memberId);
+	void insertNoticeWithFile(NoticesForDbUpload notices, int memberId);
 	void insertNoticeWithoutFile(Notices notices, int memberId);
 	
 	//공지사항 10개 씩 가져오기 

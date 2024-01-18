@@ -18,7 +18,7 @@ import metanet.kosa.metanetfinal.notice.model.NoticesForDbUpload;
 @Repository
 public interface INoticeRepository {
 	// 공지사항 글 작성
-	void insertNoticeWithFile(@Param("notices") Notices notices, @Param("memberId") int memberId);
+	void insertNoticeWithFile(@Param("notices") NoticesForDbUpload notices, @Param("memberId") int memberId);
 	void insertNoticeWithoutFile(@Param("notices") Notices notices, @Param("memberId") int memberId);
 	
 	//10개 노티스 가져오기 
