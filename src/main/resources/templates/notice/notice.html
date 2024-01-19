@@ -712,13 +712,12 @@
 				}
 			}
 
-			//notice Normal table 만드는 코드
+			//notice Normal table 만드는 코드  //console.log('일반 공지들 불러왔습니다. : ' + noticeList);
 			function getNormalNotice(offset) {
 				const xhr = new XMLHttpRequest();
 				xhr.onreadystatechange = function () {
 					if (xhr.readyState === 4 && xhr.status === 200) {
-						const noticeList = JSON.parse(xhr.responseText);
-						console.log('일반 공지들 불러왔습니다. : ' + noticeList);
+						const noticeList = JSON.parse(xhr.responseText); 
 						updateNoticeTableNormal(noticeList);
 					}
 				};
