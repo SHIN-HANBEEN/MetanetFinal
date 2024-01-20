@@ -124,11 +124,12 @@ public class ReservationService implements IReservationService{
 		
 		List<Integer> discountedCost = 
 				busesRepository.getDiscountedCostOfBusSeats(departureId, arrivalId, departureTime);
-		
+		SimpleDateFormat sdf = new SimpleDateFormat(
+			    "yyyy-MM-dd HH:mm");
 		data.put("arrPlaceNm", arrPlaceNm);
 		data.put("depPlaceNm", depPlaceNm);
-		data.put("arrPlandTime", route.getArrivalTime().toLocaleString());
-		data.put("depPlandTime", route.getDepartureTime().toLocaleString());
+		data.put("arrPlandTime", sdf.format(route.getArrivalTime()));
+		data.put("depPlandTime", sdf.format(route.getDepartureTime()));
 		data.put("gradeNm", busesRepository.getBusByRouteId(route.getRouteId()).getGradeName());
 		data.put("busId", busesRepository.getBusByRouteId(route.getRouteId()).getBusId());
 		data.put("routeId", route.getRouteId());
