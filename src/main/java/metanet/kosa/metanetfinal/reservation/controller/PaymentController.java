@@ -108,7 +108,7 @@ public class PaymentController {
 		Map<String, String> merchantUid = new HashMap<>();
 		Date date = new Date();
 		String uuid = UUID.randomUUID().toString();
-		String uid = date.toString().substring(11,date.toString().length()-9) + uuid.substring(3,11);
+		String uid =  uuid.substring(3,18);
 		merchantUid.put("paymentId", uid);
 		merchantUid.put("lockingTime", String.valueOf(SeatsLockSystemService.lockingTime));
 		merchantUid.put("discountRate", String.valueOf(ReservationService.discountRate));
