@@ -34,7 +34,7 @@ public class SeatsLockSystemService {
 		//현재 시간 now
 		LocalTime now = LocalTime.now();
 		
-		//Que에 데이터가 있을 때
+		//Queue에 데이터가 있을 때
 		if(!lockedBusQue.isEmpty()) {
 			log.info("큐활성화");
 			// Queue.peek를 통해 현재시간과 비교
@@ -49,8 +49,6 @@ public class SeatsLockSystemService {
 			}
 		}
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HHmm");
-		
-//		log.info("현재시간:{}", now.format(formatter) );
 	}
 	
 	/*
