@@ -44,7 +44,7 @@ public class PhoneNumCertificationService {
         numberAuthentication.setNowDate(LocalDateTime.now());
         //System.out.println(sixDigitRandomNumber);
         //핸드폰 번호로 인증 번호 전송
-        //smsService.sendOne(userPhoneNumber,"메타버스 인증번호[" + sixDigitRandomNumber +"]");
+        smsService.sendOne(userPhoneNumber,"메타버스 인증번호[" + sixDigitRandomNumber +"]");
         
         //인증 Map에 핸드폰 번호와 [인증번호,현재 날짜] 저장
         certification.put(userPhoneNumber, numberAuthentication);

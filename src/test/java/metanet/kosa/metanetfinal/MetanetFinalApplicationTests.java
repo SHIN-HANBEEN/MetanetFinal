@@ -17,10 +17,6 @@ class MetanetFinalApplicationTests {
 	void contextLoads() {
 	}
 	
-	@Test
-	void smsServiceTest() {
-		SingleMessageSentResponse sendOne = coolSmsService.sendOne("01056267924", "테스트입니다");
-		System.out.println(sendOne.toString());
-	}
+	
 
 }
